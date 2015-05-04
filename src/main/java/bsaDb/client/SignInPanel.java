@@ -129,6 +129,8 @@ public class SignInPanel extends JPanel {
             Util.saveProperties(properties, getClass().getResource(propertyFileName).toString());
         }
 
+        txtPassword.setDefault();
+
         baseFrame.slideCard(BaseFrame.HOME_PAGE);
     }
 
