@@ -25,6 +25,7 @@ import java.util.Properties;
 public class SignInPanel extends JPanel {
     private Properties properties;
     private String propertyFileName;
+    private BaseFrame baseFrame;
 
     {
         propertyFileName = "/properties/users.properties";
@@ -36,6 +37,11 @@ public class SignInPanel extends JPanel {
         setupProperties();
 
         loadSavedUser();
+    }
+
+    public SignInPanel(BaseFrame baseFrame) {
+        this();
+        this.baseFrame = baseFrame;
     }
 
     private void setupProperties() {
@@ -68,24 +74,6 @@ public class SignInPanel extends JPanel {
     private void clearPasswordError() {
         lblPasswordError.setText("");
         lblPasswordError.setVisible(false);
-    }
-
-    private void validateUsernameAndPassword() {
-        clearUserNameError();
-        clearPasswordError();
-
-        if (hasEmptyFields()) {
-            return;
-        }
-
-        if (!valuesExists()) {
-            return;
-        }
-
-        if (chkRememberMe.isSelected()) {
-            properties.setProperty(KeyConst.SAVED_USER.getName(), txtUserName.getText());
-            Util.saveProperties(properties, getClass().getResource(propertyFileName).toString());
-        }
     }
 
     private boolean valuesExists() {
@@ -125,7 +113,23 @@ public class SignInPanel extends JPanel {
     }
 
     private void btnSignInActionPerformed() {
-        validateUsernameAndPassword();
+        clearUserNameError();
+        clearPasswordError();
+
+        if (hasEmptyFields()) {
+            return;
+        }
+
+        if (!valuesExists()) {
+            return;
+        }
+
+        if (chkRememberMe.isSelected()) {
+            properties.setProperty(KeyConst.SAVED_USER.getName(), txtUserName.getText());
+            Util.saveProperties(properties, getClass().getResource(propertyFileName).toString());
+        }
+
+        baseFrame.slideCard(BaseFrame.HOME_PAGE);
     }
 
     private void txtUserNameFocusLost() {

@@ -4,23 +4,22 @@
 
 package bsaDb.client;
 
+import bsaDb.client.home.HomePanel;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.*;
 
 /**
  * @author User #2
  */
 public class BaseFrame extends JFrame {
-    private final static String SIGN_IN_PAGE = "signIn";
-    private final static String HOME_PAGE = "home";
+    public final static String SIGN_IN_PAGE = "signIn";
+    public final static String HOME_PAGE = "home";
 
     private SignInPanel pnlSignIn;
-
-    {
-        pnlSignIn = new SignInPanel();
-    }
+    private HomePanel pnlHome;
 
     public BaseFrame() {
         initComponents();
@@ -33,7 +32,19 @@ public class BaseFrame extends JFrame {
                 }
         );
 
+        pnlSignIn = new SignInPanel(this);
+        pnlHome = new HomePanel(this);
+
         pnlCards.add(pnlSignIn, SIGN_IN_PAGE);
+        pnlCards.add(pnlHome, HOME_PAGE);
+    }
+
+    public void slideCard(final String moveToPage) {
+        if (SIGN_IN_PAGE.equals(moveToPage)) {
+            ((CardLayout)pnlCards.getLayout()).show(pnlCards, SIGN_IN_PAGE);
+        } else if (HOME_PAGE.equals(moveToPage)) {
+            ((CardLayout)pnlCards.getLayout()).show(pnlCards, HOME_PAGE);
+        }
     }
 
     private void initComponents() {
