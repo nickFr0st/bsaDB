@@ -4,15 +4,20 @@
 
 package bsaDb.client;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.util.Properties;
-import javax.swing.*;
-import javax.swing.border.*;
-import bsaDb.client.customComponents.*;
+import bsaDb.client.customComponents.JPasswordFieldDefaultText;
+import bsaDb.client.customComponents.JTextFieldDefaultText;
 import constants.KeyConst;
 import util.Util;
+
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author User #2
@@ -28,14 +33,17 @@ public class SignInPanel extends JPanel {
     public SignInPanel() {
         initComponents();
 
-        properties = new Properties();
+        setupProperties();
 
+        loadSavedUser();
+    }
+
+    private void setupProperties() {
+        properties = new Properties();
         try {
             properties.load(getClass().getResourceAsStream(propertyFileName));
         } catch (IOException ignore) {
         }
-
-        loadSavedUser();
     }
 
     private void loadSavedUser() {
