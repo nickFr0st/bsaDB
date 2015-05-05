@@ -13,6 +13,7 @@ new FormModel {
 		} ) {
 			name: "this"
 			"background": new java.awt.Color( 255, 255, 255, 255 )
+			"border": new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 2, false )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0:1.0, 0"
 				"$rowSpecs": "30"
@@ -49,7 +50,9 @@ new FormModel {
 					"defaultImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out60.png" )
 					"selectedImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out_blue60.png" )
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnSignoutMouseReleased", false ) )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"insets": new java.awt.Insets( 5, 5, 5, 5 )
+				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridy": 1
 			} )

@@ -8,6 +8,7 @@ import bsaDb.client.BaseFrame;
 import bsaDb.client.customComponents.ButtonSideMenu;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,6 +42,7 @@ public class HomePanel extends JPanel {
 
         //======== this ========
         setBackground(Color.white);
+        setBorder(new LineBorder(new Color(51, 102, 153), 2));
         setName("this");
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {75, 0, 0};
@@ -92,7 +94,7 @@ public class HomePanel extends JPanel {
             });
             pnlOptions.add(btnSignout, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
+                new Insets(5, 5, 5, 5), 0, 0));
         }
         add(pnlOptions, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
