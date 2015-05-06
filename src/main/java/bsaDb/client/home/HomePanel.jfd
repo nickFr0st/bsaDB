@@ -4,10 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-			"$columnSpecs": "70, 0:1.0"
+			"$columnSpecs": "0:1.0"
 			"$rowSpecs": "0, 0:1.0"
-			"$hGap": 5
-			"$vGap": 5
 			"$alignLeft": true
 			"$alignTop": true
 		} ) {
@@ -15,7 +13,7 @@ new FormModel {
 			"background": new java.awt.Color( 255, 255, 255, 255 )
 			"border": new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 2, false )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-				"$columnSpecs": "0:1.0, 0"
+				"$columnSpecs": "0:1.0"
 				"$rowSpecs": "30"
 				"$hGap": 5
 				"$vGap": 5
@@ -23,44 +21,41 @@ new FormModel {
 				"$alignTop": true
 			} ) {
 				name: "panel1"
-				"background": new java.awt.Color( 51, 102, 153, 255 )
-				add( new FormComponent( "bsaDb.client.customComponents.ButtonSideMenu" ) {
-					name: "btnSettings"
-					"defaultImage": new com.jformdesigner.model.SwingIcon( 0, "/images/settings24.png" )
-					"selectedImage": new com.jformdesigner.model.SwingIcon( 0, "/images/settings_blue24.png" )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridx": 1
-					"insets": new java.awt.Insets( 5, 0, 5, 5 )
-				} )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridwidth": 2
-			} )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-				"$columnSpecs": "0:1.0"
-				"$rowSpecs": "0"
-				"$hGap": 5
-				"$vGap": 5
-				"$alignLeft": true
-				"$alignTop": true
-			} ) {
-				name: "pnlOptions"
 				"background": new java.awt.Color( 255, 255, 255, 255 )
-				add( new FormComponent( "bsaDb.client.customComponents.ButtonSideMenu" ) {
-					name: "btnSignout"
-					"defaultImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out60.png" )
-					"selectedImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out_blue60.png" )
-					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnSignoutMouseReleased", false ) )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"insets": new java.awt.Insets( 5, 5, 5, 5 )
-				} )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridy": 1
-			} )
+				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+					name: "menuBar1"
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "mnuSettings"
+						"text": "Settings"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/settings24.png" )
+						"foreground": new java.awt.Color( 0, 0, 0, 255 )
+						"font": new java.awt.Font( "Tahoma", 0, 12 )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menu1MouseEntered", false ) )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuSettingsMouseExited", false ) )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "menuItem1"
+							"text": "Database Setup"
+						} )
+					} )
+					add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+						name: "hSpacer1"
+						"opaque": false
+					} )
+					add( new FormComponent( "bsaDb.client.customComponents.ButtonSideMenu" ) {
+						name: "button1"
+						"text": "Sign out"
+						"defaultImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out24.png" )
+						"selectedImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out_blue24.png" )
+						"foreground": new java.awt.Color( 0, 0, 0, 255 )
+						"font": new java.awt.Font( "Tahoma", 0, 12 )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "button1MouseReleased", false ) )
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.CardLayout ) ) {
 				name: "pnlCards"
 				"background": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridx": 1
 				"gridy": 1
 			} )
 		}, new FormLayoutConstraints( null ) {

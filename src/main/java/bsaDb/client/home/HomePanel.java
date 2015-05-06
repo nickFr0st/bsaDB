@@ -28,16 +28,26 @@ public class HomePanel extends JPanel {
         this.baseFrame = baseFrame;
     }
 
-    private void btnSignoutMouseReleased() {
+    private void menu1MouseEntered() {
+        mnuSettings.setIcon(new ImageIcon(getClass().getResource("/images/settings_blue24.png")));
+    }
+
+    private void mnuSettingsMouseExited() {
+        mnuSettings.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
+    }
+
+    private void button1MouseReleased() {
         baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel1 = new JPanel();
-        btnSettings = new ButtonSideMenu();
-        pnlOptions = new JPanel();
-        btnSignout = new ButtonSideMenu();
+        menuBar1 = new JMenuBar();
+        mnuSettings = new JMenu();
+        menuItem1 = new JMenuItem();
+        hSpacer1 = new JPanel(null);
+        button1 = new ButtonSideMenu();
         pnlCards = new JPanel();
 
         //======== this ========
@@ -45,60 +55,77 @@ public class HomePanel extends JPanel {
         setBorder(new LineBorder(new Color(51, 102, 153), 2));
         setName("this");
         setLayout(new GridBagLayout());
-        ((GridBagLayout)getLayout()).columnWidths = new int[] {75, 0, 0};
+        ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0};
         ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0};
-        ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
 
         //======== panel1 ========
         {
-            panel1.setBackground(new Color(51, 102, 153));
+            panel1.setBackground(Color.white);
             panel1.setName("panel1");
             panel1.setLayout(new GridBagLayout());
-            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0, 0};
+            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
             ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {30, 0};
-            ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 0.0, 1.0E-4};
+            ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
             ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
-            //---- btnSettings ----
-            btnSettings.setDefaultImage(new ImageIcon(getClass().getResource("/images/settings24.png")));
-            btnSettings.setSelectedImage(new ImageIcon(getClass().getResource("/images/settings_blue24.png")));
-            btnSettings.setName("btnSettings");
-            panel1.add(btnSettings, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(5, 0, 5, 5), 0, 0));
-        }
-        add(panel1, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
-            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 5, 0), 0, 0));
+            //======== menuBar1 ========
+            {
+                menuBar1.setName("menuBar1");
 
-        //======== pnlOptions ========
-        {
-            pnlOptions.setBackground(Color.white);
-            pnlOptions.setName("pnlOptions");
-            pnlOptions.setLayout(new GridBagLayout());
-            ((GridBagLayout)pnlOptions.getLayout()).columnWidths = new int[] {0, 0};
-            ((GridBagLayout)pnlOptions.getLayout()).rowHeights = new int[] {0, 0};
-            ((GridBagLayout)pnlOptions.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
-            ((GridBagLayout)pnlOptions.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+                //======== mnuSettings ========
+                {
+                    mnuSettings.setText("Settings");
+                    mnuSettings.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
+                    mnuSettings.setForeground(Color.black);
+                    mnuSettings.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuSettings.setName("mnuSettings");
+                    mnuSettings.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            menu1MouseEntered();
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            mnuSettingsMouseExited();
+                        }
+                    });
 
-            //---- btnSignout ----
-            btnSignout.setDefaultImage(new ImageIcon(getClass().getResource("/images/sign_out60.png")));
-            btnSignout.setSelectedImage(new ImageIcon(getClass().getResource("/images/sign_out_blue60.png")));
-            btnSignout.setName("btnSignout");
-            btnSignout.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    btnSignoutMouseReleased();
+                    //---- menuItem1 ----
+                    menuItem1.setText("Database Setup");
+                    menuItem1.setName("menuItem1");
+                    mnuSettings.add(menuItem1);
                 }
-            });
-            pnlOptions.add(btnSignout, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                menuBar1.add(mnuSettings);
+
+                //---- hSpacer1 ----
+                hSpacer1.setOpaque(false);
+                hSpacer1.setName("hSpacer1");
+                menuBar1.add(hSpacer1);
+
+                //---- button1 ----
+                button1.setText("Sign out");
+                button1.setDefaultImage(new ImageIcon(getClass().getResource("/images/sign_out24.png")));
+                button1.setSelectedImage(new ImageIcon(getClass().getResource("/images/sign_out_blue24.png")));
+                button1.setForeground(Color.black);
+                button1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                button1.setName("button1");
+                button1.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        button1MouseReleased();
+                    }
+                });
+                menuBar1.add(button1);
+            }
+            panel1.add(menuBar1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(5, 5, 5, 5), 0, 0));
+                new Insets(0, 0, 0, 0), 0, 0));
         }
-        add(pnlOptions, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+        add(panel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 5), 0, 0));
+            new Insets(0, 0, 0, 0), 0, 0));
 
         //======== pnlCards ========
         {
@@ -106,7 +133,7 @@ public class HomePanel extends JPanel {
             pnlCards.setName("pnlCards");
             pnlCards.setLayout(new CardLayout());
         }
-        add(pnlCards, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+        add(pnlCards, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -114,9 +141,11 @@ public class HomePanel extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JPanel panel1;
-    private ButtonSideMenu btnSettings;
-    private JPanel pnlOptions;
-    private ButtonSideMenu btnSignout;
+    private JMenuBar menuBar1;
+    private JMenu mnuSettings;
+    private JMenuItem menuItem1;
+    private JPanel hSpacer1;
+    private ButtonSideMenu button1;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
