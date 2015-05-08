@@ -23,9 +23,15 @@ new FormModel {
 			} ) {
 				name: "panel1"
 				"opaque": false
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label3"
 					"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/flurDeLis90.png" )
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
 					"hAlign": 0
@@ -35,6 +41,9 @@ new FormModel {
 					"text": "You do not have an active connection to a MySQL database."
 					"font": new java.awt.Font( "Tahoma", 1, 20 )
 					"foreground": sfield java.awt.Color red
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"insets": new java.awt.Insets( 10, 10, 5, 10 )
 					"gridx": 1
@@ -46,6 +55,9 @@ new FormModel {
 					"text": "In order to create an active database connection you must first setup a MySQL server."
 					"font": new java.awt.Font( "Tahoma", 1, 14 )
 					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridy": 2
 					"hAlign": 0
@@ -60,6 +72,9 @@ new FormModel {
 					"opaque": false
 					"foreground": new java.awt.Color( 0, 0, 0, 255 )
 					"font": new java.awt.Font( "Tahoma", 0, 13 )
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridy": 3
 					"gridx": 1
@@ -73,7 +88,12 @@ new FormModel {
 					"background": new java.awt.Color( 255, 255, 255, 255 )
 					"foreground": new java.awt.Color( 51, 102, 153, 255 )
 					"focusPainted": false
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", false ) )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "button1MouseEntered", false ) )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "button1MouseExited", false ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridy": 4
 					"hAlign": 2
@@ -85,6 +105,9 @@ new FormModel {
 					"text": "<HTML>- Once your MySQL server is active go to <B>Setup -> Database Settings</B><BR>&nbsp;&nbsp;&nbsp;to create and configure your BSA Database database.</HTML>"
 					"font": new java.awt.Font( "Tahoma", 0, 13 )
 					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
 					"gridy": 5

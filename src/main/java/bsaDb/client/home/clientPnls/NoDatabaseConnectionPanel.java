@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,15 +35,23 @@ public class NoDatabaseConnectionPanel extends JPanel {
         }
     }
 
+    private void button1MouseEntered() {
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void button1MouseExited() {
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        panel1 = new JPanel();
-        label3 = new JLabel();
-        label1 = new JLabel();
-        label2 = new JLabel();
-        textArea3 = new JTextArea();
-        button1 = new JButton();
-        label4 = new JLabel();
+        JPanel panel1 = new JPanel();
+        JLabel label3 = new JLabel();
+        JLabel label1 = new JLabel();
+        JLabel label2 = new JLabel();
+        JTextArea textArea3 = new JTextArea();
+        JButton button1 = new JButton();
+        JLabel label4 = new JLabel();
 
         //======== this ========
         setBackground(Color.white);
@@ -114,6 +124,17 @@ public class NoDatabaseConnectionPanel extends JPanel {
                     button1ActionPerformed();
                 }
             });
+            button1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    button1MouseEntered();
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    button1MouseExited();
+                }
+            });
             panel1.add(button1, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
                 GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
                 new Insets(0, 10, 5, 5), 0, 0));
@@ -134,12 +155,5 @@ public class NoDatabaseConnectionPanel extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    private JPanel panel1;
-    private JLabel label3;
-    private JLabel label1;
-    private JLabel label2;
-    private JTextArea textArea3;
-    private JButton button1;
-    private JLabel label4;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -18,9 +18,6 @@ public class BaseFrame extends JFrame {
     public final static String SIGN_IN_PAGE = "signIn";
     public final static String HOME_PAGE = "home";
 
-    private SignInPanel pnlSignIn;
-    private HomePanel pnlHome;
-
     public BaseFrame() {
         initComponents();
 
@@ -32,8 +29,8 @@ public class BaseFrame extends JFrame {
                 }
         );
 
-        pnlSignIn = new SignInPanel(this);
-        pnlHome = new HomePanel(this);
+        SignInPanel pnlSignIn = new SignInPanel(this);
+        HomePanel pnlHome = new HomePanel(this);
 
         pnlCards.add(pnlSignIn, SIGN_IN_PAGE);
         pnlCards.add(pnlHome, HOME_PAGE);

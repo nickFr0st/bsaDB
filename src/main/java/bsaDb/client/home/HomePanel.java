@@ -22,12 +22,10 @@ public class HomePanel extends JPanel {
 
     private BaseFrame baseFrame;
 
-    private NoDatabaseConnectionPanel pnlNoDatabaseConnection;
-
     public HomePanel() {
         initComponents();
 
-        pnlNoDatabaseConnection = new NoDatabaseConnectionPanel();
+        NoDatabaseConnectionPanel pnlNoDatabaseConnection = new NoDatabaseConnectionPanel();
 
         pnlCards.add(pnlNoDatabaseConnection, NO_CONNECTION_PAGE);
     }
