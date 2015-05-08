@@ -6,6 +6,7 @@ package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
 import bsaDb.client.customComponents.ButtonSideMenu;
+import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -17,10 +18,18 @@ import java.awt.event.MouseEvent;
  * @author Nathanael
  */
 public class HomePanel extends JPanel {
+    private final static String NO_CONNECTION_PAGE = "noConnection";
+
     private BaseFrame baseFrame;
+
+    private NoDatabaseConnectionPanel pnlNoDatabaseConnection;
 
     public HomePanel() {
         initComponents();
+
+        pnlNoDatabaseConnection = new NoDatabaseConnectionPanel();
+
+        pnlCards.add(pnlNoDatabaseConnection, NO_CONNECTION_PAGE);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -29,11 +38,11 @@ public class HomePanel extends JPanel {
     }
 
     private void menu1MouseEntered() {
-        mnuSettings.setIcon(new ImageIcon(getClass().getResource("/images/settings_blue24.png")));
+        mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings_blue24.png")));
     }
 
     private void mnuSettingsMouseExited() {
-        mnuSettings.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
+        mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
     }
 
     private void button1MouseReleased() {
@@ -44,8 +53,8 @@ public class HomePanel extends JPanel {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel1 = new JPanel();
         menuBar1 = new JMenuBar();
-        mnuSettings = new JMenu();
-        menuItem1 = new JMenuItem();
+        mnuSetup = new JMenu();
+        mnuDatabaseSettings = new JMenuItem();
         hSpacer1 = new JPanel(null);
         button1 = new ButtonSideMenu();
         pnlCards = new JPanel();
@@ -74,14 +83,14 @@ public class HomePanel extends JPanel {
             {
                 menuBar1.setName("menuBar1");
 
-                //======== mnuSettings ========
+                //======== mnuSetup ========
                 {
-                    mnuSettings.setText("Settings");
-                    mnuSettings.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
-                    mnuSettings.setForeground(Color.black);
-                    mnuSettings.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                    mnuSettings.setName("mnuSettings");
-                    mnuSettings.addMouseListener(new MouseAdapter() {
+                    mnuSetup.setText("Setup");
+                    mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
+                    mnuSetup.setForeground(Color.black);
+                    mnuSetup.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuSetup.setName("mnuSetup");
+                    mnuSetup.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseEntered(MouseEvent e) {
                             menu1MouseEntered();
@@ -92,12 +101,12 @@ public class HomePanel extends JPanel {
                         }
                     });
 
-                    //---- menuItem1 ----
-                    menuItem1.setText("Database Setup");
-                    menuItem1.setName("menuItem1");
-                    mnuSettings.add(menuItem1);
+                    //---- mnuDatabaseSettings ----
+                    mnuDatabaseSettings.setText("Database Settings");
+                    mnuDatabaseSettings.setName("mnuDatabaseSettings");
+                    mnuSetup.add(mnuDatabaseSettings);
                 }
-                menuBar1.add(mnuSettings);
+                menuBar1.add(mnuSetup);
 
                 //---- hSpacer1 ----
                 hSpacer1.setOpaque(false);
@@ -142,8 +151,8 @@ public class HomePanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JPanel panel1;
     private JMenuBar menuBar1;
-    private JMenu mnuSettings;
-    private JMenuItem menuItem1;
+    private JMenu mnuSetup;
+    private JMenuItem mnuDatabaseSettings;
     private JPanel hSpacer1;
     private ButtonSideMenu button1;
     private JPanel pnlCards;
