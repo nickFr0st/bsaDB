@@ -129,7 +129,6 @@ public class NoDatabaseConnectionPanel extends JPanel {
                 public void mouseEntered(MouseEvent e) {
                     button1MouseEntered();
                 }
-
                 @Override
                 public void mouseExited(MouseEvent e) {
                     button1MouseExited();

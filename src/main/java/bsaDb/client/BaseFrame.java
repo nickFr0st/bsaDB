@@ -12,7 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * @author User #2
+ * Created by Nathanael
  */
 public class BaseFrame extends JFrame {
     public final static String SIGN_IN_PAGE = "signIn";

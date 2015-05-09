@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * @author User #2
+ * Created by Nathanael
  */
 public class SignInPanel extends JPanel {
     private Properties properties;

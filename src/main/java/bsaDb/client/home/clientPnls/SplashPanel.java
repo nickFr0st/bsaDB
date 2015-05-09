@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author User #2
+ * @author Nathanael
  */
 public class SplashPanel extends JPanel {
     public SplashPanel() {

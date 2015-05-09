@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author User #2
+ * @author Nathanael
  */
 public class DatabaseSettingsPanel extends JPanel {
     public DatabaseSettingsPanel() {
@@ -106,8 +106,8 @@ public class DatabaseSettingsPanel extends JPanel {
                 lblDatabaseNameError.setVisible(false);
                 lblDatabaseNameError.setName("lblDatabaseNameError");
                 panel2.add(lblDatabaseNameError, new GridBagConstraints(0, 1, 4, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 10, 8, 0), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 10, 8, 0), 0, 0));
 
                 //---- txtServerUserName ----
                 txtServerUserName.setMinimumSize(new Dimension(14, 40));
@@ -116,8 +116,8 @@ public class DatabaseSettingsPanel extends JPanel {
                 txtServerUserName.setDefaultText("MySQL server user name");
                 txtServerUserName.setName("txtServerUserName");
                 panel2.add(txtServerUserName, new GridBagConstraints(0, 2, 3, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 8, 5), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 8, 5), 0, 0));
 
                 //---- lblUserNameError ----
                 lblUserNameError.setText("* Error Message");
@@ -126,8 +126,8 @@ public class DatabaseSettingsPanel extends JPanel {
                 lblUserNameError.setVisible(false);
                 lblUserNameError.setName("lblUserNameError");
                 panel2.add(lblUserNameError, new GridBagConstraints(0, 3, 4, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 10, 8, 0), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 10, 8, 0), 0, 0));
 
                 //---- txtServerPassword ----
                 txtServerPassword.setPreferredSize(new Dimension(14, 40));
@@ -136,8 +136,8 @@ public class DatabaseSettingsPanel extends JPanel {
                 txtServerPassword.setDefaultText("MySQL server password");
                 txtServerPassword.setName("txtServerPassword");
                 panel2.add(txtServerPassword, new GridBagConstraints(0, 4, 3, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 8, 5), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 8, 5), 0, 0));
 
                 //---- lblPasswordError ----
                 lblPasswordError.setText("* Error Message");
@@ -146,8 +146,8 @@ public class DatabaseSettingsPanel extends JPanel {
                 lblPasswordError.setVisible(false);
                 lblPasswordError.setName("lblPasswordError");
                 panel2.add(lblPasswordError, new GridBagConstraints(0, 5, 4, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 10, 8, 0), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 10, 8, 0), 0, 0));
 
                 //---- btnCreate ----
                 btnCreate.setText("Create");
@@ -161,8 +161,8 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnCreate.setFocusPainted(false);
                 btnCreate.setName("btnCreate");
                 panel2.add(btnCreate, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(5, 5, 0, 5), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(5, 5, 0, 5), 0, 0));
 
                 //---- btnConnect ----
                 btnConnect.setText("Connect");
