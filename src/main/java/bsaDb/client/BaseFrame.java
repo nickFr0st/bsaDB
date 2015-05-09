@@ -29,11 +29,8 @@ public class BaseFrame extends JFrame {
                 }
         );
 
-        SignInPanel pnlSignIn = new SignInPanel(this);
-        HomePanel pnlHome = new HomePanel(this);
-
-        pnlCards.add(pnlSignIn, SIGN_IN_PAGE);
-        pnlCards.add(pnlHome, HOME_PAGE);
+        pnlCards.add(new SignInPanel(this), SIGN_IN_PAGE);
+        pnlCards.add(new HomePanel(this), HOME_PAGE);
     }
 
     public void slideCard(final String moveToPage) {

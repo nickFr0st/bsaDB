@@ -5,6 +5,7 @@
 package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
+import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
 import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 
@@ -22,6 +23,7 @@ import java.awt.event.MouseEvent;
 public class HomePanel extends JPanel {
     private final static String NO_CONNECTION_PAGE = "noConnection";
     private final static String SPLASH_PAGE = "splash";
+    private final static String DATABASE_SETTINGS_PAGE = "databaseSettings";
 
     private BaseFrame baseFrame;
 
@@ -30,6 +32,7 @@ public class HomePanel extends JPanel {
 
         pnlCards.add(new NoDatabaseConnectionPanel(), NO_CONNECTION_PAGE);
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
+        pnlCards.add(new DatabaseSettingsPanel(), DATABASE_SETTINGS_PAGE);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -47,6 +50,10 @@ public class HomePanel extends JPanel {
 
     private void btnSignoutActionPerformed() {
         baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
+    }
+
+    private void mnuDatabaseSettingsActionPerformed() {
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, DATABASE_SETTINGS_PAGE);
     }
 
     private void initComponents() {
@@ -107,6 +114,12 @@ public class HomePanel extends JPanel {
                     //---- mnuDatabaseSettings ----
                     mnuDatabaseSettings.setText("Database Settings");
                     mnuDatabaseSettings.setName("mnuDatabaseSettings");
+                    mnuDatabaseSettings.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mnuDatabaseSettingsActionPerformed();
+                        }
+                    });
                     mnuSetup.add(mnuDatabaseSettings);
                 }
                 menuBar1.add(mnuSetup);

@@ -45,6 +45,7 @@ new FormModel {
 							auxiliary() {
 								"JavaCodeGenerator.variableLocal": true
 							}
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuDatabaseSettingsActionPerformed", false ) )
 						} )
 					} )
 					add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {

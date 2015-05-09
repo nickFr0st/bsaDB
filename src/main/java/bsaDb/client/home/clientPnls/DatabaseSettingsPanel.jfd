@@ -1,0 +1,180 @@
+JFDML JFormDesigner: "5.1.3.0.158" Java: "1.7.0_71" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+			"$columnSpecs": "0:1.0"
+			"$rowSpecs": "0, 0:1.0"
+			"$hGap": 5
+			"$vGap": 5
+			"$alignLeft": true
+			"$alignTop": true
+		} ) {
+			name: "this"
+			"background": new java.awt.Color( 255, 255, 255, 255 )
+			add( new FormComponent( "bsaDb.client.customComponents.TitlePanel" ) {
+				name: "titlePanel1"
+				"title": "Database Settings"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "0, 0:1.0"
+				"$rowSpecs": "0, 0"
+				"$hGap": 5
+				"$vGap": 5
+				"$alignLeft": true
+				"$alignTop": true
+			} ) {
+				name: "panel1"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblConnection"
+					"text": "Current database connection:"
+					"font": new java.awt.Font( "Vijaya", 0, 22 )
+					"foreground": new java.awt.Color( 51, 102, 153, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblConnectionName"
+					"text": "dbName"
+					"font": new java.awt.Font( "Vijaya", 0, 22 )
+					"foreground": new java.awt.Color( 32, 154, 26, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 1
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "127, 108, 131, 0:1.0"
+					"$rowSpecs": "0, 0, 0, 0, 0, 0, 0"
+					"$hGap": 5
+					"$vGap": 8
+					"$alignLeft": true
+					"$alignTop": true
+				} ) {
+					name: "panel2"
+					"opaque": false
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+					add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+						name: "txtDatabaseName"
+						"preferredSize": new java.awt.Dimension( 14, 40 )
+						"minimumSize": new java.awt.Dimension( 14, 40 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+						"defaultText": "Database Name"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridwidth": 3
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lblDatabaseNameError"
+						"text": "* Error Message"
+						"foreground": sfield java.awt.Color red
+						"font": &Font0 new java.awt.Font( "Tahoma", 2, 11 )
+						"visible": false
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 1
+						"gridwidth": 4
+						"insets": new java.awt.Insets( 0, 10, 0, 0 )
+					} )
+					add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+						name: "txtServerUserName"
+						"minimumSize": new java.awt.Dimension( 14, 40 )
+						"preferredSize": new java.awt.Dimension( 14, 40 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+						"defaultText": "MySQL server user name"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 2
+						"gridwidth": 3
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lblUserNameError"
+						"text": "* Error Message"
+						"foreground": sfield java.awt.Color red
+						"font": #Font0
+						"visible": false
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 3
+						"gridwidth": 4
+						"insets": new java.awt.Insets( 0, 10, 0, 0 )
+					} )
+					add( new FormComponent( "bsaDb.client.customComponents.JPasswordFieldDefaultText" ) {
+						name: "txtServerPassword"
+						"preferredSize": new java.awt.Dimension( 14, 40 )
+						"minimumSize": new java.awt.Dimension( 14, 40 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+						"defaultText": "MySQL server password"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 4
+						"gridwidth": 3
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lblPasswordError"
+						"text": "* Error Message"
+						"foreground": sfield java.awt.Color red
+						"font": #Font0
+						"visible": false
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 5
+						"gridwidth": 4
+						"insets": new java.awt.Insets( 0, 10, 0, 0 )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnCreate"
+						"text": "Create"
+						"preferredSize": &Dimension0 new java.awt.Dimension( 90, 30 )
+						"minimumSize": &Dimension1 new java.awt.Dimension( 80, 30 )
+						"maximumSize": &Dimension2 new java.awt.Dimension( 90, 30 )
+						"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
+						"margin": &Insets0 new java.awt.Insets( 5, 20, 5, 20 )
+						"background": &Color0 new java.awt.Color( 51, 102, 153, 255 )
+						"foreground": &Color1 new java.awt.Color( 255, 255, 255, 255 )
+						"focusPainted": false
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 6
+						"insets": new java.awt.Insets( 5, 5, 0, 0 )
+						"gridx": 1
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnConnect"
+						"text": "Connect"
+						"preferredSize": #Dimension0
+						"minimumSize": #Dimension1
+						"maximumSize": #Dimension2
+						"font": #Font1
+						"margin": #Insets0
+						"background": #Color0
+						"foreground": #Color1
+						"focusPainted": false
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 6
+						"insets": new java.awt.Insets( 5, 20, 0, 0 )
+						"gridx": 2
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridy": 1
+					"gridwidth": 2
+					"insets": new java.awt.Insets( 10, 0, 0, 0 )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 1
+				"insets": new java.awt.Insets( 5, 10, 5, 10 )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 565, 420 )
+		} )
+	}
+}
