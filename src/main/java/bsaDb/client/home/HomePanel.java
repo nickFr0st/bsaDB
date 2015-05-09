@@ -5,6 +5,7 @@
 package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
+import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class HomePanel extends JPanel {
     public HomePanel() {
         initComponents();
 
-//        pnlCards.add(new NoDatabaseConnectionPanel(), NO_CONNECTION_PAGE);
+        pnlCards.add(new NoDatabaseConnectionPanel(), NO_CONNECTION_PAGE);
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
     }
 
@@ -50,12 +51,12 @@ public class HomePanel extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        panel1 = new JPanel();
-        menuBar1 = new JMenuBar();
+        JPanel panel1 = new JPanel();
+        JMenuBar menuBar1 = new JMenuBar();
         mnuSetup = new JMenu();
-        mnuDatabaseSettings = new JMenuItem();
-        hSpacer1 = new JPanel(null);
-        btnSignout = new JButton();
+        JMenuItem mnuDatabaseSettings = new JMenuItem();
+        JPanel hSpacer1 = new JPanel(null);
+        JButton btnSignout = new JButton();
         pnlCards = new JPanel();
 
         //======== this ========
@@ -156,12 +157,7 @@ public class HomePanel extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    private JPanel panel1;
-    private JMenuBar menuBar1;
     private JMenu mnuSetup;
-    private JMenuItem mnuDatabaseSettings;
-    private JPanel hSpacer1;
-    private JButton btnSignout;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
