@@ -10,26 +10,27 @@ new FormModel {
 			"$alignTop": true
 		} ) {
 			name: "this"
-			"background": new java.awt.Color( 255, 255, 255, 255 )
+			"background": new java.awt.Color( 51, 102, 153, 255 )
 			"border": new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 2, false )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0:1.0"
 				"$rowSpecs": "30"
-				"$hGap": 5
-				"$vGap": 5
 				"$alignLeft": true
 				"$alignTop": true
 			} ) {
 				name: "panel1"
-				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"background": new java.awt.Color( 153, 153, 153, 255 )
 				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 					name: "menuBar1"
+					"background": new java.awt.Color( 153, 153, 153, 255 )
+					"margin": new java.awt.Insets( 0, 10, 0, 10 )
 					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 						name: "mnuSetup"
 						"text": "Setup"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/settings24.png" )
 						"foreground": new java.awt.Color( 0, 0, 0, 255 )
 						"font": new java.awt.Font( "Tahoma", 0, 12 )
+						"opaque": false
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "menu1MouseEntered", false ) )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuSettingsMouseExited", false ) )
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
@@ -41,14 +42,19 @@ new FormModel {
 						name: "hSpacer1"
 						"opaque": false
 					} )
-					add( new FormComponent( "bsaDb.client.customComponents.ButtonSideMenu" ) {
-						name: "button1"
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "btnSignout"
 						"text": "Sign out"
-						"defaultImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out24.png" )
-						"selectedImage": new com.jformdesigner.model.SwingIcon( 0, "/images/sign_out_blue24.png" )
 						"foreground": new java.awt.Color( 0, 0, 0, 255 )
 						"font": new java.awt.Font( "Tahoma", 0, 12 )
-						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "button1MouseReleased", false ) )
+						"preferredSize": new java.awt.Dimension( 80, 24 )
+						"minimumSize": new java.awt.Dimension( 80, 24 )
+						"maximumSize": new java.awt.Dimension( 80, 24 )
+						"focusPainted": false
+						"background": new java.awt.Color( 153, 153, 153, 255 )
+						"borderPainted": false
+						"opaque": false
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSignoutActionPerformed", false ) )
 					} )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )

@@ -5,12 +5,13 @@
 package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
-import bsaDb.client.customComponents.ButtonSideMenu;
-import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
+import bsaDb.client.home.clientPnls.SplashPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -19,15 +20,15 @@ import java.awt.event.MouseEvent;
  */
 public class HomePanel extends JPanel {
     private final static String NO_CONNECTION_PAGE = "noConnection";
+    private final static String SPLASH_PAGE = "splash";
 
     private BaseFrame baseFrame;
 
     public HomePanel() {
         initComponents();
 
-        NoDatabaseConnectionPanel pnlNoDatabaseConnection = new NoDatabaseConnectionPanel();
-
-        pnlCards.add(pnlNoDatabaseConnection, NO_CONNECTION_PAGE);
+//        pnlCards.add(new NoDatabaseConnectionPanel(), NO_CONNECTION_PAGE);
+        pnlCards.add(new SplashPanel(), SPLASH_PAGE);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -43,7 +44,7 @@ public class HomePanel extends JPanel {
         mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
     }
 
-    private void button1MouseReleased() {
+    private void btnSignoutActionPerformed() {
         baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
     }
 
@@ -54,11 +55,11 @@ public class HomePanel extends JPanel {
         mnuSetup = new JMenu();
         mnuDatabaseSettings = new JMenuItem();
         hSpacer1 = new JPanel(null);
-        button1 = new ButtonSideMenu();
+        btnSignout = new JButton();
         pnlCards = new JPanel();
 
         //======== this ========
-        setBackground(Color.white);
+        setBackground(new Color(51, 102, 153));
         setBorder(new LineBorder(new Color(51, 102, 153), 2));
         setName("this");
         setLayout(new GridBagLayout());
@@ -69,7 +70,7 @@ public class HomePanel extends JPanel {
 
         //======== panel1 ========
         {
-            panel1.setBackground(Color.white);
+            panel1.setBackground(new Color(153, 153, 153));
             panel1.setName("panel1");
             panel1.setLayout(new GridBagLayout());
             ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
@@ -79,6 +80,8 @@ public class HomePanel extends JPanel {
 
             //======== menuBar1 ========
             {
+                menuBar1.setBackground(new Color(153, 153, 153));
+                menuBar1.setMargin(new Insets(0, 10, 0, 10));
                 menuBar1.setName("menuBar1");
 
                 //======== mnuSetup ========
@@ -87,6 +90,7 @@ public class HomePanel extends JPanel {
                     mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
                     mnuSetup.setForeground(Color.black);
                     mnuSetup.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuSetup.setOpaque(false);
                     mnuSetup.setName("mnuSetup");
                     mnuSetup.addMouseListener(new MouseAdapter() {
                         @Override
@@ -111,20 +115,25 @@ public class HomePanel extends JPanel {
                 hSpacer1.setName("hSpacer1");
                 menuBar1.add(hSpacer1);
 
-                //---- button1 ----
-                button1.setText("Sign out");
-                button1.setDefaultImage(new ImageIcon(getClass().getResource("/images/sign_out24.png")));
-                button1.setSelectedImage(new ImageIcon(getClass().getResource("/images/sign_out_blue24.png")));
-                button1.setForeground(Color.black);
-                button1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                button1.setName("button1");
-                button1.addMouseListener(new MouseAdapter() {
+                //---- btnSignout ----
+                btnSignout.setText("Sign out");
+                btnSignout.setForeground(Color.black);
+                btnSignout.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                btnSignout.setPreferredSize(new Dimension(80, 24));
+                btnSignout.setMinimumSize(new Dimension(80, 24));
+                btnSignout.setMaximumSize(new Dimension(80, 24));
+                btnSignout.setFocusPainted(false);
+                btnSignout.setBackground(new Color(153, 153, 153));
+                btnSignout.setBorderPainted(false);
+                btnSignout.setOpaque(false);
+                btnSignout.setName("btnSignout");
+                btnSignout.addActionListener(new ActionListener() {
                     @Override
-                    public void mouseReleased(MouseEvent e) {
-                        button1MouseReleased();
+                    public void actionPerformed(ActionEvent e) {
+                        btnSignoutActionPerformed();
                     }
                 });
-                menuBar1.add(button1);
+                menuBar1.add(btnSignout);
             }
             panel1.add(menuBar1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -152,7 +161,7 @@ public class HomePanel extends JPanel {
     private JMenu mnuSetup;
     private JMenuItem mnuDatabaseSettings;
     private JPanel hSpacer1;
-    private ButtonSideMenu button1;
+    private JButton btnSignout;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
