@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="334dc325-b311-46ee-960a-49db56e8e8f6" name="Default" comment="added database settings page">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/util/MySqlConnector.java" />
+    <list default="true" id="334dc325-b311-46ee-960a-49db56e8e8f6" name="Default" comment="cleanup and added the starting of the database connection">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/properties/database.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java" afterPath="$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.java" afterPath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/NoDatabaseConnectionPanel.java" afterPath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/NoDatabaseConnectionPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.java" afterPath="$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/SplashPanel.java" afterPath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/SplashPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java" afterPath="$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/constants/KeyConst.java" afterPath="$PROJECT_DIR$/src/main/java/constants/KeyConst.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/util/MySqlConnector.java" afterPath="$PROJECT_DIR$/src/main/java/util/MySqlConnector.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="08e3d316-edc9-47c2-a194-b32a0a3a2c31" name="do not commit" comment="" />
@@ -32,37 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProgramDriver.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/ProgramDriver.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
-              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseFrame.jfd" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.jfd">
-          <provider selected="true" editor-type-id="JFormDesigner">
-            <state />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SignInPanel.jfd" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.jfd">
           <provider selected="true" editor-type-id="JFormDesigner">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JPasswordFieldDefaultText.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/JPasswordFieldDefaultText.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
-              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-              <folding />
-            </state>
           </provider>
         </entry>
       </file>
@@ -79,15 +51,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HomePanel.jfd" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.jfd">
-          <provider selected="true" editor-type-id="JFormDesigner">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NoDatabaseConnectionPanel.jfd" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/NoDatabaseConnectionPanel.jfd">
+      <file leaf-file-name="BaseFrame.jfd" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.jfd">
           <provider selected="true" editor-type-id="JFormDesigner">
             <state />
           </provider>
@@ -97,36 +62,6 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.jfd">
           <provider selected="true" editor-type-id="JFormDesigner">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MySqlConnector.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/util/MySqlConnector.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.123958334" vertical-offset="0" max-vertical-offset="960">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TitlePanel.jfd" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/TitlePanel.jfd">
-          <provider selected="true" editor-type-id="JFormDesigner">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TitlePanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/TitlePanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1431140084251" expanded="false" signature="517:2083" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1431140084251" expanded="false" signature="2095:2304" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-              </folding>
-            </state>
           </provider>
         </entry>
       </file>
@@ -144,79 +79,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SplashPanel.jfd" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/SplashPanel.jfd">
+      <file leaf-file-name="MySqlConnector.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/util/MySqlConnector.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1224">
+              <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomePanel.jfd" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.jfd">
           <provider selected="true" editor-type-id="JFormDesigner">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SplashPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/SplashPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-              <folding>
-                <marker date="1431179925187" expanded="false" signature="324:1311" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1431179925187" expanded="false" signature="1323:1502" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NoDatabaseConnectionPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/NoDatabaseConnectionPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="969">
-              <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-              <folding>
-                <marker date="1431179557601" expanded="false" signature="1132:6496" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1431179557601" expanded="false" signature="6508:6660" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ButtonSideMenu.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/ButtonSideMenu.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="952">
-              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SideMenuSelectBorder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/SideMenuSelectBorder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-              <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HomePanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
-              <caret line="55" column="80" selection-start-line="55" selection-start-column="80" selection-end-line="55" selection-end-column="80" />
-              <folding>
-                <marker date="1431139798695" expanded="false" signature="1775:6927" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1431139798695" expanded="true" signature="6939:7148" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KeyConst.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/constants/KeyConst.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
-              <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-              <folding />
-            </state>
           </provider>
         </entry>
       </file>
@@ -230,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JTextFieldDefaultText.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/JTextFieldDefaultText.java">
+      <file leaf-file-name="database.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/properties/database.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1853">
-              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+              <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -253,11 +131,38 @@
       <file leaf-file-name="BaseFrame.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+              <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
               <folding>
-                <marker date="1431179925179" expanded="false" signature="1177:2530" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-                <marker date="1431179925179" expanded="false" signature="2542:2723" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+                <element signature="e#865#866#0" expanded="true" />
+                <element signature="e#942#943#0" expanded="true" />
+                <marker date="1431288720009" expanded="false" signature="989:2342" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+                <marker date="1431288720009" expanded="false" signature="2354:2535" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeyConst.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/constants/KeyConst.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomePanel.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.60808706" vertical-offset="17" max-vertical-offset="1071">
+              <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+              <folding>
+                <element signature="e#1393#1394#0" expanded="true" />
+                <element signature="e#1470#1471#0" expanded="true" />
+                <marker date="1431288772266" expanded="false" signature="2054:7206" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+                <marker date="1431288772266" expanded="false" signature="7218:7427" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
               </folding>
             </state>
           </provider>
@@ -282,7 +187,6 @@
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/util/Util.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/JPasswordFieldDefaultText.java" />
         <option value="$PROJECT_DIR$/src/main/resources/properties/users.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/constants/KeyConst.java" />
         <option value="$PROJECT_DIR$/src/main/java/util/Util.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.jfd" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/SideMenuSelectBorderButtonSideMenu.java" />
@@ -296,13 +200,15 @@
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/TitlePanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/TitlePanel.jfd" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.jfd" />
-        <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.jfd" />
-        <option value="$PROJECT_DIR$/src/main/java/util/MySqlConnector.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/SplashPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/constants/KeyConst.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/properties/database.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/util/MySqlConnector.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java" />
       </list>
     </option>
   </component>
@@ -595,6 +501,70 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bsaDB" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bsaDB" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bsaDb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bsaDB" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bsaDB" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bsaDb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -881,6 +851,11 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -896,7 +871,7 @@
       <workItem from="1430873748454" duration="1790000" />
       <workItem from="1431047663505" duration="5353000" />
       <workItem from="1431125957831" duration="7443000" />
-      <workItem from="1431179500228" duration="425000" />
+      <workItem from="1431179500228" duration="2978000" />
     </task>
     <task id="LOCAL-00001" summary="updates">
       <created>1430776531600</created>
@@ -950,11 +925,15 @@
       <created>1431140084650</created>
       <updated>1431140084650</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="cleanup and added the starting of the database connection">
+      <created>1431179949750</created>
+      <updated>1431179949750</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31082000" />
+    <option name="totallyTimeSpent" value="33635000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1874" height="1096" extended-state="6" />
@@ -973,19 +952,19 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972437" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20672546" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="JFormDesigner Error Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1017,7 +996,8 @@
     <MESSAGE value="added splash page" />
     <MESSAGE value="cleanup" />
     <MESSAGE value="added database settings page" />
-    <option name="LAST_COMMIT_MESSAGE" value="added database settings page" />
+    <MESSAGE value="cleanup and added the starting of the database connection" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup and added the starting of the database connection" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1028,19 +1008,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state paletteWidth="0" propertiesWidth="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/ButtonSideMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1037" max-vertical-offset="1190">
-          <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/SideMenuSelectBorder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="595">
@@ -1054,8 +1021,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="782">
           <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
           <folding>
-            <marker date="1431139798695" expanded="false" signature="1775:6927" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431139798695" expanded="true" signature="6939:7148" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1470#1471#0" expanded="true" />
+            <marker date="1431288772266" expanded="false" signature="2054:7206" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431288772266" expanded="false" signature="7218:7427" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
@@ -1097,8 +1066,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1037">
           <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding>
-            <marker date="1431179925179" expanded="false" signature="1177:2530" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431179925179" expanded="false" signature="2542:2723" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <element signature="e#865#866#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <marker date="1431288720009" expanded="false" signature="989:2342" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431288720009" expanded="false" signature="2354:2535" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
@@ -1174,8 +1145,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="765">
           <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
           <folding>
-            <marker date="1431139798695" expanded="false" signature="1775:6927" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431139798695" expanded="true" signature="6939:7148" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1470#1471#0" expanded="true" />
+            <marker date="1431288772266" expanded="false" signature="2054:7206" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431288772266" expanded="false" signature="7218:7427" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
@@ -1217,8 +1190,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1037">
           <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding>
-            <marker date="1431179925179" expanded="false" signature="1177:2530" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431179925179" expanded="false" signature="2542:2723" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <element signature="e#865#866#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <marker date="1431288720009" expanded="false" signature="989:2342" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431288720009" expanded="false" signature="2354:2535" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
@@ -1250,8 +1225,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="156" max-vertical-offset="799">
           <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
           <folding>
-            <marker date="1431179557601" expanded="false" signature="1132:6496" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431179557601" expanded="false" signature="6508:6660" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <marker date="1431179557601" expanded="false" signature="-1:-1" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431179557601" expanded="false" signature="-1:-1" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
@@ -1271,23 +1246,13 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="960">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1431140084251" expanded="false" signature="517:2083" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431140084251" expanded="false" signature="2095:2304" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <marker date="1431140084251" expanded="false" signature="-1:-1" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431140084251" expanded="false" signature="-1:-1" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/TitlePanel.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.jfd">
       <provider selected="true" editor-type-id="JFormDesigner">
         <state />
       </provider>
@@ -1300,30 +1265,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1431179925170" expanded="false" signature="518:9898" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431179925170" expanded="false" signature="9910:10376" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/SplashPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
           <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
           <folding>
-            <marker date="1431179925187" expanded="false" signature="324:1311" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431179925187" expanded="false" signature="1323:1502" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+            <marker date="1431179925187" expanded="false" signature="-1:-1" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431179925187" expanded="false" signature="-1:-1" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
         </state>
       </provider>
@@ -1344,52 +1292,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="26" max-vertical-offset="1020">
-          <caret line="55" column="80" selection-start-line="55" selection-start-column="80" selection-end-line="55" selection-end-column="80" />
-          <folding>
-            <marker date="1431139798695" expanded="false" signature="1775:6927" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431139798695" expanded="true" signature="6939:7148" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/constants/KeyConst.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/JTextFieldDefaultText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1853">
-          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/util/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="646">
-          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-          <folding>
-            <marker date="1431179925179" expanded="false" signature="1177:2530" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
-            <marker date="1431179925179" expanded="false" signature="2542:2723" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31875" vertical-offset="0" max-vertical-offset="960">
@@ -1406,11 +1308,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.jfd">
-      <provider selected="true" editor-type-id="JFormDesigner">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2363">
@@ -1419,6 +1316,68 @@
             <marker date="1431179925160" expanded="false" signature="3896:10345" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
             <marker date="1431179925160" expanded="false" signature="10357:10834" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/SignInPanel.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/clientPnls/DatabaseSettingsPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1431179925170" expanded="false" signature="518:9898" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431179925170" expanded="false" signature="9910:10376" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/JTextFieldDefaultText.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.371875" vertical-offset="0" max-vertical-offset="1853">
+          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/util/Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
+          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_40/src.zip!/javax/swing/JOptionPane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4938" max-vertical-offset="42670">
+          <caret line="362" column="29" selection-start-line="362" selection-start-column="29" selection-end-line="362" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/constants/KeyConst.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/properties/database.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1432,9 +1391,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/util/MySqlConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.123958334" vertical-offset="0" max-vertical-offset="960">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1224">
+          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/BaseFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+          <folding>
+            <element signature="e#865#866#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <marker date="1431288720009" expanded="false" signature="989:2342" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431288720009" expanded="false" signature="2354:2535" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.jfd">
+      <provider selected="true" editor-type-id="JFormDesigner">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bsaDb/client/home/HomePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60808706" vertical-offset="17" max-vertical-offset="1071">
+          <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+          <folding>
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1470#1471#0" expanded="true" />
+            <marker date="1431288772266" expanded="false" signature="2054:7206" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
+            <marker date="1431288772266" expanded="false" signature="7218:7427" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
+          </folding>
         </state>
       </provider>
     </entry>

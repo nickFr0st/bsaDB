@@ -8,6 +8,7 @@ import bsaDb.client.BaseFrame;
 import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
 import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
+import util.MySqlConnector;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -38,6 +39,14 @@ public class HomePanel extends JPanel {
     public HomePanel(BaseFrame baseFrame) {
         this();
         this.baseFrame = baseFrame;
+
+        if (MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            slideCard(SPLASH_PAGE);
+        }
+    }
+
+    public void slideCard(final String moveToPage) {
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, moveToPage);
     }
 
     private void menu1MouseEntered() {

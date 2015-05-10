@@ -34,11 +34,7 @@ public class BaseFrame extends JFrame {
     }
 
     public void slideCard(final String moveToPage) {
-        if (SIGN_IN_PAGE.equals(moveToPage)) {
-            ((CardLayout)pnlCards.getLayout()).show(pnlCards, SIGN_IN_PAGE);
-        } else if (HOME_PAGE.equals(moveToPage)) {
-            ((CardLayout)pnlCards.getLayout()).show(pnlCards, HOME_PAGE);
-        }
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, moveToPage);
     }
 
     private void initComponents() {
