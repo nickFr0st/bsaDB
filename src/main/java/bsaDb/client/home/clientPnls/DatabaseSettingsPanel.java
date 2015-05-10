@@ -7,9 +7,14 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
+import constants.KeyConst;
+import util.MySqlConnector;
+import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.Properties;
 
 /**
  * @author Nathanael
@@ -17,6 +22,136 @@ import java.awt.*;
 public class DatabaseSettingsPanel extends JPanel {
     public DatabaseSettingsPanel() {
         initComponents();
+
+        loadData();
+    }
+
+    private void loadData() {
+        clearData();
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return;
+        }
+
+        Properties dbProperties = MySqlConnector.getInstance().getProperties();
+
+        lblConnectionName.setText(dbProperties.getProperty(KeyConst.DB_NAME.getName()));
+        lblConnectionName.setForeground(new Color(32, 154, 26));
+
+        txtDatabaseName.setText(KeyConst.DB_NAME.getName());
+        txtServerUserName.setText(KeyConst.DB_USER_NAME.getName());
+        txtServerPassword.setText(KeyConst.DB_PASSWORD.getName());
+    }
+
+    private void clearData() {
+        lblConnectionName.setText("None");
+        lblConnectionName.setForeground(Color.RED);
+
+        txtDatabaseName.setDefault();
+        txtServerUserName.setDefault();
+        txtServerPassword.setDefault();
+
+        clearError(lblDatabaseNameError);
+        clearError(lblUserNameError);
+        clearError(lblPasswordError);
+    }
+
+    private void clearError(JLabel lblError) {
+        lblError.setText("");
+        lblError.setVisible(false);
+    }
+
+    private boolean validateDbName() {
+        clearError(lblDatabaseNameError);
+
+        if (Util.isEmpty(txtDatabaseName.getText()) || txtDatabaseName.isMessageDefault()) {
+            Util.setError(lblDatabaseNameError, "Database name cannot be left blank");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateUserName() {
+        clearError(lblUserNameError);
+
+        if (Util.isEmpty(txtServerUserName.getText()) || txtServerUserName.isMessageDefault()) {
+            Util.setError(lblUserNameError, "Server username cannot be left blank");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword() {
+        clearError(lblPasswordError);
+
+        if (Util.isEmpty(txtServerPassword.getText()) || txtServerPassword.isMessageDefault()) {
+            Util.setError(lblPasswordError, "Server password cannot be left blank");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateData() {
+        boolean isValid = true;
+
+        if (!validateDbName()) {
+            isValid = false;
+        }
+
+        if (!validateUserName()) {
+            isValid = false;
+        }
+
+        if (!validatePassword()) {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private void validateDatabaseName() {
+        validateDbName();
+    }
+
+    private void validateServerUserName() {
+        validateUserName();
+    }
+
+    private void validateServerPassword() {
+        validatePassword();
+    }
+
+    private void btnCreateActionPerformed() {
+        if (!validateData()) {
+            return;
+        }
+
+        if (!MySqlConnector.getInstance().createDatabase((JFrame) SwingUtilities.getWindowAncestor(this), txtDatabaseName.getText(), txtServerUserName.getText(), txtServerPassword.getText())) {
+            return;
+        }
+
+        lblConnectionName.setText(txtDatabaseName.getText());
+        lblConnectionName.setForeground(new Color(32, 154, 26));
+    }
+
+    private void btnConnectActionPerformed() {
+        if (!validateData()) {
+            return;
+        }
+
+        if (lblConnectionName.getText().equals(txtDatabaseName.getText())) {
+            return;
+        }
+
+        if (!MySqlConnector.getInstance().connectToDatabase((JFrame) SwingUtilities.getWindowAncestor(this), txtDatabaseName.getText(), txtServerUserName.getText(), txtServerPassword.getText())) {
+            return;
+        }
+
+        lblConnectionName.setText(txtDatabaseName.getText());
+        lblConnectionName.setForeground(new Color(32, 154, 26));
     }
 
     private void initComponents() {
@@ -95,6 +230,18 @@ public class DatabaseSettingsPanel extends JPanel {
                 txtDatabaseName.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 txtDatabaseName.setDefaultText("Database Name");
                 txtDatabaseName.setName("txtDatabaseName");
+                txtDatabaseName.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        validateDatabaseName();
+                    }
+                });
+                txtDatabaseName.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        validateDatabaseName();
+                    }
+                });
                 panel2.add(txtDatabaseName, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 8, 5), 0, 0));
@@ -115,6 +262,18 @@ public class DatabaseSettingsPanel extends JPanel {
                 txtServerUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 txtServerUserName.setDefaultText("MySQL server user name");
                 txtServerUserName.setName("txtServerUserName");
+                txtServerUserName.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        validateServerUserName();
+                    }
+                });
+                txtServerUserName.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        validateServerUserName();
+                    }
+                });
                 panel2.add(txtServerUserName, new GridBagConstraints(0, 2, 3, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 8, 5), 0, 0));
@@ -135,6 +294,18 @@ public class DatabaseSettingsPanel extends JPanel {
                 txtServerPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 txtServerPassword.setDefaultText("MySQL server password");
                 txtServerPassword.setName("txtServerPassword");
+                txtServerPassword.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        validateServerPassword();
+                    }
+                });
+                txtServerPassword.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        validateServerPassword();
+                    }
+                });
                 panel2.add(txtServerPassword, new GridBagConstraints(0, 4, 3, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 8, 5), 0, 0));
@@ -160,6 +331,12 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnCreate.setForeground(Color.white);
                 btnCreate.setFocusPainted(false);
                 btnCreate.setName("btnCreate");
+                btnCreate.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        btnCreateActionPerformed();
+                    }
+                });
                 panel2.add(btnCreate, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(5, 5, 0, 5), 0, 0));
@@ -175,6 +352,12 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnConnect.setForeground(Color.white);
                 btnConnect.setFocusPainted(false);
                 btnConnect.setName("btnConnect");
+                btnConnect.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        btnConnectActionPerformed();
+                    }
+                });
                 panel2.add(btnConnect, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(5, 20, 0, 5), 0, 0));
