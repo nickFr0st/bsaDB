@@ -7,6 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
+import bsaDb.client.home.HomePanel;
 import constants.KeyConst;
 import util.MySqlConnector;
 import util.Util;
@@ -20,8 +21,13 @@ import java.util.Properties;
  * @author Nathanael
  */
 public class DatabaseSettingsPanel extends JPanel {
-    public DatabaseSettingsPanel() {
+
+    private HomePanel pnlHome;
+
+    public DatabaseSettingsPanel(HomePanel pnlHome) {
         initComponents();
+
+        this.pnlHome = pnlHome;
 
         loadData();
     }
@@ -135,6 +141,8 @@ public class DatabaseSettingsPanel extends JPanel {
 
         lblConnectionName.setText(txtDatabaseName.getText());
         lblConnectionName.setForeground(new Color(32, 154, 26));
+
+        pnlHome.enableControls(true);
     }
 
     private void btnConnectActionPerformed() {
@@ -152,6 +160,8 @@ public class DatabaseSettingsPanel extends JPanel {
 
         lblConnectionName.setText(txtDatabaseName.getText());
         lblConnectionName.setForeground(new Color(32, 154, 26));
+
+        pnlHome.enableControls(true);
     }
 
     private void initComponents() {

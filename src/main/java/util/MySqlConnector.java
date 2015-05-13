@@ -48,6 +48,10 @@ public class MySqlConnector {
         return properties;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     public boolean checkForDataBaseConnection() {
         String dbName;
         String userName = null;
@@ -67,19 +71,8 @@ public class MySqlConnector {
 
             // test the connection
             connection = DriverManager.getConnection(DB_PATH + dbName, userName, password);
-        } catch (SQLException sqlE) {
-            if (!sqlE.getMessage().contains("Unknown database")) {
-                sqlE.printStackTrace();
-                return false;
-            }
-
-            try {
-                connection = DriverManager.getConnection(DB_PATH + "?user=" + userName + "&password=" + password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-
+        } catch (SQLException ignore) {
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -105,7 +98,7 @@ public class MySqlConnector {
 
             synchronized (lock) {
                 String response;
-                if (Util.isEmpty(response = DatabaseCreator.createDatabase(connection, name))) {
+                if (Util.isEmpty(response = DatabaseCreator.createDatabase(connection, name, rootUser, rootPassword))) {
                     lock.wait(WAIT_TIME);
                 } else {
                     JOptionPane.showMessageDialog(parentFrame, response);

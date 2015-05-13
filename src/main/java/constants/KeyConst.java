@@ -9,7 +9,15 @@ public enum KeyConst {
     DB_NAME("dbName"),
     DB_USER_NAME("dbUserName"),
     DB_PASSWORD("dbPassword"),
-    SAVED_USER("savedUser");
+    SAVED_USER("savedUser"),
+
+    ID("id"),
+    NAME("name"),
+    POSITION("position"),
+    PHONE_NUMBER("phoneNumber"),
+    STREET("street"),
+    CITY("city"),
+    ZIP("zip");
 
     String name;
 
