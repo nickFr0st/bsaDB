@@ -108,4 +108,10 @@ public class JPasswordFieldDefaultText extends JPasswordField {
     public void setDefault() {
         setDefaultValues();
     }
+
+    public void loadText(String password) {
+        setEchoChar('\u2022');
+        setText(password);
+        setForeground(activeColor);
+    }
 }

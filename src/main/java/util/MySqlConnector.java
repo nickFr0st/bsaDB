@@ -49,21 +49,36 @@ public class MySqlConnector {
     }
 
     public boolean checkForDataBaseConnection() {
+        String dbName;
+        String userName = null;
+        String password = null;
+
         try {
             properties.load(getClass().getResourceAsStream(DB_PROPERTIES_PATH));
-            String url = properties.getProperty(KeyConst.DB_URL.getName());
-            String dbName = properties.getProperty(KeyConst.DB_NAME.getName());
-            String userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
-            String password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
+            dbName = properties.getProperty(KeyConst.DB_NAME.getName());
+            userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
+            password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
 
-            if (Util.isEmpty(url) || Util.isEmpty(dbName) || userName == null || password == null) {
+            if (Util.isEmpty(dbName) || userName == null || password == null) {
                 return false;
             }
 
             Class.forName(DRIVER).newInstance();
 
             // test the connection
-            connection = DriverManager.getConnection(url + dbName, userName, password);
+            connection = DriverManager.getConnection(DB_PATH + dbName, userName, password);
+        } catch (SQLException sqlE) {
+            if (!sqlE.getMessage().contains("Unknown database")) {
+                sqlE.printStackTrace();
+                return false;
+            }
+
+            try {
+                connection = DriverManager.getConnection(DB_PATH + "?user=" + userName + "&password=" + password);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

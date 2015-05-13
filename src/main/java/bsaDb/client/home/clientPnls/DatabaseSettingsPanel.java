@@ -38,9 +38,9 @@ public class DatabaseSettingsPanel extends JPanel {
         lblConnectionName.setText(dbProperties.getProperty(KeyConst.DB_NAME.getName()));
         lblConnectionName.setForeground(new Color(32, 154, 26));
 
-        txtDatabaseName.setText(KeyConst.DB_NAME.getName());
-        txtServerUserName.setText(KeyConst.DB_USER_NAME.getName());
-        txtServerPassword.setText(KeyConst.DB_PASSWORD.getName());
+        txtDatabaseName.setText(dbProperties.getProperty(KeyConst.DB_NAME.getName()));
+        txtServerUserName.setText(dbProperties.getProperty(KeyConst.DB_USER_NAME.getName()));
+        txtServerPassword.loadText(dbProperties.getProperty(KeyConst.DB_PASSWORD.getName()));
     }
 
     private void clearData() {
