@@ -5,6 +5,8 @@
 package bsaDb.client;
 
 import bsaDb.client.home.HomePanel;
+import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
+import util.MySqlConnector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ import java.awt.event.WindowEvent;
  * Created by Nathanael
  */
 public class BaseFrame extends JFrame {
+    public final static String NO_CONNECTION_PAGE = "noConnection";
     public final static String SIGN_IN_PAGE = "signIn";
     public final static String HOME_PAGE = "home";
 
@@ -29,8 +32,13 @@ public class BaseFrame extends JFrame {
                 }
         );
 
+        pnlCards.add(new NoDatabaseConnectionPanel(this), NO_CONNECTION_PAGE);
         pnlCards.add(new SignInPanel(this), SIGN_IN_PAGE);
         pnlCards.add(new HomePanel(this), HOME_PAGE);
+
+        if (MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            slideCard(SIGN_IN_PAGE);
+        }
     }
 
     public void slideCard(final String moveToPage) {

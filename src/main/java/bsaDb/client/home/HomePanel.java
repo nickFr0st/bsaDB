@@ -6,10 +6,8 @@ package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
 import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
-import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 import bsaDb.client.home.clientPnls.UserPanel;
-import util.MySqlConnector;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -23,7 +21,6 @@ import java.awt.event.MouseEvent;
  * @author Nathanael
  */
 public class HomePanel extends JPanel {
-    private final static String NO_CONNECTION_PAGE = "noConnection";
     private final static String SPLASH_PAGE = "splash";
     private final static String DATABASE_SETTINGS_PAGE = "databaseSettings";
     private final static String USER_PAGE = "user";
@@ -33,26 +30,14 @@ public class HomePanel extends JPanel {
     public HomePanel() {
         initComponents();
 
-        pnlCards.add(new NoDatabaseConnectionPanel(), NO_CONNECTION_PAGE);
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
-        pnlCards.add(new DatabaseSettingsPanel(this), DATABASE_SETTINGS_PAGE);
+        pnlCards.add(new DatabaseSettingsPanel(), DATABASE_SETTINGS_PAGE);
         pnlCards.add(new UserPanel(), USER_PAGE);
     }
 
     public HomePanel(BaseFrame baseFrame) {
         this();
         this.baseFrame = baseFrame;
-
-        boolean databaseIsConnected = MySqlConnector.getInstance().checkForDataBaseConnection();
-        if (databaseIsConnected) {
-            slideCard(SPLASH_PAGE);
-        }
-
-        enableControls(databaseIsConnected);
-    }
-
-    public void enableControls(boolean enable) {
-        mnuUsers.setEnabled(enable);
     }
 
     public void slideCard(final String moveToPage) {

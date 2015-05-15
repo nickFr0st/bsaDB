@@ -14,11 +14,8 @@ new FormModel {
 			name: "this"
 			"background": new java.awt.Color( 255, 255, 255, 255 )
 			add( new FormComponent( "bsaDb.client.customComponents.TitlePanel" ) {
-				name: "titlePanel1"
+				name: "pnlTitle"
 				"title": "Database Settings"
-				auxiliary() {
-					"JavaCodeGenerator.variableLocal": true
-				}
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0, 0:1.0"

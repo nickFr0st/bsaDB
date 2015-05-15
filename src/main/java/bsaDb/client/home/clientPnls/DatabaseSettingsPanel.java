@@ -4,10 +4,10 @@
 
 package bsaDb.client.home.clientPnls;
 
+import bsaDb.client.BaseFrame;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
-import bsaDb.client.home.HomePanel;
 import constants.KeyConst;
 import util.MySqlConnector;
 import util.Util;
@@ -22,14 +22,18 @@ import java.util.Properties;
  */
 public class DatabaseSettingsPanel extends JPanel {
 
-    private HomePanel pnlHome;
+    private BaseFrame baseFrame;
 
-    public DatabaseSettingsPanel(HomePanel pnlHome) {
+    public DatabaseSettingsPanel() {
         initComponents();
 
-        this.pnlHome = pnlHome;
-
         loadData();
+    }
+
+    public DatabaseSettingsPanel(BaseFrame baseFrame, boolean showTitle) {
+        this();
+        this.baseFrame = baseFrame;
+        pnlTitle.setVisible(showTitle);
     }
 
     private void loadData() {
@@ -142,7 +146,7 @@ public class DatabaseSettingsPanel extends JPanel {
         lblConnectionName.setText(txtDatabaseName.getText());
         lblConnectionName.setForeground(new Color(32, 154, 26));
 
-        pnlHome.enableControls(true);
+        moveToSignInPage();
     }
 
     private void btnConnectActionPerformed() {
@@ -161,12 +165,18 @@ public class DatabaseSettingsPanel extends JPanel {
         lblConnectionName.setText(txtDatabaseName.getText());
         lblConnectionName.setForeground(new Color(32, 154, 26));
 
-        pnlHome.enableControls(true);
+        moveToSignInPage();
+    }
+
+    private void moveToSignInPage() {
+        if (baseFrame != null) {
+            baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
+        }
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        TitlePanel titlePanel1 = new TitlePanel();
+        pnlTitle = new TitlePanel();
         JPanel panel1 = new JPanel();
         JLabel lblConnection = new JLabel();
         lblConnectionName = new JLabel();
@@ -189,10 +199,10 @@ public class DatabaseSettingsPanel extends JPanel {
         ((GridBagLayout)getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
 
-        //---- titlePanel1 ----
-        titlePanel1.setTitle("Database Settings");
-        titlePanel1.setName("titlePanel1");
-        add(titlePanel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+        //---- pnlTitle ----
+        pnlTitle.setTitle("Database Settings");
+        pnlTitle.setName("pnlTitle");
+        add(pnlTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 5, 0), 0, 0));
 
@@ -383,6 +393,7 @@ public class DatabaseSettingsPanel extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    private TitlePanel pnlTitle;
     private JLabel lblConnectionName;
     private JTextFieldDefaultText txtDatabaseName;
     private JLabel lblDatabaseNameError;
