@@ -17,6 +17,7 @@ public class User {
     private String street;
     private String city;
     private String zip;
+    private boolean editable;
 
     public User() {
     }
@@ -75,5 +76,13 @@ public class User {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 }

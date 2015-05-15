@@ -35,6 +35,7 @@ public class LogicUser {
                 user.setStreet(rs.getString(KeyConst.STREET.getName()));
                 user.setCity(rs.getString(KeyConst.CITY.getName()));
                 user.setZip(rs.getString(KeyConst.ZIP.getName()));
+                user.setEditable(rs.getBoolean(KeyConst.EDITABLE.getName()));
 
                 userList.add(user);
             }

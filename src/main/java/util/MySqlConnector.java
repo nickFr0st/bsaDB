@@ -5,9 +5,7 @@ import constants.KeyConst;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -136,5 +134,24 @@ public class MySqlConnector {
 
         resetProperties(name, rootUser, rootPassword);
         return success;
+    }
+
+    public int getNextId(String tableName) {
+        if (!checkForDataBaseConnection()) {
+            return -1;
+        }
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT MAX(id) FROM " + tableName);
+
+            if (rs.next()) {
+                return rs.getInt(KeyConst.ID.getName()) + 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 }

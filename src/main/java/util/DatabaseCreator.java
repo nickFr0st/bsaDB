@@ -15,7 +15,9 @@ public class DatabaseCreator {
             Statement statement = connection.createStatement();
             statement.executeUpdate("CREATE DATABASE " + name);
             connection = DriverManager.getConnection(MySqlConnector.DB_PATH + name, userName, password);
+
             buildDataBase(connection);
+            insertDefaultValues(connection);
 
         } catch (SQLException sqle) {
             return sqle.getMessage();
@@ -25,6 +27,11 @@ public class DatabaseCreator {
         }
 
         return null;
+    }
+
+    private static void insertDefaultValues(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("INSERT INTO user VALUES(1, 'admin', 'administrator', '', '', '', '', false)");
     }
 
     private static void buildDataBase(Connection connection) throws SQLException {
@@ -38,6 +45,7 @@ public class DatabaseCreator {
                 " street VARCHAR(255) NULL," +
                 " city VARCHAR(255) NULL," +
                 " zip VARCHAR(10) NULL," +
+                " editable BOOL NOT NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableUser);
 

@@ -17,7 +17,8 @@ public enum KeyConst {
     PHONE_NUMBER("phoneNumber"),
     STREET("street"),
     CITY("city"),
-    ZIP("zip");
+    ZIP("zip"),
+    EDITABLE("editable");
 
     String name;
 
