@@ -7,6 +7,8 @@ package bsaDb.client;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import constants.KeyConst;
+import objects.databaseObjects.User;
+import util.CacheObject;
 import util.Util;
 
 import javax.swing.*;
@@ -77,14 +79,14 @@ public class SignInPanel extends JPanel {
     }
 
     private boolean valuesExists() {
-        String password = properties.getProperty(txtUserName.getText());
+        User user = CacheObject.getUser(txtUserName.getText());
 
-        if (password == null) {
+        if (user == null) {
             Util.setError(lblUserNameError, "User does not exists.");
             return false;
         }
 
-        if (!password.equals(txtPassword.getText())) {
+        if (!user.getPassword().equals(txtPassword.getText())) {
             Util.setError(lblPasswordError, "Password does not match.");
             return false;
         }

@@ -30,8 +30,20 @@ public class CacheObject {
         return cachedUsers.values();
     }
 
-    public static void setCachedUsers(Map<Integer, User> cachedUsers) {
-        CacheObject.cachedUsers = cachedUsers;
+    public static User getUser(String name) {
+        if (Util.isEmpty(name)) {
+            return null;
+        }
+
+        getCachedUsers();
+
+        for (User user : cachedUsers.values()) {
+            if (user.getName().equals(name)) {
+                return user;
+            }
+        }
+
+        return null;
     }
 
     public static void addToCachedUsers(User user) {
@@ -44,7 +56,7 @@ public class CacheObject {
     }
 
     public static void removeFromCachedUsers(Integer userId) {
-        if (cachedUsers == null) {
+        if (cachedUsers == null || cachedUsers.isEmpty()) {
             return;
         }
 
