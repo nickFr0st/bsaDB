@@ -18,6 +18,7 @@ public class User {
     private String city;
     private String zip;
     private boolean editable;
+    private String password;
 
     public User() {
     }
@@ -84,5 +85,13 @@ public class User {
 
     public void setEditable(boolean editable) {
         this.editable = editable;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

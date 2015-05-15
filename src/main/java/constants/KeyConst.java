@@ -18,7 +18,8 @@ public enum KeyConst {
     STREET("street"),
     CITY("city"),
     ZIP("zip"),
-    EDITABLE("editable");
+    EDITABLE("editable"),
+    PASSWORD("password");
 
     String name;
 
