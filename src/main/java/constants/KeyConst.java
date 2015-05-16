@@ -10,6 +10,7 @@ public enum KeyConst {
     DB_USER_NAME("dbUserName"),
     DB_PASSWORD("dbPassword"),
     SAVED_USER("savedUser"),
+    CURRENT_USER("currentUser"),
 
     ID("id"),
     NAME("name"),

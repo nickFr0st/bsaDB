@@ -128,8 +128,10 @@ public class SignInPanel extends JPanel {
 
         if (chkRememberMe.isSelected()) {
             properties.setProperty(KeyConst.SAVED_USER.getName(), txtUserName.getText());
-            Util.saveProperties(properties, getClass().getResource(propertyFileName).toString());
         }
+
+        properties.setProperty(KeyConst.CURRENT_USER.getName(), txtUserName.getText());
+        Util.saveProperties(properties, getClass().getResource(propertyFileName).toString());
 
         txtPassword.setDefault();
 
