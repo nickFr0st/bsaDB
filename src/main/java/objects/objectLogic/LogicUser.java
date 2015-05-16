@@ -37,6 +37,7 @@ public class LogicUser {
                 user.setZip(rs.getString(KeyConst.ZIP.getName()));
                 user.setEditable(rs.getBoolean(KeyConst.EDITABLE.getName()));
                 user.setPassword(rs.getString(KeyConst.PASSWORD.getName()));
+                user.setEmail(rs.getString(KeyConst.EMAIL.getName()));
 
                 userList.add(user);
             }

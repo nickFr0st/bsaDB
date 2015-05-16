@@ -19,7 +19,8 @@ public enum KeyConst {
     CITY("city"),
     ZIP("zip"),
     EDITABLE("editable"),
-    PASSWORD("password");
+    PASSWORD("password"),
+    EMAIL("email");
 
     String name;
 
