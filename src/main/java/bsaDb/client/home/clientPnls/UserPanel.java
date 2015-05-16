@@ -23,6 +23,9 @@ import java.util.List;
  * @author User #2
  */
 public class UserPanel extends JPanel {
+
+    private User user;
+
     public UserPanel() {
         initComponents();
 
@@ -82,7 +85,73 @@ public class UserPanel extends JPanel {
 
         clearAllErrors();
 
-        // loadData();
+        user = CacheObject.getUser(listUserNames.getSelectedValue().toString());
+        loadData();
+    }
+
+    private void loadData() {
+        if (user == null) {
+            return;
+        }
+
+        enableControls(true);
+
+        txtName.setText(user.getName());
+        txtPassword.loadText(user.getPassword());
+
+        if (!Util.isEmpty(user.getPosition())) {
+            txtPosition.setText(user.getPosition());
+        }
+
+        if (!Util.isEmpty(user.getPhoneNumber())) {
+            txtPhoneNumber.setText(user.getPhoneNumber());
+        }
+
+        if (!Util.isEmpty(user.getEmail())) {
+            txtEmail.setText(user.getEmail());
+        }
+
+        if (!Util.isEmpty(user.getStreet())) {
+            txtStreet.setText(user.getStreet());
+        }
+
+        if (!Util.isEmpty(user.getCity())) {
+            txtCity.setText(user.getCity());
+        }
+
+        if (!Util.isEmpty(user.getZip())) {
+            txtZip.setText(user.getZip());
+        }
+
+        // todo: add access right info
+
+        btnUpdate.setVisible(true);
+        btnDelete.setVisible(true);
+        btnSave.setVisible(false);
+
+        handleAdmin();
+    }
+
+    private void enableControls(boolean enable) {
+        txtName.setEnabled(enable);
+        txtPassword.setEnabled(enable);
+        txtPosition.setEnabled(enable);
+        txtPhoneNumber.setEnabled(enable);
+        txtEmail.setEnabled(enable);
+        txtStreet.setEnabled(enable);
+        txtCity.setEnabled(enable);
+        txtZip.setEnabled(enable);
+        pnlAccessRights.setEnabled(enable);
+    }
+
+    private void handleAdmin() {
+        if (user.getId() != 1) {
+            return;
+        }
+
+        txtName.setEnabled(false);
+        pnlAccessRights.setEnabled(false);
+        btnDelete.setVisible(false);
     }
 
     private void clearAllErrors() {
