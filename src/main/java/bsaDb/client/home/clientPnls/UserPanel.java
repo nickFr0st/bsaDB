@@ -168,12 +168,25 @@ public class UserPanel extends JPanel {
     private boolean validateUserName() {
         Util.clearError(lblNameError);
 
-        if (txtName.isMessageDefault() || txtName.getText().isEmpty()) {
+        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
             Util.setError(lblNameError, "Name cannot be left blank");
             return false;
         }
 
-        // todo: add validation for duplicate name
+        User tempUser = CacheObject.getUser(txtName.getText());
+        if (tempUser == null) {
+            return true;
+        }
+
+        if (user == null) {
+            Util.setError(lblNameError, "A user with name '" + txtName.getText() + "' already exists");
+            return false;
+        }
+
+        if (!tempUser.getName().equals(user.getName())) {
+            Util.setError(lblNameError, "A user with name '" + txtName.getText() + "' already exists");
+            return false;
+        }
 
         return true;
     }
