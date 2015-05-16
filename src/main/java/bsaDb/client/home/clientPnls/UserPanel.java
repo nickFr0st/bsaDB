@@ -37,7 +37,7 @@ public class UserPanel extends JPanel {
     }
 
     private void populateUserNameList() {
-        Collection<User> userList = CacheObject.getCachedUsers();
+        Collection<User> userList = CacheObject.getUserList();
         List<String> userNameList = new ArrayList<String>();
         for (User user : userList) {
             userNameList.add(user.getName());
@@ -49,7 +49,7 @@ public class UserPanel extends JPanel {
 
     private void txtSearchNameKeyReleased() {
         // instead of the logic get this from a cached list
-        Collection<User> userList = CacheObject.getCachedUsers();
+        Collection<User> userList = CacheObject.getUserList();
         List<String> userNameList = new ArrayList<String>();
         for (User user : userList) {
             userNameList.add(user.getName());
@@ -123,7 +123,7 @@ public class UserPanel extends JPanel {
             txtZip.setText(user.getZip());
         }
 
-        // todo: add access right info
+        pnlAccessRights.populateRights(user);
 
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);

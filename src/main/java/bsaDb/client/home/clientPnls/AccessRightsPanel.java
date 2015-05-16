@@ -4,10 +4,16 @@
 
 package bsaDb.client.home.clientPnls;
 
+import constants.AccessRightConst;
+import objects.databaseObjects.AccessRight;
+import objects.databaseObjects.User;
+import util.CacheObject;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author User #2
@@ -21,6 +27,27 @@ public class AccessRightsPanel extends JPanel {
     public void setEnabled(boolean enabled) {
         chkDatabaseSettings.setEnabled(enabled);
         chkUsers.setEnabled(enabled);
+    }
+
+    public void populateRights(User user) {
+        if (user == null || user.getId() <= 1) {
+            clearRights();
+            return;
+        }
+
+        List<AccessRight> accessRightList = CacheObject.getAccessRights(user.getId());
+        for (AccessRight accessRight : accessRightList) {
+            if (accessRight.getRightId() == AccessRightConst.DATABASE_SETTINGS.getId()) {
+                chkDatabaseSettings.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.USERS.getId()) {
+                chkUsers.setSelected(true);
+            }
+        }
+    }
+
+    private void clearRights() {
+        chkDatabaseSettings.setSelected(false);
+        chkUsers.setSelected(false);
     }
 
     private void initComponents() {
@@ -64,5 +91,7 @@ public class AccessRightsPanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JCheckBox chkDatabaseSettings;
     private JCheckBox chkUsers;
+
+    
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

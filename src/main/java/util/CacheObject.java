@@ -1,12 +1,11 @@
 package util;
 
+import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;
+import objects.objectLogic.LogicAccessRight;
 import objects.objectLogic.LogicUser;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Nathanael on 5/12/2015
@@ -14,16 +13,18 @@ import java.util.Map;
 public class CacheObject {
 
     private static Map<Integer, User> cachedUsers;
+    private static Map<Integer, AccessRight> cachedAccessRights;
 
     private CacheObject() {
-        getCachedUsers();
+        getUserList();
+        getAccessRightList();
     }
 
     public static void setupCache() {
-        getCachedUsers();
+        getUserList();
     }
 
-    public static Collection<User> getCachedUsers() {
+    public static Collection<User> getUserList() {
         if (cachedUsers == null) {
             cachedUsers = new HashMap<Integer, User>();
             List<User> userList = LogicUser.findAll();
@@ -34,12 +35,23 @@ public class CacheObject {
         return cachedUsers.values();
     }
 
+    public static Collection<AccessRight> getAccessRightList() {
+        if (cachedAccessRights == null) {
+            cachedAccessRights = new HashMap<Integer, AccessRight>();
+            List<AccessRight> accessRightList = LogicAccessRight.findAll();
+            for (AccessRight accessRight : accessRightList) {
+                cachedAccessRights.put(accessRight.getUserId(), accessRight);
+            }
+        }
+        return cachedAccessRights.values();
+    }
+
     public static User getUser(String name) {
         if (Util.isEmpty(name)) {
             return null;
         }
 
-        getCachedUsers();
+        getUserList();
 
         for (User user : cachedUsers.values()) {
             if (user.getName().equals(name)) {
@@ -52,7 +64,7 @@ public class CacheObject {
 
     public static void addToCachedUsers(User user) {
         if (cachedUsers == null) {
-            getCachedUsers();
+            getUserList();
         }
 
         assert cachedUsers != null;
@@ -65,5 +77,23 @@ public class CacheObject {
         }
 
         cachedUsers.remove(userId);
+    }
+
+    public static List<AccessRight> getAccessRights(int userId) {
+        List<AccessRight> accessRightList = new ArrayList<AccessRight>();
+
+        if (userId <= 0) {
+            return accessRightList;
+        }
+
+        getAccessRightList();
+
+        for (AccessRight accessRight : cachedAccessRights.values()) {
+            if (accessRight.getUserId() == userId) {
+                accessRightList.add(accessRight);
+            }
+        }
+
+        return accessRightList;
     }
 }

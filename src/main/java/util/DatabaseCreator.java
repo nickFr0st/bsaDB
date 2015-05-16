@@ -51,6 +51,13 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableUser);
 
+        String tableAccessRight = "CREATE TABLE accessRight " +
+                "(id INT NOT NULL," +
+                " userId INT NOT NULL," +
+                " rightId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableAccessRight);
+
         statement.executeBatch();
     }
 }

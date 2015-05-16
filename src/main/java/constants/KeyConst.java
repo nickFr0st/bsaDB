@@ -12,6 +12,7 @@ public enum KeyConst {
     SAVED_USER("savedUser"),
     CURRENT_USER("currentUser"),
 
+    // User
     ID("id"),
     NAME("name"),
     POSITION("position"),
@@ -21,7 +22,11 @@ public enum KeyConst {
     ZIP("zip"),
     EDITABLE("editable"),
     PASSWORD("password"),
-    EMAIL("email");
+    EMAIL("email"),
+
+    // Access Right
+    RIGHT_ID("rightId"),
+    USER_ID("userId");
 
     String name;
 
