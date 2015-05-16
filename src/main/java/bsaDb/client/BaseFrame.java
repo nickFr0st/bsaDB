@@ -63,7 +63,7 @@ public class BaseFrame extends JFrame {
 
         //======== pnlCards ========
         {
-            pnlCards.setPreferredSize(new Dimension(750, 500));
+            pnlCards.setPreferredSize(new Dimension(1000, 650));
             pnlCards.setName("pnlCards");
             pnlCards.setLayout(new CardLayout());
         }
