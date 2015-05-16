@@ -6,6 +6,7 @@ package bsaDb.client;
 
 import bsaDb.client.home.HomePanel;
 import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
+import util.CacheObject;
 import util.MySqlConnector;
 
 import javax.swing.*;
@@ -37,6 +38,7 @@ public class BaseFrame extends JFrame {
         pnlCards.add(new HomePanel(this), HOME_PAGE);
 
         if (MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            CacheObject.setupCache();
             slideCard(SIGN_IN_PAGE);
         }
     }

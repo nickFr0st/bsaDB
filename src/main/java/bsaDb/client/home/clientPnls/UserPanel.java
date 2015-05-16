@@ -26,6 +26,10 @@ public class UserPanel extends JPanel {
     public UserPanel() {
         initComponents();
 
+        btnDelete.setVisible(false);
+        btnSave.setVisible(false);
+        btnUpdate.setVisible(false);
+
         populateUserNameList();
     }
 

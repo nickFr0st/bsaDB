@@ -19,6 +19,10 @@ public class CacheObject {
         getCachedUsers();
     }
 
+    public static void setupCache() {
+        getCachedUsers();
+    }
+
     public static Collection<User> getCachedUsers() {
         if (cachedUsers == null) {
             cachedUsers = new HashMap<Integer, User>();

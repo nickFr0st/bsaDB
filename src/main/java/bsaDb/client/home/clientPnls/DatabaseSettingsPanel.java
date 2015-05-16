@@ -9,6 +9,7 @@ import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import constants.KeyConst;
+import util.CacheObject;
 import util.MySqlConnector;
 import util.Util;
 
@@ -165,6 +166,7 @@ public class DatabaseSettingsPanel extends JPanel {
 
     private void moveToSignInPage() {
         if (baseFrame != null) {
+            CacheObject.setupCache();
             baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
         }
     }
