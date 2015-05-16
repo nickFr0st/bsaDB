@@ -13,6 +13,9 @@ new FormModel {
 		} ) {
 			name: "this"
 			"background": new java.awt.Color( 255, 255, 255, 255 )
+			auxiliary() {
+				"JavaCodeGenerator.variableLocal": true
+			}
 			add( new FormComponent( "bsaDb.client.customComponents.TitlePanel" ) {
 				name: "pnlTitle"
 				"title": "Users"
@@ -43,6 +46,9 @@ new FormModel {
 				} ) {
 					name: "panel2"
 					"opaque": false
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 						"$columnSpecs": "188"
 						"$rowSpecs": "0"
@@ -54,6 +60,9 @@ new FormModel {
 						name: "pnlSearch"
 						"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
 						"opaque": false
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
 						add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 							name: "txtSearchName"
 							"defaultText": "Search by Name"
@@ -69,6 +78,9 @@ new FormModel {
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane1"
 						"horizontalScrollBarPolicy": 31
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
 						add( new FormComponent( "javax.swing.JList" ) {
 							name: "listUserNames"
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
@@ -89,8 +101,14 @@ new FormModel {
 				} ) {
 					name: "panel3"
 					"opaque": false
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane2"
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 							"$columnSpecs": "0, 183, 0, 136, 0, 122, 0:1.0"
 							"$rowSpecs": "0, 30, 0, 0, 30, 0, 30, 0, 0:1.0, 0:1.0"
@@ -101,6 +119,9 @@ new FormModel {
 						} ) {
 							name: "panel4"
 							"background": new java.awt.Color( 255, 255, 255, 255 )
+							auxiliary() {
+								"JavaCodeGenerator.variableLocal": true
+							}
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblGeneralInfo"
 								"text": "General Information:"
@@ -115,6 +136,9 @@ new FormModel {
 								"text": "Name:"
 								"font": new java.awt.Font( "Tahoma", 0, 14 )
 								"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 1
 								"hAlign": 4
@@ -132,6 +156,9 @@ new FormModel {
 								"text": "Password:"
 								"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
 								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 2
 								"gridy": 1
@@ -151,6 +178,9 @@ new FormModel {
 								"text": "Position:"
 								"font": #Font1
 								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 4
 								"gridy": 1
@@ -203,6 +233,9 @@ new FormModel {
 								"text": "Phone Number:"
 								"font": new java.awt.Font( "Tahoma", 0, 14 )
 								"foreground": new java.awt.Color( 0, 0, 0, 255 )
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 4
 								"hAlign": 4
@@ -232,6 +265,9 @@ new FormModel {
 								"text": "Street"
 								"font": #Font1
 								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 6
 								"hAlign": 4
@@ -249,6 +285,9 @@ new FormModel {
 								"text": "City"
 								"font": #Font1
 								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 2
 								"gridy": 6
@@ -267,6 +306,9 @@ new FormModel {
 								"text": "Zip"
 								"font": #Font1
 								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 4
 								"gridy": 6
@@ -316,7 +358,7 @@ new FormModel {
 								"gridwidth": 2
 							} )
 							add( new FormComponent( "bsaDb.client.home.clientPnls.AccessRightsPanel" ) {
-								name: "panel6"
+								name: "pnlAccessRights"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 8
 								"gridwidth": 7
@@ -334,6 +376,9 @@ new FormModel {
 					} ) {
 						name: "panel5"
 						"opaque": false
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnNew"
 							"text": "New"

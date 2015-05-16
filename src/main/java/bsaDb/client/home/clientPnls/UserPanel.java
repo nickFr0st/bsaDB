@@ -87,38 +87,38 @@ public class UserPanel extends JPanel {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
         JPanel pnlContents = new JPanel();
-        panel2 = new JPanel();
-        pnlSearch = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel pnlSearch = new JPanel();
         txtSearchName = new JTextFieldDefaultText();
-        scrollPane1 = new JScrollPane();
+        JScrollPane scrollPane1 = new JScrollPane();
         listUserNames = new JList();
-        panel3 = new JPanel();
-        scrollPane2 = new JScrollPane();
-        panel4 = new JPanel();
+        JPanel panel3 = new JPanel();
+        JScrollPane scrollPane2 = new JScrollPane();
+        JPanel panel4 = new JPanel();
         lblGeneralInfo = new JLabel();
-        lblName = new JLabel();
+        JLabel lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
-        lblPassword = new JLabel();
+        JLabel lblPassword = new JLabel();
         txtPassword = new JPasswordFieldDefaultText();
-        lblPosition = new JLabel();
+        JLabel lblPosition = new JLabel();
         txtPosition = new JTextFieldDefaultText();
         lblNameError = new JLabel();
         lblPasswordError = new JLabel();
         lblContactInfo = new JLabel();
-        lblPhoneNumber = new JLabel();
+        JLabel lblPhoneNumber = new JLabel();
         txtPhoneNumber = new JTextFieldDefaultText();
         lblPhoneNumberError = new JLabel();
-        lblStreet = new JLabel();
+        JLabel lblStreet = new JLabel();
         txtStreet = new JTextFieldDefaultText();
-        lblCity = new JLabel();
+        JLabel lblCity = new JLabel();
         txtCity = new JTextFieldDefaultText();
-        lblZip = new JLabel();
+        JLabel lblZip = new JLabel();
         txtZip = new JTextFieldDefaultText();
         lblStreetError = new JLabel();
         lblCityError = new JLabel();
         lblZipError = new JLabel();
-        panel6 = new AccessRightsPanel();
-        panel5 = new JPanel();
+        pnlAccessRights = new AccessRightsPanel();
+        JPanel panel5 = new JPanel();
         btnNew = new JButton();
         btnSave = new JButton();
         btnUpdate = new JButton();
@@ -443,9 +443,9 @@ public class UserPanel extends JPanel {
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 10, 0), 0, 0));
 
-                        //---- panel6 ----
-                        panel6.setName("panel6");
-                        panel4.add(panel6, new GridBagConstraints(0, 8, 7, 1, 0.0, 0.0,
+                        //---- pnlAccessRights ----
+                        pnlAccessRights.setName("pnlAccessRights");
+                        panel4.add(pnlAccessRights, new GridBagConstraints(0, 8, 7, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(10, 8, 20, 8), 0, 0));
                     }
@@ -528,38 +528,24 @@ public class UserPanel extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    private JPanel panel2;
-    private JPanel pnlSearch;
     private JTextFieldDefaultText txtSearchName;
-    private JScrollPane scrollPane1;
     private JList listUserNames;
-    private JPanel panel3;
-    private JScrollPane scrollPane2;
-    private JPanel panel4;
     private JLabel lblGeneralInfo;
-    private JLabel lblName;
     private JTextFieldDefaultText txtName;
-    private JLabel lblPassword;
     private JPasswordFieldDefaultText txtPassword;
-    private JLabel lblPosition;
     private JTextFieldDefaultText txtPosition;
     private JLabel lblNameError;
     private JLabel lblPasswordError;
     private JLabel lblContactInfo;
-    private JLabel lblPhoneNumber;
     private JTextFieldDefaultText txtPhoneNumber;
     private JLabel lblPhoneNumberError;
-    private JLabel lblStreet;
     private JTextFieldDefaultText txtStreet;
-    private JLabel lblCity;
     private JTextFieldDefaultText txtCity;
-    private JLabel lblZip;
     private JTextFieldDefaultText txtZip;
     private JLabel lblStreetError;
     private JLabel lblCityError;
     private JLabel lblZipError;
-    private AccessRightsPanel panel6;
-    private JPanel panel5;
+    private AccessRightsPanel pnlAccessRights;
     private JButton btnNew;
     private JButton btnSave;
     private JButton btnUpdate;
