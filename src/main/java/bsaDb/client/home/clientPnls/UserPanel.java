@@ -9,14 +9,12 @@ import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import objects.databaseObjects.User;
 import util.CacheObject;
+import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -78,9 +76,86 @@ public class UserPanel extends JPanel {
             return;
         }
 
-        // clearErrors();
+        clearAllErrors();
 
         // loadData();
+    }
+
+    private void clearAllErrors() {
+        Util.clearError(lblNameError);
+        Util.clearError(lblPasswordError);
+        Util.clearError(lblPhoneNumberError);
+        Util.clearError(lblEmailError);
+    }
+
+    private void validateName() {
+        validateUserName();
+    }
+
+    private boolean validateUserName() {
+        Util.clearError(lblNameError);
+
+        if (txtName.isMessageDefault() || txtName.getText().isEmpty()) {
+            Util.setError(lblNameError, "Name cannot be left blank");
+            return false;
+        }
+
+        // todo: add validation for duplicate name
+
+        return true;
+    }
+
+    private void validatePassword() {
+        validateUserPassword();
+    }
+
+    private boolean validateUserPassword() {
+        Util.clearError(lblPasswordError);
+
+        if (txtPassword.isMessageDefault() || txtPassword.getText().isEmpty()) {
+            Util.setError(lblPasswordError, "Password cannot be left blank");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void validatePhoneNumber() {
+        validatePhoneNum();
+    }
+
+    private boolean validatePhoneNum() {
+        Util.clearError(lblPhoneNumberError);
+
+        if (txtPhoneNumber.isMessageDefault() || txtPhoneNumber.getText().isEmpty()) {
+            return true;
+        }
+
+        if (!Util.validatePhoneNumber(txtPhoneNumber.getText())) {
+            Util.setError(lblPhoneNumberError, "Invalid phone number format");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void validateEmail() {
+        validateUserEmail();
+    }
+
+    private boolean validateUserEmail() {
+        Util.clearError(lblEmailError);
+
+        if (txtEmail.isMessageDefault() || txtEmail.getText().isEmpty()) {
+            return true;
+        }
+
+        if (!Util.validateEmail(txtEmail.getText())) {
+            Util.setError(lblEmailError, "Invalid email format");
+            return false;
+        }
+
+        return true;
     }
 
     private void initComponents() {
@@ -107,16 +182,16 @@ public class UserPanel extends JPanel {
         lblContactInfo = new JLabel();
         JLabel lblPhoneNumber = new JLabel();
         txtPhoneNumber = new JTextFieldDefaultText();
+        JLabel lblEmail = new JLabel();
+        txtEmail = new JTextFieldDefaultText();
         lblPhoneNumberError = new JLabel();
+        lblEmailError = new JLabel();
         JLabel lblStreet = new JLabel();
         txtStreet = new JTextFieldDefaultText();
         JLabel lblCity = new JLabel();
         txtCity = new JTextFieldDefaultText();
         JLabel lblZip = new JLabel();
         txtZip = new JTextFieldDefaultText();
-        lblStreetError = new JLabel();
-        lblCityError = new JLabel();
-        lblZipError = new JLabel();
         pnlAccessRights = new AccessRightsPanel();
         JPanel panel5 = new JPanel();
         btnNew = new JButton();
@@ -241,10 +316,10 @@ public class UserPanel extends JPanel {
                         panel4.setBackground(Color.white);
                         panel4.setName("panel4");
                         panel4.setLayout(new GridBagLayout());
-                        ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 188, 0, 141, 0, 127, 0, 0};
-                        ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 40, 0, 0, 40, 0, 40, 0, 0, 0, 0};
+                        ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 188, 0, 155, 0, 127, 0, 0};
+                        ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 40, 0, 0, 40, 0, 40, 0, 0, 0};
                         ((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
-                        ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0E-4};
+                        ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0E-4};
 
                         //---- lblGeneralInfo ----
                         lblGeneralInfo.setText("General Information:");
@@ -268,6 +343,18 @@ public class UserPanel extends JPanel {
                         txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         txtName.setDefaultText("John Doe");
                         txtName.setName("txtName");
+                        txtName.addFocusListener(new FocusAdapter() {
+                            @Override
+                            public void focusLost(FocusEvent e) {
+                                validateName();
+                            }
+                        });
+                        txtName.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                validateName();
+                            }
+                        });
                         panel4.add(txtName, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 10, 5), 0, 0));
@@ -285,6 +372,18 @@ public class UserPanel extends JPanel {
                         txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         txtPassword.setDefaultText("Password");
                         txtPassword.setName("txtPassword");
+                        txtPassword.addFocusListener(new FocusAdapter() {
+                            @Override
+                            public void focusLost(FocusEvent e) {
+                                validatePassword();
+                            }
+                        });
+                        txtPassword.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                validatePassword();
+                            }
+                        });
                         panel4.add(txtPassword, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 10, 5), 0, 0));
@@ -348,7 +447,48 @@ public class UserPanel extends JPanel {
                         txtPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         txtPhoneNumber.setDefaultText("(123) 456-7890");
                         txtPhoneNumber.setName("txtPhoneNumber");
+                        txtPhoneNumber.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                validatePhoneNumber();
+                            }
+                        });
+                        txtPhoneNumber.addFocusListener(new FocusAdapter() {
+                            @Override
+                            public void focusLost(FocusEvent e) {
+                                validatePhoneNumber();
+                            }
+                        });
                         panel4.add(txtPhoneNumber, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 10, 5), 0, 0));
+
+                        //---- lblEmail ----
+                        lblEmail.setText("Email:");
+                        lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                        lblEmail.setForeground(Color.black);
+                        lblEmail.setName("lblEmail");
+                        panel4.add(lblEmail, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                            new Insets(0, 15, 10, 5), 0, 0));
+
+                        //---- txtEmail ----
+                        txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                        txtEmail.setDefaultText("john.doe@scout.com");
+                        txtEmail.setName("txtEmail");
+                        txtEmail.addFocusListener(new FocusAdapter() {
+                            @Override
+                            public void focusLost(FocusEvent e) {
+                                validateEmail();
+                            }
+                        });
+                        txtEmail.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                validateEmail();
+                            }
+                        });
+                        panel4.add(txtEmail, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 10, 5), 0, 0));
 
@@ -358,12 +498,22 @@ public class UserPanel extends JPanel {
                         lblPhoneNumberError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                         lblPhoneNumberError.setVisible(false);
                         lblPhoneNumberError.setName("lblPhoneNumberError");
-                        panel4.add(lblPhoneNumberError, new GridBagConstraints(1, 5, 3, 1, 0.0, 0.0,
+                        panel4.add(lblPhoneNumberError, new GridBagConstraints(1, 5, 2, 1, 0.0, 0.0,
+                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 10, 25), 0, 0));
+
+                        //---- lblEmailError ----
+                        lblEmailError.setText("* Error Message");
+                        lblEmailError.setForeground(Color.red);
+                        lblEmailError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                        lblEmailError.setVisible(false);
+                        lblEmailError.setName("lblEmailError");
+                        panel4.add(lblEmailError, new GridBagConstraints(3, 5, 3, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 10, 5), 0, 0));
 
                         //---- lblStreet ----
-                        lblStreet.setText("Street");
+                        lblStreet.setText("Street:");
                         lblStreet.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         lblStreet.setForeground(Color.black);
                         lblStreet.setName("lblStreet");
@@ -380,7 +530,7 @@ public class UserPanel extends JPanel {
                             new Insets(0, 0, 10, 5), 0, 0));
 
                         //---- lblCity ----
-                        lblCity.setText("City");
+                        lblCity.setText("City:");
                         lblCity.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         lblCity.setForeground(Color.black);
                         lblCity.setName("lblCity");
@@ -397,7 +547,7 @@ public class UserPanel extends JPanel {
                             new Insets(0, 0, 10, 5), 0, 0));
 
                         //---- lblZip ----
-                        lblZip.setText("Zip");
+                        lblZip.setText("Zip:");
                         lblZip.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         lblZip.setForeground(Color.black);
                         lblZip.setName("lblZip");
@@ -413,39 +563,9 @@ public class UserPanel extends JPanel {
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 10, 5), 0, 0));
 
-                        //---- lblStreetError ----
-                        lblStreetError.setText("* Error Message");
-                        lblStreetError.setForeground(Color.red);
-                        lblStreetError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                        lblStreetError.setVisible(false);
-                        lblStreetError.setName("lblStreetError");
-                        panel4.add(lblStreetError, new GridBagConstraints(1, 7, 2, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 0, 10, 25), 0, 0));
-
-                        //---- lblCityError ----
-                        lblCityError.setText("* Error Message");
-                        lblCityError.setForeground(Color.red);
-                        lblCityError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                        lblCityError.setVisible(false);
-                        lblCityError.setName("lblCityError");
-                        panel4.add(lblCityError, new GridBagConstraints(3, 7, 2, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 0, 10, 25), 0, 0));
-
-                        //---- lblZipError ----
-                        lblZipError.setText("* Error Message");
-                        lblZipError.setForeground(Color.red);
-                        lblZipError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                        lblZipError.setVisible(false);
-                        lblZipError.setName("lblZipError");
-                        panel4.add(lblZipError, new GridBagConstraints(5, 7, 2, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 0, 10, 0), 0, 0));
-
                         //---- pnlAccessRights ----
                         pnlAccessRights.setName("pnlAccessRights");
-                        panel4.add(pnlAccessRights, new GridBagConstraints(0, 8, 7, 1, 0.0, 0.0,
+                        panel4.add(pnlAccessRights, new GridBagConstraints(0, 7, 7, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(10, 8, 20, 8), 0, 0));
                     }
@@ -538,13 +658,12 @@ public class UserPanel extends JPanel {
     private JLabel lblPasswordError;
     private JLabel lblContactInfo;
     private JTextFieldDefaultText txtPhoneNumber;
+    private JTextFieldDefaultText txtEmail;
     private JLabel lblPhoneNumberError;
+    private JLabel lblEmailError;
     private JTextFieldDefaultText txtStreet;
     private JTextFieldDefaultText txtCity;
     private JTextFieldDefaultText txtZip;
-    private JLabel lblStreetError;
-    private JLabel lblCityError;
-    private JLabel lblZipError;
     private AccessRightsPanel pnlAccessRights;
     private JButton btnNew;
     private JButton btnSave;

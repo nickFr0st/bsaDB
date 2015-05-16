@@ -61,18 +61,13 @@ public class DatabaseSettingsPanel extends JPanel {
         txtServerUserName.setDefault();
         txtServerPassword.setDefault();
 
-        clearError(lblDatabaseNameError);
-        clearError(lblUserNameError);
-        clearError(lblPasswordError);
-    }
-
-    private void clearError(JLabel lblError) {
-        lblError.setText("");
-        lblError.setVisible(false);
+        Util.clearError(lblDatabaseNameError);
+        Util.clearError(lblUserNameError);
+        Util.clearError(lblPasswordError);
     }
 
     private boolean validateDbName() {
-        clearError(lblDatabaseNameError);
+        Util.clearError(lblDatabaseNameError);
 
         if (Util.isEmpty(txtDatabaseName.getText()) || txtDatabaseName.isMessageDefault()) {
             Util.setError(lblDatabaseNameError, "Database name cannot be left blank");
@@ -83,7 +78,7 @@ public class DatabaseSettingsPanel extends JPanel {
     }
 
     private boolean validateUserName() {
-        clearError(lblUserNameError);
+        Util.clearError(lblUserNameError);
 
         if (Util.isEmpty(txtServerUserName.getText()) || txtServerUserName.isMessageDefault()) {
             Util.setError(lblUserNameError, "Server username cannot be left blank");
@@ -94,7 +89,7 @@ public class DatabaseSettingsPanel extends JPanel {
     }
 
     private boolean validatePassword() {
-        clearError(lblPasswordError);
+        Util.clearError(lblPasswordError);
 
         if (Util.isEmpty(txtServerPassword.getText()) || txtServerPassword.isMessageDefault()) {
             Util.setError(lblPasswordError, "Server password cannot be left blank");
