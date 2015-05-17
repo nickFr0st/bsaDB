@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class LogicAccessRight {
 
+    private static final Object lock = new Object();
+
     public static List<AccessRight> findAllByUserId(int userId) {
         List<AccessRight> accessRightList = new ArrayList<AccessRight>();
 
@@ -67,5 +69,49 @@ public class LogicAccessRight {
         }
 
         return accessRightList;
+    }
+
+    public static synchronized AccessRight save(AccessRight accessRight) {
+        if (accessRight == null) {
+            return null;
+        }
+
+        try {
+            synchronized (lock) {
+                if ((accessRight = saveAccessRight(accessRight)) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return accessRight;
+    }
+
+    private static AccessRight saveAccessRight(AccessRight accessRight) {
+        if (accessRight.getId() < 0) {
+            accessRight.setId(MySqlConnector.getInstance().getNextId("accessRight"));
+        }
+
+        if (accessRight.getId() < 0) {
+            return null;
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO accessRight VALUES(");
+            query.append(accessRight.getId()).append(", ");
+            query.append(accessRight.getUserId()).append(", ");
+            query.append(accessRight.getRightId()).append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return accessRight;
     }
 }

@@ -9,6 +9,10 @@ public class AccessRight {
     private int userId;
     private int rightId;
 
+    {
+        id = -1;
+    }
+
     public int getId() {
         return id;
     }

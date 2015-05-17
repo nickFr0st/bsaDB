@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 public class MySqlConnector {
     public final static String DB_PATH = "jdbc:mysql://localhost:3306/";
-    public final static long WAIT_TIME = 3000;
+    public final static long WAIT_TIME = 2000;
 
     private final static String DRIVER = "com.mysql.jdbc.Driver";
     private final static String DB_PROPERTIES_PATH = "/properties/database.properties";
@@ -143,7 +143,7 @@ public class MySqlConnector {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT MAX(id) FROM " + tableName);
+            ResultSet rs = statement.executeQuery("SELECT MAX(id) as id FROM " + tableName);
 
             if (rs.next()) {
                 return rs.getInt(KeyConst.ID.getName()) + 1;

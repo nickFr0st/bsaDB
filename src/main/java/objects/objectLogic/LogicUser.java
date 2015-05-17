@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class LogicUser {
 
+    private static final Object lock = new Object();
+
     public static List<User> findAll() {
         List<User> userList = new ArrayList<User>();
 
@@ -47,5 +49,57 @@ public class LogicUser {
         }
 
         return userList;
+    }
+
+    public static synchronized User save(User user) {
+        if (user == null) {
+             return null;
+        }
+
+        try {
+            synchronized (lock) {
+                if ((user = saveUser(user)) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    private static User saveUser(User user) {
+        if (user.getId() < 0) {
+            user.setId(MySqlConnector.getInstance().getNextId("user"));
+        }
+
+        if (user.getId() < 0) {
+            return null;
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO user VALUES(");
+            query.append(user.getId()).append(", ");
+            query.append("'").append(user.getName()).append("', ");
+            query.append("'").append(user.getPosition()).append("', ");
+            query.append("'").append(user.getPhoneNumber()).append("', ");
+            query.append("'").append(user.getStreet()).append("', ");
+            query.append("'").append(user.getCity()).append("', ");
+            query.append("'").append(user.getZip()).append("', ");
+            query.append(true).append(", ");
+            query.append("'").append(user.getPassword()).append("', ");
+            query.append("'").append(user.getEmail()).append("'");
+            query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return user;
     }
 }

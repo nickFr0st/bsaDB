@@ -7,7 +7,10 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
+import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;
+import objects.objectLogic.LogicAccessRight;
+import objects.objectLogic.LogicUser;
 import util.CacheObject;
 import util.Util;
 
@@ -86,6 +89,7 @@ public class UserPanel extends JPanel {
         }
 
         clearAllErrors();
+        clearData();
 
         user = CacheObject.getUser(listUserNames.getSelectedValue().toString());
         loadData();
@@ -257,6 +261,8 @@ public class UserPanel extends JPanel {
     }
 
     private void clearData() {
+        user = null;
+
         txtName.setDefault();
         txtPassword.setDefault();
         txtPosition.setDefault();
@@ -266,6 +272,86 @@ public class UserPanel extends JPanel {
         txtCity.setDefault();
         txtZip.setDefault();
         pnlAccessRights.populateRights(null);
+    }
+
+    private void btnSaveActionPerformed() {
+        if (!validateFields()) {
+            return;
+        }
+
+        setData();
+        user = LogicUser.save(user);
+
+        for (Integer accessRightId : pnlAccessRights.getAccessRightIdList()) {
+            AccessRight accessRight = new AccessRight();
+            accessRight.setUserId(user.getId());
+            accessRight.setRightId(accessRightId);
+
+            accessRight = LogicAccessRight.save(accessRight);
+            CacheObject.addToAccessRights(accessRight);
+        }
+
+        btnSave.setVisible(false);
+        btnUpdate.setVisible(true);
+        btnDelete.setVisible(true);
+
+        CacheObject.addToUsers(user);
+        populateUserNameList();
+    }
+
+    private void setData() {
+        if (user == null) {
+            user = new User();
+        }
+
+        user.setName(txtName.getText());
+        user.setPassword(txtPassword.getText());
+
+        if (!txtPosition.getText().trim().isEmpty() && !txtPosition.isMessageDefault()) {
+            user.setPosition(txtPosition.getText());
+        }
+
+        if (!txtPhoneNumber.getText().trim().isEmpty() && !txtPhoneNumber.isMessageDefault()) {
+            user.setPhoneNumber(txtPhoneNumber.getText());
+        }
+
+        if (!txtEmail.getText().trim().isEmpty() && !txtEmail.isMessageDefault()) {
+            user.setEmail(txtEmail.getText());
+        }
+
+        if (!txtStreet.getText().trim().isEmpty() && !txtStreet.isMessageDefault()) {
+            user.setStreet(txtStreet.getText());
+        }
+
+        if (!txtCity.getText().trim().isEmpty() && !txtCity.isMessageDefault()) {
+            user.setCity(txtCity.getText());
+        }
+
+        if (!txtZip.getText().trim().isEmpty() && !txtZip.isMessageDefault()) {
+            user.setZip(txtZip.getText());
+        }
+    }
+
+    private boolean validateFields() {
+        boolean valid = true;
+
+        if (!validateUserName()) {
+            valid = false;
+        }
+
+        if (!validateUserPassword()) {
+            valid = false;
+        }
+
+        if (!validatePhoneNum()) {
+            valid = false;
+        }
+
+        if (!validateUserEmail()) {
+            valid = false;
+        }
+
+        return valid;
     }
 
     private void initComponents() {
@@ -721,6 +807,12 @@ public class UserPanel extends JPanel {
                     btnSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnSave.setPreferredSize(new Dimension(60, 40));
                     btnSave.setName("btnSave");
+                    btnSave.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            btnSaveActionPerformed();
+                        }
+                    });
                     panel5.add(btnSave, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 10, 0), 0, 0));

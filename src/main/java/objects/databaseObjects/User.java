@@ -21,6 +21,19 @@ public class User {
     private String password;
     private String email;
 
+    {
+        id = -1;
+        name = "";
+        password = "";
+        position = "";
+        phoneNumber = "";
+        street = "";
+        city = "";
+        zip = "";
+        email = "";
+        editable = true;
+    }
+
     public User() {
     }
 

@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,19 @@ public class AccessRightsPanel extends JPanel {
                 chkUsers.setSelected(true);
             }
         }
+    }
+
+    public List<Integer> getAccessRightIdList() {
+        List<Integer> accessRightIdList = new ArrayList<Integer>();
+
+        if (chkDatabaseSettings.isSelected()) {
+            accessRightIdList.add(AccessRightConst.DATABASE_SETTINGS.getId());
+        }
+        if (chkUsers.isSelected()) {
+            accessRightIdList.add(AccessRightConst.USERS.getId());
+        }
+
+        return accessRightIdList;
     }
 
     private void clearRights() {

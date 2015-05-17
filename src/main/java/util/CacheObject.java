@@ -49,7 +49,7 @@ public class CacheObject {
             cachedAccessRights = new HashMap<Integer, AccessRight>();
             List<AccessRight> accessRightList = LogicAccessRight.findAll();
             for (AccessRight accessRight : accessRightList) {
-                cachedAccessRights.put(accessRight.getUserId(), accessRight);
+                cachedAccessRights.put(accessRight.getId(), accessRight);
             }
         }
         return cachedAccessRights.values();
@@ -71,7 +71,7 @@ public class CacheObject {
         return null;
     }
 
-    public static void addToCachedUsers(User user) {
+    public static void addToUsers(User user) {
         if (cachedUsers == null) {
             getUserList();
         }
@@ -80,7 +80,16 @@ public class CacheObject {
         cachedUsers.put(user.getId(), user);
     }
 
-    public static void removeFromCachedUsers(Integer userId) {
+    public static void addToAccessRights(AccessRight accessRight) {
+        if (cachedAccessRights == null) {
+            getAccessRightList();
+        }
+
+        assert cachedAccessRights != null;
+        cachedAccessRights.put(accessRight.getId(), accessRight);
+    }
+
+    public static void removeFromUsers(Integer userId) {
         if (cachedUsers == null || cachedUsers.isEmpty()) {
             return;
         }

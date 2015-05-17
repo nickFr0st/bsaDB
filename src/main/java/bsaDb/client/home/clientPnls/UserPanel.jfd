@@ -404,6 +404,7 @@ new FormModel {
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"preferredSize": new java.awt.Dimension( 60, 40 )
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSaveActionPerformed", false ) )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 							"gridy": 1
 						} )
