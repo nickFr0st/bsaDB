@@ -25,14 +25,17 @@ public class HomePanel extends JPanel {
     private final static String DATABASE_SETTINGS_PAGE = "databaseSettings";
     private final static String USER_PAGE = "user";
 
+    private UserPanel pnlUser = new UserPanel();
     private BaseFrame baseFrame;
 
     public HomePanel() {
         initComponents();
 
+        pnlUser = new UserPanel();
+
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
         pnlCards.add(new DatabaseSettingsPanel(), DATABASE_SETTINGS_PAGE);
-        pnlCards.add(new UserPanel(), USER_PAGE);
+        pnlCards.add(pnlUser, USER_PAGE);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -62,6 +65,7 @@ public class HomePanel extends JPanel {
     }
 
     private void mnuUsersActionPerformed() {
+        pnlUser.populateUserNameList();
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, USER_PAGE);
     }
 

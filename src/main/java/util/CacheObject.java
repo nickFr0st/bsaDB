@@ -22,6 +22,15 @@ public class CacheObject {
 
     public static void setupCache() {
         getUserList();
+        getAccessRightList();
+    }
+
+    public static void reset() {
+        cachedUsers = null;
+        cachedAccessRights = null;
+
+        getUserList();
+        getAccessRightList();
     }
 
     public static Collection<User> getUserList() {

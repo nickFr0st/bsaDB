@@ -166,7 +166,7 @@ public class DatabaseSettingsPanel extends JPanel {
 
     private void moveToSignInPage() {
         if (baseFrame != null) {
-            CacheObject.setupCache();
+            CacheObject.reset();
             baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
         }
     }

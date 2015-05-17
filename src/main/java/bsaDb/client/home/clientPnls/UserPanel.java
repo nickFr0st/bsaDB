@@ -36,7 +36,7 @@ public class UserPanel extends JPanel {
         populateUserNameList();
     }
 
-    private void populateUserNameList() {
+    public void populateUserNameList() {
         Collection<User> userList = CacheObject.getUserList();
         List<String> userNameList = new ArrayList<String>();
         for (User user : userList) {
