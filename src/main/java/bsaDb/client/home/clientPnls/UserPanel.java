@@ -34,6 +34,8 @@ public class UserPanel extends JPanel {
         btnUpdate.setVisible(false);
 
         populateUserNameList();
+
+        enableControls(false);
     }
 
     public void populateUserNameList() {
@@ -242,6 +244,28 @@ public class UserPanel extends JPanel {
         }
 
         return true;
+    }
+
+    private void btnNewActionPerformed() {
+        btnSave.setVisible(true);
+        btnUpdate.setVisible(false);
+        btnDelete.setVisible(false);
+
+        enableControls(true);
+        clearAllErrors();
+        clearData();
+    }
+
+    private void clearData() {
+        txtName.setDefault();
+        txtPassword.setDefault();
+        txtPosition.setDefault();
+        txtPhoneNumber.setDefault();
+        txtEmail.setDefault();
+        txtStreet.setDefault();
+        txtCity.setDefault();
+        txtZip.setDefault();
+        pnlAccessRights.populateRights(null);
     }
 
     private void initComponents() {
@@ -679,6 +703,12 @@ public class UserPanel extends JPanel {
                     btnNew.setForeground(Color.white);
                     btnNew.setPreferredSize(new Dimension(56, 40));
                     btnNew.setName("btnNew");
+                    btnNew.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            btnNewActionPerformed();
+                        }
+                    });
                     panel5.add(btnNew, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 10, 0), 0, 0));
