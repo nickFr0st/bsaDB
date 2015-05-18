@@ -6,6 +6,7 @@ package bsaDb.client;
 
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
+import bsaDb.client.home.HomePanel;
 import constants.KeyConst;
 import objects.databaseObjects.User;
 import util.CacheObject;
@@ -135,6 +136,7 @@ public class SignInPanel extends JPanel {
 
         txtPassword.setDefault();
 
+        baseFrame.addCard(new HomePanel((BaseFrame)getTopLevelAncestor()), BaseFrame.HOME_PAGE);
         baseFrame.slideCard(BaseFrame.HOME_PAGE);
     }
 

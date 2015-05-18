@@ -8,6 +8,11 @@ import bsaDb.client.BaseFrame;
 import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 import bsaDb.client.home.clientPnls.UserPanel;
+import constants.AccessRightConst;
+import constants.KeyConst;
+import objects.databaseObjects.AccessRight;
+import objects.databaseObjects.User;
+import util.CacheObject;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -16,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author Nathanael
@@ -27,6 +34,11 @@ public class HomePanel extends JPanel {
 
     private UserPanel pnlUser = new UserPanel();
     private BaseFrame baseFrame;
+    private String propertyFileName;
+
+    {
+        propertyFileName = "/properties/users.properties";
+    }
 
     public HomePanel() {
         initComponents();
@@ -36,6 +48,35 @@ public class HomePanel extends JPanel {
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
         pnlCards.add(new DatabaseSettingsPanel(), DATABASE_SETTINGS_PAGE);
         pnlCards.add(pnlUser, USER_PAGE);
+
+        Properties properties = new Properties();
+        try {
+            properties.load(getClass().getResourceAsStream(propertyFileName));
+
+            String currentUserName = properties.getProperty(KeyConst.CURRENT_USER.getName());
+            User currentUser = CacheObject.getUser(currentUserName);
+
+            if (currentUser.getId() == 1) {
+                return;
+            }
+
+            turnOffAllRights();
+
+            for (AccessRight accessRight : CacheObject.getAccessRights(currentUser.getId())) {
+                if (accessRight.getRightId() == AccessRightConst.DATABASE_SETTINGS.getId()) {
+                    mnuDatabaseSettings.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.USERS.getId()) {
+                    mnuUsers.setEnabled(true);
+                }
+            }
+
+        } catch (IOException ignore) {
+        }
+    }
+
+    private void turnOffAllRights() {
+        mnuDatabaseSettings.setEnabled(false);
+        mnuUsers.setEnabled(false);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -74,7 +115,7 @@ public class HomePanel extends JPanel {
         JPanel panel1 = new JPanel();
         JMenuBar menuBar1 = new JMenuBar();
         mnuSetup = new JMenu();
-        JMenuItem mnuDatabaseSettings = new JMenuItem();
+        mnuDatabaseSettings = new JMenuItem();
         mnuUsers = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         JButton btnSignout = new JButton();
@@ -196,6 +237,7 @@ public class HomePanel extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenu mnuSetup;
+    private JMenuItem mnuDatabaseSettings;
     private JMenuItem mnuUsers;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
