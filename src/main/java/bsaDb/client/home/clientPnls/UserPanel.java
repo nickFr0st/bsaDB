@@ -7,6 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
+import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;
 import objects.objectLogic.LogicAccessRight;
@@ -18,9 +19,11 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author User #2
@@ -28,6 +31,12 @@ import java.util.List;
 public class UserPanel extends JPanel {
 
     private User user;
+    private Properties properties;
+    private String propertyFileName;
+
+    {
+        propertyFileName = "/properties/users.properties";
+    }
 
     public UserPanel() {
         initComponents();
@@ -37,8 +46,17 @@ public class UserPanel extends JPanel {
         btnUpdate.setVisible(false);
 
         populateUserNameList();
+        setupProperties();
 
         enableControls(false);
+    }
+
+    private void setupProperties() {
+        properties = new Properties();
+        try {
+            properties.load(getClass().getResourceAsStream(propertyFileName));
+        } catch (IOException ignore) {
+        }
     }
 
     public void populateUserNameList() {
@@ -352,6 +370,53 @@ public class UserPanel extends JPanel {
         }
 
         return valid;
+    }
+
+    private void btnUpdateActionPerformed() {
+        if (!validateFields()) {
+            return;
+        }
+
+        if (user.getName().equals(properties.getProperty(KeyConst.CURRENT_USER.getName()))) {
+            JOptionPane.showConfirmDialog(this, "You cannot edit the currently logged in user.", "Update Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        setData();
+        user = LogicUser.update(user);
+
+        List<AccessRight> currentAccessRightList = CacheObject.getAccessRights(user.getId());
+        List<Integer> newAccessRightIdList = pnlAccessRights.getAccessRightIdList();
+        List<Integer> deleteIdList = new ArrayList<Integer>();
+
+        if (newAccessRightIdList.isEmpty()) {
+            for (AccessRight accessRight : currentAccessRightList) {
+                deleteIdList.add(accessRight.getId());
+            }
+        } else {
+            for (AccessRight accessRight : currentAccessRightList) {
+                if (!newAccessRightIdList.contains(accessRight.getRightId())) {
+                    deleteIdList.add(accessRight.getId());
+                }
+            }
+        }
+
+        for (Integer deleteId :  deleteIdList) {
+            LogicAccessRight.delete(deleteId);
+            CacheObject.removeFromAccessRights(deleteId);
+        }
+
+        for (Integer accessRightId : newAccessRightIdList) {
+            AccessRight accessRight = new AccessRight();
+            accessRight.setUserId(user.getId());
+            accessRight.setRightId(accessRightId);
+
+            accessRight = LogicAccessRight.save(accessRight);
+            CacheObject.addToAccessRights(accessRight);
+        }
+
+        CacheObject.addToUsers(user);
+        populateUserNameList();
     }
 
     private void initComponents() {
@@ -825,6 +890,12 @@ public class UserPanel extends JPanel {
                     btnUpdate.setFocusPainted(false);
                     btnUpdate.setPreferredSize(new Dimension(74, 40));
                     btnUpdate.setName("btnUpdate");
+                    btnUpdate.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            btnUpdateActionPerformed();
+                        }
+                    });
                     panel5.add(btnUpdate, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 10, 0), 0, 0));

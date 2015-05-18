@@ -97,6 +97,14 @@ public class CacheObject {
         cachedUsers.remove(userId);
     }
 
+    public static void removeFromAccessRights(Integer accessRightId) {
+        if (cachedAccessRights == null || cachedAccessRights.isEmpty()) {
+            return;
+        }
+
+        cachedAccessRights.remove(accessRightId);
+    }
+
     public static List<AccessRight> getAccessRights(int userId) {
         List<AccessRight> accessRightList = new ArrayList<AccessRight>();
 

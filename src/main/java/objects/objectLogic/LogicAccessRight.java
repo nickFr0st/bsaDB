@@ -114,4 +114,32 @@ public class LogicAccessRight {
 
         return accessRight;
     }
+
+    public static synchronized void delete(Integer id) {
+        if (id < 2) {
+            return;
+        }
+
+        try {
+            synchronized (lock) {
+                if (deleteAccessRight(id)) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean deleteAccessRight(Integer id) {
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM accessRight WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

@@ -102,4 +102,47 @@ public class LogicUser {
 
         return user;
     }
+
+    public static synchronized User update(User user) {
+        if (user == null) {
+            return null;
+        }
+
+        try {
+            synchronized (lock) {
+                if ((user = updateUser(user)) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    private static User updateUser(User user) {
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("UPDATE user SET ");
+            query.append("name = '").append(user.getName()).append("', ");
+            query.append("position = '").append(user.getPosition()).append("', ");
+            query.append("phoneNumber = '").append(user.getPhoneNumber()).append("', ");
+            query.append("street = '").append(user.getStreet()).append("', ");
+            query.append("city = '").append(user.getCity()).append("', ");
+            query.append("zip = '").append(user.getZip()).append("', ");
+            query.append("password = '").append(user.getPassword()).append("', ");
+            query.append("email = '").append(user.getEmail()).append("' ");
+            query.append("WHERE id = ").append(user.getId());
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return user;
+    }
 }
