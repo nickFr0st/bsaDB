@@ -116,7 +116,7 @@ public class LogicAccessRight {
     }
 
     public static synchronized void delete(Integer id) {
-        if (id < 2) {
+        if (id < 1) {
             return;
         }
 

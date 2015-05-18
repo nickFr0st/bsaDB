@@ -145,4 +145,32 @@ public class LogicUser {
 
         return user;
     }
+
+    public static synchronized void delete(User user) {
+        if (user == null || user.getId() <= 1) {
+             return;
+        }
+
+        try {
+            synchronized (lock) {
+                if (deleteUser(user.getId())) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean deleteUser(Integer id) {
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM user WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

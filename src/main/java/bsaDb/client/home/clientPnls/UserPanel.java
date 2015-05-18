@@ -419,6 +419,31 @@ public class UserPanel extends JPanel {
         populateUserNameList();
     }
 
+    private void btnDeleteActionPerformed() {
+        if (user.getName().equals(properties.getProperty(KeyConst.CURRENT_USER.getName()))) {
+            JOptionPane.showConfirmDialog(this, "You cannot delete the currently logged in user.", "Delete Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        for (AccessRight accessRight : CacheObject.getAccessRights(user.getId())) {
+            CacheObject.removeFromAccessRights(accessRight.getId());
+            LogicAccessRight.delete(accessRight.getId());
+        }
+
+        CacheObject.removeFromUsers(user.getId());
+        LogicUser.delete(user);
+
+        populateUserNameList();
+
+        btnDelete.setVisible(false);
+        btnSave.setVisible(false);
+        btnUpdate.setVisible(false);
+
+        clearAllErrors();
+        clearData();
+        enableControls(false);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -842,9 +867,9 @@ public class UserPanel extends JPanel {
                     panel5.setName("panel5");
                     panel5.setLayout(new GridBagLayout());
                     ((GridBagLayout)panel5.getLayout()).columnWidths = new int[] {89, 0};
-                    ((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
+                    ((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
                     ((GridBagLayout)panel5.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
-                    ((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                    ((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                     //---- btnNew ----
                     btnNew.setText("New");
@@ -908,9 +933,15 @@ public class UserPanel extends JPanel {
                     btnDelete.setFocusPainted(false);
                     btnDelete.setPreferredSize(new Dimension(68, 40));
                     btnDelete.setName("btnDelete");
+                    btnDelete.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            btnDeleteActionPerformed();
+                        }
+                    });
                     panel5.add(btnDelete, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 10, 0), 0, 0));
+                        new Insets(0, 0, 0, 0), 0, 0));
                 }
                 panel3.add(panel5, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
