@@ -26,12 +26,22 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "chkUsers"
 				"text": "Users"
-				"font": new java.awt.Font( "Tahoma", 0, 14 )
-				"foreground": new java.awt.Color( 0, 0, 0, 255 )
+				"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
+				"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 				"opaque": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridy": 1
-				"insets": new java.awt.Insets( 5, 5, 0, 0 )
+				"insets": &Insets0 new java.awt.Insets( 5, 5, 0, 0 )
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "chkAdvancements"
+				"text": "Advancements"
+				"font": #Font0
+				"foreground": #Color0
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 2
+				"insets": #Insets0
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

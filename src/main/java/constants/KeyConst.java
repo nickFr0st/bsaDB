@@ -26,7 +26,9 @@ public enum KeyConst {
 
     // Access Right
     RIGHT_ID("rightId"),
-    USER_ID("userId");
+    USER_ID("userId"),
+
+    IMG_PATH("imgPath");
 
     String name;
 

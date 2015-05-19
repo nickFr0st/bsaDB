@@ -58,6 +58,13 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableAccessRight);
 
+        String tableAdvancement = "CREATE TABLE advancement " +
+                "(id INT NOT NULL," +
+                " name VARCHAR(225) NOT NULL," +
+                " imgPath VARCHAR(255) NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableAdvancement);
+
         statement.executeBatch();
     }
 }

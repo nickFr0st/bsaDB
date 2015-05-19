@@ -7,6 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
+import bsaDb.client.home.clientPnls.common.AccessRightsPanel;
 import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;

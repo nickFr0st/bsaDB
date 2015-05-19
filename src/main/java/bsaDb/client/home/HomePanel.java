@@ -5,6 +5,7 @@
 package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
+import bsaDb.client.home.clientPnls.AdvancementPanel;
 import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 import bsaDb.client.home.clientPnls.UserPanel;
@@ -31,8 +32,10 @@ public class HomePanel extends JPanel {
     private final static String SPLASH_PAGE = "splash";
     private final static String DATABASE_SETTINGS_PAGE = "databaseSettings";
     private final static String USER_PAGE = "user";
+    private final static String ADVANCEMENT_PAGE = "advancement";
 
     private UserPanel pnlUser = new UserPanel();
+    private AdvancementPanel pnlAdvancement = new AdvancementPanel();
     private BaseFrame baseFrame;
     private String propertyFileName;
 
@@ -48,6 +51,7 @@ public class HomePanel extends JPanel {
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
         pnlCards.add(new DatabaseSettingsPanel(), DATABASE_SETTINGS_PAGE);
         pnlCards.add(pnlUser, USER_PAGE);
+        pnlCards.add(pnlAdvancement, ADVANCEMENT_PAGE);
 
         Properties properties = new Properties();
         try {
@@ -67,6 +71,8 @@ public class HomePanel extends JPanel {
                     mnuDatabaseSettings.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.USERS.getId()) {
                     mnuUsers.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.ADVANCEMENTS.getId()) {
+                    mnuAdvancments.setEnabled(true);
                 }
             }
 
@@ -110,6 +116,11 @@ public class HomePanel extends JPanel {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, USER_PAGE);
     }
 
+    private void mnuAdvancmentsActionPerformed() {
+        pnlAdvancement.populateAdvancementNameList();
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, ADVANCEMENT_PAGE);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -117,6 +128,7 @@ public class HomePanel extends JPanel {
         mnuSetup = new JMenu();
         mnuDatabaseSettings = new JMenuItem();
         mnuUsers = new JMenuItem();
+        mnuAdvancments = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         JButton btnSignout = new JButton();
         pnlCards = new JPanel();
@@ -187,6 +199,17 @@ public class HomePanel extends JPanel {
                         }
                     });
                     mnuSetup.add(mnuUsers);
+
+                    //---- mnuAdvancments ----
+                    mnuAdvancments.setText("Advancements");
+                    mnuAdvancments.setName("mnuAdvancments");
+                    mnuAdvancments.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mnuAdvancmentsActionPerformed();
+                        }
+                    });
+                    mnuSetup.add(mnuAdvancments);
                 }
                 menuBar1.add(mnuSetup);
 
@@ -239,6 +262,7 @@ public class HomePanel extends JPanel {
     private JMenu mnuSetup;
     private JMenuItem mnuDatabaseSettings;
     private JMenuItem mnuUsers;
+    private JMenuItem mnuAdvancments;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

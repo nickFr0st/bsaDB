@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Fri May 15 19:25:31 MDT 2015
  */
 
-package bsaDb.client.home.clientPnls;
+package bsaDb.client.home.clientPnls.common;
 
 import constants.AccessRightConst;
 import objects.databaseObjects.AccessRight;
@@ -42,6 +42,8 @@ public class AccessRightsPanel extends JPanel {
                 chkDatabaseSettings.setSelected(true);
             } else if (accessRight.getRightId() == AccessRightConst.USERS.getId()) {
                 chkUsers.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.ADVANCEMENTS.getId()) {
+                chkAdvancements.setSelected(true);
             }
         }
     }
@@ -55,6 +57,9 @@ public class AccessRightsPanel extends JPanel {
         if (chkUsers.isSelected()) {
             accessRightIdList.add(AccessRightConst.USERS.getId());
         }
+        if (chkAdvancements.isSelected()) {
+            accessRightIdList.add(AccessRightConst.ADVANCEMENTS.getId());
+        }
 
         return accessRightIdList;
     }
@@ -62,12 +67,14 @@ public class AccessRightsPanel extends JPanel {
     private void clearRights() {
         chkDatabaseSettings.setSelected(false);
         chkUsers.setSelected(false);
+        chkAdvancements.setSelected(false);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         chkDatabaseSettings = new JCheckBox();
         chkUsers = new JCheckBox();
+        chkAdvancements = new JCheckBox();
 
         //======== this ========
         setBorder(new TitledBorder(new LineBorder(new Color(51, 102, 153)), "Access Rights", TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION,
@@ -99,13 +106,22 @@ public class AccessRightsPanel extends JPanel {
         add(chkUsers, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 5), 0, 0));
+
+        //---- chkAdvancements ----
+        chkAdvancements.setText("Advancements");
+        chkAdvancements.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chkAdvancements.setForeground(Color.black);
+        chkAdvancements.setOpaque(false);
+        chkAdvancements.setName("chkAdvancements");
+        add(chkAdvancements, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 0, 5), 0, 0));
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JCheckBox chkDatabaseSettings;
     private JCheckBox chkUsers;
-
-    
+    private JCheckBox chkAdvancements;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
