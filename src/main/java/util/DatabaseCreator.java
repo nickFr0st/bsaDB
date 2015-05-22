@@ -65,6 +65,15 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableAdvancement);
 
+        String tableRequirement = "CREATE TABLE requirement " +
+                "(id INT NOT NULL," +
+                " name VARCHAR(45) NOT NULL," +
+                " description BLOB NOT NULL," +
+                " typeId INT NOT NULL," +
+                " parentId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableRequirement);
+
         statement.executeBatch();
     }
 }
