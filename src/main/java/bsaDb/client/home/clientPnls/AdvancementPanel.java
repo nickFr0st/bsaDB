@@ -195,6 +195,12 @@ public class AdvancementPanel extends JPanel {
         JPanel panel3 = new JPanel();
         JScrollPane scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
+        panel1 = new JPanel();
+        label1 = new JLabel();
+        panel6 = new JPanel();
+        lblName = new JLabel();
+        txtName = new JTextFieldDefaultText();
+        lblNameError = new JLabel();
         JPanel panel5 = new JPanel();
         btnNew = new JButton();
         btnSave = new JButton();
@@ -318,10 +324,73 @@ public class AdvancementPanel extends JPanel {
                         panel4.setBackground(Color.white);
                         panel4.setName("panel4");
                         panel4.setLayout(new GridBagLayout());
-                        ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 188, 0, 155, 0, 127, 0, 0};
-                        ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 40, 0, 0, 40, 0, 40, 238, 0, 0};
-                        ((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
-                        ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                        ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {270, 22, 0};
+                        ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {191, 0, 0};
+                        ((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
+                        ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
+
+                        //======== panel1 ========
+                        {
+                            panel1.setPreferredSize(new Dimension(145, 170));
+                            panel1.setBackground(new Color(204, 204, 204));
+                            panel1.setBorder(new LineBorder(new Color(51, 102, 153)));
+                            panel1.setName("panel1");
+                            panel1.setLayout(new GridBagLayout());
+                            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
+                            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0};
+                            ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+                            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
+
+                            //---- label1 ----
+                            label1.setPreferredSize(new Dimension(128, 128));
+                            label1.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
+                            label1.setToolTipText("click to upload an image here");
+                            label1.setName("label1");
+                            panel1.add(label1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                                new Insets(0, 0, 0, 0), 0, 0));
+                        }
+                        panel4.add(panel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                            new Insets(0, 0, 10, 20), 0, 0));
+
+                        //======== panel6 ========
+                        {
+                            panel6.setOpaque(false);
+                            panel6.setName("panel6");
+                            panel6.setLayout(new GridBagLayout());
+                            ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+                            //---- lblName ----
+                            lblName.setText("Name:");
+                            lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            lblName.setForeground(Color.black);
+                            lblName.setName("lblName");
+                            panel6.add(lblName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 5, 5), 0, 0));
+
+                            //---- txtName ----
+                            txtName.setDefaultText("Advancement Name");
+                            txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            txtName.setName("txtName");
+                            panel6.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
+
+                            //---- lblNameError ----
+                            lblNameError.setText("text");
+                            lblNameError.setName("lblNameError");
+                            panel6.add(lblNameError, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 0, 0), 0, 0));
+                        }
+                        panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 0, 20), 0, 0));
                     }
                     scrollPane2.setViewportView(panel4);
                 }
@@ -428,6 +497,12 @@ public class AdvancementPanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JTextFieldDefaultText txtSearchName;
     private JList listAdvancementNames;
+    private JPanel panel1;
+    private JLabel label1;
+    private JPanel panel6;
+    private JLabel lblName;
+    private JTextFieldDefaultText txtName;
+    private JLabel lblNameError;
     private JButton btnNew;
     private JButton btnSave;
     private JButton btnUpdate;

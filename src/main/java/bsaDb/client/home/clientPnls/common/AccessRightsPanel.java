@@ -20,6 +20,7 @@ import java.util.List;
  * @author User #2
  */
 public class AccessRightsPanel extends JPanel {
+
     public AccessRightsPanel() {
         initComponents();
     }
@@ -28,6 +29,7 @@ public class AccessRightsPanel extends JPanel {
     public void setEnabled(boolean enabled) {
         chkDatabaseSettings.setEnabled(enabled);
         chkUsers.setEnabled(enabled);
+        chkAdvancements.setEnabled(enabled);
     }
 
     public void populateRights(User user) {

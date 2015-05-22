@@ -364,7 +364,7 @@ new FormModel {
 								"gridx": 5
 								"gridy": 6
 							} )
-							add( new FormComponent( "bsaDb.client.home.clientPnls.AccessRightsPanel" ) {
+							add( new FormComponent( "bsaDb.client.home.clientPnls.common.AccessRightsPanel" ) {
 								name: "pnlAccessRights"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 7
