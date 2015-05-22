@@ -34,8 +34,9 @@ public class HomePanel extends JPanel {
     private final static String USER_PAGE = "user";
     private final static String ADVANCEMENT_PAGE = "advancement";
 
-    private UserPanel pnlUser = new UserPanel();
-    private AdvancementPanel pnlAdvancement = new AdvancementPanel();
+    private UserPanel pnlUser;
+    private AdvancementPanel pnlAdvancement;
+    private DatabaseSettingsPanel pnlDatabaseSettings;
     private BaseFrame baseFrame;
     private String propertyFileName;
 
@@ -46,13 +47,12 @@ public class HomePanel extends JPanel {
     public HomePanel() {
         initComponents();
 
-        pnlUser = new UserPanel();
-
         pnlCards.add(new SplashPanel(), SPLASH_PAGE);
-        pnlCards.add(new DatabaseSettingsPanel(), DATABASE_SETTINGS_PAGE);
-        pnlCards.add(pnlUser, USER_PAGE);
-        pnlCards.add(pnlAdvancement, ADVANCEMENT_PAGE);
 
+        setupAccessRights();
+    }
+
+    private void setupAccessRights() {
         Properties properties = new Properties();
         try {
             properties.load(getClass().getResourceAsStream(propertyFileName));
@@ -72,7 +72,7 @@ public class HomePanel extends JPanel {
                 } else if (accessRight.getRightId() == AccessRightConst.USERS.getId()) {
                     mnuUsers.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.ADVANCEMENTS.getId()) {
-                    mnuAdvancments.setEnabled(true);
+                    mnuAdvancements.setEnabled(true);
                 }
             }
 
@@ -108,15 +108,30 @@ public class HomePanel extends JPanel {
     }
 
     private void mnuDatabaseSettingsActionPerformed() {
+        if (pnlDatabaseSettings == null) {
+            pnlDatabaseSettings = new DatabaseSettingsPanel();
+            pnlCards.add(pnlDatabaseSettings, DATABASE_SETTINGS_PAGE);
+        }
+
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, DATABASE_SETTINGS_PAGE);
     }
 
     private void mnuUsersActionPerformed() {
+        if (pnlUser == null) {
+            pnlUser = new UserPanel();
+            pnlCards.add(pnlUser, USER_PAGE);
+        }
+
         pnlUser.populateUserNameList();
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, USER_PAGE);
     }
 
-    private void mnuAdvancmentsActionPerformed() {
+    private void mnuAdvancementsActionPerformed() {
+        if (pnlAdvancement == null) {
+            pnlAdvancement = new AdvancementPanel();
+            pnlCards.add(pnlAdvancement, ADVANCEMENT_PAGE);
+        }
+
         pnlAdvancement.populateAdvancementNameList();
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, ADVANCEMENT_PAGE);
     }
@@ -128,7 +143,7 @@ public class HomePanel extends JPanel {
         mnuSetup = new JMenu();
         mnuDatabaseSettings = new JMenuItem();
         mnuUsers = new JMenuItem();
-        mnuAdvancments = new JMenuItem();
+        mnuAdvancements = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         JButton btnSignout = new JButton();
         pnlCards = new JPanel();
@@ -200,16 +215,16 @@ public class HomePanel extends JPanel {
                     });
                     mnuSetup.add(mnuUsers);
 
-                    //---- mnuAdvancments ----
-                    mnuAdvancments.setText("Advancements");
-                    mnuAdvancments.setName("mnuAdvancments");
-                    mnuAdvancments.addActionListener(new ActionListener() {
+                    //---- mnuAdvancements ----
+                    mnuAdvancements.setText("Advancements");
+                    mnuAdvancements.setName("mnuAdvancements");
+                    mnuAdvancements.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            mnuAdvancmentsActionPerformed();
+                            mnuAdvancementsActionPerformed();
                         }
                     });
-                    mnuSetup.add(mnuAdvancments);
+                    mnuSetup.add(mnuAdvancements);
                 }
                 menuBar1.add(mnuSetup);
 
@@ -262,7 +277,7 @@ public class HomePanel extends JPanel {
     private JMenu mnuSetup;
     private JMenuItem mnuDatabaseSettings;
     private JMenuItem mnuUsers;
-    private JMenuItem mnuAdvancments;
+    private JMenuItem mnuAdvancements;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

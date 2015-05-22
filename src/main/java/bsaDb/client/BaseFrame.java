@@ -37,7 +37,6 @@ public class BaseFrame extends JFrame {
 
         pnlCards.add(new NoDatabaseConnectionPanel(this), NO_CONNECTION_PAGE);
         pnlCards.add(new SignInPanel(this), SIGN_IN_PAGE);
-//        pnlCards.add(new HomePanel(this), HOME_PAGE);
 
         if (MySqlConnector.getInstance().checkForDataBaseConnection()) {
             CacheObject.setupCache();
@@ -49,8 +48,13 @@ public class BaseFrame extends JFrame {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, moveToPage);
     }
 
-    public void addCard(final JPanel pnl, String pageName) {
-        pnlCards.add(pnl, pageName);
+    public void addCard(String pageName) {
+        if (pageName.equals(HOME_PAGE)) {
+            if (pnlHome == null) {
+                pnlHome = new HomePanel(this);
+            }
+            pnlCards.add(pnlHome, pageName);
+        }
     }
 
     private void initComponents() {

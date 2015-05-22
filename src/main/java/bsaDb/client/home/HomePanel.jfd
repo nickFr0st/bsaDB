@@ -50,9 +50,9 @@ new FormModel {
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuUsersActionPerformed", false ) )
 						} )
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "mnuAdvancments"
+							name: "mnuAdvancements"
 							"text": "Advancements"
-							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuAdvancmentsActionPerformed", false ) )
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuAdvancementsActionPerformed", false ) )
 						} )
 					} )
 					add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
