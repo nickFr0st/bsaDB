@@ -195,12 +195,19 @@ public class AdvancementPanel extends JPanel {
         JPanel panel3 = new JPanel();
         JScrollPane scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
-        panel1 = new JPanel();
-        label1 = new JLabel();
-        panel6 = new JPanel();
+        JPanel panel1 = new JPanel();
+        lblBadgeImage = new JLabel();
+        JPanel panel6 = new JPanel();
         lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
         lblNameError = new JLabel();
+        JPanel panel7 = new JPanel();
+        JPanel panel8 = new JPanel();
+        lblRequirement = new JLabel();
+        lblAddRequirement = new JLabel();
+        lblRemoveRequirement = new JLabel();
+        JScrollPane scrollPane3 = new JScrollPane();
+        pnlRequirementList = new JPanel();
         JPanel panel5 = new JPanel();
         btnNew = new JButton();
         btnSave = new JButton();
@@ -341,12 +348,12 @@ public class AdvancementPanel extends JPanel {
                             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
                             ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
 
-                            //---- label1 ----
-                            label1.setPreferredSize(new Dimension(128, 128));
-                            label1.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
-                            label1.setToolTipText("click to upload an image here");
-                            label1.setName("label1");
-                            panel1.add(label1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                            //---- lblBadgeImage ----
+                            lblBadgeImage.setPreferredSize(new Dimension(128, 128));
+                            lblBadgeImage.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
+                            lblBadgeImage.setToolTipText("click to upload an image here");
+                            lblBadgeImage.setName("lblBadgeImage");
+                            panel1.add(lblBadgeImage, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.NONE,
                                 new Insets(0, 0, 0, 0), 0, 0));
                         }
@@ -360,9 +367,9 @@ public class AdvancementPanel extends JPanel {
                             panel6.setName("panel6");
                             panel6.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
                             ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
 
                             //---- lblName ----
                             lblName.setText("Name:");
@@ -382,15 +389,87 @@ public class AdvancementPanel extends JPanel {
                                 new Insets(0, 0, 5, 0), 0, 0));
 
                             //---- lblNameError ----
-                            lblNameError.setText("text");
+                            lblNameError.setText("* Error Message");
+                            lblNameError.setForeground(Color.red);
+                            lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                            lblNameError.setVisible(false);
                             lblNameError.setName("lblNameError");
-                            panel6.add(lblNameError, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                            panel6.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 0, 0), 0, 0));
+                                new Insets(0, 10, 5, 0), 0, 0));
                         }
                         panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 0, 20), 0, 0));
+
+                        //======== panel7 ========
+                        {
+                            panel7.setOpaque(false);
+                            panel7.setName("panel7");
+                            panel7.setLayout(new GridBagLayout());
+                            ((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {0, 0};
+                            ((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0, 0};
+                            ((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+                            ((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
+
+                            //======== panel8 ========
+                            {
+                                panel8.setOpaque(false);
+                                panel8.setName("panel8");
+                                panel8.setLayout(new GridBagLayout());
+                                ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
+                                ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0};
+                                ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+                                ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                                //---- lblRequirement ----
+                                lblRequirement.setText("Requirments");
+                                lblRequirement.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                                lblRequirement.setForeground(new Color(51, 102, 153));
+                                lblRequirement.setName("lblRequirement");
+                                panel8.add(lblRequirement, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(3, 0, 0, 5), 0, 0));
+
+                                //---- lblAddRequirement ----
+                                lblAddRequirement.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
+                                lblAddRequirement.setToolTipText("Add a new requirement");
+                                lblAddRequirement.setName("lblAddRequirement");
+                                panel8.add(lblAddRequirement, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 0, 5), 0, 0));
+
+                                //---- lblRemoveRequirement ----
+                                lblRemoveRequirement.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
+                                lblRemoveRequirement.setToolTipText("Remove selected requirement");
+                                lblRemoveRequirement.setName("lblRemoveRequirement");
+                                panel8.add(lblRemoveRequirement, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 0, 0), 0, 0));
+                            }
+                            panel7.add(panel8, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
+
+                            //======== scrollPane3 ========
+                            {
+                                scrollPane3.setName("scrollPane3");
+
+                                //======== pnlRequirementList ========
+                                {
+                                    pnlRequirementList.setBackground(Color.white);
+                                    pnlRequirementList.setName("pnlRequirementList");
+                                    pnlRequirementList.setLayout(new BoxLayout(pnlRequirementList, BoxLayout.Y_AXIS));
+                                }
+                                scrollPane3.setViewportView(pnlRequirementList);
+                            }
+                            panel7.add(scrollPane3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 0, 0), 0, 0));
+                        }
+                        panel4.add(panel7, new GridBagConstraints(1, 0, 1, 2, 0.0, 0.0,
+                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 5, 10), 0, 0));
                     }
                     scrollPane2.setViewportView(panel4);
                 }
@@ -497,12 +576,14 @@ public class AdvancementPanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JTextFieldDefaultText txtSearchName;
     private JList listAdvancementNames;
-    private JPanel panel1;
-    private JLabel label1;
-    private JPanel panel6;
+    private JLabel lblBadgeImage;
     private JLabel lblName;
     private JTextFieldDefaultText txtName;
     private JLabel lblNameError;
+    private JLabel lblRequirement;
+    private JLabel lblAddRequirement;
+    private JLabel lblRemoveRequirement;
+    private JPanel pnlRequirementList;
     private JButton btnNew;
     private JButton btnSave;
     private JButton btnUpdate;
