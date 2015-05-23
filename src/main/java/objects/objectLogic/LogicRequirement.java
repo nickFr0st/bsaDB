@@ -91,4 +91,42 @@ public class LogicRequirement {
 
         return requirement;
     }
+
+    public static synchronized void delete(List<Requirement> requirementList) {
+        if (Util.isEmpty(requirementList)) {
+            return;
+        }
+
+        for (Requirement requirement : requirementList) {
+            delete(requirement);
+        }
+    }
+
+    public static synchronized void delete(Requirement requirement) {
+        if (requirement == null || requirement.getId() <= 1) {
+            return;
+        }
+
+        try {
+            synchronized (lock) {
+                if (deleteRequirement(requirement.getId())) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean deleteRequirement(Integer id) {
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM requirement WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

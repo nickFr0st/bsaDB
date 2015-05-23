@@ -187,7 +187,7 @@ public class AdvancementPanel extends JPanel {
 
         setData();
 
-        List<Requirement> requirementList = validateRequirements(-1);
+        List<Requirement> requirementList = validateRequirements(-1, true);
         if (requirementList == null) return;
 
         saveRecords(requirementList, true);
@@ -214,7 +214,7 @@ public class AdvancementPanel extends JPanel {
         CacheObject.addToRequirements(requirementList);
     }
 
-    private List<Requirement> validateRequirements(int parentId) {
+    private List<Requirement> validateRequirements(int parentId, boolean validate) {
         List<Requirement> requirementList = new ArrayList<Requirement>();
         Set<String> reqNameSet = new HashSet<String>();
 
@@ -223,20 +223,24 @@ public class AdvancementPanel extends JPanel {
                 continue;
             }
 
+            if (!validate && ((PnlRequirement)component).getReqId() < 0) {
+                continue;
+            }
+
             String reqName = ((PnlRequirement)component).getName().trim();
 
-            if (reqName.isEmpty()) {
+            if (validate && reqName.isEmpty()) {
                 Util.setError(lblRequirementError, "Requirement name cannot be left blank");
                 return null;
             }
 
-            if (!reqNameSet.add(reqName)) {
+            if (validate && !reqNameSet.add(reqName)) {
                 Util.setError(lblRequirementError, "Requirement name '" + reqName + "' already exists");
                 component.requestFocus();
                 return null;
             }
 
-            if (((PnlRequirement)component).getDescription().trim().isEmpty()) {
+            if (validate && ((PnlRequirement)component).getDescription().trim().isEmpty()) {
                 Util.setError(lblRequirementError, "Requirement description cannot be left blank");
                 return null;
             }
@@ -288,8 +292,23 @@ public class AdvancementPanel extends JPanel {
     }
 
     private void btnDeleteActionPerformed() {
+        if (listAdvancementNames.getSelectedValue() == null) {
+            return;
+        }
 
-//        CacheObject.removeFromUsers(user.getId());
+        int advancementId = advancement.getId();
+
+        List<Requirement> requirementList = validateRequirements(advancement.getId(), false);
+        LogicRequirement.delete(requirementList);
+        LogicAdvancement.delete(advancement);
+
+        CacheObject.removeFromAdvancements(advancementId);
+
+        requirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancementId, RequirementTypeConst.ADVANCEMENT.getId());
+
+        for (Requirement requirement : requirementList) {
+            CacheObject.removeFromRequirements(requirement.getId());
+        }
 
         populateAdvancementNameList();
 
@@ -495,6 +514,7 @@ public class AdvancementPanel extends JPanel {
 
                     //---- listAdvancementNames ----
                     listAdvancementNames.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                    listAdvancementNames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listAdvancementNames.setName("listAdvancementNames");
                     listAdvancementNames.addKeyListener(new KeyAdapter() {
                         @Override

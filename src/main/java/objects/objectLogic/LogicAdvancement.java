@@ -86,4 +86,32 @@ public class LogicAdvancement {
 
         return advancement;
     }
+
+    public static synchronized void delete(Advancement advancement) {
+        if (advancement == null || advancement.getId() <= 1) {
+            return;
+        }
+
+        try {
+            synchronized (lock) {
+                if (deleteAdvancement(advancement.getId())) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean deleteAdvancement(Integer id) {
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM advancement WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
