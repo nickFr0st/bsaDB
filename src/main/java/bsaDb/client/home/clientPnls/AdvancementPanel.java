@@ -336,7 +336,9 @@ public class AdvancementPanel extends JPanel {
             int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
 
             btnBadgeImage.setIcon(new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-            imagePath = imgPath;
+            if (!Util.isEmpty(imgPath)) {
+                imagePath = imgPath;
+            }
         } catch (IOException ignore) {
         }
     }
@@ -369,6 +371,19 @@ public class AdvancementPanel extends JPanel {
         }
 
         return true;
+    }
+
+    private void btnAddRequirementMouseReleased() {
+        if (!btnAddRequirement.isEnabled()) {
+            return;
+        }
+
+        PnlRequirement pnlRequirement = new PnlRequirement("[num]", "[Description]", pnlRequirementList.getComponentCount() > 0, -1);
+        pnlRequirementList.add(pnlRequirement);
+
+        pnlRequirement.getTxtReqName().requestFocus();
+
+        pnlRequirementList.revalidate();
     }
 
     private void initComponents() {
@@ -652,6 +667,10 @@ public class AdvancementPanel extends JPanel {
                                     @Override
                                     public void mouseExited(MouseEvent e) {
                                         setDefaultCursor();
+                                    }
+                                    @Override
+                                    public void mouseReleased(MouseEvent e) {
+                                        btnAddRequirementMouseReleased();
                                     }
                                 });
                                 panel8.add(btnAddRequirement, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
