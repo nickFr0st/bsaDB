@@ -4,6 +4,7 @@
 
 package bsaDb.client.home.clientPnls;
 
+import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.PnlRequirement;
 import bsaDb.client.customComponents.TitlePanel;
@@ -14,10 +15,15 @@ import org.jdesktop.swingx.VerticalLayout;
 import util.CacheObject;
 import util.Util;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,8 +34,12 @@ import java.util.List;
 public class AdvancementPanel extends JPanel {
 
     private Icon noImage;
-
     private Advancement advancement;
+    private String imagePath;
+
+    {
+        imagePath = "";
+    }
 
     public AdvancementPanel() {
         initComponents();
@@ -105,7 +115,8 @@ public class AdvancementPanel extends JPanel {
         enableControls(true);
 
         if (!Util.isEmpty(advancement.getImgPath())) {
-            btnBadgeImage.setIcon(new ImageIcon(advancement.getImgPath()));
+            imagePath = advancement.getImgPath();
+            btnBadgeImage.setIcon(new ImageIcon(imagePath));
         }
         txtName.setText(advancement.getName());
 
@@ -157,6 +168,7 @@ public class AdvancementPanel extends JPanel {
     private void clearData() {
         btnBadgeImage.setIcon(noImage);
         txtName.setDefault();
+        imagePath = "";
 
         // clear requirement list
     }
@@ -222,6 +234,39 @@ public class AdvancementPanel extends JPanel {
 
     private void setDefaultCursor() {
         setCursor(Cursor.getDefaultCursor());
+    }
+
+    private void btnBadgeImageMouseReleased() {
+        if (!btnBadgeImage.isEnabled()) {
+            return;
+        }
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+
+        CustomChooser chooser = new CustomChooser();
+        chooser.setDialogTitle("Select an image");
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileFilter(filter);
+        int returnValue = chooser.showOpenDialog(this);
+        chooser.resetLookAndFeel();
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            setImage(file.getPath());
+        }
+    }
+
+    private void setImage(String imgPath) {
+        try {
+            BufferedImage img = ImageIO.read(new File(imgPath));
+
+            int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
+            int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
+
+            btnBadgeImage.setIcon(new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+            imagePath = imgPath;
+        } catch (IOException ignore) {
+        }
     }
 
     private void initComponents() {
@@ -395,6 +440,12 @@ public class AdvancementPanel extends JPanel {
                             btnBadgeImage.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
                             btnBadgeImage.setToolTipText("click to upload an image here");
                             btnBadgeImage.setName("btnBadgeImage");
+                            btnBadgeImage.addMouseListener(new MouseAdapter() {
+                                @Override
+                                public void mouseReleased(MouseEvent e) {
+                                    btnBadgeImageMouseReleased();
+                                }
+                            });
                             panel1.add(btnBadgeImage, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.NONE,
                                 new Insets(0, 0, 0, 0), 0, 0));
