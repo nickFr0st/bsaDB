@@ -2,9 +2,11 @@ package util;
 
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.Advancement;
+import objects.databaseObjects.Requirement;
 import objects.databaseObjects.User;
 import objects.objectLogic.LogicAccessRight;
 import objects.objectLogic.LogicAdvancement;
+import objects.objectLogic.LogicRequirement;
 import objects.objectLogic.LogicUser;
 
 import java.util.*;
@@ -17,11 +19,13 @@ public class CacheObject {
     private static Map<Integer, User> cachedUsers;
     private static Map<Integer, AccessRight> cachedAccessRights;
     private static Map<Integer, Advancement> cachedAdvancements;
+    private static Map<Integer, Requirement> cachedRequirements;
 
     private CacheObject() {
         getUserList();
         getAccessRightList();
         getAdvancementList();
+        getRequirementList();
     }
 
     public static void setupCache() {
@@ -33,10 +37,12 @@ public class CacheObject {
         cachedUsers = null;
         cachedAccessRights = null;
         cachedAdvancements = null;
+        cachedRequirements = null;
 
         getUserList();
         getAccessRightList();
         getAdvancementList();
+        getRequirementList();
     }
 
     public static Collection<User> getUserList() {
@@ -154,5 +160,30 @@ public class CacheObject {
         }
 
         return null;
+    }
+
+    public static Collection<Requirement> getRequirementList() {
+        if (cachedRequirements == null) {
+            cachedRequirements = new HashMap<Integer, Requirement>();
+            List<Requirement> requirementList = LogicRequirement.findAll();
+            for (Requirement requirement : requirementList) {
+                cachedRequirements.put(requirement.getId(), requirement);
+            }
+        }
+        return cachedRequirements.values();
+    }
+
+    public static List<Requirement> getRequirementListByParentIdAndTypeId(int parentId, int typeId) {
+        List<Requirement> requirementList = new ArrayList<Requirement>();
+
+        getRequirementList();
+
+        for (Requirement requirement : cachedRequirements.values()) {
+            if (requirement.getParentId() == parentId && requirement.getTypeId() == typeId) {
+                requirementList.add(requirement);
+            }
+        }
+
+        return requirementList;
     }
 }

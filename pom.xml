@@ -10,6 +10,7 @@
 
     <properties>
         <mysql.connector.java.version>5.1.6</mysql.connector.java.version>
+        <swingx.version>1.6.1</swingx.version>
     </properties>
 
     <dependencies>
@@ -17,6 +18,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swingx</artifactId>
+            <version>${swingx.version}</version>
         </dependency>
     </dependencies>
 

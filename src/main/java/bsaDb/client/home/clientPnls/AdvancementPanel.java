@@ -5,9 +5,14 @@
 package bsaDb.client.home.clientPnls;
 
 import bsaDb.client.customComponents.JTextFieldDefaultText;
+import bsaDb.client.customComponents.PnlRequirement;
 import bsaDb.client.customComponents.TitlePanel;
+import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
+import objects.databaseObjects.Requirement;
+import org.jdesktop.swingx.VerticalLayout;
 import util.CacheObject;
+import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -22,11 +27,14 @@ import java.util.List;
  */
 public class AdvancementPanel extends JPanel {
 
+    private Icon noImage;
+
     private Advancement advancement;
 
     public AdvancementPanel() {
         initComponents();
 
+        noImage = new ImageIcon(getClass().getResource("/images/no_image.png"));
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
         btnUpdate.setVisible(false);
@@ -90,28 +98,48 @@ public class AdvancementPanel extends JPanel {
     }
 
     private void loadData() {
-//        if (user == null) {
-//            return;
-//        }
+        if (advancement == null) {
+            return;
+        }
 
         enableControls(true);
 
-        // todo: load data
+        if (!Util.isEmpty(advancement.getImgPath())) {
+            btnBadgeImage.setIcon(new ImageIcon(advancement.getImgPath()));
+        }
+        txtName.setText(advancement.getName());
+
+        loadRequirementList();
 
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
         btnSave.setVisible(false);
     }
 
+    private void loadRequirementList() {
+        List<Requirement> requirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+
+        boolean firstPass = false;
+        for (Requirement requirement : requirementList) {
+            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstPass, requirement.getId());
+            pnlRequirementList.add(pnlRequirement);
+
+            if (!firstPass) {
+                firstPass = true;
+            }
+        }
+    }
+
     private void enableControls(boolean enable) {
-        // todo: enable controls
+        btnBadgeImage.setEnabled(enable);
+        txtName.setEnabled(enable);
+        btnAddRequirement.setEnabled(enable);
+        btnRemoveRequirement.setEnabled(enable);
     }
 
     private void clearAllErrors() {
-//        Util.clearError(lblNameError);
-//        Util.clearError(lblPasswordError);
-//        Util.clearError(lblPhoneNumberError);
-//        Util.clearError(lblEmailError);
+        Util.clearError(lblNameError);
+        Util.clearError(lblRequirementError);
     }
 
     private void btnNewActionPerformed() {
@@ -122,10 +150,15 @@ public class AdvancementPanel extends JPanel {
         enableControls(true);
         clearAllErrors();
         clearData();
+
+        txtName.requestFocus();
     }
 
     private void clearData() {
-        // clear data
+        btnBadgeImage.setIcon(noImage);
+        txtName.setDefault();
+
+        // clear requirement list
     }
 
     private void btnSaveActionPerformed() {
@@ -183,6 +216,14 @@ public class AdvancementPanel extends JPanel {
         enableControls(false);
     }
 
+    private void changeToHand() {
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void setDefaultCursor() {
+        setCursor(Cursor.getDefaultCursor());
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -196,7 +237,7 @@ public class AdvancementPanel extends JPanel {
         JScrollPane scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
         JPanel panel1 = new JPanel();
-        lblBadgeImage = new JLabel();
+        btnBadgeImage = new JLabel();
         JPanel panel6 = new JPanel();
         lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
@@ -204,8 +245,9 @@ public class AdvancementPanel extends JPanel {
         JPanel panel7 = new JPanel();
         JPanel panel8 = new JPanel();
         lblRequirement = new JLabel();
-        lblAddRequirement = new JLabel();
-        lblRemoveRequirement = new JLabel();
+        btnAddRequirement = new JLabel();
+        btnRemoveRequirement = new JLabel();
+        lblRequirementError = new JLabel();
         JScrollPane scrollPane3 = new JScrollPane();
         pnlRequirementList = new JPanel();
         JPanel panel5 = new JPanel();
@@ -348,12 +390,12 @@ public class AdvancementPanel extends JPanel {
                             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
                             ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
 
-                            //---- lblBadgeImage ----
-                            lblBadgeImage.setPreferredSize(new Dimension(128, 128));
-                            lblBadgeImage.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
-                            lblBadgeImage.setToolTipText("click to upload an image here");
-                            lblBadgeImage.setName("lblBadgeImage");
-                            panel1.add(lblBadgeImage, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                            //---- btnBadgeImage ----
+                            btnBadgeImage.setPreferredSize(new Dimension(128, 128));
+                            btnBadgeImage.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
+                            btnBadgeImage.setToolTipText("click to upload an image here");
+                            btnBadgeImage.setName("btnBadgeImage");
+                            panel1.add(btnBadgeImage, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.NONE,
                                 new Insets(0, 0, 0, 0), 0, 0));
                         }
@@ -383,6 +425,8 @@ public class AdvancementPanel extends JPanel {
                             //---- txtName ----
                             txtName.setDefaultText("Advancement Name");
                             txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            txtName.setPreferredSize(new Dimension(138, 30));
+                            txtName.setMinimumSize(new Dimension(14, 30));
                             txtName.setName("txtName");
                             panel6.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -407,9 +451,9 @@ public class AdvancementPanel extends JPanel {
                             panel7.setOpaque(false);
                             panel7.setName("panel7");
                             panel7.setLayout(new GridBagLayout());
-                            ((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {0, 0};
+                            ((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {450, 0};
                             ((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0, 0};
-                            ((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+                            ((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
                             ((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
 
                             //======== panel8 ========
@@ -417,9 +461,9 @@ public class AdvancementPanel extends JPanel {
                                 panel8.setOpaque(false);
                                 panel8.setName("panel8");
                                 panel8.setLayout(new GridBagLayout());
-                                ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
+                                ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
                                 ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0};
-                                ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+                                ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
                                 ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
                                 //---- lblRequirement ----
@@ -431,21 +475,51 @@ public class AdvancementPanel extends JPanel {
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                     new Insets(3, 0, 0, 5), 0, 0));
 
-                                //---- lblAddRequirement ----
-                                lblAddRequirement.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
-                                lblAddRequirement.setToolTipText("Add a new requirement");
-                                lblAddRequirement.setName("lblAddRequirement");
-                                panel8.add(lblAddRequirement, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                //---- btnAddRequirement ----
+                                btnAddRequirement.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
+                                btnAddRequirement.setToolTipText("Add a new requirement");
+                                btnAddRequirement.setName("btnAddRequirement");
+                                btnAddRequirement.addMouseListener(new MouseAdapter() {
+                                    @Override
+                                    public void mouseEntered(MouseEvent e) {
+                                        changeToHand();
+                                    }
+                                    @Override
+                                    public void mouseExited(MouseEvent e) {
+                                        setDefaultCursor();
+                                    }
+                                });
+                                panel8.add(btnAddRequirement, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                     new Insets(0, 0, 0, 5), 0, 0));
 
-                                //---- lblRemoveRequirement ----
-                                lblRemoveRequirement.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
-                                lblRemoveRequirement.setToolTipText("Remove selected requirement");
-                                lblRemoveRequirement.setName("lblRemoveRequirement");
-                                panel8.add(lblRemoveRequirement, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                //---- btnRemoveRequirement ----
+                                btnRemoveRequirement.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
+                                btnRemoveRequirement.setToolTipText("Remove selected requirement");
+                                btnRemoveRequirement.setName("btnRemoveRequirement");
+                                btnRemoveRequirement.addMouseListener(new MouseAdapter() {
+                                    @Override
+                                    public void mouseEntered(MouseEvent e) {
+                                        changeToHand();
+                                    }
+                                    @Override
+                                    public void mouseExited(MouseEvent e) {
+                                        setDefaultCursor();
+                                    }
+                                });
+                                panel8.add(btnRemoveRequirement, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 0, 0), 0, 0));
+                                    new Insets(0, 0, 0, 5), 0, 0));
+
+                                //---- lblRequirementError ----
+                                lblRequirementError.setText("* Error Message");
+                                lblRequirementError.setForeground(Color.red);
+                                lblRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                lblRequirementError.setVisible(false);
+                                lblRequirementError.setName("lblRequirementError");
+                                panel8.add(lblRequirementError, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 10, 0, 0), 0, 0));
                             }
                             panel7.add(panel8, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -453,13 +527,14 @@ public class AdvancementPanel extends JPanel {
 
                             //======== scrollPane3 ========
                             {
+                                scrollPane3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                                 scrollPane3.setName("scrollPane3");
 
                                 //======== pnlRequirementList ========
                                 {
                                     pnlRequirementList.setBackground(Color.white);
                                     pnlRequirementList.setName("pnlRequirementList");
-                                    pnlRequirementList.setLayout(new BoxLayout(pnlRequirementList, BoxLayout.Y_AXIS));
+                                    pnlRequirementList.setLayout(new VerticalLayout());
                                 }
                                 scrollPane3.setViewportView(pnlRequirementList);
                             }
@@ -576,13 +651,14 @@ public class AdvancementPanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JTextFieldDefaultText txtSearchName;
     private JList listAdvancementNames;
-    private JLabel lblBadgeImage;
+    private JLabel btnBadgeImage;
     private JLabel lblName;
     private JTextFieldDefaultText txtName;
     private JLabel lblNameError;
     private JLabel lblRequirement;
-    private JLabel lblAddRequirement;
-    private JLabel lblRemoveRequirement;
+    private JLabel btnAddRequirement;
+    private JLabel btnRemoveRequirement;
+    private JLabel lblRequirementError;
     private JPanel pnlRequirementList;
     private JButton btnNew;
     private JButton btnSave;

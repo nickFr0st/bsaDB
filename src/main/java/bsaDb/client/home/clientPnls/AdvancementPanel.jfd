@@ -136,7 +136,7 @@ new FormModel {
 									"JavaCodeGenerator.variableLocal": true
 								}
 								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "lblBadgeImage"
+									name: "btnBadgeImage"
 									"preferredSize": new java.awt.Dimension( 128, 128 )
 									"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/no_image.png" )
 									"toolTipText": "click to upload an image here"
@@ -173,6 +173,8 @@ new FormModel {
 									name: "txtName"
 									"defaultText": "Advancement Name"
 									"font": new java.awt.Font( "Tahoma", 0, 14 )
+									"preferredSize": new java.awt.Dimension( 138, 30 )
+									"minimumSize": new java.awt.Dimension( 14, 30 )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridx": 1
 								} )
@@ -180,18 +182,18 @@ new FormModel {
 									name: "lblNameError"
 									"text": "* Error Message"
 									"foreground": sfield java.awt.Color red
-									"font": new java.awt.Font( "Tahoma", 2, 11 )
+									"font": &Font0 new java.awt.Font( "Tahoma", 2, 11 )
 									"visible": false
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 1
 									"gridwidth": 2
-									"insets": new java.awt.Insets( 0, 10, 0, 0 )
+									"insets": &Insets0 new java.awt.Insets( 0, 10, 0, 0 )
 								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 1
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-								"$columnSpecs": "0:1.0"
+								"$columnSpecs": "450"
 								"$rowSpecs": "0, 0:1.0"
 								"$hGap": 5
 								"$vGap": 5
@@ -204,7 +206,7 @@ new FormModel {
 									"JavaCodeGenerator.variableLocal": true
 								}
 								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-									"$columnSpecs": "0, 0, 0"
+									"$columnSpecs": "0, 0, 0, 0:1.0"
 									"$rowSpecs": "0"
 									"$hGap": 5
 									"$vGap": 5
@@ -225,28 +227,41 @@ new FormModel {
 										"insets": new java.awt.Insets( 3, 0, 0, 0 )
 									} )
 									add( new FormComponent( "javax.swing.JLabel" ) {
-										name: "lblAddRequirement"
+										name: "btnAddRequirement"
 										"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/add.png" )
 										"toolTipText": "Add a new requirement"
+										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
+										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 1
 									} )
 									add( new FormComponent( "javax.swing.JLabel" ) {
-										name: "lblRemoveRequirement"
+										name: "btnRemoveRequirement"
 										"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/delete.png" )
 										"toolTipText": "Remove selected requirement"
+										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
+										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 2
+									} )
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "lblRequirementError"
+										"text": "* Error Message"
+										"foreground": sfield java.awt.Color red
+										"font": #Font0
+										"visible": false
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"insets": #Insets0
+										"gridx": 3
 									} )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 								add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 									name: "scrollPane3"
+									"horizontalScrollBarPolicy": 31
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
-									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
-										"axis": 1
-									} ) {
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.swingx.VerticalLayout ) ) {
 										name: "pnlRequirementList"
 										"background": new java.awt.Color( 255, 255, 255, 255 )
 									} )
@@ -331,7 +346,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1080, 660 )
+			"size": new java.awt.Dimension( 1085, 660 )
 		} )
 	}
 }

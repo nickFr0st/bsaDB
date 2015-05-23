@@ -28,7 +28,13 @@ public enum KeyConst {
     RIGHT_ID("rightId"),
     USER_ID("userId"),
 
-    IMG_PATH("imgPath");
+    // Advancement
+    IMG_PATH("imgPath"),
+
+    // Requirement
+    DESCRIPTION("description"),
+    PARENT_ID("parentId"),
+    TYPE_ID("typeId");
 
     String name;
 
