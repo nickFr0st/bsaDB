@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 public class MySqlConnector {
     public final static String DB_PATH = "jdbc:mysql://localhost:3306/";
-    public final static long WAIT_TIME = 1000;
+    public final static long WAIT_TIME = 500;
 
     private final static String DRIVER = "com.mysql.jdbc.Driver";
     private final static String DB_PROPERTIES_PATH = "/properties/database.properties";

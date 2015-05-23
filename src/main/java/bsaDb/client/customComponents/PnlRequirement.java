@@ -54,11 +54,13 @@ public class PnlRequirement extends JPanel {
     private void txtReqDescriptionFocusGained() {
         txtReqDescription.setBackground(new Color(242, 233, 206));
         txtReqDescription.setBorder(new LineBorder(new Color(32, 154, 26), 2));
+        txtReqDescription.selectAll();
     }
 
     private void txtReqNameFocusGained() {
         txtReqName.setBackground(new Color(242, 233, 206));
         txtReqName.setBorder(new LineBorder(new Color(32, 154, 26), 2));
+        txtReqName.selectAll();
     }
 
     public JTextField getTxtReqName() {

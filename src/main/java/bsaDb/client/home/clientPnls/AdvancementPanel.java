@@ -205,11 +205,13 @@ public class AdvancementPanel extends JPanel {
         if (newAdvancement) {
             for (Requirement requirement : requirementList) {
                 requirement.setParentId(advancement.getId());
-                CacheObject.addToRequirements(requirement);
             }
         }
+
         LogicRequirement.save(requirementList);
+
         CacheObject.addToAdvancements(advancement);
+        CacheObject.addToRequirements(requirementList);
     }
 
     private List<Requirement> validateRequirements(int parentId) {
@@ -378,7 +380,7 @@ public class AdvancementPanel extends JPanel {
             return;
         }
 
-        PnlRequirement pnlRequirement = new PnlRequirement("[num]", "[Description]", pnlRequirementList.getComponentCount() > 0, -1);
+        PnlRequirement pnlRequirement = new PnlRequirement("[name]", "[description]", pnlRequirementList.getComponentCount() > 0, -1);
         pnlRequirementList.add(pnlRequirement);
 
         pnlRequirement.getTxtReqName().requestFocus();

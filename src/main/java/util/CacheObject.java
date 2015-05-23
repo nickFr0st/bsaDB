@@ -206,11 +206,22 @@ public class CacheObject {
 
     public static void addToRequirements(Requirement requirement) {
         if (cachedRequirements == null) {
-            getAccessRightList();
+            getRequirementList();
         }
 
         assert cachedRequirements != null;
         cachedRequirements.put(requirement.getId(), requirement);
+    }
+
+    public static void addToRequirements(List<Requirement> requirementList) {
+        if (cachedRequirements == null) {
+            getRequirementList();
+        }
+
+        assert cachedRequirements != null;
+        for (Requirement requirement : requirementList) {
+            cachedRequirements.put(requirement.getId(), requirement);
+        }
     }
 
     public static void removeFromRequirements(Integer requirementId) {
