@@ -11,6 +11,8 @@ import bsaDb.client.customComponents.TitlePanel;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;
+import objects.objectLogic.LogicAdvancement;
+import objects.objectLogic.LogicRequirement;
 import org.jdesktop.swingx.VerticalLayout;
 import util.CacheObject;
 import util.Util;
@@ -24,8 +26,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -169,6 +170,8 @@ public class AdvancementPanel extends JPanel {
     }
 
     private void clearData() {
+        advancement = null;
+
         btnBadgeImage.setIcon(noImage);
         txtName.setDefault();
         imagePath = "";
@@ -184,24 +187,89 @@ public class AdvancementPanel extends JPanel {
 
         setData();
 
-        // save
+        List<Requirement> requirementList = validateRequirements(-1);
+        if (requirementList == null) return;
+
+        saveRecords(requirementList, true);
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
 
-//        CacheObject.addToUsers(user);
         populateAdvancementNameList();
     }
 
+    private void saveRecords(List<Requirement> requirementList, boolean newAdvancement) {
+        advancement = LogicAdvancement.save(advancement);
+
+        if (newAdvancement) {
+            for (Requirement requirement : requirementList) {
+                requirement.setParentId(advancement.getId());
+                CacheObject.addToRequirements(requirement);
+            }
+        }
+        LogicRequirement.save(requirementList);
+        CacheObject.addToAdvancements(advancement);
+    }
+
+    private List<Requirement> validateRequirements(int parentId) {
+        List<Requirement> requirementList = new ArrayList<Requirement>();
+        Set<String> reqNameSet = new HashSet<String>();
+
+        for (Component component : pnlRequirementList.getComponents()) {
+            if (!(component instanceof PnlRequirement)) {
+                continue;
+            }
+
+            String reqName = ((PnlRequirement)component).getName().trim();
+
+            if (reqName.isEmpty()) {
+                Util.setError(lblRequirementError, "Requirement name cannot be left blank");
+                return null;
+            }
+
+            if (!reqNameSet.add(reqName)) {
+                Util.setError(lblRequirementError, "Requirement name '" + reqName + "' already exists");
+                component.requestFocus();
+                return null;
+            }
+
+            if (((PnlRequirement)component).getDescription().trim().isEmpty()) {
+                Util.setError(lblRequirementError, "Requirement description cannot be left blank");
+                return null;
+            }
+
+            Requirement requirement = new Requirement();
+            if (parentId > 0) {
+                requirement.setParentId(parentId);
+            }
+            requirement.setName(((PnlRequirement)component).getName());
+            requirement.setDescription(((PnlRequirement) component).getDescription());
+            requirement.setId(((PnlRequirement) component).getReqId());
+            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+
+            requirementList.add(requirement);
+        }
+        return requirementList;
+    }
+
     private void setData() {
-        // set data
+        if (advancement == null) {
+            advancement = new Advancement();
+        }
+
+        advancement.setName(txtName.getText());
+        if (!Util.isEmpty(imagePath)) {
+            advancement.setImgPath(imagePath);
+        }
     }
 
     private boolean validateFields() {
         boolean valid = true;
 
-        // validate
+        if (!validateAdvancementName()) {
+            valid = false;
+        }
 
         return valid;
     }
@@ -271,6 +339,36 @@ public class AdvancementPanel extends JPanel {
             imagePath = imgPath;
         } catch (IOException ignore) {
         }
+    }
+
+    private void validateName() {
+        validateAdvancementName();
+    }
+
+    private boolean validateAdvancementName() {
+        Util.clearError(lblNameError);
+
+        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
+            Util.setError(lblNameError, "Name cannot be left blank");
+            return false;
+        }
+
+        Advancement tempAdvancement = CacheObject.getAdvancement(txtName.getText());
+        if (tempAdvancement == null) {
+            return true;
+        }
+
+        if (advancement == null) {
+            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
+            return false;
+        }
+
+        if (!tempAdvancement.getName().equals(advancement.getName())) {
+            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
+            return false;
+        }
+
+        return true;
     }
 
     private void initComponents() {
@@ -464,9 +562,9 @@ public class AdvancementPanel extends JPanel {
                             panel6.setName("panel6");
                             panel6.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0};
                             ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
                             //---- lblName ----
                             lblName.setText("Name:");
@@ -483,6 +581,18 @@ public class AdvancementPanel extends JPanel {
                             txtName.setPreferredSize(new Dimension(138, 30));
                             txtName.setMinimumSize(new Dimension(14, 30));
                             txtName.setName("txtName");
+                            txtName.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateName();
+                                }
+                            });
+                            txtName.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateName();
+                                }
+                            });
                             panel6.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 0), 0, 0));
@@ -495,7 +605,7 @@ public class AdvancementPanel extends JPanel {
                             lblNameError.setName("lblNameError");
                             panel6.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 5, 0), 0, 0));
+                                new Insets(0, 10, 0, 0), 0, 0));
                         }
                         panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,

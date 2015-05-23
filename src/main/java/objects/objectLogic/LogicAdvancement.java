@@ -41,4 +41,49 @@ public class LogicAdvancement {
 
         return advancementList;
     }
+
+    public static synchronized Advancement save(Advancement advancement) {
+        if (advancement == null) {
+            return null;
+        }
+
+        try {
+            synchronized (lock) {
+                if ((advancement = saveAdvancement(advancement)) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return advancement;
+    }
+
+    private static Advancement saveAdvancement(Advancement advancement) {
+        if (advancement.getId() < 0) {
+            advancement.setId(MySqlConnector.getInstance().getNextId("advancement"));
+        }
+
+        if (advancement.getId() < 0) {
+            return null;
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO advancement VALUES(");
+            query.append(advancement.getId()).append(", ");
+            query.append("'").append(advancement.getName()).append("', ");
+            query.append("'").append(advancement.getImgPath()).append("'");
+            query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return advancement;
+    }
 }

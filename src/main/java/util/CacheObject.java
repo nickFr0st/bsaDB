@@ -162,6 +162,23 @@ public class CacheObject {
         return null;
     }
 
+    public static void addToAdvancements(Advancement advancement) {
+        if (cachedAdvancements == null) {
+            getAccessRightList();
+        }
+
+        assert cachedAdvancements != null;
+        cachedAdvancements.put(advancement.getId(), advancement);
+    }
+
+    public static void removeFromAdvancements(Integer advancementId) {
+        if (cachedAdvancements == null || cachedAdvancements.isEmpty()) {
+            return;
+        }
+
+        cachedAdvancements.remove(advancementId);
+    }
+
     public static Collection<Requirement> getRequirementList() {
         if (cachedRequirements == null) {
             cachedRequirements = new HashMap<Integer, Requirement>();
@@ -185,5 +202,22 @@ public class CacheObject {
         }
 
         return requirementList;
+    }
+
+    public static void addToRequirements(Requirement requirement) {
+        if (cachedRequirements == null) {
+            getAccessRightList();
+        }
+
+        assert cachedRequirements != null;
+        cachedRequirements.put(requirement.getId(), requirement);
+    }
+
+    public static void removeFromRequirements(Integer requirementId) {
+        if (cachedRequirements == null || cachedRequirements.isEmpty()) {
+            return;
+        }
+
+        cachedRequirements.remove(requirementId);
     }
 }

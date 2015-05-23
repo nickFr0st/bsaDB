@@ -3,6 +3,7 @@ package objects.objectLogic;
 import constants.KeyConst;
 import objects.databaseObjects.Requirement;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -42,5 +43,52 @@ public class LogicRequirement {
         }
 
         return requirementList;
+    }
+
+    public static synchronized void save(List<Requirement> requirementList) {
+        if (Util.isEmpty(requirementList)) {
+            return;
+        }
+
+        for (Requirement requirement : requirementList) {
+            save(requirement);
+        }
+    }
+
+    public static synchronized void save(Requirement requirement) {
+        try {
+            synchronized (lock) {
+                if (saveRequirement(requirement) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Requirement saveRequirement(Requirement requirement) {
+        if (requirement.getId() < 0) {
+            requirement.setId(MySqlConnector.getInstance().getNextId("requirement"));
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO requirement VALUES(");
+            query.append(requirement.getId()).append(", ");
+            query.append("'").append(requirement.getName()).append("', ");
+            query.append("'").append(requirement.getDescription()).append("', ");
+            query.append(requirement.getTypeId()).append(", ");
+            query.append(requirement.getParentId());
+            query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return requirement;
     }
 }
