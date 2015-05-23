@@ -246,6 +246,7 @@ new FormModel {
 										"toolTipText": "Remove selected requirement"
 										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
 										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
+										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveRequirementMouseReleased", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 2
 									} )

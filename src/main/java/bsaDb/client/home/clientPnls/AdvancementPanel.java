@@ -407,6 +407,16 @@ public class AdvancementPanel extends JPanel {
         pnlRequirementList.revalidate();
     }
 
+    private void btnRemoveRequirementMouseReleased() {
+        if (!btnRemoveRequirement.isEnabled() || pnlRequirementList.getComponentCount() == 0 || !(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent() instanceof PnlRequirement)) {
+            return;
+        }
+
+        pnlRequirementList.remove(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent());
+        pnlRequirementList.revalidate();
+        pnlRequirementList.repaint();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -711,6 +721,10 @@ public class AdvancementPanel extends JPanel {
                                     @Override
                                     public void mouseExited(MouseEvent e) {
                                         setDefaultCursor();
+                                    }
+                                    @Override
+                                    public void mouseReleased(MouseEvent e) {
+                                        btnRemoveRequirementMouseReleased();
                                     }
                                 });
                                 panel8.add(btnRemoveRequirement, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
