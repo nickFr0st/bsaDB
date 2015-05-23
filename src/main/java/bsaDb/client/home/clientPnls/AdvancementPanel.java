@@ -139,6 +139,9 @@ public class AdvancementPanel extends JPanel {
                 firstPass = true;
             }
         }
+
+        pnlRequirementList.revalidate();
+        pnlRequirementList.repaint();
     }
 
     private void enableControls(boolean enable) {
@@ -170,7 +173,8 @@ public class AdvancementPanel extends JPanel {
         txtName.setDefault();
         imagePath = "";
 
-        // clear requirement list
+        pnlRequirementList.removeAll();
+        pnlRequirementList.repaint();
     }
 
     private void btnSaveActionPerformed() {
