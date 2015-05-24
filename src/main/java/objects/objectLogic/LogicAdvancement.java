@@ -114,4 +114,41 @@ public class LogicAdvancement {
         }
         return true;
     }
+
+    public static synchronized Advancement update(Advancement advancement) {
+        if (advancement == null) {
+            return null;
+        }
+
+        try {
+            synchronized (lock) {
+                if ((advancement = updateAdvancement(advancement)) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return advancement;
+    }
+
+    private static Advancement updateAdvancement(Advancement advancement) {
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("UPDATE advancement SET ");
+            query.append("name = '").append(advancement.getName()).append("', ");
+            query.append("imgPath = '").append(advancement.getImgPath()).append("' ");
+            query.append("WHERE id = ").append(advancement.getId());
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return advancement;
+    }
 }

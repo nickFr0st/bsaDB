@@ -277,18 +277,87 @@ public class AdvancementPanel extends JPanel {
             valid = false;
         }
 
+        if (validateRequirements(advancement.getId(), true) == null) {
+            valid = false;
+        }
+
         return valid;
     }
 
     private void btnUpdateActionPerformed() {
+        if (listAdvancementNames.getSelectedValue() == null) {
+            return;
+        }
+
         if (!validateFields()) {
             return;
         }
 
         setData();
+        advancement = LogicAdvancement.update(advancement);
 
-//        CacheObject.addToUsers(user);
+        List<Requirement> currentRequirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+        List<Requirement> newRequirementList = getRequirementList(advancement.getId());
+        List<Requirement> deleteRequirementList = new ArrayList<Requirement>();
+
+        if (newRequirementList.isEmpty()) {
+            for (Requirement requirement : currentRequirementList) {
+                deleteRequirementList.add(requirement);
+            }
+        } else {
+            for (Requirement requirement : currentRequirementList) {
+                boolean addToList = true;
+                for (Requirement newRequirement : newRequirementList) {
+                    if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
+                        addToList = false;
+                    }
+                }
+                if (addToList) {
+                    deleteRequirementList.add(requirement);
+                }
+            }
+        }
+
+        for (Requirement deleteRequirement :  deleteRequirementList) {
+            LogicRequirement.delete(deleteRequirement);
+            CacheObject.removeFromRequirements(deleteRequirement.getId());
+        }
+
+        for (Requirement requirement : newRequirementList) {
+            if (requirement.getId() > 0) {
+                LogicRequirement.update(requirement);
+            } else {
+                LogicRequirement.save(requirement);
+            }
+            CacheObject.addToRequirements(requirement);
+        }
+
+
+        CacheObject.addToAdvancements(advancement);
         populateAdvancementNameList();
+    }
+
+    private List<Requirement> getRequirementList(int parentId) {
+        List<Requirement> requirementList = new ArrayList<Requirement>();
+
+        for (Component component : pnlRequirementList.getComponents()) {
+            if (!(component instanceof PnlRequirement)) {
+                continue;
+            }
+
+            Requirement requirement = new Requirement();
+            if (parentId > 0) {
+                requirement.setParentId(parentId);
+            }
+            requirement.setName(((PnlRequirement)component).getName());
+            requirement.setDescription(((PnlRequirement) component).getDescription());
+            requirement.setId(((PnlRequirement) component).getReqId());
+            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+
+            requirementList.add(requirement);
+        }
+
+        return requirementList;
     }
 
     private void btnDeleteActionPerformed() {

@@ -118,6 +118,22 @@ public class LogicRequirement {
         }
     }
 
+    public static synchronized void delete(int requirementId) {
+        if (requirementId < 0) {
+            return;
+        }
+
+        try {
+            synchronized (lock) {
+                if (deleteRequirement(requirementId)) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static boolean deleteRequirement(Integer id) {
 
         try {
@@ -128,5 +144,42 @@ public class LogicRequirement {
             return false;
         }
         return true;
+    }
+
+    public static synchronized Requirement update(Requirement requirement) {
+        if (requirement == null) {
+            return null;
+        }
+
+        try {
+            synchronized (lock) {
+                if ((requirement = updateRequirement(requirement)) != null) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return requirement;
+    }
+
+    private static Requirement updateRequirement(Requirement requirement) {
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("UPDATE requirement SET ");
+            query.append("name = '").append(requirement.getName()).append("', ");
+            query.append("description = '").append(requirement.getDescription()).append("' ");
+            query.append("WHERE id = ").append(requirement.getId());
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return requirement;
     }
 }
