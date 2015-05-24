@@ -197,6 +197,8 @@ public class AdvancementPanel extends JPanel {
         btnDelete.setVisible(true);
 
         populateAdvancementNameList();
+
+        listAdvancementNames.setSelectedValue(advancement.getName(), true);
     }
 
     private void saveRecords(List<Requirement> requirementList, boolean newAdvancement) {
@@ -342,6 +344,8 @@ public class AdvancementPanel extends JPanel {
 
         CacheObject.addToAdvancements(advancement);
         populateAdvancementNameList();
+
+        listAdvancementNames.setSelectedValue(advancement.getName(), true);
     }
 
     private List<Requirement> getRequirementList(int parentId) {
