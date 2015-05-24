@@ -14,10 +14,7 @@ import util.Util;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -25,6 +22,9 @@ import java.util.Properties;
  * Created by Nathanael
  */
 public class SignInPanel extends JPanel {
+    private static final String SIGN_IN = "SignIn";
+
+
     private Properties properties;
     private String propertyFileName;
     private BaseFrame baseFrame;
@@ -35,6 +35,16 @@ public class SignInPanel extends JPanel {
 
     public SignInPanel() {
         initComponents();
+
+        btnSignIn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), SIGN_IN);
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnSignInActionPerformed();
+            }
+        };
+
+        btnSignIn.getActionMap().put(SIGN_IN, action);
 
         setupProperties();
 
