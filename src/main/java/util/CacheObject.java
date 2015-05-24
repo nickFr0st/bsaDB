@@ -45,6 +45,13 @@ public class CacheObject {
         getRequirementList();
     }
 
+    public static void clear() {
+        cachedUsers = null;
+        cachedAccessRights = null;
+        cachedAdvancements = null;
+        cachedRequirements = null;
+    }
+
     public static Collection<User> getUserList() {
         if (cachedUsers == null) {
             cachedUsers = new HashMap<Integer, User>();

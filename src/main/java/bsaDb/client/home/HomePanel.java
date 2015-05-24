@@ -94,14 +94,6 @@ public class HomePanel extends JPanel {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, moveToPage);
     }
 
-    private void menu1MouseEntered() {
-        mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings_blue24.png")));
-    }
-
-    private void mnuSettingsMouseExited() {
-        mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
-    }
-
     private void btnSignoutActionPerformed() {
         slideCard(SPLASH_PAGE);
         baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
@@ -136,16 +128,48 @@ public class HomePanel extends JPanel {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, ADVANCEMENT_PAGE);
     }
 
+    private void mnuSettingsMouseEntered() {
+        mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings_blue24.png")));
+    }
+
+    private void mnuSettingsMouseExited() {
+        mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
+    }
+
+    private void mnuFileMouseEntered() {
+        mnuFile.setIcon(new ImageIcon(getClass().getResource("/images/file_blue24.png")));
+    }
+
+    private void mnuFileMouseExited() {
+        mnuFile.setIcon(new ImageIcon(getClass().getResource("/images/file24.png")));
+    }
+
+    private void mnuSignOutMouseEntered() {
+        mnuSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout_blue24.png")));
+    }
+
+    private void mnuSignOutMouseExited() {
+        mnuSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
+    }
+
+    private void mniExitActionPerformed() {
+        baseFrame.exit();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
         JMenuBar menuBar1 = new JMenuBar();
+        mnuFile = new JMenu();
+        mniImports = new JMenuItem();
+        mniExports = new JMenuItem();
+        mniExit = new JMenuItem();
         mnuSetup = new JMenu();
         mnuDatabaseSettings = new JMenuItem();
         mnuUsers = new JMenuItem();
         mnuAdvancements = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
-        JButton btnSignout = new JButton();
+        mnuSignOut = new JMenu();
         pnlCards = new JPanel();
 
         //======== this ========
@@ -174,6 +198,52 @@ public class HomePanel extends JPanel {
                 menuBar1.setMargin(new Insets(0, 10, 0, 10));
                 menuBar1.setName("menuBar1");
 
+                //======== mnuFile ========
+                {
+                    mnuFile.setText("File");
+                    mnuFile.setMnemonic('F');
+                    mnuFile.setOpaque(false);
+                    mnuFile.setForeground(Color.black);
+                    mnuFile.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuFile.setIcon(new ImageIcon(getClass().getResource("/images/file24.png")));
+                    mnuFile.setName("mnuFile");
+                    mnuFile.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            mnuFileMouseEntered();
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            mnuFileMouseExited();
+                        }
+                    });
+
+                    //---- mniImports ----
+                    mniImports.setText("Imports");
+                    mniImports.setMnemonic('I');
+                    mniImports.setName("mniImports");
+                    mnuFile.add(mniImports);
+
+                    //---- mniExports ----
+                    mniExports.setText("Exports");
+                    mniExports.setMnemonic('E');
+                    mniExports.setName("mniExports");
+                    mnuFile.add(mniExports);
+
+                    //---- mniExit ----
+                    mniExit.setText("Exit");
+                    mniExit.setMnemonic('E');
+                    mniExit.setName("mniExit");
+                    mniExit.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniExitActionPerformed();
+                        }
+                    });
+                    mnuFile.add(mniExit);
+                }
+                menuBar1.add(mnuFile);
+
                 //======== mnuSetup ========
                 {
                     mnuSetup.setText("Setup");
@@ -181,11 +251,12 @@ public class HomePanel extends JPanel {
                     mnuSetup.setForeground(Color.black);
                     mnuSetup.setFont(new Font("Tahoma", Font.PLAIN, 12));
                     mnuSetup.setOpaque(false);
+                    mnuSetup.setMnemonic('S');
                     mnuSetup.setName("mnuSetup");
                     mnuSetup.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseEntered(MouseEvent e) {
-                            menu1MouseEntered();
+                            mnuSettingsMouseEntered();
                         }
                         @Override
                         public void mouseExited(MouseEvent e) {
@@ -195,6 +266,7 @@ public class HomePanel extends JPanel {
 
                     //---- mnuDatabaseSettings ----
                     mnuDatabaseSettings.setText("Database Settings");
+                    mnuDatabaseSettings.setMnemonic('D');
                     mnuDatabaseSettings.setName("mnuDatabaseSettings");
                     mnuDatabaseSettings.addActionListener(new ActionListener() {
                         @Override
@@ -206,6 +278,7 @@ public class HomePanel extends JPanel {
 
                     //---- mnuUsers ----
                     mnuUsers.setText("Users");
+                    mnuUsers.setMnemonic('U');
                     mnuUsers.setName("mnuUsers");
                     mnuUsers.addActionListener(new ActionListener() {
                         @Override
@@ -217,6 +290,7 @@ public class HomePanel extends JPanel {
 
                     //---- mnuAdvancements ----
                     mnuAdvancements.setText("Advancements");
+                    mnuAdvancements.setMnemonic('A');
                     mnuAdvancements.setName("mnuAdvancements");
                     mnuAdvancements.addActionListener(new ActionListener() {
                         @Override
@@ -233,25 +307,30 @@ public class HomePanel extends JPanel {
                 hSpacer1.setName("hSpacer1");
                 menuBar1.add(hSpacer1);
 
-                //---- btnSignout ----
-                btnSignout.setText("Sign out");
-                btnSignout.setForeground(Color.black);
-                btnSignout.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                btnSignout.setPreferredSize(new Dimension(80, 24));
-                btnSignout.setMinimumSize(new Dimension(80, 24));
-                btnSignout.setMaximumSize(new Dimension(80, 24));
-                btnSignout.setFocusPainted(false);
-                btnSignout.setBackground(new Color(153, 153, 153));
-                btnSignout.setBorderPainted(false);
-                btnSignout.setOpaque(false);
-                btnSignout.setName("btnSignout");
-                btnSignout.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        btnSignoutActionPerformed();
-                    }
-                });
-                menuBar1.add(btnSignout);
+                //======== mnuSignOut ========
+                {
+                    mnuSignOut.setText("Sign out");
+                    mnuSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
+                    mnuSignOut.setForeground(Color.black);
+                    mnuSignOut.setOpaque(false);
+                    mnuSignOut.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuSignOut.setName("mnuSignOut");
+                    mnuSignOut.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            mnuSignOutMouseEntered();
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            mnuSignOutMouseExited();
+                        }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            btnSignoutActionPerformed();
+                        }
+                    });
+                }
+                menuBar1.add(mnuSignOut);
             }
             panel1.add(menuBar1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -274,10 +353,15 @@ public class HomePanel extends JPanel {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    private JMenu mnuFile;
+    private JMenuItem mniImports;
+    private JMenuItem mniExports;
+    private JMenuItem mniExit;
     private JMenu mnuSetup;
     private JMenuItem mnuDatabaseSettings;
     private JMenuItem mnuUsers;
     private JMenuItem mnuAdvancements;
+    private JMenu mnuSignOut;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

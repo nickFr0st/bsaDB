@@ -57,6 +57,15 @@ public class BaseFrame extends JFrame {
         }
     }
 
+    public void exit() {
+        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to close BSA Database?", "Exit", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        CacheObject.clear();
+        System.exit(0);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         pnlCards = new JPanel();
@@ -89,5 +98,7 @@ public class BaseFrame extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JPanel pnlCards;
+
+
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
