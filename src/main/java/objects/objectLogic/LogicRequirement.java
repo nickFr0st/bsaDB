@@ -103,7 +103,7 @@ public class LogicRequirement {
     }
 
     public static synchronized void delete(Requirement requirement) {
-        if (requirement == null || requirement.getId() <= 1) {
+        if (requirement == null || requirement.getId() < 1) {
             return;
         }
 

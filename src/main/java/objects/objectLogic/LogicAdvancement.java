@@ -88,7 +88,7 @@ public class LogicAdvancement {
     }
 
     public static synchronized void delete(Advancement advancement) {
-        if (advancement == null || advancement.getId() <= 1) {
+        if (advancement == null || advancement.getId() < 1) {
             return;
         }
 

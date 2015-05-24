@@ -277,7 +277,14 @@ public class AdvancementPanel extends JPanel {
             valid = false;
         }
 
-        if (validateRequirements(advancement.getId(), true) == null) {
+        int advancementId;
+        if (advancement == null) {
+            advancementId = -1;
+        } else {
+            advancementId = advancement.getId();
+        }
+
+        if (validateRequirements(advancementId, true) == null) {
             valid = false;
         }
 
@@ -425,8 +432,12 @@ public class AdvancementPanel extends JPanel {
             int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
             int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
 
-            btnBadgeImage.setIcon(new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH)));
-            if (!Util.isEmpty(imgPath)) {
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            if (icon.getImage() == null) {
+                btnBadgeImage.setIcon(noImage);
+                imagePath = "";
+            } else {
+                btnBadgeImage.setIcon(icon);
                 imagePath = imgPath;
             }
         } catch (IOException ignore) {
