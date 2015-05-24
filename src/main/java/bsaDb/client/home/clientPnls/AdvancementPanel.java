@@ -50,6 +50,9 @@ public class AdvancementPanel extends JPanel {
         btnSave.setVisible(false);
         btnUpdate.setVisible(false);
 
+        scrollPane3.getVerticalScrollBar().setUnitIncrement(18);
+        scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
+
         populateAdvancementNameList();
 
         enableControls(false);
@@ -134,15 +137,22 @@ public class AdvancementPanel extends JPanel {
     private void loadRequirementList() {
         List<Requirement> requirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
 
-        boolean firstPass = false;
+        boolean firstAdded = false;
         for (Requirement requirement : requirementList) {
-            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstPass, requirement.getId());
+            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
             pnlRequirementList.add(pnlRequirement);
 
-            if (!firstPass) {
-                firstPass = true;
+            if (!firstAdded) {
+                firstAdded = true;
             }
         }
+
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                scrollPane3.getViewport().setViewPosition(new Point(0, 0));
+            }
+        });
 
         pnlRequirementList.revalidate();
         pnlRequirementList.repaint();
@@ -520,7 +530,7 @@ public class AdvancementPanel extends JPanel {
         JScrollPane scrollPane1 = new JScrollPane();
         listAdvancementNames = new JList();
         JPanel panel3 = new JPanel();
-        JScrollPane scrollPane2 = new JScrollPane();
+        scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
         JPanel panel1 = new JPanel();
         btnBadgeImage = new JLabel();
@@ -534,7 +544,7 @@ public class AdvancementPanel extends JPanel {
         btnAddRequirement = new JLabel();
         btnRemoveRequirement = new JLabel();
         lblRequirementError = new JLabel();
-        JScrollPane scrollPane3 = new JScrollPane();
+        scrollPane3 = new JScrollPane();
         pnlRequirementList = new JPanel();
         JPanel panel5 = new JPanel();
         btnNew = new JButton();
@@ -846,6 +856,7 @@ public class AdvancementPanel extends JPanel {
                                 //======== pnlRequirementList ========
                                 {
                                     pnlRequirementList.setBackground(Color.white);
+                                    pnlRequirementList.setMaximumSize(new Dimension(450, 700));
                                     pnlRequirementList.setName("pnlRequirementList");
                                     pnlRequirementList.setLayout(new VerticalLayout());
                                 }
@@ -964,6 +975,7 @@ public class AdvancementPanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JTextFieldDefaultText txtSearchName;
     private JList listAdvancementNames;
+    private JScrollPane scrollPane2;
     private JLabel btnBadgeImage;
     private JLabel lblName;
     private JTextFieldDefaultText txtName;
@@ -972,6 +984,7 @@ public class AdvancementPanel extends JPanel {
     private JLabel btnAddRequirement;
     private JLabel btnRemoveRequirement;
     private JLabel lblRequirementError;
+    private JScrollPane scrollPane3;
     private JPanel pnlRequirementList;
     private JButton btnNew;
     private JButton btnSave;

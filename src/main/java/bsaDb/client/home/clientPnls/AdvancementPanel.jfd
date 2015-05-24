@@ -107,9 +107,6 @@ new FormModel {
 					}
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane2"
-						auxiliary() {
-							"JavaCodeGenerator.variableLocal": true
-						}
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 							"$columnSpecs": "250, 22:1.0"
 							"$rowSpecs": "181, 0:1.0"
@@ -264,12 +261,10 @@ new FormModel {
 								add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 									name: "scrollPane3"
 									"horizontalScrollBarPolicy": 31
-									auxiliary() {
-										"JavaCodeGenerator.variableLocal": true
-									}
 									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.swingx.VerticalLayout ) ) {
 										name: "pnlRequirementList"
 										"background": new java.awt.Color( 255, 255, 255, 255 )
+										"maximumSize": new java.awt.Dimension( 450, 700 )
 									} )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 1
