@@ -9,6 +9,7 @@ import bsaDb.client.home.clientPnls.AdvancementPanel;
 import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 import bsaDb.client.home.clientPnls.UserPanel;
+import bsaDb.client.home.dialogs.export.ExportDialog;
 import constants.AccessRightConst;
 import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
@@ -156,6 +157,11 @@ public class HomePanel extends JPanel {
         baseFrame.exit();
     }
 
+    private void mniExportsActionPerformed() {
+        ExportDialog dialog = new ExportDialog((JFrame) SwingUtilities.getWindowAncestor(this));
+        dialog.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -228,6 +234,12 @@ public class HomePanel extends JPanel {
                     mniExports.setText("Exports");
                     mniExports.setMnemonic('E');
                     mniExports.setName("mniExports");
+                    mniExports.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniExportsActionPerformed();
+                        }
+                    });
                     mnuFile.add(mniExports);
 
                     //---- mniExit ----
