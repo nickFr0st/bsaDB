@@ -115,11 +115,14 @@ public class AdvancementPanel extends JPanel {
 
         enableControls(true);
 
-        if (!Util.isEmpty(advancement.getImgPath())) {
-            imagePath = advancement.getImgPath();
-            btnBadgeImage.setIcon(new ImageIcon(imagePath));
-        }
         txtName.setText(advancement.getName());
+
+        ImageIcon tryPath = new ImageIcon(advancement.getImgPath());
+        if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
+            btnBadgeImage.setIcon(noImage);
+        } else {
+            setImage(advancement.getImgPath());
+        }
 
         loadRequirementList();
 
@@ -267,9 +270,15 @@ public class AdvancementPanel extends JPanel {
         }
 
         advancement.setName(txtName.getText());
-        if (!Util.isEmpty(imagePath)) {
+        if (Util.isEmpty(imagePath) || getImage() == null) {
+            advancement.setImgPath("");
+        } else {
             advancement.setImgPath(imagePath);
         }
+    }
+
+    private Image getImage() {
+        return new ImageIcon(imagePath).getImage();
     }
 
     private boolean validateFields() {
@@ -763,7 +772,7 @@ public class AdvancementPanel extends JPanel {
                                 ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
                                 //---- lblRequirement ----
-                                lblRequirement.setText("Requirments");
+                                lblRequirement.setText("Requirements");
                                 lblRequirement.setFont(new Font("Vijaya", Font.PLAIN, 22));
                                 lblRequirement.setForeground(new Color(51, 102, 153));
                                 lblRequirement.setName("lblRequirement");
