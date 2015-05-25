@@ -145,14 +145,6 @@ public class HomePanel extends JPanel {
         mnuFile.setIcon(new ImageIcon(getClass().getResource("/images/file24.png")));
     }
 
-    private void mnuSignOutMouseEntered() {
-        mnuSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout_blue24.png")));
-    }
-
-    private void mnuSignOutMouseExited() {
-        mnuSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
-    }
-
     private void mniExitActionPerformed() {
         baseFrame.exit();
     }
@@ -160,6 +152,14 @@ public class HomePanel extends JPanel {
     private void mniExportsActionPerformed() {
         ExportDialog dialog = new ExportDialog((JFrame) SwingUtilities.getWindowAncestor(this));
         dialog.setVisible(true);
+    }
+
+    private void btnSignOutMouseEntered() {
+        btnSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout_blue24.png")));
+    }
+
+    private void btnSignOutMouseExited() {
+        btnSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
     }
 
     private void initComponents() {
@@ -175,7 +175,8 @@ public class HomePanel extends JPanel {
         mnuUsers = new JMenuItem();
         mnuAdvancements = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
-        mnuSignOut = new JMenu();
+        btnSignOut = new JButton();
+        label1 = new JLabel();
         pnlCards = new JPanel();
 
         //======== this ========
@@ -319,30 +320,38 @@ public class HomePanel extends JPanel {
                 hSpacer1.setName("hSpacer1");
                 menuBar1.add(hSpacer1);
 
-                //======== mnuSignOut ========
-                {
-                    mnuSignOut.setText("Sign out");
-                    mnuSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
-                    mnuSignOut.setForeground(Color.black);
-                    mnuSignOut.setOpaque(false);
-                    mnuSignOut.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                    mnuSignOut.setName("mnuSignOut");
-                    mnuSignOut.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-                            mnuSignOutMouseEntered();
-                        }
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-                            mnuSignOutMouseExited();
-                        }
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            btnSignoutActionPerformed();
-                        }
-                    });
-                }
-                menuBar1.add(mnuSignOut);
+                //---- btnSignOut ----
+                btnSignOut.setText("Sign out");
+                btnSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
+                btnSignOut.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                btnSignOut.setForeground(Color.black);
+                btnSignOut.setFocusPainted(false);
+                btnSignOut.setOpaque(false);
+                btnSignOut.setBorder(null);
+                btnSignOut.setBackground(new Color(153, 153, 153));
+                btnSignOut.setName("btnSignOut");
+                btnSignOut.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        btnSignOutMouseEntered();
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        btnSignOutMouseExited();
+                    }
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        btnSignoutActionPerformed();
+                    }
+                });
+                menuBar1.add(btnSignOut);
+
+                //---- label1 ----
+                label1.setMinimumSize(new Dimension(10, 0));
+                label1.setPreferredSize(new Dimension(10, 0));
+                label1.setMaximumSize(new Dimension(10, 0));
+                label1.setName("label1");
+                menuBar1.add(label1);
             }
             panel1.add(menuBar1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -373,7 +382,8 @@ public class HomePanel extends JPanel {
     private JMenuItem mnuDatabaseSettings;
     private JMenuItem mnuUsers;
     private JMenuItem mnuAdvancements;
-    private JMenu mnuSignOut;
+    private JButton btnSignOut;
+    private JLabel label1;
     private JPanel pnlCards;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
