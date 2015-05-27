@@ -6,7 +6,10 @@ package constants;
 public enum AccessRightConst {
     DATABASE_SETTINGS(10, "Database Settings"),
     USERS(20, "Users"),
-    ADVANCEMENTS(30, "Advancements");
+    ADVANCEMENTS(30, "Advancements"),
+    IMPORTS(40, "Imports"),
+    EXPORTS(50, "Exports"),
+    ;
 
     private int id;
     private String name;

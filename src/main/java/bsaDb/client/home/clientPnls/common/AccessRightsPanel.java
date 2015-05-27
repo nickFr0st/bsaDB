@@ -28,6 +28,8 @@ public class AccessRightsPanel extends JPanel {
     @Override
     public void setEnabled(boolean enabled) {
         chkDatabaseSettings.setEnabled(enabled);
+        chkImports.setEnabled(enabled);
+        chkExports.setEnabled(enabled);
         chkUsers.setEnabled(enabled);
         chkAdvancements.setEnabled(enabled);
     }
@@ -46,6 +48,10 @@ public class AccessRightsPanel extends JPanel {
                 chkUsers.setSelected(true);
             } else if (accessRight.getRightId() == AccessRightConst.ADVANCEMENTS.getId()) {
                 chkAdvancements.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.IMPORTS.getId()) {
+                chkImports.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.EXPORTS.getId()) {
+                chkExports.setSelected(true);
             }
         }
     }
@@ -62,6 +68,12 @@ public class AccessRightsPanel extends JPanel {
         if (chkAdvancements.isSelected()) {
             accessRightIdList.add(AccessRightConst.ADVANCEMENTS.getId());
         }
+        if (chkImports.isSelected()) {
+            accessRightIdList.add(AccessRightConst.IMPORTS.getId());
+        }
+        if (chkExports.isSelected()) {
+            accessRightIdList.add(AccessRightConst.EXPORTS.getId());
+        }
 
         return accessRightIdList;
     }
@@ -70,11 +82,15 @@ public class AccessRightsPanel extends JPanel {
         chkDatabaseSettings.setSelected(false);
         chkUsers.setSelected(false);
         chkAdvancements.setSelected(false);
+        chkImports.setSelected(false);
+        chkExports.setSelected(false);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         chkDatabaseSettings = new JCheckBox();
+        chkImports = new JCheckBox();
+        chkExports = new JCheckBox();
         chkUsers = new JCheckBox();
         chkAdvancements = new JCheckBox();
 
@@ -85,9 +101,9 @@ public class AccessRightsPanel extends JPanel {
         setName("this");
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
         ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- chkDatabaseSettings ----
         chkDatabaseSettings.setText("Database Settings");
@@ -99,13 +115,33 @@ public class AccessRightsPanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 5), 0, 0));
 
+        //---- chkImports ----
+        chkImports.setText("Imports");
+        chkImports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chkImports.setOpaque(false);
+        chkImports.setForeground(Color.black);
+        chkImports.setName("chkImports");
+        add(chkImports, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 5), 0, 0));
+
+        //---- chkExports ----
+        chkExports.setText("Exports");
+        chkExports.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chkExports.setOpaque(false);
+        chkExports.setForeground(Color.black);
+        chkExports.setName("chkExports");
+        add(chkExports, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 5), 0, 0));
+
         //---- chkUsers ----
         chkUsers.setText("Users");
         chkUsers.setFont(new Font("Tahoma", Font.PLAIN, 14));
         chkUsers.setForeground(Color.black);
         chkUsers.setOpaque(false);
         chkUsers.setName("chkUsers");
-        add(chkUsers, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+        add(chkUsers, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 5), 0, 0));
 
@@ -115,7 +151,7 @@ public class AccessRightsPanel extends JPanel {
         chkAdvancements.setForeground(Color.black);
         chkAdvancements.setOpaque(false);
         chkAdvancements.setName("chkAdvancements");
-        add(chkAdvancements, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+        add(chkAdvancements, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 0, 5), 0, 0));
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -123,6 +159,8 @@ public class AccessRightsPanel extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JCheckBox chkDatabaseSettings;
+    private JCheckBox chkImports;
+    private JCheckBox chkExports;
     private JCheckBox chkUsers;
     private JCheckBox chkAdvancements;
     // JFormDesigner - End of variables declaration  //GEN-END:variables

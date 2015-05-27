@@ -69,19 +69,19 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuSettingsMouseEntered", false ) )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuSettingsMouseExited", false ) )
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "mnuDatabaseSettings"
+							name: "mniDatabaseSettings"
 							"text": "Database Settings"
 							"mnemonic": 68
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuDatabaseSettingsActionPerformed", false ) )
 						} )
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "mnuUsers"
+							name: "mniUsers"
 							"text": "Users"
 							"mnemonic": 85
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuUsersActionPerformed", false ) )
 						} )
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
-							name: "mnuAdvancements"
+							name: "mniAdvancements"
 							"text": "Advancements"
 							"mnemonic": 65
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mnuAdvancementsActionPerformed", false ) )

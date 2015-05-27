@@ -69,11 +69,15 @@ public class HomePanel extends JPanel {
 
             for (AccessRight accessRight : CacheObject.getAccessRights(currentUser.getId())) {
                 if (accessRight.getRightId() == AccessRightConst.DATABASE_SETTINGS.getId()) {
-                    mnuDatabaseSettings.setEnabled(true);
+                    mniDatabaseSettings.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.USERS.getId()) {
-                    mnuUsers.setEnabled(true);
+                    mniUsers.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.ADVANCEMENTS.getId()) {
-                    mnuAdvancements.setEnabled(true);
+                    mniAdvancements.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.IMPORTS.getId()) {
+                    mniImports.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.EXPORTS.getId()) {
+                    mniExports.setEnabled(true);
                 }
             }
 
@@ -82,8 +86,11 @@ public class HomePanel extends JPanel {
     }
 
     private void turnOffAllRights() {
-        mnuDatabaseSettings.setEnabled(false);
-        mnuUsers.setEnabled(false);
+        mniDatabaseSettings.setEnabled(false);
+        mniUsers.setEnabled(false);
+        mniAdvancements.setEnabled(false);
+        mniImports.setEnabled(false);
+        mniExports.setEnabled(false);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -171,9 +178,9 @@ public class HomePanel extends JPanel {
         mniExports = new JMenuItem();
         mniExit = new JMenuItem();
         mnuSetup = new JMenu();
-        mnuDatabaseSettings = new JMenuItem();
-        mnuUsers = new JMenuItem();
-        mnuAdvancements = new JMenuItem();
+        mniDatabaseSettings = new JMenuItem();
+        mniUsers = new JMenuItem();
+        mniAdvancements = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         btnSignOut = new JButton();
         label1 = new JLabel();
@@ -277,41 +284,41 @@ public class HomePanel extends JPanel {
                         }
                     });
 
-                    //---- mnuDatabaseSettings ----
-                    mnuDatabaseSettings.setText("Database Settings");
-                    mnuDatabaseSettings.setMnemonic('D');
-                    mnuDatabaseSettings.setName("mnuDatabaseSettings");
-                    mnuDatabaseSettings.addActionListener(new ActionListener() {
+                    //---- mniDatabaseSettings ----
+                    mniDatabaseSettings.setText("Database Settings");
+                    mniDatabaseSettings.setMnemonic('D');
+                    mniDatabaseSettings.setName("mniDatabaseSettings");
+                    mniDatabaseSettings.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             mnuDatabaseSettingsActionPerformed();
                         }
                     });
-                    mnuSetup.add(mnuDatabaseSettings);
+                    mnuSetup.add(mniDatabaseSettings);
 
-                    //---- mnuUsers ----
-                    mnuUsers.setText("Users");
-                    mnuUsers.setMnemonic('U');
-                    mnuUsers.setName("mnuUsers");
-                    mnuUsers.addActionListener(new ActionListener() {
+                    //---- mniUsers ----
+                    mniUsers.setText("Users");
+                    mniUsers.setMnemonic('U');
+                    mniUsers.setName("mniUsers");
+                    mniUsers.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             mnuUsersActionPerformed();
                         }
                     });
-                    mnuSetup.add(mnuUsers);
+                    mnuSetup.add(mniUsers);
 
-                    //---- mnuAdvancements ----
-                    mnuAdvancements.setText("Advancements");
-                    mnuAdvancements.setMnemonic('A');
-                    mnuAdvancements.setName("mnuAdvancements");
-                    mnuAdvancements.addActionListener(new ActionListener() {
+                    //---- mniAdvancements ----
+                    mniAdvancements.setText("Advancements");
+                    mniAdvancements.setMnemonic('A');
+                    mniAdvancements.setName("mniAdvancements");
+                    mniAdvancements.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             mnuAdvancementsActionPerformed();
                         }
                     });
-                    mnuSetup.add(mnuAdvancements);
+                    mnuSetup.add(mniAdvancements);
                 }
                 menuBar1.add(mnuSetup);
 
@@ -379,9 +386,9 @@ public class HomePanel extends JPanel {
     private JMenuItem mniExports;
     private JMenuItem mniExit;
     private JMenu mnuSetup;
-    private JMenuItem mnuDatabaseSettings;
-    private JMenuItem mnuUsers;
-    private JMenuItem mnuAdvancements;
+    private JMenuItem mniDatabaseSettings;
+    private JMenuItem mniUsers;
+    private JMenuItem mniAdvancements;
     private JButton btnSignOut;
     private JLabel label1;
     private JPanel pnlCards;
