@@ -113,6 +113,13 @@ public class ExportPanel extends JPanel {
     }
 
     public List<String> getExportList() {
+        if (rbtnExportAll.isSelected()) {
+            nameExport = new ArrayList<String>();
+            for (Advancement advancement : CacheObject.getAdvancementList()) {
+                nameExport.add(advancement.getName());
+            }
+        }
+
         return nameExport;
     }
 

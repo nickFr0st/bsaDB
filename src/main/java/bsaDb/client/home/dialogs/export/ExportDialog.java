@@ -69,8 +69,14 @@ public class ExportDialog extends JDialog {
             return;
         }
 
+        boolean success = false;
         if (typeConst == IETypeConst.ADVANCEMENT) {
-            IEAdvancementLogic.export(exportList);
+            success = IEAdvancementLogic.export(this, exportList);
+        }
+
+        if (success) {
+            setVisible(false);
+            dispose();
         }
     }
 

@@ -153,6 +153,21 @@ public class CacheObject {
         return cachedAdvancements.values();
     }
 
+    public static List<Advancement> getAdvancementList(List<String> nameList) {
+        getAdvancementList();
+
+        List<Advancement> advancementList = new ArrayList<Advancement>();
+        for (String name : nameList) {
+            for (Advancement advancement : cachedAdvancements.values()) {
+                if (advancement.getName().equals(name)) {
+                    advancementList.add(advancement);
+                }
+            }
+        }
+
+        return advancementList;
+    }
+
     public static Advancement getAdvancement(String name) {
         if (Util.isEmpty(name)) {
             return null;
