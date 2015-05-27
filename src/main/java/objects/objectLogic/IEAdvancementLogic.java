@@ -1,5 +1,6 @@
 package objects.objectLogic;
 
+import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import bsaDb.client.customComponents.CustomChooser;
 import constants.RequirementTypeConst;
@@ -10,12 +11,11 @@ import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Nathanael on 5/24/2015
@@ -89,5 +89,149 @@ public class IEAdvancementLogic {
 
         JOptionPane.showMessageDialog(parent, "Your selected advancement(s) have been successfully exported.", "Export Successful", JOptionPane.INFORMATION_MESSAGE);
         return true;
+    }
+
+    public static boolean doImport(Component parent, String importPath) {
+        try {
+            CSVReader reader = new CSVReader(new FileReader(importPath), ',');
+            Map<Advancement, List<Requirement>> importMap = new HashMap<Advancement, List<Requirement>>();
+
+            boolean getAdvancement = true;
+            Advancement advancement = null;
+            java.util.List<Requirement> requirementList = new ArrayList<Requirement>();
+
+            String[] record;
+            int line = 0;
+            StringBuilder errors = new StringBuilder();
+
+            while ((record = reader.readNext()) != null) {
+                ++line;
+                String errorLine = "line: " + line + "\n";
+
+                // check for the headers
+                if (record[0].equals("Advancement Name") || record[0].equals("Requirement Name")) {
+                    continue;
+                }
+
+                if (record[0].isEmpty()) {
+                    getAdvancement = true;
+
+                    if (advancement != null) {
+                        if (!checkForErrors(errors, parent)) {
+                            return false;
+                        }
+
+                        importMap.put(advancement, requirementList);
+                        advancement = null;
+                        requirementList = new ArrayList<Requirement>();
+                    }
+
+                    continue;
+                }
+
+                if (getAdvancement) {
+                    getAdvancement = false;
+
+                    advancement = new Advancement();
+                    String advancementName = record[0];
+
+                    if (Util.isEmpty(advancementName)){
+                        errors.append("Advancement name is missing. ").append(errorLine);
+                    } else if (advancementName.length() > Advancement.COL_NAME_LENGTH) {
+                        errors.append("Advancement name is too long. ").append(errorLine);
+                    }
+                    advancement.setName(advancementName);
+
+                    if (record.length == 1) {
+                        continue;
+                    }
+
+                    String advancementImgPath = record[1];
+                    if (Util.isEmpty(advancementImgPath)){
+                        errors.append("Advancement image path is missing. ").append(errorLine);
+                    } else if (advancementImgPath.length() > Advancement.COL_IMG_PATH_LENGTH) {
+                        errors.append("Advancement image path is too long. ").append(errorLine);
+                    }
+                    advancement.setImgPath(advancementImgPath);
+
+                    continue;
+                }
+
+                if (record.length < 2) {
+                    errors.append("Requirements needs both a name and a description.").append(errorLine);
+                    continue;
+                }
+
+                Requirement requirement = new Requirement();
+                String reqName = record[0];
+                if (Util.isEmpty(reqName)){
+                    errors.append("Requirement name is missing. ").append(errorLine);
+                } else if (reqName.length() > Requirement.COL_NAME_LENGTH) {
+                    errors.append("Requirement name is too long. ").append(errorLine);
+                }
+                requirement.setName(reqName);
+
+                String reqDesc = record[1];
+                if (Util.isEmpty(reqDesc)){
+                    errors.append("Requirement description is missing. ").append(errorLine);
+                }
+                requirement.setDescription(reqDesc);
+                requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+
+                requirementList.add(requirement);
+            }
+
+            reader.close();
+
+            if (!checkForErrors(errors, parent)) {
+                return false;
+            }
+
+            importMap.put(advancement, requirementList);
+
+            // todo: use cached lists and database for this
+//            for (Advancement adv : importMap.keySet()) {
+//                Advancement existingAdv = LogicAdvancement.findByName(adv.getName());
+//
+//                if (existingAdv != null) {
+//                    LogicRequirement.deleteAllByParentIdAndTypeId(existingAdv.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+//                }
+//
+//                adv = LogicAdvancement.importAdv(adv);
+//                if (adv == null) {
+//                    continue;
+//                }
+//
+//                java.util.List<Requirement> reqList = importMap.get(adv);
+//                if (Util.isEmpty(reqList)) {
+//                    continue;
+//                }
+//
+//                for (Requirement req : reqList) {
+//                    req.setParentId(adv.getId());
+//                }
+//
+//                LogicRequirement.saveList(reqList);
+//            }
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+
+        JOptionPane.showMessageDialog(parent, "Your advancements have been successfully imported.", "Import Successful", JOptionPane.INFORMATION_MESSAGE);
+        return true;
+    }
+
+    private static boolean checkForErrors(StringBuilder errors, Component parent) {
+        if (errors.length() <= 0) {
+            return true;
+        }
+
+        String errorHeaderMessage = "Please fix the following issues and try again.\n\n";
+        errors.insert(0, errorHeaderMessage);
+
+        JOptionPane.showMessageDialog(parent, errors, "Import Errors", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
 }

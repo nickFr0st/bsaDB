@@ -44,6 +44,7 @@ new FormModel {
 							name: "mniImports"
 							"text": "Imports"
 							"mnemonic": 73
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniImportsActionPerformed", false ) )
 						} )
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
 							name: "mniExports"

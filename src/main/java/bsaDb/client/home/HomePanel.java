@@ -10,6 +10,7 @@ import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
 import bsaDb.client.home.clientPnls.SplashPanel;
 import bsaDb.client.home.clientPnls.UserPanel;
 import bsaDb.client.home.dialogs.export.ExportDialog;
+import bsaDb.client.home.dialogs.imports.ImportDialog;
 import constants.AccessRightConst;
 import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
@@ -169,6 +170,11 @@ public class HomePanel extends JPanel {
         btnSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
     }
 
+    private void mniImportsActionPerformed() {
+        ImportDialog dialog = new ImportDialog((JFrame) SwingUtilities.getWindowAncestor(this));
+        dialog.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -236,6 +242,12 @@ public class HomePanel extends JPanel {
                     mniImports.setText("Imports");
                     mniImports.setMnemonic('I');
                     mniImports.setName("mniImports");
+                    mniImports.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniImportsActionPerformed();
+                        }
+                    });
                     mnuFile.add(mniImports);
 
                     //---- mniExports ----

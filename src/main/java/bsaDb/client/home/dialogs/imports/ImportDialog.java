@@ -1,8 +1,8 @@
 /*
- * Created by JFormDesigner on Sun May 24 13:04:15 MDT 2015
+ * Created by JFormDesigner on Tue May 26 21:04:00 MDT 2015
  */
 
-package bsaDb.client.home.dialogs.export;
+package bsaDb.client.home.dialogs.imports;
 
 import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
@@ -13,28 +13,27 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 /**
  * @author User #2
  */
-public class ExportDialog extends JDialog {
+public class ImportDialog extends JDialog {
 
-    private static final String EXPORT_SELECT_PAGE = "exportSelect";
-    private static final String EXPORT_PAGE = "export";
+    private static final String IMPORT_SELECT_PAGE = "importSelect";
+    private static final String IMPORT_PAGE = "import";
 
-    private ExportSelectPanel pnlSelect;
-    private ExportPanel pnlExport;
+    private ImportSelectPanel pnlSelect;
+    private ImportPanel pnlImport;
     private IETypeConst typeConst;
 
-    public ExportDialog(Frame owner) {
+    public ImportDialog(Frame owner) {
         super(owner);
         initComponents();
 
-        pnlSelect = new ExportSelectPanel();
-        pnlContent.add(pnlSelect, EXPORT_SELECT_PAGE);
+        pnlSelect = new ImportSelectPanel();
+        pnlContent.add(pnlSelect, IMPORT_SELECT_PAGE);
 
-        btnExport.setEnabled(false);
+        btnImport.setEnabled(false);
     }
 
     private void btnCancelActionPerformed() {
@@ -43,35 +42,35 @@ public class ExportDialog extends JDialog {
     }
 
     private void btnNextActionPerformed() {
-        typeConst = pnlSelect.getSelectedExport();
+        typeConst = pnlSelect.getSelectedImport();
 
         if (typeConst == null) {
-            JOptionPane.showMessageDialog(this, "Please select an option from the list to export.", "Empty Export Choice", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select an option from the list to import.", "Empty Import Choice", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (pnlExport == null) {
-            pnlExport = new ExportPanel(typeConst);
-            pnlContent.add(pnlExport, EXPORT_PAGE);
+        if (pnlImport == null) {
+            pnlImport = new ImportPanel(typeConst);
+            pnlContent.add(pnlImport, IMPORT_PAGE);
         }
 
-        ((CardLayout)pnlContent.getLayout()).show(pnlContent, EXPORT_PAGE);
+        ((CardLayout)pnlContent.getLayout()).show(pnlContent, IMPORT_PAGE);
 
         btnNext.setVisible(false);
-        btnExport.setEnabled(true);
+        btnImport.setEnabled(true);
     }
 
-    private void btnExportActionPerformed() {
-        List<String> exportList = pnlExport.getExportList();
+    private void btnImportActionPerformed() {
+        String importPath = pnlImport.getImportPath();
 
-        if (Util.isEmpty(exportList)) {
-            JOptionPane.showMessageDialog(this, "Please select at least one " + typeConst.getName() + " to export.", "Empty Export Choice", JOptionPane.ERROR_MESSAGE);
+        if (Util.isEmpty(importPath)) {
+            JOptionPane.showMessageDialog(this, "Please select a valid location to save your import.", "Empty Import Choice", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         boolean success = false;
         if (typeConst == IETypeConst.ADVANCEMENT) {
-            success = IEAdvancementLogic.export(this, exportList);
+            success = IEAdvancementLogic.doImport(this, importPath);
         }
 
         if (success) {
@@ -82,17 +81,14 @@ public class ExportDialog extends JDialog {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        dialogPane = new JPanel();
+        JPanel dialogPane = new JPanel();
         pnlContent = new JPanel();
-        buttonBar = new JPanel();
+        JPanel buttonBar = new JPanel();
         btnNext = new JButton();
-        btnExport = new JButton();
+        btnImport = new JButton();
         btnCancel = new JButton();
 
         //======== this ========
-        setModal(true);
-        setResizable(false);
-        setTitle("Export");
         setName("this");
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -107,7 +103,6 @@ public class ExportDialog extends JDialog {
             //======== pnlContent ========
             {
                 pnlContent.setOpaque(false);
-                pnlContent.setPreferredSize(new Dimension(500, 230));
                 pnlContent.setName("pnlContent");
                 pnlContent.setLayout(new CardLayout());
             }
@@ -125,10 +120,9 @@ public class ExportDialog extends JDialog {
 
                 //---- btnNext ----
                 btnNext.setText("Next");
-                btnNext.setBackground(new Color(51, 156, 229));
-                btnNext.setForeground(Color.white);
                 btnNext.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                btnNext.setFocusPainted(false);
+                btnNext.setForeground(Color.white);
+                btnNext.setBackground(new Color(51, 156, 229));
                 btnNext.setName("btnNext");
                 btnNext.addActionListener(new ActionListener() {
                     @Override
@@ -140,29 +134,27 @@ public class ExportDialog extends JDialog {
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
-                //---- btnExport ----
-                btnExport.setText("Export");
-                btnExport.setBackground(new Color(51, 102, 153));
-                btnExport.setForeground(Color.white);
-                btnExport.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                btnExport.setFocusPainted(false);
-                btnExport.setName("btnExport");
-                btnExport.addActionListener(new ActionListener() {
+                //---- btnImport ----
+                btnImport.setText("Import");
+                btnImport.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                btnImport.setForeground(Color.white);
+                btnImport.setBackground(new Color(51, 102, 153));
+                btnImport.setName("btnImport");
+                btnImport.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        btnExportActionPerformed();
+                        btnImportActionPerformed();
                     }
                 });
-                buttonBar.add(btnExport, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                buttonBar.add(btnImport, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- btnCancel ----
                 btnCancel.setText("Cancel");
-                btnCancel.setBackground(new Color(207, 0, 0));
-                btnCancel.setForeground(Color.white);
                 btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                btnCancel.setFocusPainted(false);
+                btnCancel.setForeground(Color.white);
+                btnCancel.setBackground(new Color(207, 0, 0));
                 btnCancel.setName("btnCancel");
                 btnCancel.addActionListener(new ActionListener() {
                     @Override
@@ -183,11 +175,9 @@ public class ExportDialog extends JDialog {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    private JPanel dialogPane;
     private JPanel pnlContent;
-    private JPanel buttonBar;
     private JButton btnNext;
-    private JButton btnExport;
+    private JButton btnImport;
     private JButton btnCancel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

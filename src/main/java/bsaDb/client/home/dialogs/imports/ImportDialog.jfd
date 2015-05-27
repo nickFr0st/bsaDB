@@ -5,17 +5,16 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "this"
-			"modal": true
-			"resizable": false
-			"title": "Export"
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
 				"background": new java.awt.Color( 255, 255, 255, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.CardLayout ) ) {
 					name: "pnlContent"
 					"opaque": false
-					"preferredSize": new java.awt.Dimension( 500, 230 )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "Center"
 				} )
@@ -28,25 +27,26 @@ new FormModel {
 					name: "buttonBar"
 					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
 					"opaque": false
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "btnNext"
 						"text": "Next"
-						"background": new java.awt.Color( 51, 156, 229, 255 )
-						"foreground": new java.awt.Color( 255, 255, 255, 255 )
 						"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
-						"focusPainted": false
+						"foreground": &Color0 new java.awt.Color( 255, 255, 255, 255 )
+						"background": new java.awt.Color( 51, 156, 229, 255 )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNextActionPerformed", false ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 1
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "btnExport"
-						"text": "Export"
-						"background": new java.awt.Color( 51, 102, 153, 255 )
-						"foreground": new java.awt.Color( 255, 255, 255, 255 )
+						name: "btnImport"
+						"text": "Import"
 						"font": #Font0
-						"focusPainted": false
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnExportActionPerformed", false ) )
+						"foreground": #Color0
+						"background": new java.awt.Color( 51, 102, 153, 255 )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnImportActionPerformed", false ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 2
 						"gridy": 0
@@ -54,10 +54,9 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "btnCancel"
 						"text": "Cancel"
+						"font": #Font0
+						"foreground": #Color0
 						"background": new java.awt.Color( 207, 0, 0, 255 )
-						"foreground": new java.awt.Color( 255, 255, 255, 255 )
-						"font": new java.awt.Font( "Tahoma", 0, 14 )
-						"focusPainted": false
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnCancelActionPerformed", false ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 3
@@ -71,7 +70,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 520, 360 )
+			"size": new java.awt.Dimension( 525, 410 )
 		} )
 	}
 }
