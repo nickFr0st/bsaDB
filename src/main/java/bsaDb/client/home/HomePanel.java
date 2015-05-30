@@ -173,6 +173,14 @@ public class HomePanel extends JPanel {
     private void mniImportsActionPerformed() {
         ImportDialog dialog = new ImportDialog((JFrame) SwingUtilities.getWindowAncestor(this));
         dialog.setVisible(true);
+
+        if (dialog.isSuccess()) {
+            switch (dialog.getTypeConst()) {
+                case ADVANCEMENT:
+                    pnlAdvancement.populateAdvancementNameList();
+                    break;
+            }
+        }
     }
 
     private void initComponents() {

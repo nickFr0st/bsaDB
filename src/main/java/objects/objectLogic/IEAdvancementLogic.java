@@ -189,30 +189,47 @@ public class IEAdvancementLogic {
 
             importMap.put(advancement, requirementList);
 
-            // todo: use cached lists and database for this
-//            for (Advancement adv : importMap.keySet()) {
-//                Advancement existingAdv = LogicAdvancement.findByName(adv.getName());
-//
-//                if (existingAdv != null) {
-//                    LogicRequirement.deleteAllByParentIdAndTypeId(existingAdv.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-//                }
-//
-//                adv = LogicAdvancement.importAdv(adv);
-//                if (adv == null) {
-//                    continue;
-//                }
-//
-//                java.util.List<Requirement> reqList = importMap.get(adv);
-//                if (Util.isEmpty(reqList)) {
-//                    continue;
-//                }
-//
-//                for (Requirement req : reqList) {
-//                    req.setParentId(adv.getId());
-//                }
-//
-//                LogicRequirement.saveList(reqList);
-//            }
+            for (Map.Entry<Advancement, List<Requirement>> entry : importMap.entrySet()) {
+                Advancement importedAdvancement = entry.getKey();
+                Advancement existingAdv = CacheObject.getAdvancement(importedAdvancement.getName());
+                int advancementId;
+
+                if (existingAdv != null) {
+                    advancementId = existingAdv.getId();
+                    if (!Util.isEmpty(importedAdvancement.getImgPath())) {
+                        existingAdv.setImgPath(importedAdvancement.getImgPath());
+                    }
+                    existingAdv = LogicAdvancement.update(existingAdv);
+                    CacheObject.addToAdvancements(existingAdv);
+
+                    List<Requirement> existingRequirementList = CacheObject.getRequirementListByParentIdAndTypeId(existingAdv.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+                    if (!Util.isEmpty(existingRequirementList)) {
+                        LogicRequirement.delete(existingRequirementList);
+                        for (Requirement requirement : existingRequirementList) {
+                            CacheObject.removeFromRequirements(requirement.getId());
+                        }
+                    }
+                } else {
+                    if (importedAdvancement.getImgPath() == null) {
+                        importedAdvancement.setImgPath("");
+                    }
+
+                    importedAdvancement = LogicAdvancement.save(importedAdvancement);
+                    CacheObject.addToAdvancements(importedAdvancement);
+                    advancementId = importedAdvancement.getId();
+                }
+
+                if (Util.isEmpty(entry.getValue())) {
+                    continue;
+                }
+
+                for (Requirement requirement : entry.getValue()) {
+                    requirement.setParentId(advancementId);
+                    requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+                    requirement = LogicRequirement.save(requirement);
+                    CacheObject.addToRequirements(requirement);
+                }
+            }
 
         } catch (IOException ioe) {
             ioe.printStackTrace();

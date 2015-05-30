@@ -55,16 +55,18 @@ public class LogicRequirement {
         }
     }
 
-    public static synchronized void save(Requirement requirement) {
+    public static synchronized Requirement save(Requirement requirement) {
         try {
             synchronized (lock) {
-                if (saveRequirement(requirement) != null) {
+                if ((requirement = saveRequirement(requirement)) != null) {
                     lock.wait(MySqlConnector.WAIT_TIME);
                 }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        return requirement;
     }
 
     private static Requirement saveRequirement(Requirement requirement) {

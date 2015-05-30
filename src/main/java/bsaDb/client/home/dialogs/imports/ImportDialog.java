@@ -25,6 +25,7 @@ public class ImportDialog extends JDialog {
     private ImportSelectPanel pnlSelect;
     private ImportPanel pnlImport;
     private IETypeConst typeConst;
+    boolean success;
 
     public ImportDialog(Frame owner) {
         super(owner);
@@ -68,15 +69,22 @@ public class ImportDialog extends JDialog {
             return;
         }
 
-        boolean success = false;
+        success = false;
         if (typeConst == IETypeConst.ADVANCEMENT) {
             success = IEAdvancementLogic.doImport(this, importPath);
         }
 
         if (success) {
             setVisible(false);
-            dispose();
         }
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public IETypeConst getTypeConst() {
+        return typeConst;
     }
 
     private void initComponents() {
@@ -90,6 +98,7 @@ public class ImportDialog extends JDialog {
 
         //======== this ========
         setTitle("Import");
+        setModal(true);
         setName("this");
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());

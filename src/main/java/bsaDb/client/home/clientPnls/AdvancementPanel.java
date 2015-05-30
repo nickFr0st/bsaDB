@@ -67,6 +67,7 @@ public class AdvancementPanel extends JPanel {
 
         listAdvancementNames.setListData(advancementNameList.toArray());
         listAdvancementNames.revalidate();
+        listAdvancementNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
