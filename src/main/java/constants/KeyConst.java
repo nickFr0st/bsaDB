@@ -34,7 +34,12 @@ public enum KeyConst {
     // Requirement
     DESCRIPTION("description"),
     PARENT_ID("parentId"),
-    TYPE_ID("typeId");
+    TYPE_ID("typeId"),
+
+    // Merit Badge
+    REQUIRED_FOR_EAGLE("requiredForEagle"),
+    REV_DATE("revisionDate"),
+    ;
 
     String name;
 

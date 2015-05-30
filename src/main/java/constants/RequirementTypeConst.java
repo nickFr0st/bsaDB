@@ -5,6 +5,7 @@ package constants;
  */
 public enum RequirementTypeConst {
     ADVANCEMENT(10, "Advancement"),
+    MERIT_BADGE(20, "Merit Badge"),
     ;
 
     private int id;

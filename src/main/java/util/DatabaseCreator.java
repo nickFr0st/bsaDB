@@ -65,6 +65,15 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableAdvancement);
 
+        String tableMeritBadge = "CREATE TABLE meritBadge " +
+                "(id INT NOT NULL," +
+                " name VARCHAR(225) NOT NULL," +
+                " imgPath VARCHAR(255) NOT NULL," +
+                " requiredForEagle TINYINT NOT NULL," +
+                " revisionDate DATE NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableMeritBadge);
+
         String tableRequirement = "CREATE TABLE requirement " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(45) NOT NULL," +

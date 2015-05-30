@@ -434,7 +434,7 @@ public class AdvancementPanel extends JPanel {
             return;
         }
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files(*.jpg, *.png, *.gif, *.jpeg)", "jpg", "png", "gif", "jpeg");
 
         CustomChooser chooser = new CustomChooser();
         chooser.setDialogTitle("Select an image");

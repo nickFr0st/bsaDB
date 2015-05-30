@@ -1,13 +1,7 @@
 package util;
 
-import objects.databaseObjects.AccessRight;
-import objects.databaseObjects.Advancement;
-import objects.databaseObjects.Requirement;
-import objects.databaseObjects.User;
-import objects.objectLogic.LogicAccessRight;
-import objects.objectLogic.LogicAdvancement;
-import objects.objectLogic.LogicRequirement;
-import objects.objectLogic.LogicUser;
+import objects.databaseObjects.*;
+import objects.objectLogic.*;
 
 import java.util.*;
 
@@ -20,12 +14,14 @@ public class CacheObject {
     private static Map<Integer, AccessRight> cachedAccessRights;
     private static Map<Integer, Advancement> cachedAdvancements;
     private static Map<Integer, Requirement> cachedRequirements;
+    private static Map<Integer, MeritBadge> cachedMeritBadges;
 
     private CacheObject() {
         getUserList();
         getAccessRightList();
         getAdvancementList();
         getRequirementList();
+        getMeritBadgeList();
     }
 
     public static void setupCache() {
@@ -38,11 +34,13 @@ public class CacheObject {
         cachedAccessRights = null;
         cachedAdvancements = null;
         cachedRequirements = null;
+        cachedMeritBadges = null;
 
         getUserList();
         getAccessRightList();
         getAdvancementList();
         getRequirementList();
+        getMeritBadgeList();
     }
 
     public static void clear() {
@@ -50,6 +48,7 @@ public class CacheObject {
         cachedAccessRights = null;
         cachedAdvancements = null;
         cachedRequirements = null;
+        cachedMeritBadges = null;
     }
 
     public static Collection<User> getUserList() {
@@ -186,7 +185,7 @@ public class CacheObject {
 
     public static void addToAdvancements(Advancement advancement) {
         if (cachedAdvancements == null) {
-            getAccessRightList();
+            getAdvancementList();
         }
 
         assert cachedAdvancements != null;
@@ -252,5 +251,64 @@ public class CacheObject {
         }
 
         cachedRequirements.remove(requirementId);
+    }
+
+    public static Collection<MeritBadge> getMeritBadgeList() {
+        if (cachedMeritBadges == null) {
+            cachedMeritBadges = new HashMap<Integer, MeritBadge>();
+            List<MeritBadge> meritBadgeList = LogicMeritBadge.findAll();
+            for (MeritBadge meritBadge : meritBadgeList) {
+                cachedMeritBadges.put(meritBadge.getId(), meritBadge);
+            }
+        }
+        return cachedMeritBadges.values();
+    }
+
+    public static List<MeritBadge> getMeritBadgeList(List<String> nameList) {
+        getMeritBadgeList();
+
+        List<MeritBadge> meritBadgeList = new ArrayList<MeritBadge>();
+        for (String name : nameList) {
+            for (MeritBadge meritBadge : cachedMeritBadges.values()) {
+                if (meritBadge.getName().equals(name)) {
+                    meritBadgeList.add(meritBadge);
+                }
+            }
+        }
+
+        return meritBadgeList;
+    }
+
+    public static MeritBadge getMeritBadge(String name) {
+        if (Util.isEmpty(name)) {
+            return null;
+        }
+
+        getMeritBadgeList();
+
+        for (MeritBadge meritBadge : cachedMeritBadges.values()) {
+            if (meritBadge.getName().equals(name)) {
+                return meritBadge;
+            }
+        }
+
+        return null;
+    }
+
+    public static void addToMeritBadges(MeritBadge meritBadge) {
+        if (cachedMeritBadges == null) {
+            getMeritBadgeList();
+        }
+
+        assert cachedMeritBadges != null;
+        cachedMeritBadges.put(meritBadge.getId(), meritBadge);
+    }
+
+    public static void removeFromMeritBadges(Integer meritBadgeId) {
+        if (cachedMeritBadges == null || cachedMeritBadges.isEmpty()) {
+            return;
+        }
+
+        cachedMeritBadges.remove(meritBadgeId);
     }
 }
