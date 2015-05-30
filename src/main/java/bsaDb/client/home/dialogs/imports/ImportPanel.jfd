@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-			"$columnSpecs": "0, 0"
-			"$rowSpecs": "0, 0, 0"
+			"$columnSpecs": "0:1.0, 80"
+			"$rowSpecs": "0, 35, 0, 0:1.0"
 			"$hGap": 5
 			"$vGap": 5
 			"$alignLeft": true
@@ -13,9 +13,66 @@ new FormModel {
 		} ) {
 			name: "this"
 			"background": new java.awt.Color( 255, 255, 255, 255 )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblSelectMessage"
+				"text": "Please select a file to import"
+				"font": new java.awt.Font( "Vijaya", 0, 20 )
+				"foreground": new java.awt.Color( 0, 0, 0, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"insets": new java.awt.Insets( 10, 10, 0, 0 )
+			} )
+			add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+				name: "txtImportPath"
+				"defaultText": "Import file path"
+				"font": new java.awt.Font( "Tahoma", 0, 14 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 1
+				"insets": new java.awt.Insets( 0, 10, 0, 0 )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btnBrowse"
+				"text": "Browse"
+				"background": new java.awt.Color( 51, 102, 153, 255 )
+				"font": new java.awt.Font( "Tahoma", 0, 14 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnBrowseActionPerformed", false ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridx": 1
+				"gridy": 1
+				"insets": new java.awt.Insets( 0, 0, 0, 10 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "lblImportInstructionMessage"
+				"text": "Import file instructions"
+				"foreground": new java.awt.Color( 0, 0, 0, 255 )
+				"font": new java.awt.Font( "Vijaya", 0, 20 )
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 2
+				"insets": new java.awt.Insets( 10, 10, 0, 0 )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JEditorPane" ) {
+					name: "txtInstructions"
+					"font": new java.awt.Font( "Tahoma", 0, 14 )
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"gridy": 3
+				"gridwidth": 2
+				"insets": new java.awt.Insets( 0, 10, 10, 10 )
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 500, 390 )
+			"size": new java.awt.Dimension( 580, 370 )
 		} )
 	}
 }

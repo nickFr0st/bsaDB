@@ -89,6 +89,7 @@ public class ImportDialog extends JDialog {
         btnCancel = new JButton();
 
         //======== this ========
+        setTitle("Import");
         setName("this");
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -103,6 +104,7 @@ public class ImportDialog extends JDialog {
             //======== pnlContent ========
             {
                 pnlContent.setOpaque(false);
+                pnlContent.setPreferredSize(new Dimension(500, 230));
                 pnlContent.setName("pnlContent");
                 pnlContent.setLayout(new CardLayout());
             }
@@ -123,6 +125,7 @@ public class ImportDialog extends JDialog {
                 btnNext.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnNext.setForeground(Color.white);
                 btnNext.setBackground(new Color(51, 156, 229));
+                btnNext.setFocusPainted(false);
                 btnNext.setName("btnNext");
                 btnNext.addActionListener(new ActionListener() {
                     @Override
@@ -139,6 +142,7 @@ public class ImportDialog extends JDialog {
                 btnImport.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnImport.setForeground(Color.white);
                 btnImport.setBackground(new Color(51, 102, 153));
+                btnImport.setFocusPainted(false);
                 btnImport.setName("btnImport");
                 btnImport.addActionListener(new ActionListener() {
                     @Override
@@ -155,6 +159,7 @@ public class ImportDialog extends JDialog {
                 btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnCancel.setForeground(Color.white);
                 btnCancel.setBackground(new Color(207, 0, 0));
+                btnCancel.setFocusPainted(false);
                 btnCancel.setName("btnCancel");
                 btnCancel.addActionListener(new ActionListener() {
                     @Override

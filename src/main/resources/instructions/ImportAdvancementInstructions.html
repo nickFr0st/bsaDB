@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Advancement Import</h2>
+
+<p>
+    Files that are imported must have a .csv extension as such make sure that all your values are separated by commas.<br>
+    It is important to note that when you specify a advancement name that already exists in BSA Database this will <b>update the existing data.</b>
+    To keep existing requirements you must specify them in the import.
+    <br>
+    When adding requirements please list all requirements for an advancement after the advancement. To signify a new advancement leave an empty
+    space between the last requirement and the name of the next advancement.<br>
+    The following table will explain what data is valid and how to build our import file. The type and max values are relate to the type of information that will be
+    stored in the associated field (such as: Text or Number) and the maximum number of character allow in each field respectfully.<br>
+</p>
+
+<table border="1" id="vertical-1">
+    <tr>
+        <th align="left">Advancement Name <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            The name of the advancement.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Advancement Image Path <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            The url of the advancement image. The path should start at the c:/ directory.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Requirement Name <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            The name of the requirement.<br>
+            <b>(Text, 44)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Requirement Description <i>(Optional if requirement name is not present)</i> <br>(type, max)</th>
+        <td>
+            The requirement description.<br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+</table>
+
+<h2>Example</h2>
+
+<p>
+    "Advancement Name", "Advancement Image Path"<br>
+    "Requirement Name", "Requirement Description"<br>
+    "Super Eagle", "c:/user/johnDoe/eagleImage.png"<br>
+    "1", "work hard"<br>
+    "2", "be awesome"<br>
+    ""<br>
+    "Super Star", "c:/user/johnDoe/eagleImage.png"<br>
+    "2", "be awesome"<br>
+</p>
+
+</body>
+</html>
