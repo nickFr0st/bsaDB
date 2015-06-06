@@ -84,7 +84,7 @@ public class ImportPanel extends JPanel {
         //---- lblSelectMessage ----
         lblSelectMessage.setText("Please select a file to import");
         lblSelectMessage.setFont(new Font("Vijaya", Font.PLAIN, 20));
-        lblSelectMessage.setForeground(Color.black);
+        lblSelectMessage.setForeground(new Color(51, 102, 153));
         lblSelectMessage.setName("lblSelectMessage");
         add(lblSelectMessage, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -117,7 +117,7 @@ public class ImportPanel extends JPanel {
 
         //---- lblImportInstructionMessage ----
         lblImportInstructionMessage.setText("Import file instructions");
-        lblImportInstructionMessage.setForeground(Color.black);
+        lblImportInstructionMessage.setForeground(new Color(51, 102, 153));
         lblImportInstructionMessage.setFont(new Font("Vijaya", Font.PLAIN, 20));
         lblImportInstructionMessage.setName("lblImportInstructionMessage");
         add(lblImportInstructionMessage, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,

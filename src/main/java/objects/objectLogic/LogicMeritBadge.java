@@ -34,7 +34,6 @@ public class LogicMeritBadge {
                 meritBadge.setName(rs.getString(KeyConst.NAME.getName()));
                 meritBadge.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
                 meritBadge.setRequiredForEagle(rs.getBoolean(KeyConst.REQUIRED_FOR_EAGLE.getName()));
-                meritBadge.setRevisionDate(rs.getDate(KeyConst.REV_DATE.getName()));
                 meritBadgeList.add(meritBadge);
             }
 
@@ -78,8 +77,7 @@ public class LogicMeritBadge {
             query.append(meritBadge.getId()).append(", ");
             query.append("'").append(meritBadge.getName()).append("', ");
             query.append("'").append(meritBadge.getImgPath().replace("\\", "\\\\")).append("', ");
-            query.append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(", ");
-            query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(meritBadge.getRevisionDate())).append("'");
+            query.append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -145,8 +143,7 @@ public class LogicMeritBadge {
             query.append("UPDATE meritBadge SET ");
             query.append(KeyConst.NAME).append(" = '").append(meritBadge.getName()).append("', ");
             query.append(KeyConst.IMG_PATH).append(" = '").append(meritBadge.getImgPath().replace("\\", "\\\\")).append("', ");
-            query.append(KeyConst.REQUIRED_FOR_EAGLE).append(" = ").append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(", ");
-            query.append(KeyConst.REV_DATE).append(" = '").append(Util.DATA_BASE_DATE_FORMAT.format(meritBadge.getRevisionDate())).append("', ");
+            query.append(KeyConst.REQUIRED_FOR_EAGLE).append(" = ").append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
             query.append("WHERE id = ").append(meritBadge.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

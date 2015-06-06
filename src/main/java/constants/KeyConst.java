@@ -39,6 +39,9 @@ public enum KeyConst {
     // Merit Badge
     REQUIRED_FOR_EAGLE("requiredForEagle"),
     REV_DATE("revisionDate"),
+
+    // Counselor
+    BADGE_ID("badgeId"),
     ;
 
     String name;

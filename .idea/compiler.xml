@@ -25,6 +25,9 @@
         <module name="bsaDB" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bsaDB" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 

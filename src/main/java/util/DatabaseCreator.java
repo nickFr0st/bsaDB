@@ -70,7 +70,6 @@ public class DatabaseCreator {
                 " name VARCHAR(225) NOT NULL," +
                 " imgPath VARCHAR(255) NOT NULL," +
                 " requiredForEagle TINYINT NOT NULL," +
-                " revisionDate DATE NOT NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableMeritBadge);
 
@@ -82,6 +81,14 @@ public class DatabaseCreator {
                 " parentId INT NOT NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableRequirement);
+
+        String tableCounselor = "CREATE TABLE counselor " +
+                "(id INT NOT NULL," +
+                " badgeId INT NOT NULL," +
+                " name VARCHAR(90) NOT NULL," +
+                " phoneNumber VARCHAR(20) NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableCounselor);
 
         statement.executeBatch();
     }

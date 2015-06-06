@@ -5,10 +5,7 @@
 package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
-import bsaDb.client.home.clientPnls.AdvancementPanel;
-import bsaDb.client.home.clientPnls.DatabaseSettingsPanel;
-import bsaDb.client.home.clientPnls.SplashPanel;
-import bsaDb.client.home.clientPnls.UserPanel;
+import bsaDb.client.home.clientPnls.*;
 import bsaDb.client.home.dialogs.export.ExportDialog;
 import bsaDb.client.home.dialogs.imports.ImportDialog;
 import constants.AccessRightConst;
@@ -35,11 +32,14 @@ public class HomePanel extends JPanel {
     private final static String DATABASE_SETTINGS_PAGE = "databaseSettings";
     private final static String USER_PAGE = "user";
     private final static String ADVANCEMENT_PAGE = "advancement";
+    private final static String MERIT_BADGE_PAGE = "meritBadge";
 
     private UserPanel pnlUser;
     private AdvancementPanel pnlAdvancement;
     private DatabaseSettingsPanel pnlDatabaseSettings;
+    private MeritBadgePanel pnlMeritBadge;
     private BaseFrame baseFrame;
+
     private String propertyFileName;
 
     {
@@ -183,6 +183,16 @@ public class HomePanel extends JPanel {
         }
     }
 
+    private void mniMeritBadgesActionPerformed() {
+        if (pnlMeritBadge == null) {
+            pnlMeritBadge = new MeritBadgePanel();
+            pnlCards.add(pnlMeritBadge, MERIT_BADGE_PAGE);
+        }
+
+        pnlMeritBadge.populateMeritBadgeNameList();
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, MERIT_BADGE_PAGE);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -195,6 +205,7 @@ public class HomePanel extends JPanel {
         mniDatabaseSettings = new JMenuItem();
         mniUsers = new JMenuItem();
         mniAdvancements = new JMenuItem();
+        mniMeritBadges = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         btnSignOut = new JButton();
         label1 = new JLabel();
@@ -339,6 +350,18 @@ public class HomePanel extends JPanel {
                         }
                     });
                     mnuSetup.add(mniAdvancements);
+
+                    //---- mniMeritBadges ----
+                    mniMeritBadges.setText("Merit Badges");
+                    mniMeritBadges.setMnemonic('M');
+                    mniMeritBadges.setName("mniMeritBadges");
+                    mniMeritBadges.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniMeritBadgesActionPerformed();
+                        }
+                    });
+                    mnuSetup.add(mniMeritBadges);
                 }
                 menuBar1.add(mnuSetup);
 
@@ -409,6 +432,7 @@ public class HomePanel extends JPanel {
     private JMenuItem mniDatabaseSettings;
     private JMenuItem mniUsers;
     private JMenuItem mniAdvancements;
+    private JMenuItem mniMeritBadges;
     private JButton btnSignOut;
     private JLabel label1;
     private JPanel pnlCards;
