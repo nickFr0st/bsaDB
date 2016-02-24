@@ -41,7 +41,6 @@ public class ImportPanel extends JPanel {
     public void setTxtImportInstructions(String url) {
         try {
             txtInstructions.setPage(url);
-            txtInstructions.setEditable(false);
         }catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -132,6 +131,7 @@ public class ImportPanel extends JPanel {
             txtInstructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
             txtInstructions.setBackground(Color.white);
             txtInstructions.setForeground(Color.black);
+            txtInstructions.setEditable(false);
             txtInstructions.setName("txtInstructions");
             scrollPane1.setViewportView(txtInstructions);
         }

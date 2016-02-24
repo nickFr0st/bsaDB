@@ -31,9 +31,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 /**
  * @author User #2
@@ -67,7 +68,10 @@ public class MeritBadgePanel extends JPanel {
     }
 
     public void populateMeritBadgeNameList() {
-        List<String> meritBadgeNameList = CacheObject.getMeritBadgeList().stream().map(MeritBadge::getName).collect(Collectors.toList());
+        List<String> meritBadgeNameList = new ArrayList<>();
+        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
+            meritBadgeNameList.add(meritBadge.getName());
+        }
 
         listMeritBadgeNames.setListData(meritBadgeNameList.toArray());
         listMeritBadgeNames.revalidate();
@@ -75,8 +79,10 @@ public class MeritBadgePanel extends JPanel {
     }
 
     private void txtSearchNameKeyReleased() {
-        Collection<MeritBadge> meritBadgeList = CacheObject.getMeritBadgeList();
-        List<String> meritBadgeNameList = meritBadgeList.stream().map(MeritBadge::getName).collect(Collectors.toList());
+        List<String> meritBadgeNameList = new ArrayList<>();
+        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
+            meritBadgeNameList.add(meritBadge.getName());
+        }
 
         if (txtSearchName.isMessageDefault()) {
             listMeritBadgeNames.setListData(meritBadgeNameList.toArray());
@@ -84,7 +90,12 @@ public class MeritBadgePanel extends JPanel {
             return;
         }
 
-        List<String> filteredList = meritBadgeList.stream().filter(meritBadge -> meritBadge.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())).map(MeritBadge::getName).collect(Collectors.toList());
+        List<String> filteredList = new ArrayList<>();
+        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
+            if (meritBadge.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
+                filteredList.add(meritBadge.getName());
+            }
+        }
 
         listMeritBadgeNames.setListData(filteredList.toArray());
         listMeritBadgeNames.revalidate();
@@ -153,7 +164,7 @@ public class MeritBadgePanel extends JPanel {
         }
     }
 
-    private List<Counselor> validateCounselors(int badgeId) {
+    private List<Counselor> validateCounselors(int badgeId, boolean validate) {
         List<Counselor> counselorList = new ArrayList<>();
         Set<String> counselorNameSet = new HashSet<>();
 
@@ -164,23 +175,23 @@ public class MeritBadgePanel extends JPanel {
         for (int i = 0; i < tableModel.getRowCount(); ++i) {
             String counselorName = (String)tableModel.getValueAt(i, 0);
 
-            if (Util.isEmpty(counselorName)) {
+            if (validate && Util.isEmpty(counselorName)) {
                 Util.setError(lblCounselorError, "Counselor name cannot be left blank");
                 return null;
             }
 
-            if (!counselorNameSet.add(counselorName)) {
+            if (validate && !counselorNameSet.add(counselorName)) {
                 Util.setError(lblCounselorError, "Counselor name '" + counselorName + "' already exists");
                 return null;
             }
 
             String phoneNumber = (String)tableModel.getValueAt(i, 1);
-            if (Util.isEmpty(phoneNumber)) {
+            if (validate && Util.isEmpty(phoneNumber)) {
                 Util.setError(lblCounselorError, "Counselor phone number cannot be left blank");
                 return null;
             }
 
-            if (!Util.validatePhoneNumber(phoneNumber)) {
+            if (validate && !Util.validatePhoneNumber(phoneNumber)) {
                 Util.setError(lblCounselorError, "Invalid phone number format: " + phoneNumber);
                 return null;
             }
@@ -211,7 +222,7 @@ public class MeritBadgePanel extends JPanel {
             }
         }
 
-        SwingUtilities.invokeLater(() -> scrollPane3.getViewport().setViewPosition(new Point(0, 0)));
+        scrollPane3.getViewport().setViewPosition(new Point(0, 0));
 
         pnlRequirementList.revalidate();
         pnlRequirementList.repaint();
@@ -256,6 +267,7 @@ public class MeritBadgePanel extends JPanel {
         pnlRequirementList.repaint();
 
         tblCounselors.removeAll();
+        tblCounselors.revalidate();
         tblCounselors.repaint();
     }
 
@@ -269,7 +281,7 @@ public class MeritBadgePanel extends JPanel {
         List<Requirement> requirementList = validateRequirements(-1, true);
         if (requirementList == null) return;
 
-        List<Counselor> counselorList = validateCounselors(-1);
+        List<Counselor> counselorList = validateCounselors(-1, true);
         if (counselorList == null) return;
 
         saveRecords(requirementList, true, counselorList);
@@ -383,7 +395,7 @@ public class MeritBadgePanel extends JPanel {
             valid = false;
         }
 
-        if (validateCounselors(meritBadgeId) == null) {
+        if (validateCounselors(meritBadgeId, true) == null) {
             valid = false;
         }
 
@@ -407,7 +419,7 @@ public class MeritBadgePanel extends JPanel {
         List<Requirement> deleteRequirementList = new ArrayList<>();
 
         if (newRequirementList.isEmpty()) {
-            deleteRequirementList.addAll(currentRequirementList.stream().collect(Collectors.toList()));
+            deleteRequirementList.addAll(currentRequirementList);
         } else {
             for (Requirement requirement : currentRequirementList) {
                 boolean addToList = true;
@@ -437,7 +449,7 @@ public class MeritBadgePanel extends JPanel {
         }
 
         // todo: may need to do something different with this
-        List<Counselor> counselorList = validateCounselors(meritBadge.getId());
+        List<Counselor> counselorList = validateCounselors(meritBadge.getId(), true);
         if (counselorList == null) return;
 
 
@@ -477,16 +489,25 @@ public class MeritBadgePanel extends JPanel {
 
         int meritBadgeId = meritBadge.getId();
 
-        List<Requirement> requirementList = validateRequirements(meritBadge.getId(), false);
+        List<Requirement> requirementList = validateRequirements(meritBadgeId, false);
+        List<Counselor> counselorList = validateCounselors(meritBadgeId, false);
+
+
+        // todo: counselor id is wrong
+        LogicCounselor.delete(counselorList);
         LogicRequirement.delete(requirementList);
         LogicMeritBadge.delete(meritBadge);
 
         CacheObject.removeFromMeritBadges(meritBadgeId);
 
         requirementList = CacheObject.getRequirementListByParentIdAndTypeId(meritBadgeId, RequirementTypeConst.MERIT_BADGE.getId());
-
         for (Requirement requirement : requirementList) {
             CacheObject.removeFromRequirements(requirement.getId());
+        }
+
+        counselorList = CacheObject.getCounselorListByBadgeId(meritBadgeId);
+        for (Counselor counselor : counselorList) {
+            CacheObject.removeFromCounselors(counselor.getId());
         }
 
         populateMeritBadgeNameList();

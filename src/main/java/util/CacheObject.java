@@ -58,7 +58,7 @@ public class CacheObject {
 
     public static Collection<User> getUserList() {
         if (cachedUsers == null) {
-            cachedUsers = new HashMap<Integer, User>();
+            cachedUsers = new HashMap<>();
             List<User> userList = LogicUser.findAll();
             for (User user : userList) {
                 cachedUsers.put(user.getId(), user);
@@ -102,7 +102,7 @@ public class CacheObject {
 
     public static Collection<AccessRight> getAccessRightList() {
         if (cachedAccessRights == null) {
-            cachedAccessRights = new HashMap<Integer, AccessRight>();
+            cachedAccessRights = new HashMap<>();
             List<AccessRight> accessRightList = LogicAccessRight.findAll();
             for (AccessRight accessRight : accessRightList) {
                 cachedAccessRights.put(accessRight.getId(), accessRight);
@@ -129,15 +129,13 @@ public class CacheObject {
     }
 
     public static List<AccessRight> getAccessRights(int userId) {
-        List<AccessRight> accessRightList = new ArrayList<AccessRight>();
+        List<AccessRight> accessRightList = new ArrayList<>();
 
         if (userId <= 0) {
             return accessRightList;
         }
 
-        getAccessRightList();
-
-        for (AccessRight accessRight : cachedAccessRights.values()) {
+        for (AccessRight accessRight : getAccessRightList()) {
             if (accessRight.getUserId() == userId) {
                 accessRightList.add(accessRight);
             }
@@ -148,7 +146,7 @@ public class CacheObject {
 
     public static Collection<Advancement> getAdvancementList() {
         if (cachedAdvancements == null) {
-            cachedAdvancements = new HashMap<Integer, Advancement>();
+            cachedAdvancements = new HashMap<>();
             List<Advancement> advancementList = LogicAdvancement.findAll();
             for (Advancement advancement : advancementList) {
                 cachedAdvancements.put(advancement.getId(), advancement);
@@ -158,11 +156,9 @@ public class CacheObject {
     }
 
     public static List<Advancement> getAdvancementList(List<String> nameList) {
-        getAdvancementList();
-
-        List<Advancement> advancementList = new ArrayList<Advancement>();
+        List<Advancement> advancementList = new ArrayList<>();
         for (String name : nameList) {
-            for (Advancement advancement : cachedAdvancements.values()) {
+            for (Advancement advancement : getAdvancementList()) {
                 if (advancement.getName().equals(name)) {
                     advancementList.add(advancement);
                 }
@@ -207,7 +203,7 @@ public class CacheObject {
 
     public static Collection<Requirement> getRequirementList() {
         if (cachedRequirements == null) {
-            cachedRequirements = new HashMap<Integer, Requirement>();
+            cachedRequirements = new HashMap<>();
             List<Requirement> requirementList = LogicRequirement.findAll();
             for (Requirement requirement : requirementList) {
                 cachedRequirements.put(requirement.getId(), requirement);
@@ -217,16 +213,12 @@ public class CacheObject {
     }
 
     public static List<Requirement> getRequirementListByParentIdAndTypeId(int parentId, int typeId) {
-        List<Requirement> requirementList = new ArrayList<Requirement>();
-
-        getRequirementList();
-
-        for (Requirement requirement : cachedRequirements.values()) {
+        List<Requirement> requirementList = new ArrayList<>();
+        for (Requirement requirement : getRequirementList()) {
             if (requirement.getParentId() == parentId && requirement.getTypeId() == typeId) {
                 requirementList.add(requirement);
             }
         }
-
         return requirementList;
     }
 
@@ -260,7 +252,7 @@ public class CacheObject {
 
     public static Collection<MeritBadge> getMeritBadgeList() {
         if (cachedMeritBadges == null) {
-            cachedMeritBadges = new HashMap<Integer, MeritBadge>();
+            cachedMeritBadges = new HashMap<>();
             List<MeritBadge> meritBadgeList = LogicMeritBadge.findAll();
             for (MeritBadge meritBadge : meritBadgeList) {
                 cachedMeritBadges.put(meritBadge.getId(), meritBadge);
@@ -270,11 +262,9 @@ public class CacheObject {
     }
 
     public static List<MeritBadge> getMeritBadgeList(List<String> nameList) {
-        getMeritBadgeList();
-
-        List<MeritBadge> meritBadgeList = new ArrayList<MeritBadge>();
+        List<MeritBadge> meritBadgeList = new ArrayList<>();
         for (String name : nameList) {
-            for (MeritBadge meritBadge : cachedMeritBadges.values()) {
+            for (MeritBadge meritBadge : getMeritBadgeList()) {
                 if (meritBadge.getName().equals(name)) {
                     meritBadgeList.add(meritBadge);
                 }
@@ -319,7 +309,7 @@ public class CacheObject {
 
     public static Collection<Counselor> getCounselorList() {
         if (cachedCounselors == null) {
-            cachedCounselors = new HashMap<Integer, Counselor>();
+            cachedCounselors = new HashMap<>();
             List<Counselor> counselorList = LogicCounselor.findAll();
             for (Counselor counselor : counselorList) {
                 cachedCounselors.put(counselor.getId(), counselor);
@@ -329,18 +319,12 @@ public class CacheObject {
     }
 
     public static List<Counselor> getCounselorListByBadgeId(int badgeId) {
-        List<Counselor> counselorList = new ArrayList<Counselor>();
-
-        if (cachedCounselors == null) {
-            getCounselorList();
-        }
-
-        for (Counselor counselor : cachedCounselors.values()) {
+        List<Counselor> counselorList = new ArrayList<>();
+        for (Counselor counselor : counselorList) {
             if (counselor.getBadgeId() == badgeId) {
                 counselorList.add(counselor);
             }
         }
-
         return counselorList;
     }
 

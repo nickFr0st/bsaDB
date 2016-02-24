@@ -13,40 +13,41 @@ import java.util.List;
 /**
  * Created by Nathanael on 10/25/2014
  */
+@SuppressWarnings("StringBufferReplaceableByString")
 public class LogicCounselor {
 
     private static final Object lock = new Object();
 
-    public static List<Counselor> findAllByBadgeId(int badgeId) {
-
-        List<Counselor> counselorList = new ArrayList<Counselor>();
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return counselorList;
-        }
-
-        try {
-            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " ORDER BY name");
-
-            while (rs.next()) {
-                Counselor counselor = new Counselor();
-                counselor.setId(rs.getInt(KeyConst.ID.getName()));
-                counselor.setBadgeId(rs.getInt(KeyConst.BADGE_ID.getName()));
-                counselor.setName(rs.getString(KeyConst.NAME.getName()));
-                counselor.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                counselorList.add(counselor);
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        return counselorList;
-    }
+//    public static List<Counselor> findAllByBadgeId(int badgeId) {
+//
+//        List<Counselor> counselorList = new ArrayList<>();
+//
+//        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+//            return counselorList;
+//        }
+//
+//        try {
+//            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+//            ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " ORDER BY name");
+//
+//            while (rs.next()) {
+//                Counselor counselor = new Counselor();
+//                counselor.setId(rs.getInt(KeyConst.ID.getName()));
+//                counselor.setBadgeId(rs.getInt(KeyConst.BADGE_ID.getName()));
+//                counselor.setName(rs.getString(KeyConst.NAME.getName()));
+//                counselor.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
+//                counselorList.add(counselor);
+//            }
+//
+//        } catch (Exception e) {
+//            return null;
+//        }
+//
+//        return counselorList;
+//    }
 
     public static List<Counselor> findAll() {
-        List<Counselor> counselorList = new ArrayList<Counselor>();
+        List<Counselor> counselorList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return counselorList;
@@ -222,33 +223,42 @@ public class LogicCounselor {
 //        return counselor;
 //    }
 
-//    public static synchronized void delete(List<Integer> counselorIdList) {
-//        if (Util.isEmpty(counselorIdList)) {
-//            return;
-//        }
-//
-//        try {
-//            synchronized (lock) {
-//                if (deleteCounselorList(counselorIdList)) {
-//                    lock.wait(MySqlConnector.WAIT_TIME);
-//                }
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static synchronized void delete(List<Counselor> counselorList) {
+        if (Util.isEmpty(counselorList)) {
+            return;
+        }
 
-//    private static boolean deleteCounselorList(List<Integer> counselorIdList) {
-//        try {
-//            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-//            statement.executeUpdate("DELETE FROM counselor WHERE id IN (" + Util.listToString(counselorIdList) + ")");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
+        for (Counselor counselor : counselorList) {
+             delete(counselor);
+        }
+    }
 
+    public static synchronized void delete(Counselor counselor) {
+        if (counselor == null || counselor.getId() < 1) {
+            return;
+        }
+
+        try {
+            synchronized (lock) {
+                if (deleteRequirement(counselor.getId())) {
+                    lock.wait(MySqlConnector.WAIT_TIME);
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean deleteRequirement(Integer counselorId) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM counselor WHERE id = " + counselorId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 //    public static void updateList(List<Counselor> counselorList, int meritBadgeId) {
 //        for (Counselor counselor : counselorList) {
