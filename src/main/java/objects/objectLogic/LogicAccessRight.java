@@ -15,37 +15,8 @@ import java.util.List;
  */
 public class LogicAccessRight {
 
-    private static final Object lock = new Object();
-
-    public static List<AccessRight> findAllByUserId(int userId) {
-        List<AccessRight> accessRightList = new ArrayList<AccessRight>();
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return accessRightList;
-        }
-
-        try {
-            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM accessRight WHERE userId = " + userId);
-
-            while (rs.next()) {
-                AccessRight accessRight = new AccessRight();
-                accessRight.setId(rs.getInt(KeyConst.ID.getName()));
-                accessRight.setUserId(rs.getInt(KeyConst.USER_ID.getName()));
-                accessRight.setRightId(rs.getInt(KeyConst.RIGHT_ID.getName()));
-
-                accessRightList.add(accessRight);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<AccessRight>();
-        }
-
-        return accessRightList;
-    }
-
     public static List<AccessRight> findAll() {
-        List<AccessRight> accessRightList = new ArrayList<AccessRight>();
+        List<AccessRight> accessRightList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return accessRightList;
@@ -65,23 +36,26 @@ public class LogicAccessRight {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<AccessRight>();
+            return new ArrayList<>();
         }
 
         return accessRightList;
     }
 
-    public static synchronized AccessRight save(AccessRight accessRight) {
+    public static synchronized AccessRight save(final AccessRight accessRight) {
         if (accessRight == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((accessRight = saveAccessRight(accessRight)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveAccessRight(accessRight);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -89,13 +63,13 @@ public class LogicAccessRight {
         return accessRight;
     }
 
-    private static AccessRight saveAccessRight(AccessRight accessRight) {
+    private static void saveAccessRight(AccessRight accessRight) {
         if (accessRight.getId() < 0) {
             accessRight.setId(MySqlConnector.getInstance().getNextId("accessRight"));
         }
 
         if (accessRight.getId() < 0) {
-            return null;
+            return;
         }
 
         try {
@@ -109,37 +83,34 @@ public class LogicAccessRight {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return accessRight;
     }
 
-    public static synchronized void delete(Integer id) {
+    public static synchronized void delete(final Integer id) {
         if (id < 1) {
             return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteAccessRight(id)) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteAccessRight(id);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean deleteAccessRight(Integer id) {
-
+    private static void deleteAccessRight(Integer id) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM accessRight WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 }

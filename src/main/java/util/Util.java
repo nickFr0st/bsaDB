@@ -77,4 +77,20 @@ public class Util {
     public static int getIntValue(boolean value) {
         return value ? 1 : 0;
     }
+
+    public static String csvWrap(String str) {
+        if (isEmpty(str)) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder(str);
+        int id = 0;
+        while (sb.indexOf("\"", id) >= 0) {
+            id = sb.indexOf("\"", id);
+            sb.insert(id, "\"");
+            id = id + 2;
+        }
+
+        return "\"" + sb.toString() + "\"";
+    }
 }

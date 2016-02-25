@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class LogicUser {
 
-    private static final Object lock = new Object();
-
     public static List<User> findAll() {
         List<User> userList = new ArrayList<>();
 
@@ -53,17 +51,21 @@ public class LogicUser {
         return userList;
     }
 
-    public static synchronized User save(User user) {
+    public static synchronized User save(final User user) {
         if (user == null) {
              return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((user = saveUser(user)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveUser(user);
                 }
-            }
+            });
+
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -71,13 +73,13 @@ public class LogicUser {
         return user;
     }
 
-    private static User saveUser(User user) {
+    private static void saveUser(User user) {
         if (user.getId() < 0) {
             user.setId(MySqlConnector.getInstance().getNextId("user"));
         }
 
         if (user.getId() < 0) {
-            return null;
+            return;
         }
 
         try {
@@ -101,23 +103,24 @@ public class LogicUser {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return user;
     }
 
-    public static synchronized User update(User user) {
+    public static synchronized User update(final User user) {
         if (user == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((user = updateUser(user)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateUser(user);
                 }
-            }
+            });
+
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -125,8 +128,7 @@ public class LogicUser {
         return user;
     }
 
-    private static User updateUser(User user) {
-
+    private static void updateUser(User user) {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE user SET ");
@@ -146,37 +148,34 @@ public class LogicUser {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return user;
     }
 
-    public static synchronized void delete(User user) {
+    public static synchronized void delete(final User user) {
         if (user == null || user.getId() <= 1) {
              return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteUser(user.getId())) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteUser(user.getId());
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean deleteUser(Integer id) {
-
+    private static void deleteUser(Integer id) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM user WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 }
