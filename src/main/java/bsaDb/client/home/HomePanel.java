@@ -105,6 +105,7 @@ public class HomePanel extends JPanel {
 
     private void btnSignoutActionPerformed() {
         slideCard(SPLASH_PAGE);
+        baseFrame.clearHomePnl();
         baseFrame.slideCard(BaseFrame.SIGN_IN_PAGE);
     }
 

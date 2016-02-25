@@ -168,7 +168,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1015, 835 )
+			"size": new java.awt.Dimension( 850, 650 )
 		} )
 	}
 }
