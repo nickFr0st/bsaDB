@@ -14,18 +14,18 @@ new FormModel {
 			"border": new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 2, false )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0:1.0"
-				"$rowSpecs": "30"
+				"$rowSpecs": "35"
 				"$alignLeft": true
 				"$alignTop": true
 			} ) {
 				name: "panel1"
-				"background": new java.awt.Color( 153, 153, 153, 255 )
+				"background": new java.awt.Color( 218, 165, 4, 255 )
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true
 				}
 				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 					name: "menuBar1"
-					"background": new java.awt.Color( 153, 153, 153, 255 )
+					"background": new java.awt.Color( 218, 165, 4, 255 )
 					"margin": new java.awt.Insets( 0, 10, 0, 10 )
 					"borderPainted": false
 					auxiliary() {

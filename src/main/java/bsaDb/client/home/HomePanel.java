@@ -227,17 +227,17 @@ public class HomePanel extends JPanel {
 
         //======== panel1 ========
         {
-            panel1.setBackground(new Color(153, 153, 153));
+            panel1.setBackground(new Color(218, 165, 4));
             panel1.setName("panel1");
             panel1.setLayout(new GridBagLayout());
             ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
-            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {30, 0};
+            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {35, 0};
             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
             ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
             //======== menuBar1 ========
             {
-                menuBar1.setBackground(new Color(153, 153, 153));
+                menuBar1.setBackground(new Color(218, 165, 4));
                 menuBar1.setMargin(new Insets(0, 10, 0, 10));
                 menuBar1.setBorderPainted(false);
                 menuBar1.setName("menuBar1");
