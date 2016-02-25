@@ -347,6 +347,7 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnCreate.setBackground(new Color(51, 102, 153));
                 btnCreate.setForeground(Color.white);
                 btnCreate.setFocusPainted(false);
+                btnCreate.setToolTipText("<html>On database creatation a defualt user will be added.<br>\ndefualt user credentials are: <br>\nusername: admin<br>\npassword: admin\n</html>");
                 btnCreate.setName("btnCreate");
                 btnCreate.addActionListener(new ActionListener() {
                     @Override
