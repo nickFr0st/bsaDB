@@ -16,8 +16,6 @@ import java.util.List;
 @SuppressWarnings("StringBufferReplaceableByString")
 public class LogicCounselor {
 
-    private static final Object lock = new Object();
-
 //    public static List<Counselor> findAllByBadgeId(int badgeId) {
 //
 //        List<Counselor> counselorList = new ArrayList<>();
@@ -121,17 +119,20 @@ public class LogicCounselor {
         }
     }
 
-    public static synchronized Counselor save(Counselor counselor) {
+    public static synchronized Counselor save(final Counselor counselor) {
         if (counselor == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((counselor = saveCounselor(counselor)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveCounselor(counselor);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -139,7 +140,7 @@ public class LogicCounselor {
         return counselor;
     }
 
-    private static Counselor saveCounselor(Counselor counselor) {
+    private static void saveCounselor(Counselor counselor) {
         if (counselor.getId() < 0) {
             counselor.setId(MySqlConnector.getInstance().getNextId("counselor"));
         }
@@ -157,22 +158,23 @@ public class LogicCounselor {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-        return counselor;
     }
 
-    public static synchronized Counselor update(Counselor counselor) {
+    public static synchronized Counselor update(final Counselor counselor) {
         if (counselor == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((counselor = updateCounselor(counselor)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateCounselor(counselor);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -180,7 +182,7 @@ public class LogicCounselor {
         return counselor;
     }
 
-    public static Counselor updateCounselor(Counselor counselor) {
+    public static void updateCounselor(Counselor counselor) {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE counselor SET ");
@@ -192,10 +194,7 @@ public class LogicCounselor {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return counselor;
     }
 
 //    public static Counselor findByNameAndBadgeId(String name, int badgeId) {
@@ -233,31 +232,32 @@ public class LogicCounselor {
         }
     }
 
-    public static synchronized void delete(Counselor counselor) {
+    public static synchronized void delete(final Counselor counselor) {
         if (counselor == null || counselor.getId() < 1) {
             return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteRequirement(counselor.getId())) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteRequirement(counselor.getId());
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean deleteRequirement(Integer counselorId) {
+    private static void deleteRequirement(Integer counselorId) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM counselor WHERE id = " + counselorId);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
 //    public static void updateList(List<Counselor> counselorList, int meritBadgeId) {

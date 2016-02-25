@@ -14,10 +14,8 @@ import java.util.List;
  */
 public class LogicAdvancement {
 
-    private static final Object lock = new Object();
-
     public static List<Advancement> findAll() {
-        List<Advancement> advancementList = new ArrayList<Advancement>();
+        List<Advancement> advancementList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return advancementList;
@@ -36,23 +34,26 @@ public class LogicAdvancement {
             }
 
         } catch (Exception e) {
-            return new ArrayList<Advancement>();
+            return new ArrayList<>();
         }
 
         return advancementList;
     }
 
-    public static synchronized Advancement save(Advancement advancement) {
+    public static synchronized Advancement save(final Advancement advancement) {
         if (advancement == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((advancement = saveAdvancement(advancement)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveAdvancement(advancement);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -60,13 +61,13 @@ public class LogicAdvancement {
         return advancement;
     }
 
-    private static Advancement saveAdvancement(Advancement advancement) {
+    private static void saveAdvancement(Advancement advancement) {
         if (advancement.getId() < 0) {
             advancement.setId(MySqlConnector.getInstance().getNextId("advancement"));
         }
 
         if (advancement.getId() < 0) {
-            return null;
+            return;
         }
 
         try {
@@ -81,51 +82,51 @@ public class LogicAdvancement {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return advancement;
     }
 
-    public static synchronized void delete(Advancement advancement) {
+    public static synchronized void delete(final Advancement advancement) {
         if (advancement == null || advancement.getId() < 1) {
             return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteAdvancement(advancement.getId())) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteAdvancement(advancement.getId());
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean deleteAdvancement(Integer id) {
-
+    private static void deleteAdvancement(Integer id) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM advancement WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public static synchronized Advancement update(Advancement advancement) {
+    public static synchronized Advancement update(final Advancement advancement) {
         if (advancement == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((advancement = updateAdvancement(advancement)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateAdvancement(advancement);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
