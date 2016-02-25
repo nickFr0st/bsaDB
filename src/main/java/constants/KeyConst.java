@@ -14,10 +14,12 @@ public enum KeyConst {
 
     // User
     ID("id"),
+    USERNAME("username"),
     NAME("name"),
     POSITION("position"),
     PHONE_NUMBER("phoneNumber"),
     STREET("street"),
+    STATE("state"),
     CITY("city"),
     ZIP("zip"),
     EDITABLE("editable"),

@@ -5,17 +5,20 @@ package objects.databaseObjects;
  */
 public class User {
 
+    public static final int COL_USER_NAME_LENGTH = 30;
     public static final int COL_NAME_LENGTH = 90;
     public static final int COL_POSITION_LENGTH = 90;
     public static final int COL_PHONE_NUMBER_LENGTH = 20;
     public static final int COL_ZIP_LENGTH = 10;
 
     private int id;
+    private String userName;
     private String name;
     private String position;
     private String phoneNumber;
     private String street;
     private String city;
+    private String state;
     private String zip;
     private boolean editable;
     private String password;
@@ -23,12 +26,14 @@ public class User {
 
     {
         id = -1;
+        userName = "";
         name = "";
         password = "";
         position = "";
         phoneNumber = "";
         street = "";
         city = "";
+        state = "";
         zip = "";
         email = "";
         editable = true;
@@ -43,6 +48,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getName() {
@@ -75,6 +88,14 @@ public class User {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getCity() {

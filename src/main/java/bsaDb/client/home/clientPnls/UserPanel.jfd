@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "5.1.3.0.158" Java: "1.7.0_71" encoding: "UTF-8"
+JFDML JFormDesigner: "5.1.3.0.158" Java: "1.7.0_79" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -110,8 +110,8 @@ new FormModel {
 							"JavaCodeGenerator.variableLocal": true
 						}
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-							"$columnSpecs": "0, 183, 0, 150, 0, 122, 0:1.0"
-							"$rowSpecs": "0, 30, 0, 0, 30, 0, 30, 228, 0:1.0"
+							"$columnSpecs": "0, 183, 0, 150, 0:1.0"
+							"$rowSpecs": "0, 30, 0, 30, 0, 0, 30, 0, 30, 30, 228, 0:1.0"
 							"$hGap": 5
 							"$vGap": 10
 							"$alignLeft": true
@@ -127,14 +127,17 @@ new FormModel {
 								"text": "General Information:"
 								"font": new java.awt.Font( "Vijaya", 0, 22 )
 								"foreground": new java.awt.Color( 51, 102, 153, 255 )
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridwidth": 2
 								"insets": new java.awt.Insets( 10, 8, 0, 0 )
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "lblName"
-								"text": "Name:"
-								"font": new java.awt.Font( "Tahoma", 0, 14 )
+								name: "lblUsername"
+								"text": "Username:"
+								"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
 								"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 								auxiliary() {
 									"JavaCodeGenerator.variableLocal": true
@@ -144,19 +147,19 @@ new FormModel {
 								"hAlign": 4
 							} )
 							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
-								name: "txtName"
-								"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
-								"defaultText": "John Doe"
-								addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateName", false ) )
-								addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateName", false ) )
+								name: "txtUsername"
+								"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
+								"defaultText": "john"
+								addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateUName", false ) )
+								addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateUName", false ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 1
 								"gridy": 1
+								"gridx": 1
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblPassword"
 								"text": "Password:"
-								"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
+								"font": &Font2 new java.awt.Font( "Tahoma", 0, 14 )
 								"foreground": #Color0
 								auxiliary() {
 									"JavaCodeGenerator.variableLocal": true
@@ -169,7 +172,7 @@ new FormModel {
 							} )
 							add( new FormComponent( "bsaDb.client.customComponents.JPasswordFieldDefaultText" ) {
 								name: "txtPassword"
-								"font": #Font0
+								"font": #Font1
 								"defaultText": "Password"
 								addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validatePassword", false ) )
 								addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validatePassword", false ) )
@@ -178,115 +181,152 @@ new FormModel {
 								"gridy": 1
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "lblPosition"
-								"text": "Position:"
-								"font": #Font1
-								"foreground": #Color0
-								auxiliary() {
-									"JavaCodeGenerator.variableLocal": true
-								}
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 4
-								"gridy": 1
-								"hAlign": 4
-								"insets": new java.awt.Insets( 0, 5, 0, 0 )
-							} )
-							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
-								name: "txtPosition"
-								"font": #Font0
-								"defaultText": "Scout Master"
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 5
-								"gridy": 1
-							} )
-							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "lblNameError"
+								name: "lblUsernameError"
 								"text": "* Error Message"
 								"foreground": sfield java.awt.Color red
-								"font": &Font2 new java.awt.Font( "Tahoma", 2, 11 )
+								"font": &Font3 new java.awt.Font( "Tahoma", 2, 11 )
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 2
+								"insets": &Insets0 new java.awt.Insets( 0, 0, 0, 20 )
 								"gridx": 1
 								"gridwidth": 2
-								"insets": new java.awt.Insets( 0, 0, 0, 20 )
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblPasswordError"
 								"text": "* Error Message"
 								"foreground": sfield java.awt.Color red
-								"font": #Font2
+								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 2
 								"gridx": 3
 								"gridwidth": 2
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "lblName"
+								"text": "Name:"
+								"font": #Font0
+								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 3
+								"hAlign": 4
+							} )
+							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+								name: "txtName"
+								"font": #Font1
+								"defaultText": "John Doe"
+								addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateName", false ) )
+								addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateName", false ) )
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridx": 1
+								"gridy": 3
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "lblPosition"
+								"text": "Position:"
+								"font": #Font2
+								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridx": 2
+								"hAlign": 4
+								"insets": new java.awt.Insets( 0, 5, 0, 0 )
+								"gridy": 3
+							} )
+							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+								name: "txtPosition"
+								"font": #Font1
+								"defaultText": "Scout Master"
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridx": 3
+								"gridy": 3
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "lblNameError"
+								"text": "* Error Message"
+								"foreground": sfield java.awt.Color red
+								"font": #Font3
+								"visible": false
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 4
+								"gridx": 1
+								"gridwidth": 2
+								"insets": #Insets0
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblContactInfo"
 								"text": "Contact Information:"
 								"font": new java.awt.Font( "Vijaya", 0, 22 )
 								"foreground": new java.awt.Color( 51, 102, 153, 255 )
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 3
+								"gridy": 5
 								"gridwidth": 2
 								"insets": new java.awt.Insets( 0, 8, 0, 0 )
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblPhoneNumber"
 								"text": "Phone Number:"
-								"font": &Font3 new java.awt.Font( "Tahoma", 0, 14 )
+								"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
 								"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
 								auxiliary() {
 									"JavaCodeGenerator.variableLocal": true
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 4
+								"gridy": 6
 								"hAlign": 4
-								"insets": &Insets0 new java.awt.Insets( 0, 15, 0, 0 )
+								"insets": &Insets1 new java.awt.Insets( 0, 15, 0, 0 )
 							} )
 							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 								name: "txtPhoneNumber"
-								"font": #Font0
+								"font": #Font1
 								"defaultText": "(123) 456-7890"
 								addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validatePhoneNumber", false ) )
 								addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validatePhoneNumber", false ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 1
-								"gridy": 4
+								"gridy": 6
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblEmail"
 								"text": "Email:"
-								"font": #Font3
+								"font": #Font4
 								"foreground": #Color1
 								auxiliary() {
 									"JavaCodeGenerator.variableLocal": true
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 4
+								"gridy": 6
 								"hAlign": 4
-								"insets": #Insets0
+								"insets": #Insets1
 								"gridx": 2
 							} )
 							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 								name: "txtEmail"
-								"font": #Font0
+								"font": #Font1
 								"defaultText": "john.doe@scout.com"
 								addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateEmail", false ) )
 								addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateEmail", false ) )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 4
+								"gridy": 6
 								"gridx": 3
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblPhoneNumberError"
 								"text": "* Error Message"
 								"foreground": sfield java.awt.Color red
-								"font": #Font2
+								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 5
+								"gridy": 7
 								"gridx": 1
 								"gridwidth": 2
 								"insets": new java.awt.Insets( 0, 0, 0, 20 )
@@ -295,80 +335,100 @@ new FormModel {
 								name: "lblEmailError"
 								"text": "* Error Message"
 								"foreground": sfield java.awt.Color red
-								"font": #Font2
+								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 5
+								"gridy": 7
 								"gridx": 3
-								"gridwidth": 3
+								"gridwidth": 2
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "lblStreet"
-								"text": "Street:"
-								"font": #Font1
+								name: "lblCity"
+								"text": "City:"
+								"font": #Font2
 								"foreground": #Color0
 								auxiliary() {
 									"JavaCodeGenerator.variableLocal": true
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 6
+								"gridy": 8
+								"hAlign": 4
+							} )
+							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+								name: "txtCity"
+								"font": #Font1
+								"defaultText": "Eagle Mtn"
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridx": 1
+								"gridy": 8
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "lblCity2"
+								"text": "State:"
+								"font": #Font2
+								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 8
+								"hAlign": 4
+								"gridx": 2
+							} )
+							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+								name: "txtState"
+								"font": #Font1
+								"defaultText": "Utah"
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 8
+								"gridx": 3
+							} )
+							add( new FormComponent( "javax.swing.JLabel" ) {
+								name: "lblStreet"
+								"text": "Street:"
+								"font": #Font2
+								"foreground": #Color0
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 9
 								"hAlign": 4
 							} )
 							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 								name: "txtStreet"
-								"font": #Font0
+								"font": #Font1
 								"defaultText": "100 South 100 West"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 1
-								"gridy": 6
+								"gridy": 9
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "lblCity"
-								"text": "City:"
-								"font": #Font1
+								name: "lblZip"
+								"text": "Zip:"
+								"font": #Font2
 								"foreground": #Color0
 								auxiliary() {
 									"JavaCodeGenerator.variableLocal": true
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 2
-								"gridy": 6
-								"hAlign": 4
-							} )
-							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
-								name: "txtCity"
-								"font": #Font0
-								"defaultText": "Scout Town"
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 3
-								"gridy": 6
-							} )
-							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "lblZip"
-								"text": "Zip:"
-								"font": #Font1
-								"foreground": #Color0
-								auxiliary() {
-									"JavaCodeGenerator.variableLocal": true
-								}
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 4
-								"gridy": 6
+								"gridy": 9
 								"hAlign": 4
 							} )
 							add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 								name: "txtZip"
-								"font": #Font0
+								"font": #Font1
 								"defaultText": "12345"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 5
-								"gridy": 6
+								"gridx": 3
+								"gridy": 9
 							} )
 							add( new FormComponent( "bsaDb.client.home.clientPnls.common.AccessRightsPanel" ) {
 								name: "pnlAccessRights"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 7
-								"gridwidth": 7
+								"gridy": 10
+								"gridwidth": 5
 								"insets": new java.awt.Insets( 10, 8, 10, 8 )
 							} )
 						} )
@@ -394,6 +454,9 @@ new FormModel {
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"preferredSize": new java.awt.Dimension( 56, 40 )
+							auxiliary() {
+								"JavaCodeGenerator.variableLocal": true
+							}
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewActionPerformed", false ) )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 						add( new FormComponent( "javax.swing.JButton" ) {
@@ -444,7 +507,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1080, 660 )
+			"size": new java.awt.Dimension( 1080, 730 )
 		} )
 	}
 }

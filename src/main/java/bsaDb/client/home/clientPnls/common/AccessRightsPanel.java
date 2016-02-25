@@ -32,6 +32,7 @@ public class AccessRightsPanel extends JPanel {
         chkExports.setEnabled(enabled);
         chkUsers.setEnabled(enabled);
         chkAdvancements.setEnabled(enabled);
+        chkMeritBadges.setEnabled(enabled);
     }
 
     public void populateRights(User user) {
@@ -52,6 +53,8 @@ public class AccessRightsPanel extends JPanel {
                 chkImports.setSelected(true);
             } else if (accessRight.getRightId() == AccessRightConst.EXPORTS.getId()) {
                 chkExports.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.MERIT_BADGES.getId()) {
+                chkMeritBadges.setSelected(true);
             }
         }
     }
@@ -74,6 +77,9 @@ public class AccessRightsPanel extends JPanel {
         if (chkExports.isSelected()) {
             accessRightIdList.add(AccessRightConst.EXPORTS.getId());
         }
+        if (chkMeritBadges.isSelected()) {
+            accessRightIdList.add(AccessRightConst.MERIT_BADGES.getId());
+        }
 
         return accessRightIdList;
     }
@@ -84,11 +90,13 @@ public class AccessRightsPanel extends JPanel {
         chkAdvancements.setSelected(false);
         chkImports.setSelected(false);
         chkExports.setSelected(false);
+        chkMeritBadges.setSelected(false);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         chkDatabaseSettings = new JCheckBox();
+        chkMeritBadges = new JCheckBox();
         chkImports = new JCheckBox();
         chkExports = new JCheckBox();
         chkUsers = new JCheckBox();
@@ -113,7 +121,17 @@ public class AccessRightsPanel extends JPanel {
         chkDatabaseSettings.setName("chkDatabaseSettings");
         add(chkDatabaseSettings, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 5, 5), 0, 0));
+            new Insets(5, 5, 5, 20), 0, 0));
+
+        //---- chkMeritBadges ----
+        chkMeritBadges.setText("Merit Badges");
+        chkMeritBadges.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chkMeritBadges.setForeground(Color.black);
+        chkMeritBadges.setOpaque(false);
+        chkMeritBadges.setName("chkMeritBadges");
+        add(chkMeritBadges, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 0), 0, 0));
 
         //---- chkImports ----
         chkImports.setText("Imports");
@@ -123,7 +141,7 @@ public class AccessRightsPanel extends JPanel {
         chkImports.setName("chkImports");
         add(chkImports, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 5, 5), 0, 0));
+            new Insets(5, 5, 5, 20), 0, 0));
 
         //---- chkExports ----
         chkExports.setText("Exports");
@@ -133,7 +151,7 @@ public class AccessRightsPanel extends JPanel {
         chkExports.setName("chkExports");
         add(chkExports, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 5, 5), 0, 0));
+            new Insets(5, 5, 5, 20), 0, 0));
 
         //---- chkUsers ----
         chkUsers.setText("Users");
@@ -143,7 +161,7 @@ public class AccessRightsPanel extends JPanel {
         chkUsers.setName("chkUsers");
         add(chkUsers, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 5, 5), 0, 0));
+            new Insets(5, 5, 5, 20), 0, 0));
 
         //---- chkAdvancements ----
         chkAdvancements.setText("Advancements");
@@ -153,12 +171,13 @@ public class AccessRightsPanel extends JPanel {
         chkAdvancements.setName("chkAdvancements");
         add(chkAdvancements, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 0, 5), 0, 0));
+            new Insets(5, 5, 0, 20), 0, 0));
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JCheckBox chkDatabaseSettings;
+    private JCheckBox chkMeritBadges;
     private JCheckBox chkImports;
     private JCheckBox chkExports;
     private JCheckBox chkUsers;

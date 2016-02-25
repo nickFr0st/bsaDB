@@ -18,7 +18,7 @@ public class LogicUser {
     private static final Object lock = new Object();
 
     public static List<User> findAll() {
-        List<User> userList = new ArrayList<User>();
+        List<User> userList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return userList;
@@ -31,10 +31,12 @@ public class LogicUser {
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt(KeyConst.ID.getName()));
+                user.setUserName(rs.getString(KeyConst.USERNAME.getName()));
                 user.setName(rs.getString(KeyConst.NAME.getName()));
                 user.setPosition(rs.getString(KeyConst.POSITION.getName()));
                 user.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
                 user.setStreet(rs.getString(KeyConst.STREET.getName()));
+                user.setState(rs.getString(KeyConst.STATE.getName()));
                 user.setCity(rs.getString(KeyConst.CITY.getName()));
                 user.setZip(rs.getString(KeyConst.ZIP.getName()));
                 user.setEditable(rs.getBoolean(KeyConst.EDITABLE.getName()));
@@ -45,7 +47,7 @@ public class LogicUser {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<User>();
+            return new ArrayList<>();
         }
 
         return userList;
@@ -82,11 +84,13 @@ public class LogicUser {
             StringBuilder query = new StringBuilder();
             query.append("INSERT INTO user VALUES(");
             query.append(user.getId()).append(", ");
+            query.append("'").append(user.getUserName()).append("', ");
             query.append("'").append(user.getName()).append("', ");
             query.append("'").append(user.getPosition()).append("', ");
             query.append("'").append(user.getPhoneNumber()).append("', ");
-            query.append("'").append(user.getStreet()).append("', ");
+            query.append("'").append(user.getState()).append("', ");
             query.append("'").append(user.getCity()).append("', ");
+            query.append("'").append(user.getStreet()).append("', ");
             query.append("'").append(user.getZip()).append("', ");
             query.append(true).append(", ");
             query.append("'").append(user.getPassword()).append("', ");
@@ -126,11 +130,13 @@ public class LogicUser {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE user SET ");
+            query.append("username = '").append(user.getUserName()).append("', ");
             query.append("name = '").append(user.getName()).append("', ");
             query.append("position = '").append(user.getPosition()).append("', ");
             query.append("phoneNumber = '").append(user.getPhoneNumber()).append("', ");
-            query.append("street = '").append(user.getStreet()).append("', ");
+            query.append("state = '").append(user.getState()).append("', ");
             query.append("city = '").append(user.getCity()).append("', ");
+            query.append("street = '").append(user.getStreet()).append("', ");
             query.append("zip = '").append(user.getZip()).append("', ");
             query.append("password = '").append(user.getPassword()).append("', ");
             query.append("email = '").append(user.getEmail()).append("' ");

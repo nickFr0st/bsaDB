@@ -60,7 +60,7 @@ public class HomePanel extends JPanel {
             properties.load(getClass().getResourceAsStream(propertyFileName));
 
             String currentUserName = properties.getProperty(KeyConst.CURRENT_USER.getName());
-            User currentUser = CacheObject.getUser(currentUserName);
+            User currentUser = CacheObject.getUserByUserName(currentUserName);
 
             if (currentUser.getId() == 1) {
                 return;
@@ -79,6 +79,8 @@ public class HomePanel extends JPanel {
                     mniImports.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.EXPORTS.getId()) {
                     mniExports.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.MERIT_BADGES.getId()) {
+                    mniMeritBadges.setEnabled(true);
                 }
             }
 
@@ -92,6 +94,7 @@ public class HomePanel extends JPanel {
         mniAdvancements.setEnabled(false);
         mniImports.setEnabled(false);
         mniExports.setEnabled(false);
+        mniMeritBadges.setEnabled(false);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -236,6 +239,7 @@ public class HomePanel extends JPanel {
             {
                 menuBar1.setBackground(new Color(153, 153, 153));
                 menuBar1.setMargin(new Insets(0, 10, 0, 10));
+                menuBar1.setBorderPainted(false);
                 menuBar1.setName("menuBar1");
 
                 //======== mnuFile ========

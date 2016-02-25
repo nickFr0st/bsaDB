@@ -89,7 +89,7 @@ public class SignInPanel extends JPanel {
     }
 
     private boolean valuesExists() {
-        User user = CacheObject.getUser(txtUserName.getText());
+        User user = CacheObject.getUserByUserName(txtUserName.getText());
 
         if (user == null) {
             Util.setError(lblUserNameError, "User does not exists.");

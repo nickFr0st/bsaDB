@@ -31,7 +31,7 @@ public class DatabaseCreator {
 
     private static void insertDefaultValues(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
-        statement.executeUpdate("INSERT INTO user VALUES(1, 'admin', 'administrator', '', '', '', '', false, 'admin', '')");
+        statement.executeUpdate("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
     }
 
     private static void buildDataBase(Connection connection) throws SQLException {
@@ -39,11 +39,13 @@ public class DatabaseCreator {
 
         String tableUser = "CREATE TABLE user " +
                 "(id INT NOT NULL," +
+                " username VARCHAR(30) NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
                 " position VARCHAR(90) NULL," +
                 " phoneNumber VARCHAR(20) NULL," +
-                " street VARCHAR(255) NULL," +
+                " state VARCHAR(255) NULL," +
                 " city VARCHAR(255) NULL," +
+                " street VARCHAR(255) NULL," +
                 " zip VARCHAR(10) NULL," +
                 " editable BOOL NOT NULL," +
                 " password VARCHAR(90) NOT NULL," +

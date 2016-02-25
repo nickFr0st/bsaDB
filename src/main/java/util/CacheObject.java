@@ -83,6 +83,22 @@ public class CacheObject {
         return null;
     }
 
+    public static User getUserByUserName(String username) {
+        if (Util.isEmpty(username)) {
+            return null;
+        }
+
+        getUserList();
+
+        for (User user : cachedUsers.values()) {
+            if (user.getUserName().equals(username)) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
     public static void addToUsers(User user) {
         if (cachedUsers == null) {
             getUserList();
