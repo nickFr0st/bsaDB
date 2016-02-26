@@ -15,10 +15,8 @@ import java.util.List;
  */
 public class LogicMeritBadge {
 
-    private static final Object lock = new Object();
-
     public static List<MeritBadge> findAll() {
-        List<MeritBadge> meritBadgeList = new ArrayList<MeritBadge>();
+        List<MeritBadge> meritBadgeList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return meritBadgeList;
@@ -38,23 +36,26 @@ public class LogicMeritBadge {
             }
 
         } catch (Exception e) {
-            return new ArrayList<MeritBadge>();
+            return new ArrayList<>();
         }
 
         return meritBadgeList;
     }
 
-    public static synchronized MeritBadge save(MeritBadge meritBadge) {
+    public static synchronized MeritBadge save(final MeritBadge meritBadge) {
         if (meritBadge == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((meritBadge = saveMeritBadge(meritBadge)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveMeritBadge(meritBadge);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,13 +63,13 @@ public class LogicMeritBadge {
         return meritBadge;
     }
 
-    private static MeritBadge saveMeritBadge(MeritBadge meritBadge) {
+    private static void saveMeritBadge(MeritBadge meritBadge) {
         if (meritBadge.getId() < 0) {
             meritBadge.setId(MySqlConnector.getInstance().getNextId("meritBadge"));
         }
 
         if (meritBadge.getId() < 0) {
-            return null;
+            return;
         }
 
         try {
@@ -84,51 +85,52 @@ public class LogicMeritBadge {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return meritBadge;
     }
 
-    public static synchronized void delete(MeritBadge meritBadge) {
+    public static synchronized void delete(final MeritBadge meritBadge) {
         if (meritBadge == null || meritBadge.getId() < 1) {
             return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteMeritBadge(meritBadge.getId())) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteMeritBadge(meritBadge.getId());
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean deleteMeritBadge(Integer id) {
+    private static void deleteMeritBadge(Integer id) {
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM meritBadge WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public static synchronized MeritBadge update(MeritBadge meritBadge) {
+    public static synchronized MeritBadge update(final MeritBadge meritBadge) {
         if (meritBadge == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((meritBadge = updateMeritBadge(meritBadge)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateMeritBadge(meritBadge);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -136,8 +138,7 @@ public class LogicMeritBadge {
         return meritBadge;
     }
 
-    private static MeritBadge updateMeritBadge(MeritBadge meritBadge) {
-
+    private static void updateMeritBadge(MeritBadge meritBadge) {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE meritBadge SET ");
@@ -150,9 +151,6 @@ public class LogicMeritBadge {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return meritBadge;
     }
 }

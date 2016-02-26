@@ -15,10 +15,8 @@ import java.util.List;
  */
 public class LogicRequirement {
 
-    private static final Object lock = new Object();
-
     public static List<Requirement> findAll() {
-        List<Requirement> requirementList = new ArrayList<Requirement>();
+        List<Requirement> requirementList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return requirementList;
@@ -26,7 +24,7 @@ public class LogicRequirement {
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM requirement ORDER BY id");
+            ResultSet rs = statement.executeQuery("SELECT * FROM requirement ORDER BY name");
 
             while (rs.next()) {
                 Requirement requirement = new Requirement();
@@ -39,7 +37,7 @@ public class LogicRequirement {
             }
 
         } catch (Exception e) {
-            return new ArrayList<Requirement>();
+            return new ArrayList<>();
         }
 
         return requirementList;
@@ -55,13 +53,16 @@ public class LogicRequirement {
         }
     }
 
-    public static synchronized Requirement save(Requirement requirement) {
+    public static synchronized Requirement save(final Requirement requirement) {
         try {
-            synchronized (lock) {
-                if ((requirement = saveRequirement(requirement)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveRequirement(requirement);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,7 +70,7 @@ public class LogicRequirement {
         return requirement;
     }
 
-    private static Requirement saveRequirement(Requirement requirement) {
+    private static void saveRequirement(Requirement requirement) {
         if (requirement.getId() < 0) {
             requirement.setId(MySqlConnector.getInstance().getNextId("requirement"));
         }
@@ -88,10 +89,7 @@ public class LogicRequirement {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return requirement;
     }
 
     public static synchronized void delete(List<Requirement> requirementList) {
@@ -104,61 +102,68 @@ public class LogicRequirement {
         }
     }
 
-    public static synchronized void delete(Requirement requirement) {
+    public static synchronized void delete(final Requirement requirement) {
         if (requirement == null || requirement.getId() < 1) {
             return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteRequirement(requirement.getId())) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteRequirement(requirement.getId());
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public static synchronized void delete(int requirementId) {
+    public static synchronized void delete(final int requirementId) {
         if (requirementId < 0) {
             return;
         }
 
         try {
-            synchronized (lock) {
-                if (deleteRequirement(requirementId)) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteRequirement(requirementId);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static boolean deleteRequirement(Integer id) {
+    private static void deleteRequirement(Integer id) {
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM requirement WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
-    public static synchronized Requirement update(Requirement requirement) {
+    public static synchronized Requirement update(final Requirement requirement) {
         if (requirement == null) {
             return null;
         }
 
         try {
-            synchronized (lock) {
-                if ((requirement = updateRequirement(requirement)) != null) {
-                    lock.wait(MySqlConnector.WAIT_TIME);
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateRequirement(requirement);
                 }
-            }
+            });
+            t.start();
+            t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -166,7 +171,7 @@ public class LogicRequirement {
         return requirement;
     }
 
-    private static Requirement updateRequirement(Requirement requirement) {
+    private static void updateRequirement(Requirement requirement) {
 
         try {
             StringBuilder query = new StringBuilder();
@@ -179,9 +184,6 @@ public class LogicRequirement {
             statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
-
-        return requirement;
     }
 }
