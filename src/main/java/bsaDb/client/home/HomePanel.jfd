@@ -19,13 +19,13 @@ new FormModel {
 				"$alignTop": true
 			} ) {
 				name: "panel1"
-				"background": new java.awt.Color( 218, 165, 4, 255 )
+				"background": new java.awt.Color( 202, 183, 160, 255 )
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true
 				}
 				add( new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 					name: "menuBar1"
-					"background": new java.awt.Color( 218, 165, 4, 255 )
+					"background": new java.awt.Color( 202, 183, 160, 255 )
 					"margin": new java.awt.Insets( 0, 10, 0, 10 )
 					"borderPainted": false
 					auxiliary() {
