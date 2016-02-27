@@ -7,24 +7,24 @@ import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Created by Nathanael on 5/22/2015
  */
 public class LogicRequirement {
 
-    public static List<Requirement> findAll() {
-        List<Requirement> requirementList = new ArrayList<>();
+    public static Set<Requirement> findAllByParentIdAndTypeId(int parentId, int typeId) {
+        Set<Requirement> requirementSet = new LinkedHashSet<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return requirementList;
+            return requirementSet;
         }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM requirement ORDER BY name");
+            ResultSet rs = statement.executeQuery("SELECT * FROM requirement WHERE parentId = " + parentId + " AND typeId = " + typeId + " ORDER BY id");
 
             while (rs.next()) {
                 Requirement requirement = new Requirement();
@@ -33,17 +33,17 @@ public class LogicRequirement {
                 requirement.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
                 requirement.setParentId(rs.getInt(KeyConst.PARENT_ID.getName()));
                 requirement.setTypeId(rs.getInt(KeyConst.TYPE_ID.getName()));
-                requirementList.add(requirement);
+                requirementSet.add(requirement);
             }
 
         } catch (Exception e) {
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
 
-        return requirementList;
+        return requirementSet;
     }
 
-    public static synchronized void save(List<Requirement> requirementList) {
+    public static synchronized void save(Set<Requirement> requirementList) {
         if (Util.isEmpty(requirementList)) {
             return;
         }
@@ -92,7 +92,7 @@ public class LogicRequirement {
         }
     }
 
-    public static synchronized void delete(List<Requirement> requirementList) {
+    public static synchronized void delete(Set<Requirement> requirementList) {
         if (Util.isEmpty(requirementList)) {
             return;
         }

@@ -31,10 +31,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author User #2
@@ -210,10 +208,10 @@ public class MeritBadgePanel extends JPanel {
     }
 
     private void loadRequirementList() {
-        List<Requirement> requirementList = CacheObject.getRequirementListByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
+        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
 
         boolean firstAdded = false;
-        for (Requirement requirement : requirementList) {
+        for (Requirement requirement : requirementSet) {
             PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
             pnlRequirementList.add(pnlRequirement);
 
@@ -278,13 +276,13 @@ public class MeritBadgePanel extends JPanel {
 
         setData();
 
-        List<Requirement> requirementList = validateRequirements(-1, true);
-        if (requirementList == null) return;
+        Set<Requirement> requirementSet = validateRequirements(-1, true);
+        if (requirementSet == null) return;
 
         List<Counselor> counselorList = validateCounselors(-1, true);
         if (counselorList == null) return;
 
-        saveRecords(requirementList, true, counselorList);
+        saveRecords(requirementSet, true, counselorList);
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
@@ -295,15 +293,15 @@ public class MeritBadgePanel extends JPanel {
         listMeritBadgeNames.setSelectedValue(meritBadge.getName(), true);
     }
 
-    private void saveRecords(List<Requirement> requirementList, boolean newMeritBadge, List<Counselor> counselorList) {
+    private void saveRecords(Set<Requirement> requirementSet, boolean newMeritBadge, List<Counselor> counselorList) {
         meritBadge = LogicMeritBadge.save(meritBadge);
 
         if (newMeritBadge) {
-            for (Requirement requirement : requirementList) {
+            for (Requirement requirement : requirementSet) {
                 requirement.setParentId(meritBadge.getId());
             }
         }
-        LogicRequirement.save(requirementList);
+        LogicRequirement.save(requirementSet);
 
         for (Counselor counselor : counselorList) {
             counselor.setBadgeId(meritBadge.getId());
@@ -311,12 +309,11 @@ public class MeritBadgePanel extends JPanel {
         LogicCounselor.save(counselorList);
 
         CacheObject.addToMeritBadges(meritBadge);
-        CacheObject.addToRequirements(requirementList);
         CacheObject.addToCounselors(counselorList);
     }
 
-    private List<Requirement> validateRequirements(int parentId, boolean validate) {
-        List<Requirement> requirementList = new ArrayList<>();
+    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
+        Set<Requirement> requirementSet = new LinkedHashSet<>();
         Set<String> reqNameSet = new HashSet<>();
 
         for (Component component : pnlRequirementList.getComponents()) {
@@ -355,9 +352,9 @@ public class MeritBadgePanel extends JPanel {
             requirement.setId(((PnlRequirement) component).getReqId());
             requirement.setTypeId(RequirementTypeConst.MERIT_BADGE.getId());
 
-            requirementList.add(requirement);
+            requirementSet.add(requirement);
         }
-        return requirementList;
+        return requirementSet;
     }
 
     private void setData() {
@@ -414,14 +411,14 @@ public class MeritBadgePanel extends JPanel {
         setData();
         meritBadge = LogicMeritBadge.update(meritBadge);
 
-        List<Requirement> currentRequirementList = CacheObject.getRequirementListByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
+        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
         List<Requirement> newRequirementList = getRequirementList(meritBadge.getId());
         List<Requirement> deleteRequirementList = new ArrayList<>();
 
         if (newRequirementList.isEmpty()) {
-            deleteRequirementList.addAll(currentRequirementList);
+            deleteRequirementList.addAll(currentRequirementSet);
         } else {
-            for (Requirement requirement : currentRequirementList) {
+            for (Requirement requirement : currentRequirementSet) {
                 boolean addToList = true;
                 for (Requirement newRequirement : newRequirementList) {
                     if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
@@ -436,7 +433,6 @@ public class MeritBadgePanel extends JPanel {
 
         for (Requirement deleteRequirement :  deleteRequirementList) {
             LogicRequirement.delete(deleteRequirement);
-            CacheObject.removeFromRequirements(deleteRequirement.getId());
         }
 
         for (Requirement requirement : newRequirementList) {
@@ -445,7 +441,6 @@ public class MeritBadgePanel extends JPanel {
             } else {
                 LogicRequirement.save(requirement);
             }
-            CacheObject.addToRequirements(requirement);
         }
 
         // todo: may need to do something different with this
@@ -489,21 +484,16 @@ public class MeritBadgePanel extends JPanel {
 
         int meritBadgeId = meritBadge.getId();
 
-        List<Requirement> requirementList = validateRequirements(meritBadgeId, false);
+        Set<Requirement> requirementSet = validateRequirements(meritBadgeId, false);
         List<Counselor> counselorList = validateCounselors(meritBadgeId, false);
 
 
         // todo: counselor id is wrong
         LogicCounselor.delete(counselorList);
-        LogicRequirement.delete(requirementList);
+        LogicRequirement.delete(requirementSet);
         LogicMeritBadge.delete(meritBadge);
 
         CacheObject.removeFromMeritBadges(meritBadgeId);
-
-        requirementList = CacheObject.getRequirementListByParentIdAndTypeId(meritBadgeId, RequirementTypeConst.MERIT_BADGE.getId());
-        for (Requirement requirement : requirementList) {
-            CacheObject.removeFromRequirements(requirement.getId());
-        }
 
         counselorList = CacheObject.getCounselorListByBadgeId(meritBadgeId);
         for (Counselor counselor : counselorList) {

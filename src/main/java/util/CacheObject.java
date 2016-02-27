@@ -13,7 +13,6 @@ public class CacheObject {
     private static Map<Integer, User> cachedUsers;
     private static Map<Integer, AccessRight> cachedAccessRights;
     private static Map<Integer, Advancement> cachedAdvancements;
-    private static Map<Integer, Requirement> cachedRequirements;
     private static Map<Integer, MeritBadge> cachedMeritBadges;
     private static Map<Integer, Counselor> cachedCounselors;
 
@@ -21,7 +20,6 @@ public class CacheObject {
         getUserList();
         getAccessRightList();
         getAdvancementList();
-        getRequirementList();
         getMeritBadgeList();
         getCounselorList();
     }
@@ -35,14 +33,12 @@ public class CacheObject {
         cachedUsers = null;
         cachedAccessRights = null;
         cachedAdvancements = null;
-        cachedRequirements = null;
         cachedMeritBadges = null;
         cachedCounselors = null;
 
         getUserList();
         getAccessRightList();
         getAdvancementList();
-        getRequirementList();
         getMeritBadgeList();
         getCounselorList();
     }
@@ -51,7 +47,6 @@ public class CacheObject {
         cachedUsers = null;
         cachedAccessRights = null;
         cachedAdvancements = null;
-        cachedRequirements = null;
         cachedMeritBadges = null;
         cachedCounselors = null;
     }
@@ -215,55 +210,6 @@ public class CacheObject {
         }
 
         cachedAdvancements.remove(advancementId);
-    }
-
-    public static Collection<Requirement> getRequirementList() {
-        if (cachedRequirements == null) {
-            cachedRequirements = new HashMap<>();
-            List<Requirement> requirementList = LogicRequirement.findAll();
-            for (Requirement requirement : requirementList) {
-                cachedRequirements.put(requirement.getId(), requirement);
-            }
-        }
-        return cachedRequirements.values();
-    }
-
-    public static List<Requirement> getRequirementListByParentIdAndTypeId(int parentId, int typeId) {
-        List<Requirement> requirementList = new ArrayList<>();
-        for (Requirement requirement : getRequirementList()) {
-            if (requirement.getParentId() == parentId && requirement.getTypeId() == typeId) {
-                requirementList.add(requirement);
-            }
-        }
-        return requirementList;
-    }
-
-    public static void addToRequirements(Requirement requirement) {
-        if (cachedRequirements == null) {
-            getRequirementList();
-        }
-
-        assert cachedRequirements != null;
-        cachedRequirements.put(requirement.getId(), requirement);
-    }
-
-    public static void addToRequirements(List<Requirement> requirementList) {
-        if (cachedRequirements == null) {
-            getRequirementList();
-        }
-
-        assert cachedRequirements != null;
-        for (Requirement requirement : requirementList) {
-            cachedRequirements.put(requirement.getId(), requirement);
-        }
-    }
-
-    public static void removeFromRequirements(Integer requirementId) {
-        if (cachedRequirements == null || cachedRequirements.isEmpty()) {
-            return;
-        }
-
-        cachedRequirements.remove(requirementId);
     }
 
     public static Collection<MeritBadge> getMeritBadgeList() {

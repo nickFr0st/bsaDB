@@ -60,7 +60,7 @@ public class AdvancementPanel extends JPanel {
 
     public void populateAdvancementNameList() {
         Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        List<String> advancementNameList = new ArrayList<String>();
+        List<String> advancementNameList = new ArrayList<>();
         for (Advancement advancement : advancementList) {
             advancementNameList.add(advancement.getName());
         }
@@ -72,7 +72,7 @@ public class AdvancementPanel extends JPanel {
 
     private void txtSearchNameKeyReleased() {
         Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        List<String> advancementNameList = new ArrayList<String>();
+        List<String> advancementNameList = new ArrayList<>();
         for (Advancement advancement : advancementList) {
             advancementNameList.add(advancement.getName());
         }
@@ -83,7 +83,7 @@ public class AdvancementPanel extends JPanel {
             return;
         }
 
-        List<String> filteredList = new ArrayList<String>();
+        List<String> filteredList = new ArrayList<>();
         for (Advancement advancement : advancementList) {
             if (advancement.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
                 filteredList.add(advancement.getName());
@@ -128,18 +128,18 @@ public class AdvancementPanel extends JPanel {
             setImage(advancement.getImgPath());
         }
 
-        loadRequirementList();
+        loadRequirementSet();
 
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
         btnSave.setVisible(false);
     }
 
-    private void loadRequirementList() {
-        List<Requirement> requirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+    private void loadRequirementSet() {
+        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
 
         boolean firstAdded = false;
-        for (Requirement requirement : requirementList) {
+        for (Requirement requirement : requirementSet) {
             PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
             pnlRequirementList.add(pnlRequirement);
 
@@ -201,10 +201,10 @@ public class AdvancementPanel extends JPanel {
 
         setData();
 
-        List<Requirement> requirementList = validateRequirements(-1, true);
-        if (requirementList == null) return;
+        Set<Requirement> requirementSet = validateRequirements(-1, true);
+        if (requirementSet == null) return;
 
-        saveRecords(requirementList, true);
+        saveRecords(requirementSet, true);
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
@@ -215,24 +215,23 @@ public class AdvancementPanel extends JPanel {
         listAdvancementNames.setSelectedValue(advancement.getName(), true);
     }
 
-    private void saveRecords(List<Requirement> requirementList, boolean newAdvancement) {
+    private void saveRecords(Set<Requirement> requirementSet, boolean newAdvancement) {
         advancement = LogicAdvancement.save(advancement);
 
         if (newAdvancement) {
-            for (Requirement requirement : requirementList) {
+            for (Requirement requirement : requirementSet) {
                 requirement.setParentId(advancement.getId());
             }
         }
 
-        LogicRequirement.save(requirementList);
+        LogicRequirement.save(requirementSet);
 
         CacheObject.addToAdvancements(advancement);
-        CacheObject.addToRequirements(requirementList);
     }
 
-    private List<Requirement> validateRequirements(int parentId, boolean validate) {
-        List<Requirement> requirementList = new ArrayList<Requirement>();
-        Set<String> reqNameSet = new HashSet<String>();
+    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
+        Set<Requirement> requirementSet = new LinkedHashSet<>();
+        Set<String> reqNameSet = new HashSet<>();
 
         for (Component component : pnlRequirementList.getComponents()) {
             if (!(component instanceof PnlRequirement)) {
@@ -270,9 +269,9 @@ public class AdvancementPanel extends JPanel {
             requirement.setId(((PnlRequirement) component).getReqId());
             requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
 
-            requirementList.add(requirement);
+            requirementSet.add(requirement);
         }
-        return requirementList;
+        return requirementSet;
     }
 
     private void setData() {
@@ -325,40 +324,38 @@ public class AdvancementPanel extends JPanel {
         setData();
         advancement = LogicAdvancement.update(advancement);
 
-        List<Requirement> currentRequirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-        List<Requirement> newRequirementList = getRequirementList(advancement.getId());
-        List<Requirement> deleteRequirementList = new ArrayList<Requirement>();
+        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+        Set<Requirement> newRequirementSet = getRequirementSet(advancement.getId());
+        Set<Requirement> deleteRequirementSet = new LinkedHashSet<>();
 
-        if (newRequirementList.isEmpty()) {
-            for (Requirement requirement : currentRequirementList) {
-                deleteRequirementList.add(requirement);
+        if (newRequirementSet.isEmpty()) {
+            for (Requirement requirement : currentRequirementSet) {
+                deleteRequirementSet.add(requirement);
             }
         } else {
-            for (Requirement requirement : currentRequirementList) {
+            for (Requirement requirement : currentRequirementSet) {
                 boolean addToList = true;
-                for (Requirement newRequirement : newRequirementList) {
+                for (Requirement newRequirement : newRequirementSet) {
                     if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
                         addToList = false;
                     }
                 }
                 if (addToList) {
-                    deleteRequirementList.add(requirement);
+                    deleteRequirementSet.add(requirement);
                 }
             }
         }
 
-        for (Requirement deleteRequirement :  deleteRequirementList) {
+        for (Requirement deleteRequirement :  deleteRequirementSet) {
             LogicRequirement.delete(deleteRequirement);
-            CacheObject.removeFromRequirements(deleteRequirement.getId());
         }
 
-        for (Requirement requirement : newRequirementList) {
+        for (Requirement requirement : newRequirementSet) {
             if (requirement.getId() > 0) {
                 LogicRequirement.update(requirement);
             } else {
                 LogicRequirement.save(requirement);
             }
-            CacheObject.addToRequirements(requirement);
         }
 
 
@@ -368,8 +365,8 @@ public class AdvancementPanel extends JPanel {
         listAdvancementNames.setSelectedValue(advancement.getName(), true);
     }
 
-    private List<Requirement> getRequirementList(int parentId) {
-        List<Requirement> requirementList = new ArrayList<Requirement>();
+    private Set<Requirement> getRequirementSet(int parentId) {
+        Set<Requirement> requirementSet = new LinkedHashSet<>();
 
         for (Component component : pnlRequirementList.getComponents()) {
             if (!(component instanceof PnlRequirement)) {
@@ -385,10 +382,10 @@ public class AdvancementPanel extends JPanel {
             requirement.setId(((PnlRequirement) component).getReqId());
             requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
 
-            requirementList.add(requirement);
+            requirementSet.add(requirement);
         }
 
-        return requirementList;
+        return requirementSet;
     }
 
     private void btnDeleteActionPerformed() {
@@ -398,17 +395,11 @@ public class AdvancementPanel extends JPanel {
 
         int advancementId = advancement.getId();
 
-        List<Requirement> requirementList = validateRequirements(advancement.getId(), false);
-        LogicRequirement.delete(requirementList);
+        Set<Requirement> requirementSet = validateRequirements(advancement.getId(), false);
+        LogicRequirement.delete(requirementSet);
         LogicAdvancement.delete(advancement);
 
         CacheObject.removeFromAdvancements(advancementId);
-
-        requirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancementId, RequirementTypeConst.ADVANCEMENT.getId());
-
-        for (Requirement requirement : requirementList) {
-            CacheObject.removeFromRequirements(requirement.getId());
-        }
 
         populateAdvancementNameList();
 

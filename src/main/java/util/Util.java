@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Created by Nathanael on 5/4/2015
@@ -26,6 +27,10 @@ public class Util {
 
     public static boolean isEmpty(List list) {
         return list == null || list.isEmpty();
+    }
+
+    public static boolean isEmpty(Set set) {
+        return set == null || set.isEmpty();
     }
 
     public static boolean isEmpty(JTextFieldDefaultText txtField) {

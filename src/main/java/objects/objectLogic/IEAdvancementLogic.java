@@ -12,10 +12,8 @@ import util.Util;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Nathanael on 5/24/2015
@@ -57,9 +55,9 @@ public class IEAdvancementLogic {
                     records.add(new String[]{advancement.getName(), advancement.getImgPath()});
                 }
 
-                List<Requirement> requirementList = CacheObject.getRequirementListByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-                if (!Util.isEmpty(requirementList)) {
-                    for (Requirement requirement : requirementList) {
+                Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+                if (!Util.isEmpty(requirementSet)) {
+                    for (Requirement requirement : requirementSet) {
                         records.add(new String[]{requirement.getName(), requirement.getDescription()});
                     }
                 }
@@ -202,12 +200,9 @@ public class IEAdvancementLogic {
                     existingAdv = LogicAdvancement.update(existingAdv);
                     CacheObject.addToAdvancements(existingAdv);
 
-                    List<Requirement> existingRequirementList = CacheObject.getRequirementListByParentIdAndTypeId(existingAdv.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-                    if (!Util.isEmpty(existingRequirementList)) {
-                        LogicRequirement.delete(existingRequirementList);
-                        for (Requirement requirement : existingRequirementList) {
-                            CacheObject.removeFromRequirements(requirement.getId());
-                        }
+                    Set<Requirement> existingRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(existingAdv.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+                    if (!Util.isEmpty(existingRequirementSet)) {
+                        LogicRequirement.delete(existingRequirementSet);
                     }
                 } else {
                     if (importedAdvancement.getImgPath() == null) {
@@ -227,7 +222,6 @@ public class IEAdvancementLogic {
                     requirement.setParentId(advancementId);
                     requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
                     requirement = LogicRequirement.save(requirement);
-                    CacheObject.addToRequirements(requirement);
                 }
             }
 
