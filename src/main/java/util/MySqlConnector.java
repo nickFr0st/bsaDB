@@ -52,15 +52,11 @@ public class MySqlConnector {
     }
 
     public boolean checkForDataBaseConnection() {
-        String dbName;
-        String userName = null;
-        String password = null;
-
         try {
             properties.load(getClass().getResourceAsStream(DB_PROPERTIES_PATH));
-            dbName = properties.getProperty(KeyConst.DB_NAME.getName());
-            userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
-            password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
+            String dbName = properties.getProperty(KeyConst.DB_NAME.getName());
+            String userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
+            String password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
 
             if (Util.isEmpty(dbName) || userName == null || password == null) {
                 return false;
