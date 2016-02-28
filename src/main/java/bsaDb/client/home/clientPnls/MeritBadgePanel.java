@@ -71,7 +71,7 @@ public class MeritBadgePanel extends JPanel {
             meritBadgeNameList.add(meritBadge.getName());
         }
 
-        listMeritBadgeNames.setListData(meritBadgeNameList.toArray());
+        listMeritBadgeNames.setListData(Util.getSortedList(meritBadgeNameList));
         listMeritBadgeNames.revalidate();
         listMeritBadgeNames.repaint();
     }
@@ -83,7 +83,7 @@ public class MeritBadgePanel extends JPanel {
         }
 
         if (txtSearchName.isMessageDefault()) {
-            listMeritBadgeNames.setListData(meritBadgeNameList.toArray());
+            listMeritBadgeNames.setListData(Util.getSortedList(meritBadgeNameList));
             listMeritBadgeNames.revalidate();
             return;
         }
@@ -95,7 +95,7 @@ public class MeritBadgePanel extends JPanel {
             }
         }
 
-        listMeritBadgeNames.setListData(filteredList.toArray());
+        listMeritBadgeNames.setListData(Util.getSortedList(filteredList));
         listMeritBadgeNames.revalidate();
     }
 

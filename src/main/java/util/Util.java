@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by Nathanael on 5/4/2015
@@ -106,5 +107,16 @@ public class Util {
 
     public static Frame getParent(JDialog dialog) {
         return (JFrame) SwingUtilities.getWindowAncestor(dialog);
+    }
+
+    public static Object[] getSortedList(List<String> nameList) {
+        if (Util.isEmpty(nameList)) {
+            return new Object[0];
+        }
+
+        NameComparator comparator = new NameComparator();
+        TreeSet<String> sortedNames = new TreeSet<>(comparator);
+        sortedNames.addAll(nameList);
+        return sortedNames.toArray();
     }
 }

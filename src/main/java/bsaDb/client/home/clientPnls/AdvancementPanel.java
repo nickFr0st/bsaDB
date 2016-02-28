@@ -65,7 +65,7 @@ public class AdvancementPanel extends JPanel {
             advancementNameList.add(advancement.getName());
         }
 
-        listAdvancementNames.setListData(advancementNameList.toArray());
+        listAdvancementNames.setListData(Util.getSortedList(advancementNameList));
         listAdvancementNames.revalidate();
         listAdvancementNames.repaint();
     }
@@ -78,7 +78,7 @@ public class AdvancementPanel extends JPanel {
         }
 
         if (txtSearchName.isMessageDefault()) {
-            listAdvancementNames.setListData(advancementNameList.toArray());
+            listAdvancementNames.setListData(Util.getSortedList(advancementNameList));
             listAdvancementNames.revalidate();
             return;
         }
@@ -90,7 +90,7 @@ public class AdvancementPanel extends JPanel {
             }
         }
 
-        listAdvancementNames.setListData(filteredList.toArray());
+        listAdvancementNames.setListData(Util.getSortedList(filteredList));
         listAdvancementNames.revalidate();
     }
 
@@ -527,19 +527,19 @@ public class AdvancementPanel extends JPanel {
         JPanel panel1 = new JPanel();
         btnBadgeImage = new JLabel();
         JPanel panel6 = new JPanel();
-        lblName = new JLabel();
+        JLabel lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
         lblNameError = new JLabel();
         JPanel panel7 = new JPanel();
         JPanel panel8 = new JPanel();
-        lblRequirement = new JLabel();
+        JLabel lblRequirement = new JLabel();
         btnAddRequirement = new JLabel();
         btnRemoveRequirement = new JLabel();
         lblRequirementError = new JLabel();
         scrollPane3 = new JScrollPane();
         pnlRequirementList = new JPanel();
         JPanel panel5 = new JPanel();
-        btnNew = new JButton();
+        JButton btnNew = new JButton();
         btnSave = new JButton();
         btnUpdate = new JButton();
         btnDelete = new JButton();
@@ -969,16 +969,13 @@ public class AdvancementPanel extends JPanel {
     private JList listAdvancementNames;
     private JScrollPane scrollPane2;
     private JLabel btnBadgeImage;
-    private JLabel lblName;
     private JTextFieldDefaultText txtName;
     private JLabel lblNameError;
-    private JLabel lblRequirement;
     private JLabel btnAddRequirement;
     private JLabel btnRemoveRequirement;
     private JLabel lblRequirementError;
     private JScrollPane scrollPane3;
     private JPanel pnlRequirementList;
-    private JButton btnNew;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;

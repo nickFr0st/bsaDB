@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "5.1.3.0.158" Java: "1.7.0_71" encoding: "UTF-8"
+JFDML JFormDesigner: "5.1.3.0.158" Java: "1.7.0_79" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -165,6 +165,9 @@ new FormModel {
 									"text": "Name:"
 									"font": new java.awt.Font( "Tahoma", 0, 14 )
 									"foreground": new java.awt.Color( 0, 0, 0, 255 )
+									auxiliary() {
+										"JavaCodeGenerator.variableLocal": true
+									}
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"insets": new java.awt.Insets( 0, 10, 0, 0 )
 								} )
@@ -224,6 +227,9 @@ new FormModel {
 										"text": "Requirements"
 										"font": new java.awt.Font( "Vijaya", 0, 22 )
 										"foreground": new java.awt.Color( 51, 102, 153, 255 )
+										auxiliary() {
+											"JavaCodeGenerator.variableLocal": true
+										}
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"insets": new java.awt.Insets( 3, 0, 0, 0 )
 									} )
@@ -297,6 +303,9 @@ new FormModel {
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"preferredSize": new java.awt.Dimension( 56, 40 )
+							auxiliary() {
+								"JavaCodeGenerator.variableLocal": true
+							}
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnNewActionPerformed", false ) )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 						add( new FormComponent( "javax.swing.JButton" ) {

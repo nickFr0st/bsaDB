@@ -68,7 +68,7 @@ public class UserPanel extends JPanel {
             userNameList.add(user.getUserName());
         }
 
-        listUserNames.setListData(userNameList.toArray());
+        listUserNames.setListData(Util.getSortedList(userNameList));
         listUserNames.revalidate();
     }
 
@@ -81,7 +81,7 @@ public class UserPanel extends JPanel {
         }
 
         if (txtSearchName.isMessageDefault()) {
-            listUserNames.setListData(userNameList.toArray());
+            listUserNames.setListData(Util.getSortedList(userNameList));
             listUserNames.revalidate();
             return;
         }
@@ -93,7 +93,7 @@ public class UserPanel extends JPanel {
             }
         }
 
-        listUserNames.setListData(filteredList.toArray());
+        listUserNames.setListData(Util.getSortedList(filteredList));
         listUserNames.revalidate();
     }
 
