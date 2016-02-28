@@ -1,5 +1,6 @@
 package util;
 
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.KeyConst;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class MySqlConnector {
             properties = new Properties();
             properties.load(getClass().getResourceAsStream(DB_PROPERTIES_PATH));
         } catch (IOException ioe) {
-            JOptionPane.showMessageDialog(null, "Path \"/properties/database.properties\" does not exist.", "Cannot find Property", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(null, "Cannot Find Property", "Path \"/properties/database.properties\" does not exist.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             ioe.printStackTrace();
         }
     }
@@ -99,14 +100,14 @@ public class MySqlConnector {
                 if (Util.isEmpty(response = DatabaseCreator.createDatabase(connection, name, rootUser, rootPassword))) {
                     lock.wait(WAIT_TIME);
                 } else {
-                    JOptionPane.showMessageDialog(parentFrame, response);
+                    new MessageDialog(parentFrame, "Database Creation Error", response, MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
                 }
             }
         } catch (InterruptedException e) {
-            JOptionPane.showMessageDialog(parentFrame, "Database create was interrupted, please try again.", "Interruption Error", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(parentFrame, "Interruption Error", "Database create was interrupted, please try again.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             success = false;
         } catch (SQLException sqlE) {
-            JOptionPane.showMessageDialog(parentFrame, sqlE.getMessage(), "Creation Error", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(parentFrame, "Database Creation Error", sqlE.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             System.out.println("\n\n******Error in creating database********\n\n");
             sqlE.printStackTrace();
             success = false;
@@ -126,7 +127,7 @@ public class MySqlConnector {
             connection = DriverManager.getConnection(DB_PATH + name, rootUser, rootPassword);
 
         } catch (SQLException sqle) {
-            JOptionPane.showMessageDialog(parentFrame, sqle.getMessage(), "Connection Error", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(parentFrame, "Connection Error", sqle.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             success = false;
         } catch (Exception ignore) {
             success = false;

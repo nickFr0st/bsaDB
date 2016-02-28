@@ -4,6 +4,7 @@ import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -97,5 +98,13 @@ public class Util {
         }
 
         return "\"" + sb.toString() + "\"";
+    }
+
+    public static Frame getParent(Component panel) {
+        return (JFrame) SwingUtilities.getWindowAncestor(panel);
+    }
+
+    public static Frame getParent(JDialog dialog) {
+        return (JFrame) SwingUtilities.getWindowAncestor(dialog);
     }
 }

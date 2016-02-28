@@ -4,6 +4,7 @@
 
 package bsaDb.client.home.dialogs.export;
 
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
 import util.Util;
@@ -46,7 +47,7 @@ public class ExportDialog extends JDialog {
         typeConst = pnlSelect.getSelectedExport();
 
         if (typeConst == null) {
-            JOptionPane.showMessageDialog(this, "Please select an option from the list to export.", "Empty Export Choice", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(Util.getParent(this), "Empty Export Choice", "Please select an option from the list to export.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return;
         }
 
@@ -65,7 +66,7 @@ public class ExportDialog extends JDialog {
         List<String> exportList = pnlExport.getExportList();
 
         if (Util.isEmpty(exportList)) {
-            JOptionPane.showMessageDialog(this, "Please select at least one " + typeConst.getName() + " to export.", "Empty Export Choice", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(Util.getParent(this), "Empty Export Choice", "Please select at least one " + typeConst.getName() + " to export.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return;
         }
 

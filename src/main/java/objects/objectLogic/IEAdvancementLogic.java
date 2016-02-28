@@ -3,6 +3,7 @@ package objects.objectLogic;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import bsaDb.client.customComponents.CustomChooser;
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;
@@ -85,7 +86,7 @@ public class IEAdvancementLogic {
             return false;
         }
 
-        JOptionPane.showMessageDialog(parent, "Your selected advancement(s) have been successfully exported.", "Export Successful", JOptionPane.INFORMATION_MESSAGE);
+        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected advancement(s) have been successfully exported.", MessageDialog.MessageType.INFO, MessageDialog.ButtonType.OKAY);
         return true;
     }
 
@@ -230,7 +231,7 @@ public class IEAdvancementLogic {
             return false;
         }
 
-        JOptionPane.showMessageDialog(parent, "Your advancements have been successfully imported.", "Import Successful", JOptionPane.INFORMATION_MESSAGE);
+        new MessageDialog(Util.getParent(parent), "Import Successful", "Your advancements have been successfully imported.", MessageDialog.MessageType.INFO, MessageDialog.ButtonType.OKAY);
         return true;
     }
 
@@ -242,7 +243,7 @@ public class IEAdvancementLogic {
         String errorHeaderMessage = "Please fix the following issues and try again.\n\n";
         errors.insert(0, errorHeaderMessage);
 
-        JOptionPane.showMessageDialog(parent, errors, "Import Errors", JOptionPane.ERROR_MESSAGE);
+        new MessageDialog(Util.getParent(parent), "Import Errors", errors.toString(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
         return false;
     }
 }

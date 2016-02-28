@@ -6,6 +6,7 @@ package bsaDb.client;
 
 import bsaDb.client.home.HomePanel;
 import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
+import bsaDb.client.home.dialogs.MessageDialog;
 import util.CacheObject;
 import util.MySqlConnector;
 
@@ -63,7 +64,8 @@ public class BaseFrame extends JFrame {
     }
 
     public void exit() {
-        if (JOptionPane.showConfirmDialog(this, "Are you sure you want to close BSA Database?", "Exit", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) != JOptionPane.YES_OPTION) {
+        MessageDialog dialog = new MessageDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Exit", "Are you sure you want to close BSA Database?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.OKAY_CANCEL);
+        if (dialog.getChoice() != MessageDialog.OPTION_YES) {
             return;
         }
 

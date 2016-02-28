@@ -4,6 +4,7 @@
 
 package bsaDb.client.home.dialogs.imports;
 
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
 import util.Util;
@@ -46,7 +47,7 @@ public class ImportDialog extends JDialog {
         typeConst = pnlSelect.getSelectedImport();
 
         if (typeConst == null) {
-            JOptionPane.showMessageDialog(this, "Please select an option from the list to import.", "Empty Import Choice", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(Util.getParent(this), "Empty Import Choice", "Please select an option from the list to import.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return;
         }
 
@@ -65,7 +66,7 @@ public class ImportDialog extends JDialog {
         String importPath = pnlImport.getImportPath();
 
         if (Util.isEmpty(importPath)) {
-            JOptionPane.showMessageDialog(this, "Please select a valid location to save your import.", "Empty Import Choice", JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(Util.getParent(this), "Empty Import Choice", "Please select a valid location to save your import.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return;
         }
 

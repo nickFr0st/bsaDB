@@ -1,0 +1,88 @@
+JFDML JFormDesigner: "5.1.3.0.158" Java: "1.7.0_79" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"modal": true
+			"minimumSize": new java.awt.Dimension( 430, 200 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "0:1.0"
+				"$rowSpecs": "0:1.0"
+				"$alignTop": true
+				"$alignLeft": true
+			} ) {
+				name: "panel1"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				"minimumSize": new java.awt.Dimension( 448, 20 )
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+					name: "pnlContents"
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					"opaque": false
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+						"$columnSpecs": "0:1.0, 0, 0"
+						"$rowSpecs": "35"
+						"$hGap": 5
+						"$vGap": 5
+					} ) {
+						name: "buttonBar"
+						"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
+						"opaque": false
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "South"
+					} )
+					add( new FormComponent( "javax.swing.JTextArea" ) {
+						name: "txtMessage"
+						"opaque": false
+						"text": "Message here"
+						"lineWrap": true
+						"wrapStyleWord": true
+						"foreground": new java.awt.Color( 0, 0, 0, 255 )
+						"editable": false
+						"margin": new java.awt.Insets( 10, 10, 10, 10 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "Center"
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+						"$columnSpecs": "82"
+						"$rowSpecs": "0:1.0"
+						"$hGap": 5
+						"$vGap": 5
+						"$alignLeft": true
+						"$alignTop": true
+					} ) {
+						name: "pnlImage"
+						"opaque": false
+						auxiliary() {
+							"JavaCodeGenerator.variableLocal": true
+						}
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lblImage"
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/warning64.png" )
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"hAlign": 0
+							"vAlign": 0
+						} )
+					}, new FormLayoutConstraints( class java.lang.String ) {
+						"value": "West"
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"insets": new java.awt.Insets( 10, 10, 10, 10 )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 430, 200 )
+		} )
+	}
+}

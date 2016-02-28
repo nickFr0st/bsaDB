@@ -1,5 +1,7 @@
 package bsaDb.client.customComponents;
 
+import bsaDb.client.home.dialogs.MessageDialog;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
@@ -45,17 +47,16 @@ public class CustomChooser extends JFileChooser {
     public void approveSelection(){
         File f = getSelectedFile();
         if(f.exists() && getDialogType() == SAVE_DIALOG){
-            int result = JOptionPane.showConfirmDialog(this, "The file already exists, would you like to overwrite it?", "Existing file", JOptionPane.YES_NO_CANCEL_OPTION);
-            switch(result){
-                case JOptionPane.YES_OPTION:
+            MessageDialog dialog = new MessageDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Existing File", "The file already exists, would you like to overwrite it?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO);
+            switch(dialog.getChoice()){
+                case MessageDialog.OPTION_YES:
                     super.approveSelection();
                     return;
-                case JOptionPane.NO_OPTION:
-                    return;
-                case JOptionPane.CLOSED_OPTION:
-                    return;
-                case JOptionPane.CANCEL_OPTION:
+                case MessageDialog.OPTION_NO:
                     cancelSelection();
+                    return;
+                case MessageDialog.OPTION_CLOSE:
+                default:
                     return;
             }
         }

@@ -8,6 +8,7 @@ import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.home.clientPnls.common.AccessRightsPanel;
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;
@@ -450,7 +451,7 @@ public class UserPanel extends JPanel {
 
     private void btnDeleteActionPerformed() {
         if (user.getUserName().equals(properties.getProperty(KeyConst.CURRENT_USER.getName()))) {
-            JOptionPane.showConfirmDialog(this, "You cannot delete the currently logged in user.", "Delete Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            new MessageDialog(Util.getParent(this), "Delete Error", "You cannot delete the currently logged in user.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return;
         }
 
