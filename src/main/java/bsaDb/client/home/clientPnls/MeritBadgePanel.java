@@ -125,6 +125,7 @@ public class MeritBadgePanel extends JPanel {
         enableControls(true);
 
         txtName.setText(meritBadge.getName());
+        chkRequiredForEagle.setSelected(meritBadge.isRequiredForEagle());
 
         ImageIcon tryPath = new ImageIcon(meritBadge.getImgPath());
         if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
@@ -133,7 +134,7 @@ public class MeritBadgePanel extends JPanel {
             setImage(meritBadge.getImgPath());
         }
 
-        loadRequirementList();
+        loadRequirements();
 
         loadCounselorTable();
 
@@ -207,7 +208,7 @@ public class MeritBadgePanel extends JPanel {
         return counselorList;
     }
 
-    private void loadRequirementList() {
+    private void loadRequirements() {
         Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
 
         boolean firstAdded = false;
@@ -259,6 +260,7 @@ public class MeritBadgePanel extends JPanel {
 
         btnBadgeImage.setIcon(noImage);
         txtName.setDefault();
+        chkRequiredForEagle.setSelected(false);
         imagePath = "";
 
         pnlRequirementList.removeAll();
@@ -363,6 +365,7 @@ public class MeritBadgePanel extends JPanel {
         }
 
         meritBadge.setName(txtName.getText());
+        meritBadge.setRequiredForEagle(chkRequiredForEagle.isSelected());
         if (Util.isEmpty(imagePath) || getImage() == null) {
             meritBadge.setImgPath("");
         } else {
