@@ -51,15 +51,15 @@ public class IEAdvancementLogic {
                 }
 
                 if (Util.isEmpty(advancement.getImgPath())) {
-                    records.add(new String[]{Util.csvWrap(advancement.getName())});
+                    records.add(new String[]{advancement.getName()});
                 } else {
-                    records.add(new String[]{Util.csvWrap(advancement.getName()), Util.csvWrap(advancement.getImgPath())});
+                    records.add(new String[]{advancement.getName(), advancement.getImgPath()});
                 }
 
                 Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
                 if (!Util.isEmpty(requirementSet)) {
                     for (Requirement requirement : requirementSet) {
-                        records.add(new String[]{Util.csvWrap(requirement.getName()), Util.csvWrap(requirement.getDescription())});
+                        records.add(new String[]{requirement.getName(), requirement.getDescription()});
                     }
                 }
 

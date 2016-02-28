@@ -47,7 +47,7 @@ public class CustomChooser extends JFileChooser {
     public void approveSelection(){
         File f = getSelectedFile();
         if(f.exists() && getDialogType() == SAVE_DIALOG){
-            MessageDialog dialog = new MessageDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Existing File", "The file already exists, would you like to overwrite it?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO);
+            MessageDialog dialog = new MessageDialog(null, "Existing File", "The file already exists, would you like to overwrite it?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO);
             switch(dialog.getChoice()){
                 case MessageDialog.OPTION_YES:
                     super.approveSelection();
