@@ -86,17 +86,17 @@ public class LogicUser {
             StringBuilder query = new StringBuilder();
             query.append("INSERT INTO user VALUES(");
             query.append(user.getId()).append(", ");
-            query.append("'").append(user.getUserName()).append("', ");
-            query.append("'").append(user.getName()).append("', ");
-            query.append("'").append(user.getPosition()).append("', ");
+            query.append("'").append(user.getUserName().replace("'", "''")).append("', ");
+            query.append("'").append(user.getName().replace("'", "''")).append("', ");
+            query.append("'").append(user.getPosition().replace("'", "''")).append("', ");
             query.append("'").append(user.getPhoneNumber()).append("', ");
-            query.append("'").append(user.getState()).append("', ");
-            query.append("'").append(user.getCity()).append("', ");
-            query.append("'").append(user.getStreet()).append("', ");
+            query.append("'").append(user.getState().replace("'", "''")).append("', ");
+            query.append("'").append(user.getCity().replace("'", "''")).append("', ");
+            query.append("'").append(user.getStreet().replace("'", "''")).append("', ");
             query.append("'").append(user.getZip()).append("', ");
             query.append(true).append(", ");
-            query.append("'").append(user.getPassword()).append("', ");
-            query.append("'").append(user.getEmail()).append("'");
+            query.append("'").append(user.getPassword().replace("'", "''")).append("', ");
+            query.append("'").append(user.getEmail().replace("'", "''")).append("'");
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -132,16 +132,16 @@ public class LogicUser {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE user SET ");
-            query.append("username = '").append(user.getUserName()).append("', ");
-            query.append("name = '").append(user.getName()).append("', ");
-            query.append("position = '").append(user.getPosition()).append("', ");
+            query.append("username = '").append(user.getUserName().replace("'", "''")).append("', ");
+            query.append("name = '").append(user.getName().replace("'", "''")).append("', ");
+            query.append("position = '").append(user.getPosition().replace("'", "''")).append("', ");
             query.append("phoneNumber = '").append(user.getPhoneNumber()).append("', ");
-            query.append("state = '").append(user.getState()).append("', ");
-            query.append("city = '").append(user.getCity()).append("', ");
-            query.append("street = '").append(user.getStreet()).append("', ");
+            query.append("state = '").append(user.getState().replace("'", "''")).append("', ");
+            query.append("city = '").append(user.getCity().replace("'", "''")).append("', ");
+            query.append("street = '").append(user.getStreet().replace("'", "''")).append("', ");
             query.append("zip = '").append(user.getZip()).append("', ");
-            query.append("password = '").append(user.getPassword()).append("', ");
-            query.append("email = '").append(user.getEmail()).append("' ");
+            query.append("password = '").append(user.getPassword().replace("'", "''")).append("', ");
+            query.append("email = '").append(user.getEmail().replace("'", "''")).append("' ");
             query.append("WHERE id = ").append(user.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

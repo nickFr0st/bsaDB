@@ -74,8 +74,8 @@ public class LogicAdvancement {
             StringBuilder query = new StringBuilder();
             query.append("INSERT INTO advancement VALUES(");
             query.append(advancement.getId()).append(", ");
-            query.append("'").append(advancement.getName()).append("', ");
-            query.append("'").append(advancement.getImgPath().replace("\\", "\\\\")).append("'");
+            query.append("'").append(advancement.getName().replace("'", "''")).append("', ");
+            query.append("'").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("'");
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -139,8 +139,8 @@ public class LogicAdvancement {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE advancement SET ");
-            query.append("name = '").append(advancement.getName()).append("', ");
-            query.append("imgPath = '").append(advancement.getImgPath().replace("\\", "\\\\")).append("' ");
+            query.append("name = '").append(advancement.getName().replace("'", "''")).append("', ");
+            query.append("imgPath = '").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("' ");
             query.append("WHERE id = ").append(advancement.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

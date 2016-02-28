@@ -150,7 +150,7 @@ public class LogicCounselor {
             query.append("INSERT INTO counselor VALUES(");
             query.append(counselor.getId()).append(", ");
             query.append(counselor.getBadgeId()).append(", ");
-            query.append("'").append(counselor.getName()).append("', ");
+            query.append("'").append(counselor.getName().replace("'", "''")).append("', ");
             query.append("'").append(counselor.getPhoneNumber()).append("' ");
             query.append(")");
 
@@ -186,7 +186,7 @@ public class LogicCounselor {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE counselor SET ");
-            query.append("name = '").append(counselor.getName()).append("', ");
+            query.append("name = '").append(counselor.getName().replace("'", "''")).append("', ");
             query.append("phoneNumber = '").append(counselor.getPhoneNumber()).append("' ");
             query.append("WHERE id = ").append(counselor.getId());
 

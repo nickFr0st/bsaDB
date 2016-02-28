@@ -76,8 +76,8 @@ public class LogicMeritBadge {
             StringBuilder query = new StringBuilder();
             query.append("INSERT INTO meritBadge VALUES(");
             query.append(meritBadge.getId()).append(", ");
-            query.append("'").append(meritBadge.getName()).append("', ");
-            query.append("'").append(meritBadge.getImgPath().replace("\\", "\\\\")).append("', ");
+            query.append("'").append(meritBadge.getName().replace("'", "''")).append("', ");
+            query.append("'").append(meritBadge.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
             query.append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
             query.append(")");
 
@@ -142,8 +142,8 @@ public class LogicMeritBadge {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE meritBadge SET ");
-            query.append(KeyConst.NAME).append(" = '").append(meritBadge.getName()).append("', ");
-            query.append(KeyConst.IMG_PATH).append(" = '").append(meritBadge.getImgPath().replace("\\", "\\\\")).append("', ");
+            query.append(KeyConst.NAME).append(" = '").append(meritBadge.getName().replace("'", "''")).append("', ");
+            query.append(KeyConst.IMG_PATH).append(" = '").append(meritBadge.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
             query.append(KeyConst.REQUIRED_FOR_EAGLE).append(" = ").append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
             query.append("WHERE id = ").append(meritBadge.getId());
 

@@ -79,8 +79,8 @@ public class LogicRequirement {
             StringBuilder query = new StringBuilder();
             query.append("INSERT INTO requirement VALUES(");
             query.append(requirement.getId()).append(", ");
-            query.append("'").append(requirement.getName()).append("', ");
-            query.append("'").append(requirement.getDescription()).append("', ");
+            query.append("'").append(requirement.getName().replace("'", "''")).append("', ");
+            query.append("'").append(requirement.getDescription().replace("'", "''")).append("', ");
             query.append(requirement.getTypeId()).append(", ");
             query.append(requirement.getParentId());
             query.append(")");
@@ -176,8 +176,8 @@ public class LogicRequirement {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE requirement SET ");
-            query.append("name = '").append(requirement.getName()).append("', ");
-            query.append("description = '").append(requirement.getDescription()).append("' ");
+            query.append("name = '").append(requirement.getName().replace("'", "''")).append("', ");
+            query.append("description = '").append(requirement.getDescription().replace("'", "''")).append("' ");
             query.append("WHERE id = ").append(requirement.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

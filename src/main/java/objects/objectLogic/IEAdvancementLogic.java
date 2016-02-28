@@ -39,7 +39,7 @@ public class IEAdvancementLogic {
             // write to location
             StringWriter writer = new StringWriter();
             CSVWriter csvWriter = new CSVWriter(writer, ',');
-            java.util.List<String[]> records = new ArrayList<String[]>();
+            java.util.List<String[]> records = new ArrayList<>();
 
             records.add(new String[]{"Advancement Name", "Advancement Image Path"});
             records.add(new String[]{"Requirement Name", "Requirement Description"});
@@ -51,15 +51,15 @@ public class IEAdvancementLogic {
                 }
 
                 if (Util.isEmpty(advancement.getImgPath())) {
-                    records.add(new String[]{advancement.getName()});
+                    records.add(new String[]{Util.csvWrap(advancement.getName())});
                 } else {
-                    records.add(new String[]{advancement.getName(), advancement.getImgPath()});
+                    records.add(new String[]{Util.csvWrap(advancement.getName()), Util.csvWrap(advancement.getImgPath())});
                 }
 
                 Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
                 if (!Util.isEmpty(requirementSet)) {
                     for (Requirement requirement : requirementSet) {
-                        records.add(new String[]{requirement.getName(), requirement.getDescription()});
+                        records.add(new String[]{Util.csvWrap(requirement.getName()), Util.csvWrap(requirement.getDescription())});
                     }
                 }
 
@@ -93,11 +93,11 @@ public class IEAdvancementLogic {
     public static boolean doImport(Component parent, String importPath) {
         try {
             CSVReader reader = new CSVReader(new FileReader(importPath), ',');
-            Map<Advancement, List<Requirement>> importMap = new HashMap<Advancement, List<Requirement>>();
+            Map<Advancement, List<Requirement>> importMap = new HashMap<>();
 
             boolean getAdvancement = true;
             Advancement advancement = null;
-            java.util.List<Requirement> requirementList = new ArrayList<Requirement>();
+            java.util.List<Requirement> requirementList = new ArrayList<>();
 
             String[] record;
             int line = 0;
@@ -122,7 +122,7 @@ public class IEAdvancementLogic {
 
                         importMap.put(advancement, requirementList);
                         advancement = null;
-                        requirementList = new ArrayList<Requirement>();
+                        requirementList = new ArrayList<>();
                     }
 
                     continue;
@@ -222,7 +222,7 @@ public class IEAdvancementLogic {
                 for (Requirement requirement : entry.getValue()) {
                     requirement.setParentId(advancementId);
                     requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
-                    requirement = LogicRequirement.save(requirement);
+                    LogicRequirement.save(requirement);
                 }
             }
 
