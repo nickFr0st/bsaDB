@@ -86,7 +86,7 @@ public class IEAdvancementLogic {
             return false;
         }
 
-        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected advancement(s) have been successfully exported.", MessageDialog.MessageType.INFO, MessageDialog.ButtonType.OKAY);
+        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected advancement(s) have been successfully exported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
     }
 
@@ -231,7 +231,7 @@ public class IEAdvancementLogic {
             return false;
         }
 
-        new MessageDialog(Util.getParent(parent), "Import Successful", "Your advancements have been successfully imported.", MessageDialog.MessageType.INFO, MessageDialog.ButtonType.OKAY);
+        new MessageDialog(Util.getParent(parent), "Import Successful", "Your advancements have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
     }
 

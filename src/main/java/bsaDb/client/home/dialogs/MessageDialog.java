@@ -113,7 +113,9 @@ public class MessageDialog extends JDialog {
         INFO(1, "/images/info64.png"),
         QUESTION(2, "/images/question64.png"),
         WARNING(3, "/images/warning64.png"),
-        ERROR(4, "/images/error64.png"),;
+        ERROR(4, "/images/error64.png"),
+        SUCCESS(5, "/images/success64.png"),
+        ;
 
         int id;
         String ImagePath;
