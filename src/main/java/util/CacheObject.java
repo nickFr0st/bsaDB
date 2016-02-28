@@ -282,7 +282,7 @@ public class CacheObject {
 
     public static List<Counselor> getCounselorListByBadgeId(int badgeId) {
         List<Counselor> counselorList = new ArrayList<>();
-        for (Counselor counselor : counselorList) {
+        for (Counselor counselor : getCounselorList()) {
             if (counselor.getBadgeId() == badgeId) {
                 counselorList.add(counselor);
             }
