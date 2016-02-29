@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Merit Badge Import</h2>
+
+<p>
+    Files that are imported must have a .csv extension as such make sure that all your values are separated by commas.<br>
+    It is important to note that when you specify a merit badge name that already exists in BSA Database this will <b>update the existing data.</b>
+    To keep existing requirements or contacts you must specify them in the import.
+    <br>
+    When adding counselors please list all counselors for a merit badge after the merit badge, also when adding a counselor put an asterisks(*) at the start of the name
+    to signify that it is a counselor not a requirement.
+    <br>
+    When adding requirements please list all requirements for an merit badge after the merit badge. To signify a new merit badge leave an empty
+    space between the last requirement and the name of the next merit badge.<br>
+    The following table will explain what data is valid and how to build our import file. The type and max values are relate to the type of information that will be
+    stored in the associated field (such as: Text or Number) and the maximum number of character allow in each field respectfully.<br>
+</p>
+
+<table border="1" id="vertical-1">
+    <tr>
+        <th align="left">Merit Badge Name <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            The name of the name of merit badge.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Is Required For Eagle <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            If the merit badge is required for eagle then type true, else type false.<br>
+            <b>(Boolean, N/A)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Merit Badge Image Path <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            The url of the merit badge image. The path should start at the c:/ directory.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Counselor Name <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            The name of the merit badge counselor.<br>
+            <b>(Text, 90)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Counselor Phone Number <i>(Do not add if counselor name was not given)</i> <br>(type, max)</th>
+        <td>
+            The merit badge counselors phone number.<br>
+            <b>(Text, 20)</b>
+        </td>
+    <tr>
+        <th align="left">Requirement Name <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            The name of the requirement.<br>
+            <b>(Text, 44)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Requirement Description <i>(Do not add if requirement name was not given)</i> <br>(type, max)</th>
+        <td>
+            The requirement description.<br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+</table>
+
+<h2>Example</h2>
+
+<p>
+    "Merit Badge Name", "Is Required For Eagle", "Merit Badge Image Path"<br>
+    "Counselor Name", "Counselor Phone Number"<br>
+    "Requirement Name", "Requirement Description"<br>
+    "Swimming", "true", "c:/user/johnDoe/swimming.jpg"<br>
+    "*Randy Swampwater", "(123) 456-7890"<br>
+    "1", "work hard"<br>
+    "2", "be awesome"<br>
+    ""<br>
+    "Art", "false", "08/10/1995", "c:/user/johnDoe/art.png"<br>
+    "1", "be awesome"<br>
+</p>
+
+</body>
+</html>

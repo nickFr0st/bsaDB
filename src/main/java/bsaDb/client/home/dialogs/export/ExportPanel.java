@@ -6,6 +6,7 @@ package bsaDb.client.home.dialogs.export;
 
 import constants.IETypeConst;
 import objects.databaseObjects.Advancement;
+import objects.databaseObjects.MeritBadge;
 import util.CacheObject;
 
 import javax.swing.*;
@@ -21,8 +22,8 @@ import java.util.List;
  */
 public class ExportPanel extends JPanel {
 
-    private List<String> nameSource = new ArrayList<String>();
-    private List<String> nameExport = new ArrayList<String>();
+    private List<String> nameSource = new ArrayList<>();
+    private List<String> nameExport = new ArrayList<>();
 
     public ExportPanel() {
         initComponents();
@@ -43,12 +44,20 @@ public class ExportPanel extends JPanel {
         btnRemove.setEnabled(enable);
     }
 
-    private void populateSourceList(IETypeConst typeConst) {
-        if (typeConst == IETypeConst.ADVANCEMENT) {
-            Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-            for (Advancement advancement : advancementList) {
-                nameSource.add(advancement.getName());
-            }
+    private void populateSourceList(final IETypeConst typeConst) {
+        switch (typeConst) {
+            case ADVANCEMENT:
+                Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+                for (Advancement advancement : advancementList) {
+                    nameSource.add(advancement.getName());
+                }
+                break;
+            case MERIT_BADGE:
+                Collection<MeritBadge> meritBadgeList = CacheObject.getMeritBadgeList();
+                for (MeritBadge meritBadge : meritBadgeList) {
+                    nameSource.add(meritBadge.getName());
+                }
+                break;
         }
 
         listSource.setListData(nameSource.toArray());
@@ -114,10 +123,7 @@ public class ExportPanel extends JPanel {
 
     public List<String> getExportList() {
         if (rbtnExportAll.isSelected()) {
-            nameExport = new ArrayList<String>();
-            for (Advancement advancement : CacheObject.getAdvancementList()) {
-                nameExport.add(advancement.getName());
-            }
+            nameExport.addAll(nameSource);
         }
 
         return nameExport;
@@ -126,16 +132,16 @@ public class ExportPanel extends JPanel {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         rbtnExportAll = new JRadioButton();
-        label1 = new JLabel();
-        rbtnExportSelected = new JRadioButton();
-        lblAvailable = new JLabel();
-        lblSelected = new JLabel();
-        scrollPane1 = new JScrollPane();
+        JLabel label1 = new JLabel();
+        JRadioButton rbtnExportSelected = new JRadioButton();
+        JLabel lblAvailable = new JLabel();
+        JLabel lblSelected = new JLabel();
+        JScrollPane scrollPane1 = new JScrollPane();
         listSource = new JList();
-        panel1 = new JPanel();
+        JPanel panel1 = new JPanel();
         btnAdd = new JButton();
         btnRemove = new JButton();
-        scrollPane2 = new JScrollPane();
+        JScrollPane scrollPane2 = new JScrollPane();
         listExport = new JList();
 
         //======== this ========
@@ -302,16 +308,9 @@ public class ExportPanel extends JPanel {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JRadioButton rbtnExportAll;
-    private JLabel label1;
-    private JRadioButton rbtnExportSelected;
-    private JLabel lblAvailable;
-    private JLabel lblSelected;
-    private JScrollPane scrollPane1;
     private JList listSource;
-    private JPanel panel1;
     private JButton btnAdd;
     private JButton btnRemove;
-    private JScrollPane scrollPane2;
     private JList listExport;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

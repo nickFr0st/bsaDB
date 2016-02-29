@@ -7,6 +7,7 @@ package bsaDb.client.home.dialogs.export;
 import bsaDb.client.home.dialogs.MessageDialog;
 import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
+import objects.objectLogic.IEMeritBadgeLogic;
 import util.Util;
 
 import javax.swing.*;
@@ -71,8 +72,13 @@ public class ExportDialog extends JDialog {
         }
 
         boolean success = false;
-        if (typeConst == IETypeConst.ADVANCEMENT) {
-            success = IEAdvancementLogic.export(this, exportList);
+        switch (typeConst) {
+            case ADVANCEMENT:
+                success = IEAdvancementLogic.export(this, exportList);
+                break;
+            case MERIT_BADGE:
+                success = IEMeritBadgeLogic.export(this, exportList);
+                break;
         }
 
         if (success) {
