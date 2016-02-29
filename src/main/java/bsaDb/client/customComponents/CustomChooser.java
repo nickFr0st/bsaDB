@@ -47,18 +47,32 @@ public class CustomChooser extends JFileChooser {
     public void approveSelection(){
         File f = getSelectedFile();
         if(f.exists() && getDialogType() == SAVE_DIALOG){
+            LookAndFeel current = UIManager.getLookAndFeel();
+
+            try {
+                UIManager.setLookAndFeel(old);
+            } catch (Throwable th) {
+                th.printStackTrace();
+            }
             MessageDialog dialog = new MessageDialog(null, "Existing File", "The file already exists, would you like to overwrite it?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO);
             switch(dialog.getChoice()){
                 case MessageDialog.OPTION_YES:
                     super.approveSelection();
-                    return;
+                    break;
                 case MessageDialog.OPTION_NO:
                     cancelSelection();
-                    return;
+                    break;
                 case MessageDialog.OPTION_CLOSE:
                 default:
-                    return;
+                    break;
             }
+            try {
+                UIManager.setLookAndFeel(current);
+            } catch (Throwable th) {
+                th.printStackTrace();
+            }
+
+            return;
         }
         super.approveSelection();
     }

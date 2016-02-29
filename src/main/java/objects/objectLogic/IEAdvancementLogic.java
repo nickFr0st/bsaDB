@@ -82,7 +82,7 @@ public class IEAdvancementLogic {
             export.close();
 
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            new MessageDialog(null, "Export Error", ioe.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return false;
         }
 
@@ -227,7 +227,7 @@ public class IEAdvancementLogic {
             }
 
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            new MessageDialog(null, "Import Error", ioe.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return false;
         }
 
