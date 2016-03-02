@@ -167,9 +167,9 @@ public class LogicMeritBadge {
         try {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE meritBadge SET ");
-            query.append(KeyConst.NAME).append(" = '").append(meritBadge.getName().replace("'", "''")).append("', ");
-            query.append(KeyConst.IMG_PATH).append(" = '").append(meritBadge.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
-            query.append(KeyConst.REQUIRED_FOR_EAGLE).append(" = ").append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
+            query.append(KeyConst.NAME.getName()).append(" = '").append(meritBadge.getName().replace("'", "''")).append("', ");
+            query.append(KeyConst.IMG_PATH.getName()).append(" = '").append(meritBadge.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
+            query.append(KeyConst.REQUIRED_FOR_EAGLE.getName()).append(" = ").append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
             query.append("WHERE id = ").append(meritBadge.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

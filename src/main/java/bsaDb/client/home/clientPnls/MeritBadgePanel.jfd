@@ -244,8 +244,7 @@ new FormModel {
 										name: "btnAddCounselor"
 										"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/images/add.png" )
 										"toolTipText": "Add a new requirement"
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
+										"cursor": &Cursor0 new java.awt.Cursor( 12 )
 										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddCounselorMouseReleased", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 1
@@ -255,8 +254,7 @@ new FormModel {
 										name: "btnRemoveCounselor"
 										"icon": &SwingIcon1 new com.jformdesigner.model.SwingIcon( 0, "/images/delete.png" )
 										"toolTipText": "Remove selected requirement"
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
+										"cursor": #Cursor0
 										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveCounselorMouseReleased", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 2
@@ -345,8 +343,7 @@ new FormModel {
 										name: "btnAddRequirement"
 										"icon": #SwingIcon0
 										"toolTipText": "Add a new requirement"
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
+										"cursor": #Cursor0
 										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddRequirementMouseReleased", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 1
@@ -355,8 +352,7 @@ new FormModel {
 										name: "btnRemoveRequirement"
 										"icon": #SwingIcon1
 										"toolTipText": "Remove selected requirement"
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "changeToHand", false ) )
-										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "setDefaultCursor", false ) )
+										"cursor": #Cursor0
 										addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveRequirementMouseReleased", false ) )
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridx": 2

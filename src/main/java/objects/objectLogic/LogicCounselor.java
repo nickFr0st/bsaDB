@@ -197,30 +197,31 @@ public class LogicCounselor {
         }
     }
 
-//    public static Counselor findByNameAndBadgeId(String name, int badgeId) {
-//        if (!connector.checkForDataBaseConnection()) {
-//            return null;
-//        }
-//
-//        Counselor counselor = null;
-//        try {
-//            Statement statement = connector.createStatement();
-//            ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " AND name LIKE '" + name + "'");
-//
-//            if (rs.next()) {
-//                counselor = new Counselor();
-//                counselor.setId(rs.getInt(KeyConst.COUNSELOR_ID.getName()));
-//                counselor.setBadgeId(rs.getInt(KeyConst.COUNSELOR_BADGE_ID.getName()));
-//                counselor.setName(rs.getString(KeyConst.COUNSELOR_NAME.getName()));
-//                counselor.setPhoneNumber(rs.getString(KeyConst.COUNSELOR_PHONE_NUMBER.getName()));
-//            }
-//
-//        } catch (Exception e) {
-//            return null;
-//        }
-//
-//        return counselor;
-//    }
+    public static Counselor findByNameAndBadgeId(String name, int badgeId) {
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return null;
+        }
+
+        Counselor counselor = null;
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " AND name LIKE '" + name + "'");
+
+            if (rs.next()) {
+                counselor = new Counselor();
+                counselor.setId(rs.getInt(KeyConst.ID.getName()));
+                counselor.setBadgeId(rs.getInt(KeyConst.BADGE_ID.getName()));
+                counselor.setName(rs.getString(KeyConst.NAME.getName()));
+                counselor.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return counselor;
+    }
 
     public static synchronized void delete(List<Counselor> counselorList) {
         if (Util.isEmpty(counselorList)) {

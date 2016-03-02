@@ -195,10 +195,14 @@ public class MeritBadgePanel extends JPanel {
                 return null;
             }
 
-            Counselor counselor = new Counselor();
-            if (badgeId > 0) {
-                counselor.setBadgeId(badgeId);
+            Counselor counselor = LogicCounselor.findByNameAndBadgeId(counselorName, badgeId);
+            if (counselor == null) {
+                counselor = new Counselor();
+                if (badgeId > 0) {
+                    counselor.setBadgeId(badgeId);
+                }
             }
+
             counselor.setName(counselorName);
             counselor.setPhoneNumber((String) tableModel.getValueAt(i, 1));
 
@@ -266,9 +270,11 @@ public class MeritBadgePanel extends JPanel {
         pnlRequirementList.removeAll();
         pnlRequirementList.repaint();
 
-        tblCounselors.removeAll();
-        tblCounselors.revalidate();
-        tblCounselors.repaint();
+        if (tableModel.getRowCount() > 0) {
+            for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
+                tableModel.removeRow(i);
+            }
+        }
     }
 
     private void btnSaveActionPerformed() {
@@ -445,10 +451,14 @@ public class MeritBadgePanel extends JPanel {
             }
         }
 
-        // todo: may need to do something different with this
         List<Counselor> counselorList = validateCounselors(meritBadge.getId(), true);
-        if (counselorList == null) return;
-
+        for (Counselor counselor : counselorList) {
+            if (counselor.getId() > 0) {
+                LogicCounselor.update(counselor);
+            } else {
+                LogicCounselor.save(counselor);
+            }
+        }
 
         CacheObject.addToMeritBadges(meritBadge);
         populateMeritBadgeNameList();
@@ -487,10 +497,8 @@ public class MeritBadgePanel extends JPanel {
         int meritBadgeId = meritBadge.getId();
 
         Set<Requirement> requirementSet = validateRequirements(meritBadgeId, false);
-        List<Counselor> counselorList = validateCounselors(meritBadgeId, false);
+        List<Counselor> counselorList = getCounselorListForDeletion(meritBadgeId);
 
-
-        // todo: counselor id is wrong
         LogicCounselor.delete(counselorList);
         LogicRequirement.delete(requirementSet);
         LogicMeritBadge.delete(meritBadge);
@@ -508,12 +516,24 @@ public class MeritBadgePanel extends JPanel {
         enableControls(false);
     }
 
-    private void changeToHand() {
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
+    private List<Counselor> getCounselorListForDeletion(int meritBadgeId) {
+        List<Counselor> counselorList = new ArrayList<>();
 
-    private void setDefaultCursor() {
-        setCursor(Cursor.getDefaultCursor());
+        if (tableModel.getRowCount() <= 0) {
+            return counselorList;
+        }
+
+        for (int i = 0; i < tableModel.getRowCount(); ++i) {
+            String counselorName = (String)tableModel.getValueAt(i, 0);
+
+            Counselor counselor = LogicCounselor.findByNameAndBadgeId(counselorName, meritBadgeId);
+            if (counselor != null) {
+                counselorList.add(counselor);
+            }
+
+        }
+
+        return counselorList;
     }
 
     private void btnBadgeImageMouseReleased() {
@@ -932,16 +952,9 @@ public class MeritBadgePanel extends JPanel {
                                 //---- btnAddCounselor ----
                                 btnAddCounselor.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
                                 btnAddCounselor.setToolTipText("Add a new requirement");
+                                btnAddCounselor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                 btnAddCounselor.setName("btnAddCounselor");
                                 btnAddCounselor.addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
-                                        changeToHand();
-                                    }
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
-                                        setDefaultCursor();
-                                    }
                                     @Override
                                     public void mouseReleased(MouseEvent e) {
                                         btnAddCounselorMouseReleased();
@@ -954,16 +967,9 @@ public class MeritBadgePanel extends JPanel {
                                 //---- btnRemoveCounselor ----
                                 btnRemoveCounselor.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
                                 btnRemoveCounselor.setToolTipText("Remove selected requirement");
+                                btnRemoveCounselor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                 btnRemoveCounselor.setName("btnRemoveCounselor");
                                 btnRemoveCounselor.addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
-                                        changeToHand();
-                                    }
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
-                                        setDefaultCursor();
-                                    }
                                     @Override
                                     public void mouseReleased(MouseEvent e) {
                                         btnRemoveCounselorMouseReleased();
@@ -1043,16 +1049,9 @@ public class MeritBadgePanel extends JPanel {
                                 //---- btnAddRequirement ----
                                 btnAddRequirement.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
                                 btnAddRequirement.setToolTipText("Add a new requirement");
+                                btnAddRequirement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                 btnAddRequirement.setName("btnAddRequirement");
                                 btnAddRequirement.addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
-                                        changeToHand();
-                                    }
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
-                                        setDefaultCursor();
-                                    }
                                     @Override
                                     public void mouseReleased(MouseEvent e) {
                                         btnAddRequirementMouseReleased();
@@ -1065,16 +1064,9 @@ public class MeritBadgePanel extends JPanel {
                                 //---- btnRemoveRequirement ----
                                 btnRemoveRequirement.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
                                 btnRemoveRequirement.setToolTipText("Remove selected requirement");
+                                btnRemoveRequirement.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                 btnRemoveRequirement.setName("btnRemoveRequirement");
                                 btnRemoveRequirement.addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
-                                        changeToHand();
-                                    }
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
-                                        setDefaultCursor();
-                                    }
                                     @Override
                                     public void mouseReleased(MouseEvent e) {
                                         btnRemoveRequirementMouseReleased();
