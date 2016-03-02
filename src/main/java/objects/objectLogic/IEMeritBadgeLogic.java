@@ -108,7 +108,8 @@ public class IEMeritBadgeLogic {
             boolean getMeritBadge = true;
             MeritBadge meritBadge = null;
             Set<Requirement> requirementSet = new LinkedHashSet<>();
-            java.util.List<Counselor> counselorList = new ArrayList<>();
+            List<Counselor> counselorList = new ArrayList<>();
+            Set<String> counselorNameSet = new HashSet<>();
 
             String[] record;
             int line = 0;
@@ -140,6 +141,7 @@ public class IEMeritBadgeLogic {
                         meritBadge = null;
                         requirementSet = new LinkedHashSet<>();
                         counselorList = new ArrayList<>();
+                        counselorNameSet = new HashSet<>();
                     }
 
                     continue;
@@ -198,6 +200,8 @@ public class IEMeritBadgeLogic {
                         errors.append("Counselor name is missing. ").append(errorLine);
                     } else if (counselorName.length() > Counselor.COL_NAME_LENGTH) {
                         errors.append("Counselor name is too long. ").append(errorLine);
+                    } else if (!counselorNameSet.add(counselorName)) {
+                        errors.append("Counselor names must be unique per Merit Badge. ").append(errorLine);
                     }
                     counselor.setName(counselorName.substring(1, counselorName.length()));
 
