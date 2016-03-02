@@ -43,12 +43,12 @@ public class LogicRequirement {
         return requirementSet;
     }
 
-    public static synchronized void save(Set<Requirement> requirementList) {
-        if (Util.isEmpty(requirementList)) {
+    public static synchronized void save(Set<Requirement> requirementSet) {
+        if (Util.isEmpty(requirementSet)) {
             return;
         }
 
-        for (Requirement requirement : requirementList) {
+        for (Requirement requirement : requirementSet) {
             save(requirement);
         }
     }
@@ -182,6 +182,30 @@ public class LogicRequirement {
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static synchronized void deleteAllByParentIdAndTypeId(final int parentId, final int typeId) {
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteAllRequirementsByParentIdAndTypeId(parentId, typeId);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteAllRequirementsByParentIdAndTypeId(int parentId, int typeId) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM requirement WHERE parentId = " + parentId + " AND typeId = " + typeId);
         } catch (Exception e) {
             e.printStackTrace();
         }

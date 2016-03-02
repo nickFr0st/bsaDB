@@ -4,8 +4,8 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.home.dialogs.MessageDialog;
+import bsaDb.client.home.dialogs.imports.helper.MeritBadgeImport;
 import constants.RequirementTypeConst;
-import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Counselor;
 import objects.databaseObjects.MeritBadge;
 import objects.databaseObjects.Requirement;
@@ -59,10 +59,10 @@ public class IEMeritBadgeLogic {
                     records.add(new String[]{meritBadge.getName(), Boolean.toString(meritBadge.isRequiredForEagle()), meritBadge.getImgPath()});
                 }
 
-                List<Counselor> counselorList = CacheObject.getCounselorListByBadgeId(meritBadge.getId());
+                List<Counselor> counselorList = LogicCounselor.findAllByBadgeId(meritBadge.getId());
                 if (!Util.isEmpty(counselorList)) {
                     for (Counselor counselor : counselorList) {
-                        records.add(new String[]{counselor.getName(), counselor.getPhoneNumber()});
+                        records.add(new String[]{"*" + counselor.getName(), counselor.getPhoneNumber()});
                     }
                 }
 
@@ -103,11 +103,12 @@ public class IEMeritBadgeLogic {
     public static boolean doImport(Component parent, String importPath) {
         try {
             CSVReader reader = new CSVReader(new FileReader(importPath), ',');
-            Map<Advancement, List<Requirement>> importMap = new HashMap<>();
+            Map<MeritBadge, MeritBadgeImport> importMap = new HashMap<>();
 
-            boolean getAdvancement = true;
-            Advancement advancement = null;
-            List<Requirement> requirementList = new ArrayList<>();
+            boolean getMeritBadge = true;
+            MeritBadge meritBadge = null;
+            Set<Requirement> requirementSet = new LinkedHashSet<>();
+            java.util.List<Counselor> counselorList = new ArrayList<>();
 
             String[] record;
             int line = 0;
@@ -118,51 +119,101 @@ public class IEMeritBadgeLogic {
                 String errorLine = "line: " + line + "\n";
 
                 // check for the headers
-                if (record[0].equals("Advancement Name") || record[0].equals("Requirement Name")) {
+                if (record[0].equals("Merit Badge Name") || record[0].equals("Counselor Name") || record[0].equals("Requirement Name")) {
                     continue;
                 }
 
                 if (record[0].isEmpty()) {
-                    getAdvancement = true;
+                    getMeritBadge = true;
 
-                    if (advancement != null) {
+                    if (meritBadge != null) {
                         if (!checkForErrors(errors, parent)) {
                             return false;
                         }
 
-                        importMap.put(advancement, requirementList);
-                        advancement = null;
-                        requirementList = new ArrayList<>();
+                        MeritBadgeImport badgeImport = new MeritBadgeImport();
+                        badgeImport.setRequirementSet(requirementSet);
+                        badgeImport.setCounselorList(counselorList);
+
+                        importMap.put(meritBadge, badgeImport);
+
+                        meritBadge = null;
+                        requirementSet = new LinkedHashSet<>();
+                        counselorList = new ArrayList<>();
                     }
 
                     continue;
                 }
 
-                if (getAdvancement) {
-                    getAdvancement = false;
+                if (getMeritBadge) {
+                    getMeritBadge = false;
 
-                    advancement = new Advancement();
-                    String advancementName = record[0];
-
-                    if (Util.isEmpty(advancementName)){
-                        errors.append("Advancement name is missing. ").append(errorLine);
-                    } else if (advancementName.length() > Advancement.COL_NAME_LENGTH) {
-                        errors.append("Advancement name is too long. ").append(errorLine);
-                    }
-                    advancement.setName(advancementName);
-
-                    if (record.length == 1) {
+                    if (record.length < 2) {
+                        errors.append("There are too few values for the merit badge. ").append(errorLine);
                         continue;
                     }
 
-                    String advancementImgPath = record[1];
-                    if (Util.isEmpty(advancementImgPath)){
-                        errors.append("Advancement image path is missing. ").append(errorLine);
-                    } else if (advancementImgPath.length() > Advancement.COL_IMG_PATH_LENGTH) {
-                        errors.append("Advancement image path is too long. ").append(errorLine);
-                    }
-                    advancement.setImgPath(advancementImgPath);
 
+                    meritBadge = new MeritBadge();
+                    String badgeName = record[0];
+
+                    if (Util.isEmpty(badgeName)){
+                        errors.append("Merit badge name is missing. ").append(errorLine);
+                    } else if (badgeName.length() > MeritBadge.COL_NAME_LENGTH) {
+                        errors.append("Merit badge name is too long. ").append(errorLine);
+                    }
+                    meritBadge.setName(badgeName);
+
+                    if (!(checkForBoolean(record[1].trim()))) {
+                        errors.append("invalid value: ").append(record[1]).append(". Accepted values are 'true' or 'false'. ").append(errorLine);
+                        meritBadge.setRequiredForEagle(false);
+                        continue;
+                    } else {
+                        meritBadge.setRequiredForEagle(Boolean.parseBoolean(record[1].trim()));
+                    }
+
+                    if (record.length == 2) {
+                        continue;
+                    }
+
+                    String advancementImgPath = record[2];
+                    if (Util.isEmpty(advancementImgPath)){
+                        errors.append("Merit badge image path is missing. ").append(errorLine);
+                    } else if (advancementImgPath.length() > MeritBadge.COL_IMG_PATH_LENGTH) {
+                        errors.append("Merit badge image path is too long. ").append(errorLine);
+                    }
+                    meritBadge.setImgPath(advancementImgPath);
+                    continue;
+                }
+
+                if (record[0].startsWith("*")) {
+                    if (record.length < 2) {
+                        errors.append("Counselors needs both a name and a phone number.").append(errorLine);
+                        continue;
+                    }
+
+                    Counselor counselor = new Counselor();
+                    String counselorName = record[0];
+                    if (Util.isEmpty(counselorName)){
+                        errors.append("Counselor name is missing. ").append(errorLine);
+                    } else if (counselorName.length() > Counselor.COL_NAME_LENGTH) {
+                        errors.append("Counselor name is too long. ").append(errorLine);
+                    }
+                    counselor.setName(counselorName.substring(1, counselorName.length()));
+
+                    String phoneNumber = record[1];
+                    if (Util.isEmpty(phoneNumber)){
+                        errors.append("Phone number is missing. ").append(errorLine);
+                    } else if (counselorName.length() > Counselor.COL_PHONE_NUMBER_LENGTH) {
+                        errors.append("Phone number is too long. ").append(errorLine);
+                    }
+
+                    if (!Util.validatePhoneNumber(phoneNumber)) {
+                        errors.append("Phone number format is incorrect. ").append(errorLine);
+                    }
+
+                    counselor.setPhoneNumber(phoneNumber);
+                    counselorList.add(counselor);
                     continue;
                 }
 
@@ -185,9 +236,9 @@ public class IEMeritBadgeLogic {
                     errors.append("Requirement description is missing. ").append(errorLine);
                 }
                 requirement.setDescription(reqDesc);
-                requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+                requirement.setTypeId(RequirementTypeConst.MERIT_BADGE.getId());
 
-                requirementList.add(requirement);
+                requirementSet.add(requirement);
             }
 
             reader.close();
@@ -196,43 +247,53 @@ public class IEMeritBadgeLogic {
                 return false;
             }
 
-            importMap.put(advancement, requirementList);
+            MeritBadgeImport badgeImport = new MeritBadgeImport();
+            badgeImport.setCounselorList(counselorList);
+            badgeImport.setRequirementSet(requirementSet);
+            importMap.put(meritBadge, badgeImport);
 
-            for (Map.Entry<Advancement, List<Requirement>> entry : importMap.entrySet()) {
-                Advancement importedAdvancement = entry.getKey();
-                Advancement existingAdv = CacheObject.getAdvancement(importedAdvancement.getName());
-                int advancementId;
+            for (Map.Entry<MeritBadge, MeritBadgeImport> entry : importMap.entrySet()) {
+                MeritBadge importedBadge = entry.getKey();
+                MeritBadge existingBadge = LogicMeritBadge.findByName(importedBadge.getName());
+                int meritBadgeId;
 
-                if (existingAdv != null) {
-                    advancementId = existingAdv.getId();
-                    if (!Util.isEmpty(importedAdvancement.getImgPath())) {
-                        existingAdv.setImgPath(importedAdvancement.getImgPath());
+                if (existingBadge != null) {
+                    meritBadgeId = existingBadge.getId();
+                    if (!Util.isEmpty(importedBadge.getImgPath())) {
+                        existingBadge.setImgPath(importedBadge.getImgPath());
                     }
-                    existingAdv = LogicAdvancement.update(existingAdv);
-                    CacheObject.addToAdvancements(existingAdv);
+                    existingBadge.setRequiredForEagle(importedBadge.isRequiredForEagle());
+                    LogicMeritBadge.update(existingBadge);
+                    CacheObject.addToMeritBadges(existingBadge);
 
-                    Set<Requirement> existingRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(existingAdv.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-                    if (!Util.isEmpty(existingRequirementSet)) {
-                        LogicRequirement.delete(existingRequirementSet);
-                    }
+                    LogicCounselor.deleteAllByBadgeId(meritBadgeId);
+                    LogicRequirement.deleteAllByParentIdAndTypeId(meritBadgeId, RequirementTypeConst.MERIT_BADGE.getId());
                 } else {
-                    if (importedAdvancement.getImgPath() == null) {
-                        importedAdvancement.setImgPath("");
+                    if (importedBadge.getImgPath() == null) {
+                        importedBadge.setImgPath("");
                     }
 
-                    importedAdvancement = LogicAdvancement.save(importedAdvancement);
-                    CacheObject.addToAdvancements(importedAdvancement);
-                    advancementId = importedAdvancement.getId();
+                    LogicMeritBadge.save(importedBadge);
+                    CacheObject.addToMeritBadges(importedBadge);
+                    meritBadgeId = importedBadge.getId();
                 }
 
-                if (Util.isEmpty(entry.getValue())) {
-                    continue;
+
+                MeritBadgeImport listContainer = importMap.get(importedBadge);
+                List<Counselor> counselors = listContainer.getCounselorList();
+                if (!Util.isEmpty(counselors)) {
+                    for (Counselor counselor : counselors) {
+                        counselor.setBadgeId(meritBadgeId);
+                    }
+                    LogicCounselor.save(counselorList);
                 }
 
-                for (Requirement requirement : entry.getValue()) {
-                    requirement.setParentId(advancementId);
-                    requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
-                    LogicRequirement.save(requirement);
+                Set<Requirement> reqList = listContainer.getRequirementSet();
+                if (!Util.isEmpty(reqList)) {
+                    for (Requirement req : reqList) {
+                        req.setParentId(meritBadgeId);
+                    }
+                    LogicRequirement.save(reqList);
                 }
             }
 
@@ -241,8 +302,12 @@ public class IEMeritBadgeLogic {
             return false;
         }
 
-        new MessageDialog(Util.getParent(parent), "Import Successful", "Your advancements have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
+        new MessageDialog(Util.getParent(parent), "Import Successful", "Your merit badges have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
+    }
+
+    private static boolean checkForBoolean(String arg) {
+        return !Util.isEmpty(arg) && ("true".equalsIgnoreCase(arg) || "false".equalsIgnoreCase(arg));
     }
 
     private static boolean checkForErrors(StringBuilder errors, Component parent) {

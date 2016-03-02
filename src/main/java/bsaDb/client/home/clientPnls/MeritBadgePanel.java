@@ -146,7 +146,7 @@ public class MeritBadgePanel extends JPanel {
     private void loadCounselorTable() {
         clearCounselorTable();
 
-        java.util.List<Counselor> counselorList = CacheObject.getCounselorListByBadgeId(meritBadge.getId());
+        java.util.List<Counselor> counselorList = LogicCounselor.findAllByBadgeId(meritBadge.getId());
         if (!Util.isEmpty(counselorList)) {
             for (Counselor counselor : counselorList) {
                 Object[] rowData = new Object[]{counselor.getName(), counselor.getPhoneNumber()};
@@ -311,7 +311,6 @@ public class MeritBadgePanel extends JPanel {
         LogicCounselor.save(counselorList);
 
         CacheObject.addToMeritBadges(meritBadge);
-        CacheObject.addToCounselors(counselorList);
     }
 
     private Set<Requirement> validateRequirements(int parentId, boolean validate) {
@@ -497,11 +496,6 @@ public class MeritBadgePanel extends JPanel {
         LogicMeritBadge.delete(meritBadge);
 
         CacheObject.removeFromMeritBadges(meritBadgeId);
-
-        counselorList = CacheObject.getCounselorListByBadgeId(meritBadgeId);
-        for (Counselor counselor : counselorList) {
-            CacheObject.removeFromCounselors(counselor.getId());
-        }
 
         populateMeritBadgeNameList();
 

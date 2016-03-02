@@ -1,7 +1,13 @@
 package util;
 
-import objects.databaseObjects.*;
-import objects.objectLogic.*;
+import objects.databaseObjects.AccessRight;
+import objects.databaseObjects.Advancement;
+import objects.databaseObjects.MeritBadge;
+import objects.databaseObjects.User;
+import objects.objectLogic.LogicAccessRight;
+import objects.objectLogic.LogicAdvancement;
+import objects.objectLogic.LogicMeritBadge;
+import objects.objectLogic.LogicUser;
 
 import java.util.*;
 
@@ -14,14 +20,12 @@ public class CacheObject {
     private static Map<Integer, AccessRight> cachedAccessRights;
     private static Map<Integer, Advancement> cachedAdvancements;
     private static Map<Integer, MeritBadge> cachedMeritBadges;
-    private static Map<Integer, Counselor> cachedCounselors;
 
     private CacheObject() {
         getUserList();
         getAccessRightList();
         getAdvancementList();
         getMeritBadgeList();
-        getCounselorList();
     }
 
     public static void setupCache() {
@@ -34,13 +38,11 @@ public class CacheObject {
         cachedAccessRights = null;
         cachedAdvancements = null;
         cachedMeritBadges = null;
-        cachedCounselors = null;
 
         getUserList();
         getAccessRightList();
         getAdvancementList();
         getMeritBadgeList();
-        getCounselorList();
     }
 
     public static void clear() {
@@ -48,7 +50,6 @@ public class CacheObject {
         cachedAccessRights = null;
         cachedAdvancements = null;
         cachedMeritBadges = null;
-        cachedCounselors = null;
     }
 
     public static Collection<User> getUserList() {
@@ -267,54 +268,5 @@ public class CacheObject {
         }
 
         cachedMeritBadges.remove(meritBadgeId);
-    }
-
-    public static Collection<Counselor> getCounselorList() {
-        if (cachedCounselors == null) {
-            cachedCounselors = new HashMap<>();
-            List<Counselor> counselorList = LogicCounselor.findAll();
-            for (Counselor counselor : counselorList) {
-                cachedCounselors.put(counselor.getId(), counselor);
-            }
-        }
-        return cachedCounselors.values();
-    }
-
-    public static List<Counselor> getCounselorListByBadgeId(int badgeId) {
-        List<Counselor> counselorList = new ArrayList<>();
-        for (Counselor counselor : getCounselorList()) {
-            if (counselor.getBadgeId() == badgeId) {
-                counselorList.add(counselor);
-            }
-        }
-        return counselorList;
-    }
-
-    public static void addToCounselor(Counselor counselor) {
-        if (cachedCounselors == null) {
-            getCounselorList();
-        }
-
-        assert cachedCounselors != null;
-        cachedCounselors.put(counselor.getId(), counselor);
-    }
-
-    public static void addToCounselors(List<Counselor> counselorList) {
-        if (cachedCounselors == null) {
-            getCounselorList();
-        }
-
-        assert cachedCounselors != null;
-        for (Counselor counselor : counselorList) {
-            cachedCounselors.put(counselor.getId(), counselor);
-        }
-    }
-
-    public static void removeFromCounselors(Integer counselorId) {
-        if (cachedCounselors == null || cachedCounselors.isEmpty()) {
-            return;
-        }
-
-        cachedCounselors.remove(counselorId);
     }
 }

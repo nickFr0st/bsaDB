@@ -16,33 +16,33 @@ import java.util.List;
 @SuppressWarnings("StringBufferReplaceableByString")
 public class LogicCounselor {
 
-//    public static List<Counselor> findAllByBadgeId(int badgeId) {
-//
-//        List<Counselor> counselorList = new ArrayList<>();
-//
-//        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-//            return counselorList;
-//        }
-//
-//        try {
-//            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-//            ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " ORDER BY name");
-//
-//            while (rs.next()) {
-//                Counselor counselor = new Counselor();
-//                counselor.setId(rs.getInt(KeyConst.ID.getName()));
-//                counselor.setBadgeId(rs.getInt(KeyConst.BADGE_ID.getName()));
-//                counselor.setName(rs.getString(KeyConst.NAME.getName()));
-//                counselor.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-//                counselorList.add(counselor);
-//            }
-//
-//        } catch (Exception e) {
-//            return null;
-//        }
-//
-//        return counselorList;
-//    }
+    public static List<Counselor> findAllByBadgeId(int badgeId) {
+
+        List<Counselor> counselorList = new ArrayList<>();
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return counselorList;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " ORDER BY name");
+
+            while (rs.next()) {
+                Counselor counselor = new Counselor();
+                counselor.setId(rs.getInt(KeyConst.ID.getName()));
+                counselor.setBadgeId(rs.getInt(KeyConst.BADGE_ID.getName()));
+                counselor.setName(rs.getString(KeyConst.NAME.getName()));
+                counselor.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
+                counselorList.add(counselor);
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return counselorList;
+    }
 
     public static List<Counselor> findAll() {
         List<Counselor> counselorList = new ArrayList<>();
@@ -241,7 +241,7 @@ public class LogicCounselor {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    deleteRequirement(counselor.getId());
+                    deleteCounselor(counselor.getId());
                 }
             });
             t.start();
@@ -251,7 +251,7 @@ public class LogicCounselor {
         }
     }
 
-    private static void deleteRequirement(Integer counselorId) {
+    private static void deleteCounselor(Integer counselorId) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM counselor WHERE id = " + counselorId);
@@ -296,30 +296,27 @@ public class LogicCounselor {
 //        deleteList(deletionList);
 //    }
 
-//    public static synchronized void deleteAllByBadgeId(int badgeId) {
-//        try {
-//            synchronized (lock) {
-//                if (!deleteAllCounselorsByBadgeId(badgeId)) {
-//                    lock.wait(Util.WAIT_TIME);
-//                }
-//            }
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static synchronized void deleteAllByBadgeId(final int badgeId) {
+        try {
+            Thread t  = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteAllCounselorsByBadgeId(badgeId);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-//    private static boolean deleteAllCounselorsByBadgeId(int badgeId) {
-//        if (!connector.checkForDataBaseConnection()) {
-//            return false;
-//        }
-//
-//        try {
-//            Statement statement = connector.createStatement();
-//            statement.executeUpdate("DELETE FROM counselor WHERE badgeId = " + badgeId);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
+    private static void deleteAllCounselorsByBadgeId(int badgeId) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM counselor WHERE badgeId = " + badgeId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

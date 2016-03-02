@@ -35,6 +35,9 @@ public class ImportPanel extends JPanel {
             case ADVANCEMENT:
                 setTxtImportInstructions(getClass().getResource("/instructions/ImportAdvancementInstructions.html").toString());
                 break;
+            case MERIT_BADGE:
+                setTxtImportInstructions(getClass().getResource("/instructions/ImportMeritBadgeInstructions.html").toString());
+                break;
         }
     }
 

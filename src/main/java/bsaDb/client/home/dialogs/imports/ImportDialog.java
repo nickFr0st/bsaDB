@@ -7,6 +7,7 @@ package bsaDb.client.home.dialogs.imports;
 import bsaDb.client.home.dialogs.MessageDialog;
 import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
+import objects.objectLogic.IEMeritBadgeLogic;
 import util.Util;
 
 import javax.swing.*;
@@ -71,8 +72,13 @@ public class ImportDialog extends JDialog {
         }
 
         success = false;
-        if (typeConst == IETypeConst.ADVANCEMENT) {
-            success = IEAdvancementLogic.doImport(this, importPath);
+        switch (typeConst) {
+            case ADVANCEMENT:
+                success = IEAdvancementLogic.doImport(this, importPath);
+                break;
+            case MERIT_BADGE:
+                success = IEMeritBadgeLogic.doImport(this, importPath);
+                break;
         }
 
         if (success) {
