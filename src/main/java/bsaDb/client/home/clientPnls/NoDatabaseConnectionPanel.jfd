@@ -110,12 +110,11 @@ new FormModel {
 							"background": new java.awt.Color( 255, 255, 255, 255 )
 							"foreground": new java.awt.Color( 51, 102, 153, 255 )
 							"focusPainted": false
+							"cursor": new java.awt.Cursor( 12 )
 							auxiliary() {
 								"JavaCodeGenerator.variableLocal": true
 							}
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", false ) )
-							addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "button1MouseEntered", false ) )
-							addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "button1MouseExited", false ) )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 							"gridy": 4
 							"hAlign": 2

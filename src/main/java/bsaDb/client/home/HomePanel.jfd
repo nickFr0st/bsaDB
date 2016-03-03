@@ -11,7 +11,6 @@ new FormModel {
 		} ) {
 			name: "this"
 			"background": new java.awt.Color( 51, 102, 153, 255 )
-			"border": new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 2, false )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0:1.0"
 				"$rowSpecs": "35"
@@ -64,8 +63,8 @@ new FormModel {
 						name: "mnuSetup"
 						"text": "Setup"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/settings24.png" )
-						"foreground": new java.awt.Color( 0, 0, 0, 255 )
-						"font": new java.awt.Font( "Tahoma", 0, 12 )
+						"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
+						"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
 						"opaque": false
 						"mnemonic": 83
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuSettingsMouseEntered", false ) )
@@ -93,6 +92,29 @@ new FormModel {
 							"text": "Merit Badges"
 							"mnemonic": 77
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniMeritBadgesActionPerformed", false ) )
+						} )
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "mnuHelp"
+						"text": "Help"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/help24.png" )
+						"foreground": #Color0
+						"font": #Font0
+						"opaque": false
+						"mnemonic": 72
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuHelpMouseEntered", false ) )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuHelpMouseExited", false ) )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "mniAbout"
+							"text": "About"
+							"mnemonic": 66
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniAboutActionPerformed", false ) )
+						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "mniMeritBadgeLink"
+							"text": "meritbadge.org"
+							"mnemonic": 79
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniMeritBadgeLinkActionPerformed", false ) )
 						} )
 					} )
 					add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {

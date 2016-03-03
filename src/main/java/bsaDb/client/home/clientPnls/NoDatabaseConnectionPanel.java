@@ -11,8 +11,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -43,17 +41,8 @@ public class NoDatabaseConnectionPanel extends JPanel {
         try {
             URI uri = new URI("https://dev.mysql.com/downloads/mysql/");
             Desktop.getDesktop().browse(uri);
-        } catch (URISyntaxException ignore) {
-        } catch (IOException ignore){
+        } catch (URISyntaxException | IOException ignore) {
         }
-    }
-
-    private void button1MouseEntered() {
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
-
-    private void button1MouseExited() {
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void btnSetupActionPerformed() {
@@ -174,21 +163,12 @@ public class NoDatabaseConnectionPanel extends JPanel {
                     button1.setBackground(Color.white);
                     button1.setForeground(new Color(51, 102, 153));
                     button1.setFocusPainted(false);
+                    button1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     button1.setName("button1");
                     button1.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             button1ActionPerformed();
-                        }
-                    });
-                    button1.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-                            button1MouseEntered();
-                        }
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-                            button1MouseExited();
                         }
                     });
                     panel3.add(button1, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,

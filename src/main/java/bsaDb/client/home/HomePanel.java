@@ -6,6 +6,7 @@ package bsaDb.client.home;
 
 import bsaDb.client.BaseFrame;
 import bsaDb.client.home.clientPnls.*;
+import bsaDb.client.home.dialogs.AboutDialog;
 import bsaDb.client.home.dialogs.export.ExportDialog;
 import bsaDb.client.home.dialogs.imports.ImportDialog;
 import constants.AccessRightConst;
@@ -13,15 +14,17 @@ import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;
 import util.CacheObject;
+import util.Util;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 /**
@@ -197,6 +200,30 @@ public class HomePanel extends JPanel {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, MERIT_BADGE_PAGE);
     }
 
+    private void mniMeritBadgeLinkActionPerformed() {
+        if (!Desktop.isDesktopSupported()) {
+            return;
+        }
+
+        try {
+            URI uri = new URI("http://meritbadge.org/wiki/index.php/Main_Page");
+            Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException ignore) {
+        }
+    }
+
+    private void mniAboutActionPerformed() {
+        new AboutDialog(Util.getParent(this));
+    }
+
+    private void mnuHelpMouseEntered() {
+        mnuHelp.setIcon(new ImageIcon(getClass().getResource("/images/help_blue24.png")));
+    }
+
+    private void mnuHelpMouseExited() {
+        mnuHelp.setIcon(new ImageIcon(getClass().getResource("/images/help24.png")));
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -210,6 +237,9 @@ public class HomePanel extends JPanel {
         mniUsers = new JMenuItem();
         mniAdvancements = new JMenuItem();
         mniMeritBadges = new JMenuItem();
+        mnuHelp = new JMenu();
+        mniAbout = new JMenuItem();
+        mniMeritBadgeLink = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         btnSignOut = new JButton();
         label1 = new JLabel();
@@ -217,7 +247,6 @@ public class HomePanel extends JPanel {
 
         //======== this ========
         setBackground(new Color(51, 102, 153));
-        setBorder(new LineBorder(new Color(51, 102, 153), 2));
         setName("this");
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0};
@@ -370,6 +399,52 @@ public class HomePanel extends JPanel {
                 }
                 menuBar1.add(mnuSetup);
 
+                //======== mnuHelp ========
+                {
+                    mnuHelp.setText("Help");
+                    mnuHelp.setIcon(new ImageIcon(getClass().getResource("/images/help24.png")));
+                    mnuHelp.setForeground(Color.black);
+                    mnuHelp.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuHelp.setOpaque(false);
+                    mnuHelp.setMnemonic('H');
+                    mnuHelp.setName("mnuHelp");
+                    mnuHelp.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            mnuHelpMouseEntered();
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            mnuHelpMouseExited();
+                        }
+                    });
+
+                    //---- mniAbout ----
+                    mniAbout.setText("About");
+                    mniAbout.setMnemonic('B');
+                    mniAbout.setName("mniAbout");
+                    mniAbout.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniAboutActionPerformed();
+                        }
+                    });
+                    mnuHelp.add(mniAbout);
+
+                    //---- mniMeritBadgeLink ----
+                    mniMeritBadgeLink.setText("meritbadge.org");
+                    mniMeritBadgeLink.setMnemonic('O');
+                    mniMeritBadgeLink.setName("mniMeritBadgeLink");
+                    mniMeritBadgeLink.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniMeritBadgeLinkActionPerformed();
+                        }
+                    });
+                    mnuHelp.add(mniMeritBadgeLink);
+                }
+                menuBar1.add(mnuHelp);
+
                 //---- hSpacer1 ----
                 hSpacer1.setOpaque(false);
                 hSpacer1.setName("hSpacer1");
@@ -438,6 +513,9 @@ public class HomePanel extends JPanel {
     private JMenuItem mniUsers;
     private JMenuItem mniAdvancements;
     private JMenuItem mniMeritBadges;
+    private JMenu mnuHelp;
+    private JMenuItem mniAbout;
+    private JMenuItem mniMeritBadgeLink;
     private JButton btnSignOut;
     private JLabel label1;
     private JPanel pnlCards;
