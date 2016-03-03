@@ -95,6 +95,17 @@ new FormModel {
 						} )
 					} )
 					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "mnuScout"
+						"text": "Scouts"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/scout24.png" )
+						"foreground": #Color0
+						"font": #Font0
+						"opaque": false
+						"mnemonic": 83
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuScoutMouseEntered", false ) )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuScoutMouseExited", false ) )
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 						name: "mnuHelp"
 						"text": "Help"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/help24.png" )

@@ -224,6 +224,14 @@ public class HomePanel extends JPanel {
         mnuHelp.setIcon(new ImageIcon(getClass().getResource("/images/help24.png")));
     }
 
+    private void mnuScoutMouseEntered() {
+        mnuScout.setIcon(new ImageIcon(getClass().getResource("/images/scout_blue24.png")));
+    }
+
+    private void mnuScoutMouseExited() {
+        mnuScout.setIcon(new ImageIcon(getClass().getResource("/images/scout24.png")));
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -237,6 +245,7 @@ public class HomePanel extends JPanel {
         mniUsers = new JMenuItem();
         mniAdvancements = new JMenuItem();
         mniMeritBadges = new JMenuItem();
+        mnuScout = new JMenu();
         mnuHelp = new JMenu();
         mniAbout = new JMenuItem();
         mniMeritBadgeLink = new JMenuItem();
@@ -399,6 +408,28 @@ public class HomePanel extends JPanel {
                 }
                 menuBar1.add(mnuSetup);
 
+                //======== mnuScout ========
+                {
+                    mnuScout.setText("Scouts");
+                    mnuScout.setIcon(new ImageIcon(getClass().getResource("/images/scout24.png")));
+                    mnuScout.setForeground(Color.black);
+                    mnuScout.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuScout.setOpaque(false);
+                    mnuScout.setMnemonic('S');
+                    mnuScout.setName("mnuScout");
+                    mnuScout.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            mnuScoutMouseEntered();
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            mnuScoutMouseExited();
+                        }
+                    });
+                }
+                menuBar1.add(mnuScout);
+
                 //======== mnuHelp ========
                 {
                     mnuHelp.setText("Help");
@@ -513,6 +544,7 @@ public class HomePanel extends JPanel {
     private JMenuItem mniUsers;
     private JMenuItem mniAdvancements;
     private JMenuItem mniMeritBadges;
+    private JMenu mnuScout;
     private JMenu mnuHelp;
     private JMenuItem mniAbout;
     private JMenuItem mniMeritBadgeLink;
