@@ -104,6 +104,11 @@ new FormModel {
 						"mnemonic": 83
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuScoutMouseEntered", false ) )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuScoutMouseExited", false ) )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "mniBoyScouts"
+							"text": "Boy Scouts"
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniBoyScoutsActionPerformed", false ) )
+						} )
 					} )
 					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 						name: "mnuHelp"

@@ -36,11 +36,13 @@ public class HomePanel extends JPanel {
     private final static String USER_PAGE = "user";
     private final static String ADVANCEMENT_PAGE = "advancement";
     private final static String MERIT_BADGE_PAGE = "meritBadge";
+    private final static String BOY_SCOUTS_PAGE = "boyScoutsBadge";
 
     private UserPanel pnlUser;
     private AdvancementPanel pnlAdvancement;
     private DatabaseSettingsPanel pnlDatabaseSettings;
     private MeritBadgePanel pnlMeritBadge;
+    private BoyScoutPanel pnlBoyScouts;
     private BaseFrame baseFrame;
 
     private String propertyFileName;
@@ -232,6 +234,15 @@ public class HomePanel extends JPanel {
         mnuScout.setIcon(new ImageIcon(getClass().getResource("/images/scout24.png")));
     }
 
+    private void mniBoyScoutsActionPerformed() {
+        if (pnlBoyScouts == null) {
+            pnlBoyScouts = new BoyScoutPanel();
+            pnlCards.add(pnlBoyScouts, BOY_SCOUTS_PAGE);
+        }
+
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, BOY_SCOUTS_PAGE);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -246,6 +257,7 @@ public class HomePanel extends JPanel {
         mniAdvancements = new JMenuItem();
         mniMeritBadges = new JMenuItem();
         mnuScout = new JMenu();
+        mniBoyScouts = new JMenuItem();
         mnuHelp = new JMenu();
         mniAbout = new JMenuItem();
         mniMeritBadgeLink = new JMenuItem();
@@ -427,6 +439,17 @@ public class HomePanel extends JPanel {
                             mnuScoutMouseExited();
                         }
                     });
+
+                    //---- mniBoyScouts ----
+                    mniBoyScouts.setText("Boy Scouts");
+                    mniBoyScouts.setName("mniBoyScouts");
+                    mniBoyScouts.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniBoyScoutsActionPerformed();
+                        }
+                    });
+                    mnuScout.add(mniBoyScouts);
                 }
                 menuBar1.add(mnuScout);
 
@@ -545,6 +568,7 @@ public class HomePanel extends JPanel {
     private JMenuItem mniAdvancements;
     private JMenuItem mniMeritBadges;
     private JMenu mnuScout;
+    private JMenuItem mniBoyScouts;
     private JMenu mnuHelp;
     private JMenuItem mniAbout;
     private JMenuItem mniMeritBadgeLink;
