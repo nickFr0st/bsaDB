@@ -19,7 +19,7 @@ new FormModel {
 			add( new FormComponent( "bsaDb.client.customComponents.TitlePanel" ) {
 				name: "pnlTitle"
 				"title": "Boy Scouts"
-				"imagePath": "/images/Universal_Emblem_4K48.jpg"
+				"imagePath": "/images/fleurdelis48.jpg"
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true
 				}

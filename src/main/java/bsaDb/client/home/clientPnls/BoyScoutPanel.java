@@ -555,7 +555,7 @@ public class BoyScoutPanel extends JPanel {
 
         //---- pnlTitle ----
         pnlTitle.setTitle("Boy Scouts");
-        pnlTitle.setImagePath("/images/Universal_Emblem_4K48.jpg");
+        pnlTitle.setImagePath("/images/fleurdelis48.jpg");
         pnlTitle.setName("pnlTitle");
         add(pnlTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
