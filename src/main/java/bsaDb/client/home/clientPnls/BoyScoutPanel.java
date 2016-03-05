@@ -6,26 +6,21 @@ package bsaDb.client.home.clientPnls;
 
 import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
-import bsaDb.client.customComponents.PnlRequirement;
 import bsaDb.client.customComponents.TitlePanel;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;
 import objects.objectLogic.LogicAdvancement;
 import objects.objectLogic.LogicRequirement;
-import org.jdesktop.swingx.VerticalLayout;
 import util.CacheObject;
 import util.Util;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -50,7 +45,6 @@ public class BoyScoutPanel extends JPanel {
         btnSave.setVisible(false);
         btnUpdate.setVisible(false);
 
-        scrollPane3.getVerticalScrollBar().setUnitIncrement(18);
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
         populateAdvancementNameList();
@@ -119,56 +113,56 @@ public class BoyScoutPanel extends JPanel {
 
         enableControls(true);
 
-        txtName.setText(advancement.getName());
+//        txtName.setText(advancement.getName());
 
         ImageIcon tryPath = new ImageIcon(advancement.getImgPath());
         if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
-            btnBadgeImage.setIcon(noImage);
+//            btnBadgeImage.setIcon(noImage);
         } else {
             setImage(advancement.getImgPath());
         }
 
-        loadRequirementSet();
+//        loadRequirementSet();
 
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
         btnSave.setVisible(false);
     }
 
-    private void loadRequirementSet() {
-        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-
-        boolean firstAdded = false;
-        for (Requirement requirement : requirementSet) {
-            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
-            pnlRequirementList.add(pnlRequirement);
-
-            if (!firstAdded) {
-                firstAdded = true;
-            }
-        }
-
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                scrollPane3.getViewport().setViewPosition(new Point(0, 0));
-            }
-        });
-
-        pnlRequirementList.revalidate();
-        pnlRequirementList.repaint();
-    }
+//    private void loadRequirementSet() {
+//        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+//
+//        boolean firstAdded = false;
+//        for (Requirement requirement : requirementSet) {
+//            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
+//            pnlRequirementList.add(pnlRequirement);
+//
+//            if (!firstAdded) {
+//                firstAdded = true;
+//            }
+//        }
+//
+//
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                scrollPane3.getViewport().setViewPosition(new Point(0, 0));
+//            }
+//        });
+//
+//        pnlRequirementList.revalidate();
+//        pnlRequirementList.repaint();
+//    }
 
     private void enableControls(boolean enable) {
-        btnBadgeImage.setEnabled(enable);
-        txtName.setEnabled(enable);
-        btnAddRequirement.setEnabled(enable);
-        btnRemoveRequirement.setEnabled(enable);
+//        btnBadgeImage.setEnabled(enable);
+//        txtName.setEnabled(enable);
+//        btnAddRequirement.setEnabled(enable);
+//        btnRemoveRequirement.setEnabled(enable);
     }
 
     private void clearAllErrors() {
-        Util.clearError(lblNameError);
-        Util.clearError(lblRequirementError);
+//        Util.clearError(lblNameError);
+//        Util.clearError(lblRequirementError);
     }
 
     private void btnNewActionPerformed() {
@@ -180,18 +174,18 @@ public class BoyScoutPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        txtName.requestFocus();
+//        txtName.requestFocus();
     }
 
     private void clearData() {
-        advancement = null;
-
-        btnBadgeImage.setIcon(noImage);
-        txtName.setDefault();
-        imagePath = "";
-
-        pnlRequirementList.removeAll();
-        pnlRequirementList.repaint();
+//        advancement = null;
+//
+//        btnBadgeImage.setIcon(noImage);
+//        txtName.setDefault();
+//        imagePath = "";
+//
+//        pnlRequirementList.removeAll();
+//        pnlRequirementList.repaint();
     }
 
     private void btnSaveActionPerformed() {
@@ -201,10 +195,10 @@ public class BoyScoutPanel extends JPanel {
 
         setData();
 
-        Set<Requirement> requirementSet = validateRequirements(-1, true);
-        if (requirementSet == null) return;
+//        Set<Requirement> requirementSet = validateRequirements(-1, true);
+//        if (requirementSet == null) return;
 
-        saveRecords(requirementSet, true);
+//        saveRecords(requirementSet, true);
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
@@ -229,57 +223,57 @@ public class BoyScoutPanel extends JPanel {
         CacheObject.addToAdvancements(advancement);
     }
 
-    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
-        Set<Requirement> requirementSet = new LinkedHashSet<>();
-        Set<String> reqNameSet = new HashSet<>();
-
-        for (Component component : pnlRequirementList.getComponents()) {
-            if (!(component instanceof PnlRequirement)) {
-                continue;
-            }
-
-            if (!validate && ((PnlRequirement)component).getReqId() < 0) {
-                continue;
-            }
-
-            String reqName = ((PnlRequirement)component).getName().trim();
-
-            if (validate && reqName.isEmpty()) {
-                Util.setError(lblRequirementError, "Requirement name cannot be left blank");
-                return null;
-            }
-
-            if (validate && !reqNameSet.add(reqName)) {
-                Util.setError(lblRequirementError, "Requirement name '" + reqName + "' already exists");
-                component.requestFocus();
-                return null;
-            }
-
-            if (validate && ((PnlRequirement)component).getDescription().trim().isEmpty()) {
-                Util.setError(lblRequirementError, "Requirement description cannot be left blank");
-                return null;
-            }
-
-            Requirement requirement = new Requirement();
-            if (parentId > 0) {
-                requirement.setParentId(parentId);
-            }
-            requirement.setName(((PnlRequirement)component).getName());
-            requirement.setDescription(((PnlRequirement) component).getDescription());
-            requirement.setId(((PnlRequirement) component).getReqId());
-            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
-
-            requirementSet.add(requirement);
-        }
-        return requirementSet;
-    }
+//    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
+//        Set<Requirement> requirementSet = new LinkedHashSet<>();
+//        Set<String> reqNameSet = new HashSet<>();
+//
+//        for (Component component : pnlRequirementList.getComponents()) {
+//            if (!(component instanceof PnlRequirement)) {
+//                continue;
+//            }
+//
+//            if (!validate && ((PnlRequirement)component).getReqId() < 0) {
+//                continue;
+//            }
+//
+//            String reqName = ((PnlRequirement)component).getName().trim();
+//
+//            if (validate && reqName.isEmpty()) {
+//                Util.setError(lblRequirementError, "Requirement name cannot be left blank");
+//                return null;
+//            }
+//
+//            if (validate && !reqNameSet.add(reqName)) {
+//                Util.setError(lblRequirementError, "Requirement name '" + reqName + "' already exists");
+//                component.requestFocus();
+//                return null;
+//            }
+//
+//            if (validate && ((PnlRequirement)component).getDescription().trim().isEmpty()) {
+//                Util.setError(lblRequirementError, "Requirement description cannot be left blank");
+//                return null;
+//            }
+//
+//            Requirement requirement = new Requirement();
+//            if (parentId > 0) {
+//                requirement.setParentId(parentId);
+//            }
+//            requirement.setName(((PnlRequirement)component).getName());
+//            requirement.setDescription(((PnlRequirement) component).getDescription());
+//            requirement.setId(((PnlRequirement) component).getReqId());
+//            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+//
+//            requirementSet.add(requirement);
+//        }
+//        return requirementSet;
+//    }
 
     private void setData() {
         if (advancement == null) {
             advancement = new Advancement();
         }
 
-        advancement.setName(txtName.getText());
+//        advancement.setName(txtName.getText());
         if (Util.isEmpty(imagePath) || getImage() == null) {
             advancement.setImgPath("");
         } else {
@@ -294,9 +288,9 @@ public class BoyScoutPanel extends JPanel {
     private boolean validateFields() {
         boolean valid = true;
 
-        if (!validateAdvancementName()) {
-            valid = false;
-        }
+//        if (!validateAdvancementName()) {
+//            valid = false;
+//        }
 
         int advancementId;
         if (advancement == null) {
@@ -305,9 +299,9 @@ public class BoyScoutPanel extends JPanel {
             advancementId = advancement.getId();
         }
 
-        if (validateRequirements(advancementId, true) == null) {
-            valid = false;
-        }
+//        if (validateRequirements(advancementId, true) == null) {
+//            valid = false;
+//        }
 
         return valid;
     }
@@ -325,38 +319,38 @@ public class BoyScoutPanel extends JPanel {
         advancement = LogicAdvancement.update(advancement);
 
         Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-        Set<Requirement> newRequirementSet = getRequirementSet(advancement.getId());
+//        Set<Requirement> newRequirementSet = getRequirementSet(advancement.getId());
         Set<Requirement> deleteRequirementSet = new LinkedHashSet<>();
 
-        if (newRequirementSet.isEmpty()) {
-            for (Requirement requirement : currentRequirementSet) {
-                deleteRequirementSet.add(requirement);
-            }
-        } else {
-            for (Requirement requirement : currentRequirementSet) {
-                boolean addToList = true;
-                for (Requirement newRequirement : newRequirementSet) {
-                    if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
-                        addToList = false;
-                    }
-                }
-                if (addToList) {
-                    deleteRequirementSet.add(requirement);
-                }
-            }
-        }
-
-        for (Requirement deleteRequirement :  deleteRequirementSet) {
-            LogicRequirement.delete(deleteRequirement);
-        }
-
-        for (Requirement requirement : newRequirementSet) {
-            if (requirement.getId() > 0) {
-                LogicRequirement.update(requirement);
-            } else {
-                LogicRequirement.save(requirement);
-            }
-        }
+//        if (newRequirementSet.isEmpty()) {
+//            for (Requirement requirement : currentRequirementSet) {
+//                deleteRequirementSet.add(requirement);
+//            }
+//        } else {
+//            for (Requirement requirement : currentRequirementSet) {
+//                boolean addToList = true;
+//                for (Requirement newRequirement : newRequirementSet) {
+//                    if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
+//                        addToList = false;
+//                    }
+//                }
+//                if (addToList) {
+//                    deleteRequirementSet.add(requirement);
+//                }
+//            }
+//        }
+//
+//        for (Requirement deleteRequirement :  deleteRequirementSet) {
+//            LogicRequirement.delete(deleteRequirement);
+//        }
+//
+//        for (Requirement requirement : newRequirementSet) {
+//            if (requirement.getId() > 0) {
+//                LogicRequirement.update(requirement);
+//            } else {
+//                LogicRequirement.save(requirement);
+//            }
+//        }
 
 
         CacheObject.addToAdvancements(advancement);
@@ -365,28 +359,28 @@ public class BoyScoutPanel extends JPanel {
         listBoyScoutNames.setSelectedValue(advancement.getName(), true);
     }
 
-    private Set<Requirement> getRequirementSet(int parentId) {
-        Set<Requirement> requirementSet = new LinkedHashSet<>();
-
-        for (Component component : pnlRequirementList.getComponents()) {
-            if (!(component instanceof PnlRequirement)) {
-                continue;
-            }
-
-            Requirement requirement = new Requirement();
-            if (parentId > 0) {
-                requirement.setParentId(parentId);
-            }
-            requirement.setName(((PnlRequirement)component).getName());
-            requirement.setDescription(((PnlRequirement) component).getDescription());
-            requirement.setId(((PnlRequirement) component).getReqId());
-            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
-
-            requirementSet.add(requirement);
-        }
-
-        return requirementSet;
-    }
+//    private Set<Requirement> getRequirementSet(int parentId) {
+//        Set<Requirement> requirementSet = new LinkedHashSet<>();
+//
+//        for (Component component : pnlRequirementList.getComponents()) {
+//            if (!(component instanceof PnlRequirement)) {
+//                continue;
+//            }
+//
+//            Requirement requirement = new Requirement();
+//            if (parentId > 0) {
+//                requirement.setParentId(parentId);
+//            }
+//            requirement.setName(((PnlRequirement)component).getName());
+//            requirement.setDescription(((PnlRequirement) component).getDescription());
+//            requirement.setId(((PnlRequirement) component).getReqId());
+//            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
+//
+//            requirementSet.add(requirement);
+//        }
+//
+//        return requirementSet;
+//    }
 
     private void btnDeleteActionPerformed() {
         if (listBoyScoutNames.getSelectedValue() == null) {
@@ -395,8 +389,8 @@ public class BoyScoutPanel extends JPanel {
 
         int advancementId = advancement.getId();
 
-        Set<Requirement> requirementSet = validateRequirements(advancement.getId(), false);
-        LogicRequirement.delete(requirementSet);
+//        Set<Requirement> requirementSet = validateRequirements(advancement.getId(), false);
+//        LogicRequirement.delete(requirementSet);
         LogicAdvancement.delete(advancement);
 
         CacheObject.removeFromAdvancements(advancementId);
@@ -421,9 +415,9 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void btnBadgeImageMouseReleased() {
-        if (!btnBadgeImage.isEnabled()) {
-            return;
-        }
+//        if (!btnBadgeImage.isEnabled()) {
+//            return;
+//        }
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files(*.jpg, *.png, *.gif, *.jpeg)", "jpg", "png", "gif", "jpeg");
 
@@ -441,76 +435,76 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setImage(String imgPath) {
-        try {
-            BufferedImage img = ImageIO.read(new File(imgPath));
-
-            int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
-            int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
-
-            ImageIcon icon = new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-            if (icon.getImage() == null) {
-                btnBadgeImage.setIcon(noImage);
-                imagePath = "";
-            } else {
-                btnBadgeImage.setIcon(icon);
-                imagePath = imgPath;
-            }
-        } catch (IOException ignore) {
-        }
+//        try {
+//            BufferedImage img = ImageIO.read(new File(imgPath));
+//
+//            int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
+//            int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
+//
+//            ImageIcon icon = new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+//            if (icon.getImage() == null) {
+//                btnBadgeImage.setIcon(noImage);
+//                imagePath = "";
+//            } else {
+//                btnBadgeImage.setIcon(icon);
+//                imagePath = imgPath;
+//            }
+//        } catch (IOException ignore) {
+//        }
     }
 
-    private void validateName() {
-        validateAdvancementName();
-    }
+//    private void validateName() {
+//        validateAdvancementName();
+//    }
 
-    private boolean validateAdvancementName() {
-        Util.clearError(lblNameError);
+//    private boolean validateAdvancementName() {
+//        Util.clearError(lblNameError);
+//
+//        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
+//            Util.setError(lblNameError, "Name cannot be left blank");
+//            return false;
+//        }
+//
+//        Advancement tempAdvancement = CacheObject.getAdvancement(txtName.getText());
+//        if (tempAdvancement == null) {
+//            return true;
+//        }
+//
+//        if (advancement == null) {
+//            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
+//            return false;
+//        }
+//
+//        if (!tempAdvancement.getName().equals(advancement.getName())) {
+//            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
-        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
-            Util.setError(lblNameError, "Name cannot be left blank");
-            return false;
-        }
+//    private void btnAddRequirementMouseReleased() {
+//        if (!btnAddRequirement.isEnabled()) {
+//            return;
+//        }
+//
+//        PnlRequirement pnlRequirement = new PnlRequirement("[name]", "[description]", pnlRequirementList.getComponentCount() > 0, -1);
+//        pnlRequirementList.add(pnlRequirement);
+//
+//        pnlRequirement.getTxtReqName().requestFocus();
+//
+//        pnlRequirementList.revalidate();
+//    }
 
-        Advancement tempAdvancement = CacheObject.getAdvancement(txtName.getText());
-        if (tempAdvancement == null) {
-            return true;
-        }
-
-        if (advancement == null) {
-            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
-            return false;
-        }
-
-        if (!tempAdvancement.getName().equals(advancement.getName())) {
-            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
-            return false;
-        }
-
-        return true;
-    }
-
-    private void btnAddRequirementMouseReleased() {
-        if (!btnAddRequirement.isEnabled()) {
-            return;
-        }
-
-        PnlRequirement pnlRequirement = new PnlRequirement("[name]", "[description]", pnlRequirementList.getComponentCount() > 0, -1);
-        pnlRequirementList.add(pnlRequirement);
-
-        pnlRequirement.getTxtReqName().requestFocus();
-
-        pnlRequirementList.revalidate();
-    }
-
-    private void btnRemoveRequirementMouseReleased() {
-        if (!btnRemoveRequirement.isEnabled() || pnlRequirementList.getComponentCount() == 0 || !(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent() instanceof PnlRequirement)) {
-            return;
-        }
-
-        pnlRequirementList.remove(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent());
-        pnlRequirementList.revalidate();
-        pnlRequirementList.repaint();
-    }
+//    private void btnRemoveRequirementMouseReleased() {
+//        if (!btnRemoveRequirement.isEnabled() || pnlRequirementList.getComponentCount() == 0 || !(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent() instanceof PnlRequirement)) {
+//            return;
+//        }
+//
+//        pnlRequirementList.remove(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent());
+//        pnlRequirementList.revalidate();
+//        pnlRequirementList.repaint();
+//    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -524,20 +518,36 @@ public class BoyScoutPanel extends JPanel {
         JPanel panel3 = new JPanel();
         scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
-        JPanel panel1 = new JPanel();
-        btnBadgeImage = new JLabel();
-        JPanel panel6 = new JPanel();
-        JLabel lblName = new JLabel();
+        tabPnlContent = new JTabbedPane();
+        pnlSummary = new JPanel();
+        pnlGeneral = new JPanel();
+        lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
+        lblRole = new JLabel();
+        txtRole = new JTextFieldDefaultText();
         lblNameError = new JLabel();
-        JPanel panel7 = new JPanel();
-        JPanel panel8 = new JPanel();
-        JLabel lblRequirement = new JLabel();
-        btnAddRequirement = new JLabel();
-        btnRemoveRequirement = new JLabel();
-        lblRequirementError = new JLabel();
+        lblCurrenctRank = new JLabel();
+        cboCurrenctRank = new JComboBox();
+        lblBirthDate = new JLabel();
+        txtBirthDate = new JTextFieldDefaultText();
+        lblAge = new JLabel();
+        lblAgeValue = new JLabel();
+        lblBirthDateError = new JLabel();
+        label11 = new JLabel();
+        progressBar1 = new JProgressBar();
+        label12 = new JLabel();
+        pnlAdvancementTracker = new JPanel();
+        label13 = new JLabel();
+        progressBar2 = new JProgressBar();
+        label14 = new JLabel();
+        label15 = new JLabel();
+        progressBar3 = new JProgressBar();
+        label16 = new JLabel();
+        label17 = new JLabel();
         scrollPane3 = new JScrollPane();
-        pnlRequirementList = new JPanel();
+        table1 = new JTable();
+        panel7 = new JPanel();
+        panel8 = new JPanel();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -660,208 +670,289 @@ public class BoyScoutPanel extends JPanel {
 
                     //======== panel4 ========
                     {
-                        panel4.setBackground(Color.white);
+                        panel4.setBackground(new Color(202, 183, 160));
                         panel4.setName("panel4");
-                        panel4.setLayout(new GridBagLayout());
-                        ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {270, 22, 0};
-                        ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {191, 0, 0};
-                        ((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                        ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
+                        panel4.setLayout(new BorderLayout());
 
-                        //======== panel1 ========
+                        //======== tabPnlContent ========
                         {
-                            panel1.setPreferredSize(new Dimension(145, 170));
-                            panel1.setBackground(new Color(204, 204, 204));
-                            panel1.setBorder(new LineBorder(new Color(51, 102, 153)));
-                            panel1.setName("panel1");
-                            panel1.setLayout(new GridBagLayout());
-                            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
-                            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0};
-                            ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
-                            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
+                            tabPnlContent.setBackground(Color.white);
+                            tabPnlContent.setForeground(Color.black);
+                            tabPnlContent.setFont(new Font("Tahoma", Font.PLAIN, 18));
+                            tabPnlContent.setName("tabPnlContent");
 
-                            //---- btnBadgeImage ----
-                            btnBadgeImage.setPreferredSize(new Dimension(128, 128));
-                            btnBadgeImage.setIcon(new ImageIcon(getClass().getResource("/images/no_image.png")));
-                            btnBadgeImage.setToolTipText("click to upload an image here");
-                            btnBadgeImage.setName("btnBadgeImage");
-                            btnBadgeImage.addMouseListener(new MouseAdapter() {
-                                @Override
-                                public void mouseReleased(MouseEvent e) {
-                                    btnBadgeImageMouseReleased();
+                            //======== pnlSummary ========
+                            {
+                                pnlSummary.setBackground(Color.white);
+                                pnlSummary.setBorder(null);
+                                pnlSummary.setName("pnlSummary");
+                                pnlSummary.setLayout(new GridBagLayout());
+                                ((GridBagLayout)pnlSummary.getLayout()).columnWidths = new int[] {0, 0};
+                                ((GridBagLayout)pnlSummary.getLayout()).rowHeights = new int[] {0, 340, 0};
+                                ((GridBagLayout)pnlSummary.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+                                ((GridBagLayout)pnlSummary.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+                                //======== pnlGeneral ========
+                                {
+                                    pnlGeneral.setOpaque(false);
+                                    pnlGeneral.setName("pnlGeneral");
+                                    pnlGeneral.setLayout(new GridBagLayout());
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 195, 57, 0, 203, 0, 0, 0, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 24, 25, 0, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+
+                                    //---- lblName ----
+                                    lblName.setText("Name:");
+                                    lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblName.setForeground(Color.black);
+                                    lblName.setName("lblName");
+                                    pnlGeneral.add(lblName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- txtName ----
+                                    txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    txtName.setDefaultText("Scout Name");
+                                    txtName.setName("txtName");
+                                    pnlGeneral.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblRole ----
+                                    lblRole.setText("Leadership Role:");
+                                    lblRole.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblRole.setForeground(Color.black);
+                                    lblRole.setName("lblRole");
+                                    pnlGeneral.add(lblRole, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- txtRole ----
+                                    txtRole.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    txtRole.setDefaultText("Role");
+                                    txtRole.setName("txtRole");
+                                    pnlGeneral.add(txtRole, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblNameError ----
+                                    lblNameError.setText("*error message");
+                                    lblNameError.setForeground(Color.red);
+                                    lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblNameError.setName("lblNameError");
+                                    pnlGeneral.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
+
+                                    //---- lblCurrenctRank ----
+                                    lblCurrenctRank.setText("Current Rank:");
+                                    lblCurrenctRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblCurrenctRank.setForeground(Color.black);
+                                    lblCurrenctRank.setName("lblCurrenctRank");
+                                    pnlGeneral.add(lblCurrenctRank, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- cboCurrenctRank ----
+                                    cboCurrenctRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    cboCurrenctRank.setBackground(Color.white);
+                                    cboCurrenctRank.setForeground(Color.black);
+                                    cboCurrenctRank.setName("cboCurrenctRank");
+                                    pnlGeneral.add(cboCurrenctRank, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblBirthDate ----
+                                    lblBirthDate.setText("Birth Date:");
+                                    lblBirthDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblBirthDate.setForeground(Color.black);
+                                    lblBirthDate.setName("lblBirthDate");
+                                    pnlGeneral.add(lblBirthDate, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- txtBirthDate ----
+                                    txtBirthDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    txtBirthDate.setDefaultText("15/02/2006");
+                                    txtBirthDate.setName("txtBirthDate");
+                                    pnlGeneral.add(txtBirthDate, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblAge ----
+                                    lblAge.setText("Age:");
+                                    lblAge.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblAge.setForeground(Color.black);
+                                    lblAge.setName("lblAge");
+                                    pnlGeneral.add(lblAge, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 10, 5, 5), 0, 0));
+
+                                    //---- lblAgeValue ----
+                                    lblAgeValue.setText("12");
+                                    lblAgeValue.setFont(new Font("Tahoma", Font.BOLD, 14));
+                                    lblAgeValue.setForeground(new Color(32, 154, 26));
+                                    lblAgeValue.setName("lblAgeValue");
+                                    pnlGeneral.add(lblAgeValue, new GridBagConstraints(6, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblBirthDateError ----
+                                    lblBirthDateError.setText("*error message");
+                                    lblBirthDateError.setForeground(Color.red);
+                                    lblBirthDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblBirthDateError.setName("lblBirthDateError");
+                                    pnlGeneral.add(lblBirthDateError, new GridBagConstraints(3, 3, 3, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label11 ----
+                                    label11.setText("Time Left in Boy Scouts");
+                                    label11.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    label11.setForeground(Color.black);
+                                    label11.setName("label11");
+                                    pnlGeneral.add(label11, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- progressBar1 ----
+                                    progressBar1.setValue(50);
+                                    progressBar1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    progressBar1.setName("progressBar1");
+                                    pnlGeneral.add(progressBar1, new GridBagConstraints(0, 5, 7, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label12 ----
+                                    label12.setText("1 yr, 6 mon, 2 days");
+                                    label12.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    label12.setForeground(Color.black);
+                                    label12.setName("label12");
+                                    pnlGeneral.add(label12, new GridBagConstraints(0, 6, 7, 1, 0.0, 0.0,
+                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                                        new Insets(0, 0, 0, 5), 0, 0));
                                 }
-                            });
-                            panel1.add(btnBadgeImage, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.NONE,
-                                new Insets(0, 0, 0, 0), 0, 0));
-                        }
-                        panel4.add(panel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.NONE,
-                            new Insets(0, 0, 10, 20), 0, 0));
+                                pnlSummary.add(pnlGeneral, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(15, 10, 5, 10), 0, 0));
 
-                        //======== panel6 ========
-                        {
-                            panel6.setOpaque(false);
-                            panel6.setName("panel6");
-                            panel6.setLayout(new GridBagLayout());
-                            ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0};
-                            ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+                                //======== pnlAdvancementTracker ========
+                                {
+                                    pnlAdvancementTracker.setOpaque(false);
+                                    pnlAdvancementTracker.setName("pnlAdvancementTracker");
+                                    pnlAdvancementTracker.setLayout(new GridBagLayout());
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).columnWidths = new int[] {716, 0, 0};
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).rowHeights = new int[] {0, 25, 6, 0, 25, 0, 0, 0, 0};
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
-                            //---- lblName ----
-                            lblName.setText("Name:");
-                            lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                            lblName.setForeground(Color.black);
-                            lblName.setName("lblName");
-                            panel6.add(lblName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 5, 5), 0, 0));
+                                    //---- label13 ----
+                                    label13.setText("Number of Camps Attended");
+                                    label13.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    label13.setForeground(Color.black);
+                                    label13.setName("label13");
+                                    pnlAdvancementTracker.add(label13, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
 
-                            //---- txtName ----
-                            txtName.setDefaultText("Advancement Name");
-                            txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                            txtName.setPreferredSize(new Dimension(138, 30));
-                            txtName.setMinimumSize(new Dimension(14, 30));
-                            txtName.setName("txtName");
-                            txtName.addKeyListener(new KeyAdapter() {
-                                @Override
-                                public void keyReleased(KeyEvent e) {
-                                    validateName();
+                                    //---- progressBar2 ----
+                                    progressBar2.setValue(50);
+                                    progressBar2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    progressBar2.setName("progressBar2");
+                                    pnlAdvancementTracker.add(progressBar2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label14 ----
+                                    label14.setText("11 of 21");
+                                    label14.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    label14.setForeground(Color.black);
+                                    label14.setName("label14");
+                                    pnlAdvancementTracker.add(label14, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label15 ----
+                                    label15.setText("Waiting Period for Next Advancement");
+                                    label15.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    label15.setForeground(Color.black);
+                                    label15.setName("label15");
+                                    pnlAdvancementTracker.add(label15, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- progressBar3 ----
+                                    progressBar3.setValue(50);
+                                    progressBar3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    progressBar3.setName("progressBar3");
+                                    pnlAdvancementTracker.add(progressBar3, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label16 ----
+                                    label16.setText("2 mo, 3 days");
+                                    label16.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    label16.setForeground(Color.black);
+                                    label16.setName("label16");
+                                    pnlAdvancementTracker.add(label16, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label17 ----
+                                    label17.setText("Progress of Current Advancement");
+                                    label17.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    label17.setForeground(Color.black);
+                                    label17.setName("label17");
+                                    pnlAdvancementTracker.add(label17, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //======== scrollPane3 ========
+                                    {
+                                        scrollPane3.setName("scrollPane3");
+
+                                        //---- table1 ----
+                                        table1.setPreferredScrollableViewportSize(new Dimension(450, 200));
+                                        table1.setMaximumSize(new Dimension(2147483647, 200));
+                                        table1.setName("table1");
+                                        scrollPane3.setViewportView(table1);
+                                    }
+                                    pnlAdvancementTracker.add(scrollPane3, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 0, 5), 0, 0));
                                 }
-                            });
-                            txtName.addFocusListener(new FocusAdapter() {
-                                @Override
-                                public void focusLost(FocusEvent e) {
-                                    validateName();
-                                }
-                            });
-                            panel6.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 0), 0, 0));
+                                pnlSummary.add(pnlAdvancementTracker, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 10, 10, 10), 0, 0));
+                            }
+                            tabPnlContent.addTab("Summary", pnlSummary);
 
-                            //---- lblNameError ----
-                            lblNameError.setText("* Error Message");
-                            lblNameError.setForeground(Color.red);
-                            lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                            lblNameError.setVisible(false);
-                            lblNameError.setName("lblNameError");
-                            panel6.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 0, 0), 0, 0));
-                        }
-                        panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 0, 0, 20), 0, 0));
-
-                        //======== panel7 ========
-                        {
-                            panel7.setOpaque(false);
-                            panel7.setName("panel7");
-                            panel7.setLayout(new GridBagLayout());
-                            ((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {450, 0};
-                            ((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0, 0};
-                            ((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
-                            ((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
+                            //======== panel7 ========
+                            {
+                                panel7.setBackground(Color.white);
+                                panel7.setName("panel7");
+                                panel7.setLayout(new GridBagLayout());
+                                ((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {0, 0, 0};
+                                ((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+                                ((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+                                ((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+                            }
+                            tabPnlContent.addTab("text", panel7);
 
                             //======== panel8 ========
                             {
-                                panel8.setOpaque(false);
+                                panel8.setBackground(Color.white);
                                 panel8.setName("panel8");
                                 panel8.setLayout(new GridBagLayout());
-                                ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
-                                ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0};
-                                ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
-                                ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
-
-                                //---- lblRequirement ----
-                                lblRequirement.setText("Requirements");
-                                lblRequirement.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                lblRequirement.setForeground(new Color(51, 102, 153));
-                                lblRequirement.setName("lblRequirement");
-                                panel8.add(lblRequirement, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(3, 0, 0, 5), 0, 0));
-
-                                //---- btnAddRequirement ----
-                                btnAddRequirement.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
-                                btnAddRequirement.setToolTipText("Add a new requirement");
-                                btnAddRequirement.setName("btnAddRequirement");
-                                btnAddRequirement.addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
-                                        changeToHand();
-                                    }
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
-                                        setDefaultCursor();
-                                    }
-                                    @Override
-                                    public void mouseReleased(MouseEvent e) {
-                                        btnAddRequirementMouseReleased();
-                                    }
-                                });
-                                panel8.add(btnAddRequirement, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 0, 5), 0, 0));
-
-                                //---- btnRemoveRequirement ----
-                                btnRemoveRequirement.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
-                                btnRemoveRequirement.setToolTipText("Remove selected requirement");
-                                btnRemoveRequirement.setName("btnRemoveRequirement");
-                                btnRemoveRequirement.addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseEntered(MouseEvent e) {
-                                        changeToHand();
-                                    }
-                                    @Override
-                                    public void mouseExited(MouseEvent e) {
-                                        setDefaultCursor();
-                                    }
-                                    @Override
-                                    public void mouseReleased(MouseEvent e) {
-                                        btnRemoveRequirementMouseReleased();
-                                    }
-                                });
-                                panel8.add(btnRemoveRequirement, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 0, 5), 0, 0));
-
-                                //---- lblRequirementError ----
-                                lblRequirementError.setText("* Error Message");
-                                lblRequirementError.setForeground(Color.red);
-                                lblRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                                lblRequirementError.setVisible(false);
-                                lblRequirementError.setName("lblRequirementError");
-                                panel8.add(lblRequirementError, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 10, 0, 0), 0, 0));
+                                ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0};
+                                ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+                                ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+                                ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
                             }
-                            panel7.add(panel8, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 0), 0, 0));
-
-                            //======== scrollPane3 ========
-                            {
-                                scrollPane3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                                scrollPane3.setName("scrollPane3");
-
-                                //======== pnlRequirementList ========
-                                {
-                                    pnlRequirementList.setBackground(Color.white);
-                                    pnlRequirementList.setMaximumSize(new Dimension(450, 700));
-                                    pnlRequirementList.setName("pnlRequirementList");
-                                    pnlRequirementList.setLayout(new VerticalLayout());
-                                }
-                                scrollPane3.setViewportView(pnlRequirementList);
-                            }
-                            panel7.add(scrollPane3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 0, 0), 0, 0));
+                            tabPnlContent.addTab("text", panel8);
                         }
-                        panel4.add(panel7, new GridBagConstraints(1, 0, 1, 2, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 0, 5, 10), 0, 0));
+                        panel4.add(tabPnlContent, BorderLayout.CENTER);
                     }
                     scrollPane2.setViewportView(panel4);
                 }
@@ -969,14 +1060,36 @@ public class BoyScoutPanel extends JPanel {
     private JTextFieldDefaultText txtSearchName;
     private JList listBoyScoutNames;
     private JScrollPane scrollPane2;
-    private JLabel btnBadgeImage;
+    private JTabbedPane tabPnlContent;
+    private JPanel pnlSummary;
+    private JPanel pnlGeneral;
+    private JLabel lblName;
     private JTextFieldDefaultText txtName;
+    private JLabel lblRole;
+    private JTextFieldDefaultText txtRole;
     private JLabel lblNameError;
-    private JLabel btnAddRequirement;
-    private JLabel btnRemoveRequirement;
-    private JLabel lblRequirementError;
+    private JLabel lblCurrenctRank;
+    private JComboBox cboCurrenctRank;
+    private JLabel lblBirthDate;
+    private JTextFieldDefaultText txtBirthDate;
+    private JLabel lblAge;
+    private JLabel lblAgeValue;
+    private JLabel lblBirthDateError;
+    private JLabel label11;
+    private JProgressBar progressBar1;
+    private JLabel label12;
+    private JPanel pnlAdvancementTracker;
+    private JLabel label13;
+    private JProgressBar progressBar2;
+    private JLabel label14;
+    private JLabel label15;
+    private JProgressBar progressBar3;
+    private JLabel label16;
+    private JLabel label17;
     private JScrollPane scrollPane3;
-    private JPanel pnlRequirementList;
+    private JTable table1;
+    private JPanel panel7;
+    private JPanel panel8;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;
