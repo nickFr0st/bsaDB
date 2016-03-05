@@ -298,7 +298,7 @@ public class HomePanel extends JPanel {
                     mnuFile.setMnemonic('F');
                     mnuFile.setOpaque(false);
                     mnuFile.setForeground(Color.black);
-                    mnuFile.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuFile.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     mnuFile.setIcon(new ImageIcon(getClass().getResource("/images/file24.png")));
                     mnuFile.setName("mnuFile");
                     mnuFile.addMouseListener(new MouseAdapter() {
@@ -355,7 +355,7 @@ public class HomePanel extends JPanel {
                     mnuSetup.setText("Setup");
                     mnuSetup.setIcon(new ImageIcon(getClass().getResource("/images/settings24.png")));
                     mnuSetup.setForeground(Color.black);
-                    mnuSetup.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuSetup.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     mnuSetup.setOpaque(false);
                     mnuSetup.setMnemonic('S');
                     mnuSetup.setName("mnuSetup");
@@ -425,7 +425,7 @@ public class HomePanel extends JPanel {
                     mnuScout.setText("Scouts");
                     mnuScout.setIcon(new ImageIcon(getClass().getResource("/images/scout24.png")));
                     mnuScout.setForeground(Color.black);
-                    mnuScout.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuScout.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     mnuScout.setOpaque(false);
                     mnuScout.setMnemonic('S');
                     mnuScout.setName("mnuScout");
@@ -442,6 +442,7 @@ public class HomePanel extends JPanel {
 
                     //---- mniBoyScouts ----
                     mniBoyScouts.setText("Boy Scouts");
+                    mniBoyScouts.setMnemonic('B');
                     mniBoyScouts.setName("mniBoyScouts");
                     mniBoyScouts.addActionListener(new ActionListener() {
                         @Override
@@ -458,7 +459,7 @@ public class HomePanel extends JPanel {
                     mnuHelp.setText("Help");
                     mnuHelp.setIcon(new ImageIcon(getClass().getResource("/images/help24.png")));
                     mnuHelp.setForeground(Color.black);
-                    mnuHelp.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                    mnuHelp.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     mnuHelp.setOpaque(false);
                     mnuHelp.setMnemonic('H');
                     mnuHelp.setName("mnuHelp");
@@ -507,7 +508,7 @@ public class HomePanel extends JPanel {
                 //---- btnSignOut ----
                 btnSignOut.setText("Sign out");
                 btnSignOut.setIcon(new ImageIcon(getClass().getResource("/images/signout24.png")));
-                btnSignOut.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                btnSignOut.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnSignOut.setForeground(Color.black);
                 btnSignOut.setFocusPainted(false);
                 btnSignOut.setOpaque(false);

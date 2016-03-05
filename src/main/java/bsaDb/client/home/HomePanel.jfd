@@ -36,7 +36,7 @@ new FormModel {
 						"mnemonic": 70
 						"opaque": false
 						"foreground": new java.awt.Color( 0, 0, 0, 255 )
-						"font": new java.awt.Font( "Tahoma", 0, 12 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/file24.png" )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuFileMouseEntered", false ) )
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseExited", "mnuFileMouseExited", false ) )
@@ -64,7 +64,7 @@ new FormModel {
 						"text": "Setup"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/settings24.png" )
 						"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
-						"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
 						"opaque": false
 						"mnemonic": 83
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuSettingsMouseEntered", false ) )
@@ -99,7 +99,7 @@ new FormModel {
 						"text": "Scouts"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/scout24.png" )
 						"foreground": #Color0
-						"font": #Font0
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
 						"opaque": false
 						"mnemonic": 83
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuScoutMouseEntered", false ) )
@@ -107,6 +107,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JMenuItem" ) {
 							name: "mniBoyScouts"
 							"text": "Boy Scouts"
+							"mnemonic": 66
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniBoyScoutsActionPerformed", false ) )
 						} )
 					} )
@@ -115,7 +116,7 @@ new FormModel {
 						"text": "Help"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/help24.png" )
 						"foreground": #Color0
-						"font": #Font0
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
 						"opaque": false
 						"mnemonic": 72
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseEntered", "mnuHelpMouseEntered", false ) )
@@ -144,7 +145,7 @@ new FormModel {
 						name: "btnSignOut"
 						"text": "Sign out"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/signout24.png" )
-						"font": new java.awt.Font( "Tahoma", 0, 12 )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
 						"foreground": new java.awt.Color( 0, 0, 0, 255 )
 						"focusPainted": false
 						"opaque": false
