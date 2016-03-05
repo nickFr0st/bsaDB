@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/AbstractDateModel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/ComponentColorDefaults.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/ComponentFormatDefaults.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/ComponentIconDefaults.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/ComponentTextDefaults.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/DateComponent.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/DateComponentFormatter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/DateModel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/DatePanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/DatePicker.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/JDatePanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/JDatePicker.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/SqlDateModel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/UtilCalendarModel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/UtilDateModel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/constraints/DateSelectionConstraint.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/constraints/RangeConstraint.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/constraints/WeekdayConstraint.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/constraints/WeekendConstraint.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/graphics/JNextIcon.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/bsaDb/client/customComponents/jdatepicker/graphics/JPreviousIcon.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/jdatepicker" charset="UTF-8" />
+  </component>
 </project>
 
