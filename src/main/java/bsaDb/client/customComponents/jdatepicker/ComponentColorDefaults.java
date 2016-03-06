@@ -59,31 +59,31 @@ public final class ComponentColorDefaults {
         FG_TODAY_SELECTOR_ENABLED,
         FG_TODAY_SELECTOR_DISABLED,
         BG_TODAY_SELECTOR,
-        POPUP_BORDER;
+        POPUP_BORDER,
     }
 
     private Map<Key, Color> colors;
 
     private ComponentColorDefaults() {
-        colors = new HashMap<Key, Color>();
+        colors = new HashMap<>();
 
-        colors.put(Key.FG_MONTH_SELECTOR, SystemColor.activeCaptionText);
-        colors.put(Key.BG_MONTH_SELECTOR, SystemColor.activeCaption);
+        colors.put(Key.FG_MONTH_SELECTOR, Color.white);
+        colors.put(Key.BG_MONTH_SELECTOR, new Color(51, 102, 153));
 
         colors.put(Key.FG_GRID_HEADER, new Color(10, 36, 106));
         colors.put(Key.BG_GRID_HEADER, Color.LIGHT_GRAY);
 
         colors.put(Key.FG_GRID_THIS_MONTH, Color.BLACK);
         colors.put(Key.FG_GRID_OTHER_MONTH, Color.LIGHT_GRAY);
-        colors.put(Key.FG_GRID_TODAY, Color.RED);
+        colors.put(Key.FG_GRID_TODAY, new Color(172, 128, 23));
         colors.put(Key.BG_GRID, Color.WHITE);
         colors.put(Key.BG_GRID_NOT_SELECTABLE, new Color(240, 240, 240));
 
-        colors.put(Key.FG_GRID_SELECTED, Color.WHITE);
-        colors.put(Key.BG_GRID_SELECTED, new Color(10, 36, 106));
+        colors.put(Key.FG_GRID_SELECTED, Color.BLACK);
+        colors.put(Key.BG_GRID_SELECTED, new Color(165, 228, 253));
 
-        colors.put(Key.FG_GRID_TODAY_SELECTED, Color.RED);
-        colors.put(Key.BG_GRID_TODAY_SELECTED, new Color(10, 36, 106));
+        colors.put(Key.FG_GRID_TODAY_SELECTED, new Color(172, 128, 23));
+        colors.put(Key.BG_GRID_TODAY_SELECTED, new Color(165, 228, 253));
 
         colors.put(Key.FG_TODAY_SELECTOR_ENABLED, Color.BLACK);
         colors.put(Key.FG_TODAY_SELECTOR_DISABLED, Color.LIGHT_GRAY);

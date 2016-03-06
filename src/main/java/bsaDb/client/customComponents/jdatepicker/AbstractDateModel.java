@@ -56,8 +56,8 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     private Set<PropertyChangeListener> propertyChangeListeners;
 
     protected AbstractDateModel() {
-        changeListeners = new HashSet<ChangeListener>();
-        propertyChangeListeners = new HashSet<PropertyChangeListener>();
+        changeListeners = new HashSet<>();
+        propertyChangeListeners = new HashSet<>();
         selected = false;
         calendarValue = Calendar.getInstance();
     }

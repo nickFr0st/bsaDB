@@ -7,6 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
+import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;
@@ -523,26 +524,32 @@ public class BoyScoutPanel extends JPanel {
         pnlGeneral = new JPanel();
         lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
-        lblRole = new JLabel();
+        lblPosition = new JLabel();
         txtRole = new JTextFieldDefaultText();
         lblNameError = new JLabel();
-        lblCurrenctRank = new JLabel();
-        cboCurrenctRank = new JComboBox();
+        lblRank = new JLabel();
+        cboRank = new JComboBox();
         lblBirthDate = new JLabel();
-        txtBirthDate = new JTextFieldDefaultText();
+        cboBirthDate = new JDatePicker();
         lblAge = new JLabel();
         lblAgeValue = new JLabel();
         lblBirthDateError = new JLabel();
+        lblBirthDate2 = new JLabel();
+        cboRankDate = new JDatePicker();
+        lblRankDateError = new JLabel();
         label11 = new JLabel();
-        progressBar1 = new JProgressBar();
-        label12 = new JLabel();
-        pnlAdvancementTracker = new JPanel();
         label13 = new JLabel();
+        progressBar1 = new JProgressBar();
         progressBar2 = new JProgressBar();
+        label12 = new JLabel();
         label14 = new JLabel();
         label15 = new JLabel();
+        label1 = new JLabel();
         progressBar3 = new JProgressBar();
+        progressBar4 = new JProgressBar();
         label16 = new JLabel();
+        label2 = new JLabel();
+        pnlAdvancementTracker = new JPanel();
         label17 = new JLabel();
         scrollPane3 = new JScrollPane();
         table1 = new JTable();
@@ -688,7 +695,7 @@ public class BoyScoutPanel extends JPanel {
                                 pnlSummary.setName("pnlSummary");
                                 pnlSummary.setLayout(new GridBagLayout());
                                 ((GridBagLayout)pnlSummary.getLayout()).columnWidths = new int[] {0, 0};
-                                ((GridBagLayout)pnlSummary.getLayout()).rowHeights = new int[] {0, 340, 0};
+                                ((GridBagLayout)pnlSummary.getLayout()).rowHeights = new int[] {0, 210, 0};
                                 ((GridBagLayout)pnlSummary.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
                                 ((GridBagLayout)pnlSummary.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
@@ -697,10 +704,10 @@ public class BoyScoutPanel extends JPanel {
                                     pnlGeneral.setOpaque(false);
                                     pnlGeneral.setName("pnlGeneral");
                                     pnlGeneral.setLayout(new GridBagLayout());
-                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 195, 57, 0, 203, 0, 0, 0, 0};
-                                    ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 24, 25, 0, 0};
-                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
-                                    ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 195, 42, 0, 190, 0, 0, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 35, 0, 24, 25, 0, 35, 25, 0, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                                     //---- lblName ----
                                     lblName.setText("Name:");
@@ -719,18 +726,18 @@ public class BoyScoutPanel extends JPanel {
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- lblRole ----
-                                    lblRole.setText("Leadership Role:");
-                                    lblRole.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblRole.setForeground(Color.black);
-                                    lblRole.setName("lblRole");
-                                    pnlGeneral.add(lblRole, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                    //---- lblPosition ----
+                                    lblPosition.setText("Position:");
+                                    lblPosition.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblPosition.setForeground(Color.black);
+                                    lblPosition.setName("lblPosition");
+                                    pnlGeneral.add(lblPosition, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- txtRole ----
                                     txtRole.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    txtRole.setDefaultText("Role");
+                                    txtRole.setDefaultText("Troop Position");
                                     txtRole.setName("txtRole");
                                     pnlGeneral.add(txtRole, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -745,21 +752,21 @@ public class BoyScoutPanel extends JPanel {
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 20, 5, 5), 0, 0));
 
-                                    //---- lblCurrenctRank ----
-                                    lblCurrenctRank.setText("Current Rank:");
-                                    lblCurrenctRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblCurrenctRank.setForeground(Color.black);
-                                    lblCurrenctRank.setName("lblCurrenctRank");
-                                    pnlGeneral.add(lblCurrenctRank, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                                    //---- lblRank ----
+                                    lblRank.setText("Rank:");
+                                    lblRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblRank.setForeground(Color.black);
+                                    lblRank.setName("lblRank");
+                                    pnlGeneral.add(lblRank, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- cboCurrenctRank ----
-                                    cboCurrenctRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    cboCurrenctRank.setBackground(Color.white);
-                                    cboCurrenctRank.setForeground(Color.black);
-                                    cboCurrenctRank.setName("cboCurrenctRank");
-                                    pnlGeneral.add(cboCurrenctRank, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+                                    //---- cboRank ----
+                                    cboRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    cboRank.setBackground(Color.white);
+                                    cboRank.setForeground(Color.black);
+                                    cboRank.setName("cboRank");
+                                    pnlGeneral.add(cboRank, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
@@ -772,11 +779,12 @@ public class BoyScoutPanel extends JPanel {
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- txtBirthDate ----
-                                    txtBirthDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    txtBirthDate.setDefaultText("15/02/2006");
-                                    txtBirthDate.setName("txtBirthDate");
-                                    pnlGeneral.add(txtBirthDate, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
+                                    //---- cboBirthDate ----
+                                    cboBirthDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    cboBirthDate.setMaximumSize(new Dimension(32822, 30));
+                                    cboBirthDate.setMinimumSize(new Dimension(57, 30));
+                                    cboBirthDate.setName("cboBirthDate");
+                                    pnlGeneral.add(cboBirthDate, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
@@ -796,7 +804,7 @@ public class BoyScoutPanel extends JPanel {
                                     lblAgeValue.setName("lblAgeValue");
                                     pnlGeneral.add(lblAgeValue, new GridBagConstraints(6, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 5), 0, 0));
+                                        new Insets(0, 0, 5, 0), 0, 0));
 
                                     //---- lblBirthDateError ----
                                     lblBirthDateError.setText("*error message");
@@ -805,22 +813,66 @@ public class BoyScoutPanel extends JPanel {
                                     lblBirthDateError.setName("lblBirthDateError");
                                     pnlGeneral.add(lblBirthDateError, new GridBagConstraints(3, 3, 3, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
+
+                                    //---- lblBirthDate2 ----
+                                    lblBirthDate2.setText("Rank Date:");
+                                    lblBirthDate2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblBirthDate2.setForeground(Color.black);
+                                    lblBirthDate2.setName("lblBirthDate2");
+                                    pnlGeneral.add(lblBirthDate2, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- cboRankDate ----
+                                    cboRankDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    cboRankDate.setMaximumSize(new Dimension(32822, 30));
+                                    cboRankDate.setMinimumSize(new Dimension(57, 30));
+                                    cboRankDate.setName("cboRankDate");
+                                    pnlGeneral.add(cboRankDate, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblRankDateError ----
+                                    lblRankDateError.setText("*error message");
+                                    lblRankDateError.setForeground(Color.red);
+                                    lblRankDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblRankDateError.setName("lblRankDateError");
+                                    pnlGeneral.add(lblRankDateError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
 
                                     //---- label11 ----
                                     label11.setText("Time Left in Boy Scouts");
                                     label11.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     label11.setForeground(Color.black);
                                     label11.setName("label11");
-                                    pnlGeneral.add(label11, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    pnlGeneral.add(label11, new GridBagConstraints(0, 6, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
                                         new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label13 ----
+                                    label13.setText("Number of Camps Attended");
+                                    label13.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    label13.setForeground(Color.black);
+                                    label13.setName("label13");
+                                    pnlGeneral.add(label13, new GridBagConstraints(3, 6, 4, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 0), 0, 0));
 
                                     //---- progressBar1 ----
                                     progressBar1.setValue(50);
                                     progressBar1.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     progressBar1.setName("progressBar1");
-                                    pnlGeneral.add(progressBar1, new GridBagConstraints(0, 5, 7, 1, 0.0, 0.0,
+                                    pnlGeneral.add(progressBar1, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- progressBar2 ----
+                                    progressBar2.setValue(50);
+                                    progressBar2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    progressBar2.setName("progressBar2");
+                                    pnlGeneral.add(progressBar2, new GridBagConstraints(3, 7, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
@@ -829,39 +881,8 @@ public class BoyScoutPanel extends JPanel {
                                     label12.setFont(new Font("Tahoma", Font.PLAIN, 12));
                                     label12.setForeground(Color.black);
                                     label12.setName("label12");
-                                    pnlGeneral.add(label12, new GridBagConstraints(0, 6, 7, 1, 0.0, 0.0,
+                                    pnlGeneral.add(label12, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.NORTH, GridBagConstraints.NONE,
-                                        new Insets(0, 0, 0, 5), 0, 0));
-                                }
-                                pnlSummary.add(pnlGeneral, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(15, 10, 5, 10), 0, 0));
-
-                                //======== pnlAdvancementTracker ========
-                                {
-                                    pnlAdvancementTracker.setOpaque(false);
-                                    pnlAdvancementTracker.setName("pnlAdvancementTracker");
-                                    pnlAdvancementTracker.setLayout(new GridBagLayout());
-                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).columnWidths = new int[] {716, 0, 0};
-                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).rowHeights = new int[] {0, 25, 6, 0, 25, 0, 0, 0, 0};
-                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
-
-                                    //---- label13 ----
-                                    label13.setText("Number of Camps Attended");
-                                    label13.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    label13.setForeground(Color.black);
-                                    label13.setName("label13");
-                                    pnlAdvancementTracker.add(label13, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- progressBar2 ----
-                                    progressBar2.setValue(50);
-                                    progressBar2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    progressBar2.setName("progressBar2");
-                                    pnlAdvancementTracker.add(progressBar2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- label14 ----
@@ -869,7 +890,7 @@ public class BoyScoutPanel extends JPanel {
                                     label14.setFont(new Font("Tahoma", Font.PLAIN, 12));
                                     label14.setForeground(Color.black);
                                     label14.setName("label14");
-                                    pnlAdvancementTracker.add(label14, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                                    pnlGeneral.add(label14, new GridBagConstraints(3, 8, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.NORTH, GridBagConstraints.NONE,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
@@ -878,49 +899,91 @@ public class BoyScoutPanel extends JPanel {
                                     label15.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     label15.setForeground(Color.black);
                                     label15.setName("label15");
-                                    pnlAdvancementTracker.add(label15, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    pnlGeneral.add(label15, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- label1 ----
+                                    label1.setText("Progress Towards Next Advancement");
+                                    label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    label1.setForeground(Color.black);
+                                    label1.setName("label1");
+                                    pnlGeneral.add(label1, new GridBagConstraints(3, 9, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- progressBar3 ----
                                     progressBar3.setValue(50);
                                     progressBar3.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     progressBar3.setName("progressBar3");
-                                    pnlAdvancementTracker.add(progressBar3, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                    pnlGeneral.add(progressBar3, new GridBagConstraints(0, 10, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- progressBar4 ----
+                                    progressBar4.setValue(60);
+                                    progressBar4.setName("progressBar4");
+                                    pnlGeneral.add(progressBar4, new GridBagConstraints(3, 10, 2, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- label16 ----
                                     label16.setText("2 mo, 3 days");
                                     label16.setFont(new Font("Tahoma", Font.PLAIN, 12));
                                     label16.setForeground(Color.black);
                                     label16.setName("label16");
-                                    pnlAdvancementTracker.add(label16, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+                                    pnlGeneral.add(label16, new GridBagConstraints(0, 11, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.NORTH, GridBagConstraints.NONE,
-                                        new Insets(0, 0, 5, 5), 0, 0));
+                                        new Insets(0, 0, 0, 5), 0, 0));
+
+                                    //---- label2 ----
+                                    label2.setText("6 of 10 Requirements");
+                                    label2.setForeground(Color.black);
+                                    label2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    label2.setName("label2");
+                                    pnlGeneral.add(label2, new GridBagConstraints(3, 11, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+                                        new Insets(0, 0, 0, 5), 0, 0));
+                                }
+                                pnlSummary.add(pnlGeneral, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(15, 10, 10, 10), 0, 0));
+
+                                //======== pnlAdvancementTracker ========
+                                {
+                                    pnlAdvancementTracker.setOpaque(false);
+                                    pnlAdvancementTracker.setPreferredSize(new Dimension(592, 150));
+                                    pnlAdvancementTracker.setMaximumSize(new Dimension(2147483647, 150));
+                                    pnlAdvancementTracker.setMinimumSize(new Dimension(567, 150));
+                                    pnlAdvancementTracker.setName("pnlAdvancementTracker");
+                                    pnlAdvancementTracker.setLayout(new GridBagLayout());
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).columnWidths = new int[] {567, 0};
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).rowHeights = new int[] {0, 0, 0};
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlAdvancementTracker.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
                                     //---- label17 ----
                                     label17.setText("Progress of Current Advancement");
                                     label17.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     label17.setForeground(Color.black);
                                     label17.setName("label17");
-                                    pnlAdvancementTracker.add(label17, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
+                                    pnlAdvancementTracker.add(label17, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 5), 0, 0));
+                                        new Insets(0, 0, 5, 0), 0, 0));
 
                                     //======== scrollPane3 ========
                                     {
                                         scrollPane3.setName("scrollPane3");
 
                                         //---- table1 ----
-                                        table1.setPreferredScrollableViewportSize(new Dimension(450, 200));
+                                        table1.setPreferredScrollableViewportSize(new Dimension(450, 150));
                                         table1.setMaximumSize(new Dimension(2147483647, 200));
                                         table1.setName("table1");
                                         scrollPane3.setViewportView(table1);
                                     }
-                                    pnlAdvancementTracker.add(scrollPane3, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0,
+                                    pnlAdvancementTracker.add(scrollPane3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 0, 5), 0, 0));
+                                        new Insets(0, 0, 0, 0), 0, 0));
                                 }
                                 pnlSummary.add(pnlAdvancementTracker, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1065,26 +1128,32 @@ public class BoyScoutPanel extends JPanel {
     private JPanel pnlGeneral;
     private JLabel lblName;
     private JTextFieldDefaultText txtName;
-    private JLabel lblRole;
+    private JLabel lblPosition;
     private JTextFieldDefaultText txtRole;
     private JLabel lblNameError;
-    private JLabel lblCurrenctRank;
-    private JComboBox cboCurrenctRank;
+    private JLabel lblRank;
+    private JComboBox cboRank;
     private JLabel lblBirthDate;
-    private JTextFieldDefaultText txtBirthDate;
+    private JDatePicker cboBirthDate;
     private JLabel lblAge;
     private JLabel lblAgeValue;
     private JLabel lblBirthDateError;
+    private JLabel lblBirthDate2;
+    private JDatePicker cboRankDate;
+    private JLabel lblRankDateError;
     private JLabel label11;
-    private JProgressBar progressBar1;
-    private JLabel label12;
-    private JPanel pnlAdvancementTracker;
     private JLabel label13;
+    private JProgressBar progressBar1;
     private JProgressBar progressBar2;
+    private JLabel label12;
     private JLabel label14;
     private JLabel label15;
+    private JLabel label1;
     private JProgressBar progressBar3;
+    private JProgressBar progressBar4;
     private JLabel label16;
+    private JLabel label2;
+    private JPanel pnlAdvancementTracker;
     private JLabel label17;
     private JScrollPane scrollPane3;
     private JTable table1;

@@ -31,6 +31,7 @@ package bsaDb.client.customComponents.jdatepicker;
 import bsaDb.client.customComponents.jdatepicker.constraints.DateSelectionConstraint;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -133,6 +134,10 @@ public class JDatePicker extends JComponent implements DatePicker {
         DateModel<?> model = datePanel.getModel();
         setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
         formattedTextField.setEditable(false);
+        formattedTextField.setBackground(Color.white);
+        formattedTextField.setForeground(Color.black);
+        formattedTextField.setBorder(new LineBorder(Color.gray, 1));
+        formattedTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
         add(formattedTextField);
         layout.putConstraint(SpringLayout.WEST, formattedTextField, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, formattedTextField);
@@ -142,6 +147,10 @@ public class JDatePicker extends JComponent implements DatePicker {
         button.setFocusable(true);
         Icon icon = ComponentIconDefaults.getInstance().getPopupButtonIcon();
         button.setIcon(icon);
+        button.setFocusPainted(false);
+        button.setBackground(Color.white);
+        button.setBorderPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         if (icon == null) {
             // reset to caption
             button.setText("...");
@@ -157,8 +166,8 @@ public class JDatePicker extends JComponent implements DatePicker {
         //Do layout formatting
         int h = (int) button.getPreferredSize().getHeight();
         int w = (int) datePanel.getPreferredSize().getWidth();
-        button.setPreferredSize(new Dimension(h, h));
-        formattedTextField.setPreferredSize(new Dimension(w - h - 1, h));
+        button.setPreferredSize(new Dimension(24, 24));
+        formattedTextField.setPreferredSize(new Dimension(100, 30));
 
         //Add event listeners
         addHierarchyBoundsListener(internalEventHandler);

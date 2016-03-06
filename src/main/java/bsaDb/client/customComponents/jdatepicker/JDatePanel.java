@@ -115,8 +115,8 @@ public class JDatePanel extends JComponent implements DatePanel {
      * @param model a custom date model
      */
     public JDatePanel(DateModel<?> model) {
-        actionListeners = new HashSet<ActionListener>();
-        dateConstraints = new HashSet<DateSelectionConstraint>();
+        actionListeners = new HashSet<>();
+        dateConstraints = new HashSet<>();
 
         showYearButtons = false;
         doubleClickAction = false;
@@ -142,11 +142,11 @@ public class JDatePanel extends JComponent implements DatePanel {
         if (value instanceof Calendar) {
             return new UtilCalendarModel((Calendar) value);
         }
-        if (value instanceof Date) {
-            return new UtilDateModel((Date) value);
-        }
         if (value instanceof java.sql.Date) {
             return new SqlDateModel((java.sql.Date) value);
+        }
+        if (value instanceof Date) {
+            return new UtilDateModel((Date) value);
         }
         throw new IllegalArgumentException("No model could be constructed from the initial value object.");
     }
@@ -321,8 +321,8 @@ public class JDatePanel extends JComponent implements DatePanel {
          */
         private void initialise() {
             this.setLayout(new BorderLayout());
-            this.setSize(200, 180);
-            this.setPreferredSize(new Dimension(200, 180));
+            this.setSize(250, 200);
+            this.setPreferredSize(new Dimension(250, 200));
             this.setOpaque(false);
             this.add(getNorthPanel(), BorderLayout.NORTH);
             this.add(getSouthPanel(), BorderLayout.SOUTH);
@@ -341,6 +341,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 northPanel.setName("");
                 northPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
                 northPanel.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_MONTH_SELECTOR));
+                northPanel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_MONTH_SELECTOR));
                 northPanel.add(getPreviousButtonPanel(), BorderLayout.WEST);
                 northPanel.add(getNextButtonPanel(), BorderLayout.EAST);
                 northPanel.add(getNorthCenterPanel(), BorderLayout.CENTER);
@@ -375,6 +376,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 monthLabel = new JLabel();
                 monthLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_MONTH_SELECTOR));
                 monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                monthLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
                 monthLabel.addMouseListener(internalController);
                 updateMonthLabel();
             }
@@ -389,6 +391,8 @@ public class JDatePanel extends JComponent implements DatePanel {
         private JSpinner getYearSpinner() {
             if (yearSpinner == null) {
                 yearSpinner = new JSpinner();
+                yearSpinner.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                yearSpinner.setBackground(Color.white);
                 yearSpinner.setModel(internalModel);
             }
             return yearSpinner;
@@ -422,9 +426,8 @@ public class JDatePanel extends JComponent implements DatePanel {
                 noneLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_ENABLED));
                 noneLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 noneLabel.addMouseListener(internalController);
-                //TODO get the translations for each language before adding this in
-                //noneLabel.setToolTipText(getText(ComponentTextDefaults.CLEAR));
                 noneLabel.setIcon(getIcons().getClearIcon());
+                noneLabel.setToolTipText("Clear date selection");
             }
             return noneLabel;
         }
@@ -449,6 +452,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 todayLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_ENABLED));
                 todayLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 todayLabel.addMouseListener(internalController);
+                todayLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
                 updateTodayLabel();
             }
             return todayLabel;
@@ -486,6 +490,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 dayTable.setCellSelectionEnabled(true);
                 dayTable.setRowSelectionAllowed(true);
                 dayTable.setFocusable(false);
+                dayTable.setFont(new Font("Tahoma", Font.PLAIN, 12));
                 dayTable.addMouseListener(internalController);
                 for (int i = 0; i < 7; i++) {
                     TableColumn column = dayTable.getColumnModel().getColumn(i);
@@ -537,6 +542,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 dayTableHeader = getDayTable().getTableHeader();
                 dayTableHeader.setResizingAllowed(false);
                 dayTableHeader.setReorderingAllowed(false);
+                dayTableHeader.setFont(new Font("Tahoma", Font.PLAIN, 12));
                 dayTableHeader.setDefaultRenderer(getDayTableCellRenderer());
             }
             return dayTableHeader;
@@ -595,10 +601,10 @@ public class JDatePanel extends JComponent implements DatePanel {
                 nextMonthButton.setIcon(getIcons().getNextMonthIconEnabled());
                 nextMonthButton.setDisabledIcon(getIcons().getNextMonthIconDisabled());
                 nextMonthButton.setText("");
+                nextMonthButton.setBackground(Color.white);
                 nextMonthButton.setPreferredSize(new Dimension(20, 15));
                 nextMonthButton.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 nextMonthButton.setFocusable(false);
-                nextMonthButton.setOpaque(true);
                 nextMonthButton.addActionListener(internalController);
                 nextMonthButton.setToolTipText(getTexts().getText(ComponentTextDefaults.Key.MONTH));
             }
@@ -637,10 +643,10 @@ public class JDatePanel extends JComponent implements DatePanel {
                 previousMonthButton.setIcon(getIcons().getPreviousMonthIconEnabled());
                 previousMonthButton.setDisabledIcon(getIcons().getPreviousMonthIconDisabled());
                 previousMonthButton.setText("");
+                previousMonthButton.setBackground(Color.white);
                 previousMonthButton.setPreferredSize(new Dimension(20, 15));
                 previousMonthButton.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 previousMonthButton.setFocusable(false);
-                previousMonthButton.setOpaque(true);
                 previousMonthButton.addActionListener(internalController);
                 previousMonthButton.setToolTipText(getTexts().getText(ComponentTextDefaults.Key.MONTH));
             }
@@ -677,8 +683,8 @@ public class JDatePanel extends JComponent implements DatePanel {
             if (monthPopupMenu == null) {
                 monthPopupMenu = new JPopupMenu();
                 JMenuItem[] menuItems = getMonthPopupMenuItems();
-                for (int i = 0; i < menuItems.length; i++) {
-                    monthPopupMenu.add(menuItems[i]);
+                for (JMenuItem menuItem : menuItems) {
+                    monthPopupMenu.add(menuItem);
                 }
             }
             return monthPopupMenu;
@@ -732,7 +738,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             // Exit this method if the value is null, encountered from JTable#AccessibleJTable
             if (value == null) {
-                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                return super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
             }
 
             JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -930,8 +936,8 @@ public class JDatePanel extends JComponent implements DatePanel {
         private Set<TableModelListener> tableModelListeners;
 
         public InternalCalendarModel(DateModel<?> model) {
-            this.spinnerChangeListeners = new HashSet<ChangeListener>();
-            this.tableModelListeners = new HashSet<TableModelListener>();
+            this.spinnerChangeListeners = new HashSet<>();
+            this.tableModelListeners = new HashSet<>();
             this.model = model;
             model.addChangeListener(this);
         }

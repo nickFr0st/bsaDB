@@ -70,15 +70,15 @@ public final class ComponentIconDefaults {
         // TODO consider making all the icons vector images which will scale
         try {
             clearIcon = loadIcon(CLEAR);
-            nextMonthIconEnabled = new JNextIcon(4, 7, false, true);
+            nextMonthIconEnabled = new ImageIcon(getClass().getResource("/images/next.png"));
             nextYearIconEnabled = new JNextIcon(8, 7, true, true);
-            previousMonthIconEnabled = new JPreviousIcon(4, 7, false, true);
+            previousMonthIconEnabled = new ImageIcon(getClass().getResource("/images/back.png"));
             previousYearIconEnabled = new JPreviousIcon(8, 7, true, true);
-            nextMonthIconDisabled = new JNextIcon(4, 7, false, false);
+            nextMonthIconDisabled = new ImageIcon(getClass().getResource("/images/next.png"));
             nextYearIconDisabled = new JNextIcon(8, 7, true, false);
-            previousMonthIconDisabled = new JPreviousIcon(4, 7, false, false);
+            previousMonthIconDisabled = new ImageIcon(getClass().getResource("/images/back.png"));
             previousYearIconDisabled = new JPreviousIcon(8, 7, true, false);
-            popupButtonIcon = null;
+            popupButtonIcon = new ImageIcon(getClass().getResource("/images/calendar24.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
