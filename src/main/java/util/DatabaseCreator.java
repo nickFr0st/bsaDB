@@ -92,6 +92,24 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableCounselor);
 
+        String tableBoyScout = "CREATE TABLE boyScout " +
+                "(id INT NOT NULL," +
+                " name VARCHAR(90) NOT NULL," +
+                " position VARCHAR(90) NULL," +
+                " birthDate DATE NOT NULL," +
+                " advancementId INT NULL," +
+                " advancementDate DATE NULL," +
+                " phoneNumber VARCHAR(20) NULL," +
+                " guardianName VARCHAR(90) NULL," +
+                " guardianPhoneNumber VARCHAR(20) NULL," +
+                " street VARCHAR(255) NULL," +
+                " city VARCHAR(255) NULL," +
+                " state VARCHAR(255) NULL," +
+                " zip VARCHAR(10) NULL," +
+                " note BLOB NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableBoyScout);
+
         statement.executeBatch();
     }
 }
