@@ -35,28 +35,20 @@ public class BoyScoutPanel extends JPanel {
     private final Color WARNING = new Color(220,177,26);
     private final Color BAD = new Color(255, 0, 0);
 
-    private Icon noImage;
     private Advancement advancement;
-    private String imagePath;
-
-    {
-        imagePath = "";
-    }
 
     public BoyScoutPanel() {
         initComponents();
 
-        noImage = new ImageIcon(getClass().getResource("/images/no_image.png"));
         setupProgressBars();
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
         btnUpdate.setVisible(false);
+        clearAllErrors();
 
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
         populateAdvancementNameList();
-
-
         enableControls(false);
     }
 
@@ -72,7 +64,6 @@ public class BoyScoutPanel extends JPanel {
 
         barProgress.setForeground(AVG);
         barProgress.setBackground(Color.white);
-
     }
 
     public void populateAdvancementNameList() {
@@ -177,15 +168,20 @@ public class BoyScoutPanel extends JPanel {
 //    }
 
     private void enableControls(boolean enable) {
-//        btnBadgeImage.setEnabled(enable);
-//        txtName.setEnabled(enable);
-//        btnAddRequirement.setEnabled(enable);
-//        btnRemoveRequirement.setEnabled(enable);
+        // Settings Tab
+        txtName.setEnabled(enable);
+        txtPosition.setEnabled(enable);
+        cboRank.setEnabled(enable);
+        cboRankDate.setEnabled(enable);
+        cboBirthDate.setEnabled(enable);
+        tblProgress.setEnabled(enable);
     }
 
     private void clearAllErrors() {
-//        Util.clearError(lblNameError);
-//        Util.clearError(lblRequirementError);
+        // Settings Tab
+        Util.clearError(lblNameError);
+        Util.clearError(lblBirthDateError);
+        Util.clearError(lblRankDateError);
     }
 
     private void btnNewActionPerformed() {
@@ -297,15 +293,6 @@ public class BoyScoutPanel extends JPanel {
         }
 
 //        advancement.setName(txtName.getText());
-        if (Util.isEmpty(imagePath) || getImage() == null) {
-            advancement.setImgPath("");
-        } else {
-            advancement.setImgPath(imagePath);
-        }
-    }
-
-    private Image getImage() {
-        return new ImageIcon(imagePath).getImage();
     }
 
     private boolean validateFields() {
@@ -547,7 +534,7 @@ public class BoyScoutPanel extends JPanel {
         lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
         lblPosition = new JLabel();
-        txtRole = new JTextFieldDefaultText();
+        txtPosition = new JTextFieldDefaultText();
         lblNameError = new JLabel();
         lblRank = new JLabel();
         cboRank = new JComboBox();
@@ -756,11 +743,11 @@ public class BoyScoutPanel extends JPanel {
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- txtRole ----
-                                    txtRole.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    txtRole.setDefaultText("Troop Position");
-                                    txtRole.setName("txtRole");
-                                    pnlGeneral.add(txtRole, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
+                                    //---- txtPosition ----
+                                    txtPosition.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    txtPosition.setDefaultText("Troop Position");
+                                    txtPosition.setName("txtPosition");
+                                    pnlGeneral.add(txtPosition, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 0), 0, 0));
 
@@ -1133,7 +1120,7 @@ public class BoyScoutPanel extends JPanel {
     private JLabel lblName;
     private JTextFieldDefaultText txtName;
     private JLabel lblPosition;
-    private JTextFieldDefaultText txtRole;
+    private JTextFieldDefaultText txtPosition;
     private JLabel lblNameError;
     private JLabel lblRank;
     private JComboBox cboRank;

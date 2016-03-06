@@ -162,7 +162,7 @@ new FormModel {
 											"gridx": 4
 										} )
 										add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
-											name: "txtRole"
+											name: "txtPosition"
 											"font": new java.awt.Font( "Tahoma", 0, 14 )
 											"defaultText": "Troop Position"
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
