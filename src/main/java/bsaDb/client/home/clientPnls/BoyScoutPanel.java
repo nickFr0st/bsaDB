@@ -175,6 +175,27 @@ public class BoyScoutPanel extends JPanel {
         cboRankDate.setEnabled(enable);
         cboBirthDate.setEnabled(enable);
         tblProgress.setEnabled(enable);
+
+        // Contact Info Tab
+        txtPhoneNumber.setEnabled(enable);
+        txtCity.setEnabled(enable);
+        txtStreet.setEnabled(enable);
+        txtGuardianName.setEnabled(enable);
+        txtState.setEnabled(enable);
+        txtZip.setEnabled(enable);
+        txtGuardianPhone.setEnabled(enable);
+        txtNotes.setEnabled(enable);
+
+        // Details Tab
+        tblSpecialAwards.setEnabled(enable);
+        listMeritBadges.setEnabled(enable);
+        listCamps.setEnabled(enable);
+        btnAddAward.setEnabled(enable);
+        btnRemoveAward.setEnabled(enable);
+        btnAddMeritBadge.setEnabled(enable);
+        btnRemoveMeritBadge.setEnabled(enable);
+        btnAddCamp.setEnabled(enable);
+        btnRemoveCamp.setEnabled(enable);
     }
 
     private void clearAllErrors() {
@@ -182,6 +203,10 @@ public class BoyScoutPanel extends JPanel {
         Util.clearError(lblNameError);
         Util.clearError(lblBirthDateError);
         Util.clearError(lblRankDateError);
+
+        // Contact Info Tab
+        Util.clearError(lblPhoneNumberError);
+        Util.clearError(lblGuardianPhoneError);
     }
 
     private void btnNewActionPerformed() {
@@ -463,6 +488,44 @@ public class BoyScoutPanel extends JPanel {
 //        }
     }
 
+    private void validatePhoneNumber() {
+        validatePhoneNum();
+    }
+
+    private void validateGuardianPhoneNumber() {
+        validateGuardianPhoneNum();
+    }
+
+    private boolean validateGuardianPhoneNum() {
+        Util.clearError(lblGuardianPhoneError);
+
+        if (txtGuardianPhone.isMessageDefault() || txtGuardianPhone.getText().isEmpty()) {
+            return true;
+        }
+
+        if (!Util.validatePhoneNumber(txtGuardianPhone.getText())) {
+            Util.setError(lblGuardianPhoneError, "Invalid phone number format");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validatePhoneNum() {
+        Util.clearError(lblPhoneNumberError);
+
+        if (txtPhoneNumber.isMessageDefault() || txtPhoneNumber.getText().isEmpty()) {
+            return true;
+        }
+
+        if (!Util.validatePhoneNumber(txtPhoneNumber.getText())) {
+            Util.setError(lblPhoneNumberError, "Invalid phone number format");
+            return false;
+        }
+
+        return true;
+    }
+
 //    private void validateName() {
 //        validateAdvancementName();
 //    }
@@ -561,8 +624,50 @@ public class BoyScoutPanel extends JPanel {
         lblProgressTable = new JLabel();
         scrollPane3 = new JScrollPane();
         tblProgress = new JTable();
-        panel7 = new JPanel();
-        panel8 = new JPanel();
+        pnlContact = new JPanel();
+        JLabel lblContactInfo = new JLabel();
+        JLabel lblPhoneNumber = new JLabel();
+        txtPhoneNumber = new JTextFieldDefaultText();
+        lblPhoneNumberError = new JLabel();
+        JLabel lblCity = new JLabel();
+        txtCity = new JTextFieldDefaultText();
+        JLabel lblState = new JLabel();
+        txtState = new JTextFieldDefaultText();
+        JLabel lblStreet = new JLabel();
+        txtStreet = new JTextFieldDefaultText();
+        JLabel lblZip = new JLabel();
+        txtZip = new JTextFieldDefaultText();
+        JLabel lblGuardianName = new JLabel();
+        txtGuardianName = new JTextFieldDefaultText();
+        JLabel lblGuardianPhone = new JLabel();
+        txtGuardianPhone = new JTextFieldDefaultText();
+        lblGuardianPhoneError = new JLabel();
+        JLabel lblNotes = new JLabel();
+        scrollPane4 = new JScrollPane();
+        txtNotes = new JTextArea();
+        pnlDetails = new JPanel();
+        pnlDetailContents = new JPanel();
+        JPanel panel8 = new JPanel();
+        JLabel lblSpecialAwards = new JLabel();
+        btnAddAward = new JLabel();
+        btnRemoveAward = new JLabel();
+        lblRequirementError = new JLabel();
+        scrollPane5 = new JScrollPane();
+        tblSpecialAwards = new JTable();
+        JPanel panel9 = new JPanel();
+        JLabel lblMeritBadges = new JLabel();
+        btnAddMeritBadge = new JLabel();
+        btnRemoveMeritBadge = new JLabel();
+        lblRequirementError2 = new JLabel();
+        JPanel panel10 = new JPanel();
+        JLabel lblCamps = new JLabel();
+        btnAddCamp = new JLabel();
+        btnRemoveCamp = new JLabel();
+        lblRequirementError3 = new JLabel();
+        scrollPane6 = new JScrollPane();
+        listMeritBadges = new JList();
+        scrollPane7 = new JScrollPane();
+        listCamps = new JList();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -712,7 +817,7 @@ public class BoyScoutPanel extends JPanel {
                                     pnlGeneral.setOpaque(false);
                                     pnlGeneral.setName("pnlGeneral");
                                     pnlGeneral.setLayout(new GridBagLayout());
-                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 195, 36, 0, 0, 185, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 207, 36, 0, 0, 195, 0};
                                     ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 35, 0, 24, 25, 0, 35, 25, 0, 35, 201, 0};
                                     ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
                                     ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
@@ -982,29 +1087,427 @@ public class BoyScoutPanel extends JPanel {
                             }
                             tabPnlContent.addTab("Summary", pnlSummary);
 
-                            //======== panel7 ========
+                            //======== pnlContact ========
                             {
-                                panel7.setBackground(Color.white);
-                                panel7.setName("panel7");
-                                panel7.setLayout(new GridBagLayout());
-                                ((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {0, 0, 0};
-                                ((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
-                                ((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-                                ((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
-                            }
-                            tabPnlContent.addTab("text", panel7);
+                                pnlContact.setBackground(Color.white);
+                                pnlContact.setName("pnlContact");
+                                pnlContact.setLayout(new GridBagLayout());
+                                ((GridBagLayout)pnlContact.getLayout()).columnWidths = new int[] {0, 188, 83, 183, 0};
+                                ((GridBagLayout)pnlContact.getLayout()).rowHeights = new int[] {0, 35, 0, 35, 35, 35, 0, 0, 313, 0};
+                                ((GridBagLayout)pnlContact.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                                ((GridBagLayout)pnlContact.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
-                            //======== panel8 ========
-                            {
-                                panel8.setBackground(Color.white);
-                                panel8.setName("panel8");
-                                panel8.setLayout(new GridBagLayout());
-                                ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0};
-                                ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
-                                ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-                                ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+                                //---- lblContactInfo ----
+                                lblContactInfo.setText("Contact Information:");
+                                lblContactInfo.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                                lblContactInfo.setForeground(new Color(51, 102, 153));
+                                lblContactInfo.setName("lblContactInfo");
+                                pnlContact.add(lblContactInfo, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 8, 5, 5), 0, 0));
+
+                                //---- lblPhoneNumber ----
+                                lblPhoneNumber.setText("Phone Number:");
+                                lblPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblPhoneNumber.setForeground(Color.black);
+                                lblPhoneNumber.setName("lblPhoneNumber");
+                                pnlContact.add(lblPhoneNumber, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 15, 5, 5), 0, 0));
+
+                                //---- txtPhoneNumber ----
+                                txtPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtPhoneNumber.setDefaultText("(123) 456-7890");
+                                txtPhoneNumber.setName("txtPhoneNumber");
+                                txtPhoneNumber.addKeyListener(new KeyAdapter() {
+                                    @Override
+                                    public void keyReleased(KeyEvent e) {
+                                        validatePhoneNumber();
+                                    }
+                                });
+                                txtPhoneNumber.addFocusListener(new FocusAdapter() {
+                                    @Override
+                                    public void focusLost(FocusEvent e) {
+                                        validatePhoneNumber();
+                                    }
+                                });
+                                pnlContact.add(txtPhoneNumber, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- lblPhoneNumberError ----
+                                lblPhoneNumberError.setText("*error message");
+                                lblPhoneNumberError.setForeground(Color.red);
+                                lblPhoneNumberError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                lblPhoneNumberError.setName("lblPhoneNumberError");
+                                pnlContact.add(lblPhoneNumberError, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 20, 5, 5), 0, 0));
+
+                                //---- lblCity ----
+                                lblCity.setText("City:");
+                                lblCity.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblCity.setForeground(Color.black);
+                                lblCity.setName("lblCity");
+                                pnlContact.add(lblCity, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- txtCity ----
+                                txtCity.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtCity.setDefaultText("Eagle Mtn");
+                                txtCity.setName("txtCity");
+                                pnlContact.add(txtCity, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- lblState ----
+                                lblState.setText("State:");
+                                lblState.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblState.setForeground(Color.black);
+                                lblState.setName("lblState");
+                                pnlContact.add(lblState, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- txtState ----
+                                txtState.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtState.setDefaultText("Utah");
+                                txtState.setName("txtState");
+                                pnlContact.add(txtState, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 0), 0, 0));
+
+                                //---- lblStreet ----
+                                lblStreet.setText("Street:");
+                                lblStreet.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblStreet.setForeground(Color.black);
+                                lblStreet.setName("lblStreet");
+                                pnlContact.add(lblStreet, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- txtStreet ----
+                                txtStreet.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtStreet.setDefaultText("100 South 100 West");
+                                txtStreet.setName("txtStreet");
+                                pnlContact.add(txtStreet, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- lblZip ----
+                                lblZip.setText("Zip:");
+                                lblZip.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblZip.setForeground(Color.black);
+                                lblZip.setName("lblZip");
+                                pnlContact.add(lblZip, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- txtZip ----
+                                txtZip.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtZip.setDefaultText("12345");
+                                txtZip.setName("txtZip");
+                                pnlContact.add(txtZip, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 0), 0, 0));
+
+                                //---- lblGuardianName ----
+                                lblGuardianName.setText("Parent Name:");
+                                lblGuardianName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblGuardianName.setForeground(Color.black);
+                                lblGuardianName.setName("lblGuardianName");
+                                pnlContact.add(lblGuardianName, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 15, 5, 5), 0, 0));
+
+                                //---- txtGuardianName ----
+                                txtGuardianName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtGuardianName.setDefaultText("Parent Name");
+                                txtGuardianName.setName("txtGuardianName");
+                                pnlContact.add(txtGuardianName, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 5), 0, 0));
+
+                                //---- lblGuardianPhone ----
+                                lblGuardianPhone.setText("Parent Phone Number:");
+                                lblGuardianPhone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblGuardianPhone.setForeground(Color.black);
+                                lblGuardianPhone.setName("lblGuardianPhone");
+                                pnlContact.add(lblGuardianPhone, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    new Insets(0, 15, 5, 5), 0, 0));
+
+                                //---- txtGuardianPhone ----
+                                txtGuardianPhone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                txtGuardianPhone.setDefaultText("(123) 456-7890");
+                                txtGuardianPhone.setName("txtGuardianPhone");
+                                txtGuardianPhone.addFocusListener(new FocusAdapter() {
+                                    @Override
+                                    public void focusLost(FocusEvent e) {
+                                        validateGuardianPhoneNumber();
+                                    }
+                                });
+                                txtGuardianPhone.addKeyListener(new KeyAdapter() {
+                                    @Override
+                                    public void keyReleased(KeyEvent e) {
+                                        validateGuardianPhoneNumber();
+                                    }
+                                });
+                                pnlContact.add(txtGuardianPhone, new GridBagConstraints(3, 5, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 0), 0, 0));
+
+                                //---- lblGuardianPhoneError ----
+                                lblGuardianPhoneError.setText("*error message");
+                                lblGuardianPhoneError.setForeground(Color.red);
+                                lblGuardianPhoneError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                lblGuardianPhoneError.setName("lblGuardianPhoneError");
+                                pnlContact.add(lblGuardianPhoneError, new GridBagConstraints(2, 6, 2, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 20, 5, 0), 0, 0));
+
+                                //---- lblNotes ----
+                                lblNotes.setText("Notes:");
+                                lblNotes.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                                lblNotes.setForeground(new Color(51, 102, 153));
+                                lblNotes.setName("lblNotes");
+                                pnlContact.add(lblNotes, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 8, 5, 5), 0, 0));
+
+                                //======== scrollPane4 ========
+                                {
+                                    scrollPane4.setName("scrollPane4");
+
+                                    //---- txtNotes ----
+                                    txtNotes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    txtNotes.setBackground(Color.white);
+                                    txtNotes.setForeground(Color.black);
+                                    txtNotes.setName("txtNotes");
+                                    scrollPane4.setViewportView(txtNotes);
+                                }
+                                pnlContact.add(scrollPane4, new GridBagConstraints(0, 8, 4, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 15, 10, 0), 0, 0));
                             }
-                            tabPnlContent.addTab("text", panel8);
+                            tabPnlContent.addTab("Contact Info", pnlContact);
+
+                            //======== pnlDetails ========
+                            {
+                                pnlDetails.setBackground(Color.white);
+                                pnlDetails.setName("pnlDetails");
+                                pnlDetails.setLayout(new GridBagLayout());
+                                ((GridBagLayout)pnlDetails.getLayout()).columnWidths = new int[] {0, 0};
+                                ((GridBagLayout)pnlDetails.getLayout()).rowHeights = new int[] {0, 0};
+                                ((GridBagLayout)pnlDetails.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+                                ((GridBagLayout)pnlDetails.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
+
+                                //======== pnlDetailContents ========
+                                {
+                                    pnlDetailContents.setOpaque(false);
+                                    pnlDetailContents.setName("pnlDetailContents");
+                                    pnlDetailContents.setLayout(new GridBagLayout());
+                                    ((GridBagLayout)pnlDetailContents.getLayout()).columnWidths = new int[] {330, 300, 0};
+                                    ((GridBagLayout)pnlDetailContents.getLayout()).rowHeights = new int[] {0, 0, 64, 328, 0};
+                                    ((GridBagLayout)pnlDetailContents.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlDetailContents.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+
+                                    //======== panel8 ========
+                                    {
+                                        panel8.setOpaque(false);
+                                        panel8.setName("panel8");
+                                        panel8.setLayout(new GridBagLayout());
+                                        ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
+                                        ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0};
+                                        ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                                        ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                                        //---- lblSpecialAwards ----
+                                        lblSpecialAwards.setText("Special Awards");
+                                        lblSpecialAwards.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                                        lblSpecialAwards.setForeground(new Color(51, 102, 153));
+                                        lblSpecialAwards.setName("lblSpecialAwards");
+                                        panel8.add(lblSpecialAwards, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(3, 0, 0, 5), 0, 0));
+
+                                        //---- btnAddAward ----
+                                        btnAddAward.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
+                                        btnAddAward.setToolTipText("Add a new award");
+                                        btnAddAward.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnAddAward.setName("btnAddAward");
+                                        panel8.add(btnAddAward, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- btnRemoveAward ----
+                                        btnRemoveAward.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
+                                        btnRemoveAward.setToolTipText("Remove selected award");
+                                        btnRemoveAward.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnRemoveAward.setName("btnRemoveAward");
+                                        panel8.add(btnRemoveAward, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- lblRequirementError ----
+                                        lblRequirementError.setText("* Error Message");
+                                        lblRequirementError.setForeground(Color.red);
+                                        lblRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                        lblRequirementError.setVisible(false);
+                                        lblRequirementError.setName("lblRequirementError");
+                                        panel8.add(lblRequirementError, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 10, 0, 0), 0, 0));
+                                    }
+                                    pnlDetailContents.add(panel8, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 0), 0, 0));
+
+                                    //======== scrollPane5 ========
+                                    {
+                                        scrollPane5.setName("scrollPane5");
+
+                                        //---- tblSpecialAwards ----
+                                        tblSpecialAwards.setPreferredScrollableViewportSize(new Dimension(450, 100));
+                                        tblSpecialAwards.setName("tblSpecialAwards");
+                                        scrollPane5.setViewportView(tblSpecialAwards);
+                                    }
+                                    pnlDetailContents.add(scrollPane5, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 0), 0, 0));
+
+                                    //======== panel9 ========
+                                    {
+                                        panel9.setOpaque(false);
+                                        panel9.setName("panel9");
+                                        panel9.setLayout(new GridBagLayout());
+                                        ((GridBagLayout)panel9.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
+                                        ((GridBagLayout)panel9.getLayout()).rowHeights = new int[] {0, 0};
+                                        ((GridBagLayout)panel9.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                                        ((GridBagLayout)panel9.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                                        //---- lblMeritBadges ----
+                                        lblMeritBadges.setText("Merit Badges");
+                                        lblMeritBadges.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                                        lblMeritBadges.setForeground(new Color(51, 102, 153));
+                                        lblMeritBadges.setName("lblMeritBadges");
+                                        panel9.add(lblMeritBadges, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(3, 0, 0, 5), 0, 0));
+
+                                        //---- btnAddMeritBadge ----
+                                        btnAddMeritBadge.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
+                                        btnAddMeritBadge.setToolTipText("Add a merit badge");
+                                        btnAddMeritBadge.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnAddMeritBadge.setName("btnAddMeritBadge");
+                                        panel9.add(btnAddMeritBadge, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- btnRemoveMeritBadge ----
+                                        btnRemoveMeritBadge.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
+                                        btnRemoveMeritBadge.setToolTipText("Remove selected merit badge");
+                                        btnRemoveMeritBadge.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnRemoveMeritBadge.setName("btnRemoveMeritBadge");
+                                        panel9.add(btnRemoveMeritBadge, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- lblRequirementError2 ----
+                                        lblRequirementError2.setText("* Error Message");
+                                        lblRequirementError2.setForeground(Color.red);
+                                        lblRequirementError2.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                        lblRequirementError2.setVisible(false);
+                                        lblRequirementError2.setName("lblRequirementError2");
+                                        panel9.add(lblRequirementError2, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 10, 0, 0), 0, 0));
+                                    }
+                                    pnlDetailContents.add(panel9, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 30), 0, 0));
+
+                                    //======== panel10 ========
+                                    {
+                                        panel10.setOpaque(false);
+                                        panel10.setName("panel10");
+                                        panel10.setLayout(new GridBagLayout());
+                                        ((GridBagLayout)panel10.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
+                                        ((GridBagLayout)panel10.getLayout()).rowHeights = new int[] {0, 0};
+                                        ((GridBagLayout)panel10.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                                        ((GridBagLayout)panel10.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                                        //---- lblCamps ----
+                                        lblCamps.setText("Camps");
+                                        lblCamps.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                                        lblCamps.setForeground(new Color(51, 102, 153));
+                                        lblCamps.setName("lblCamps");
+                                        panel10.add(lblCamps, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(3, 0, 0, 5), 0, 0));
+
+                                        //---- btnAddCamp ----
+                                        btnAddCamp.setIcon(new ImageIcon(getClass().getResource("/images/add.png")));
+                                        btnAddCamp.setToolTipText("Add a camp");
+                                        btnAddCamp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnAddCamp.setName("btnAddCamp");
+                                        panel10.add(btnAddCamp, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- btnRemoveCamp ----
+                                        btnRemoveCamp.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));
+                                        btnRemoveCamp.setToolTipText("Remove selected camp");
+                                        btnRemoveCamp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnRemoveCamp.setName("btnRemoveCamp");
+                                        panel10.add(btnRemoveCamp, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- lblRequirementError3 ----
+                                        lblRequirementError3.setText("* Error Message");
+                                        lblRequirementError3.setForeground(Color.red);
+                                        lblRequirementError3.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                        lblRequirementError3.setVisible(false);
+                                        lblRequirementError3.setName("lblRequirementError3");
+                                        panel10.add(lblRequirementError3, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 10, 0, 0), 0, 0));
+                                    }
+                                    pnlDetailContents.add(panel10, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 0), 0, 0));
+
+                                    //======== scrollPane6 ========
+                                    {
+                                        scrollPane6.setName("scrollPane6");
+
+                                        //---- listMeritBadges ----
+                                        listMeritBadges.setName("listMeritBadges");
+                                        scrollPane6.setViewportView(listMeritBadges);
+                                    }
+                                    pnlDetailContents.add(scrollPane6, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 5, 0, 30), 0, 0));
+
+                                    //======== scrollPane7 ========
+                                    {
+                                        scrollPane7.setName("scrollPane7");
+
+                                        //---- listCamps ----
+                                        listCamps.setName("listCamps");
+                                        scrollPane7.setViewportView(listCamps);
+                                    }
+                                    pnlDetailContents.add(scrollPane7, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 5, 0, 0), 0, 0));
+                                }
+                                pnlDetails.add(pnlDetailContents, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(10, 10, 10, 10), 0, 0));
+                            }
+                            tabPnlContent.addTab("Details", pnlDetails);
                         }
                         panel4.add(tabPnlContent, BorderLayout.CENTER);
                     }
@@ -1147,8 +1650,35 @@ public class BoyScoutPanel extends JPanel {
     private JLabel lblProgressTable;
     private JScrollPane scrollPane3;
     private JTable tblProgress;
-    private JPanel panel7;
-    private JPanel panel8;
+    private JPanel pnlContact;
+    private JTextFieldDefaultText txtPhoneNumber;
+    private JLabel lblPhoneNumberError;
+    private JTextFieldDefaultText txtCity;
+    private JTextFieldDefaultText txtState;
+    private JTextFieldDefaultText txtStreet;
+    private JTextFieldDefaultText txtZip;
+    private JTextFieldDefaultText txtGuardianName;
+    private JTextFieldDefaultText txtGuardianPhone;
+    private JLabel lblGuardianPhoneError;
+    private JScrollPane scrollPane4;
+    private JTextArea txtNotes;
+    private JPanel pnlDetails;
+    private JPanel pnlDetailContents;
+    private JLabel btnAddAward;
+    private JLabel btnRemoveAward;
+    private JLabel lblRequirementError;
+    private JScrollPane scrollPane5;
+    private JTable tblSpecialAwards;
+    private JLabel btnAddMeritBadge;
+    private JLabel btnRemoveMeritBadge;
+    private JLabel lblRequirementError2;
+    private JLabel btnAddCamp;
+    private JLabel btnRemoveCamp;
+    private JLabel lblRequirementError3;
+    private JScrollPane scrollPane6;
+    private JList listMeritBadges;
+    private JScrollPane scrollPane7;
+    private JList listCamps;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;
