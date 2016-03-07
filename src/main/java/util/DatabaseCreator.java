@@ -110,6 +110,15 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableBoyScout);
 
+        String tableSpecialAward = "CREATE TABLE specialAward " +
+                "(id INT NOT NULL," +
+                "scoutId INT NOT NULL," +
+                "scoutTypeId INT NOT NULL," +
+                " name VARCHAR(225) NOT NULL," +
+                " imgPath VARCHAR(255) NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableSpecialAward);
+
         statement.executeBatch();
     }
 }
