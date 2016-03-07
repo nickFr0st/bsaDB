@@ -483,7 +483,7 @@ new FormModel {
 										}
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 3
-										"hAlign": 4
+										"insets": new java.awt.Insets( 0, 15, 0, 0 )
 									} )
 									add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 										name: "txtCity"
@@ -503,8 +503,8 @@ new FormModel {
 										}
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 3
-										"hAlign": 4
 										"gridx": 2
+										"insets": new java.awt.Insets( 0, 15, 0, 0 )
 									} )
 									add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 										name: "txtState"
@@ -524,7 +524,7 @@ new FormModel {
 										}
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 4
-										"hAlign": 4
+										"insets": new java.awt.Insets( 0, 15, 0, 0 )
 									} )
 									add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 										name: "txtStreet"
@@ -544,8 +544,8 @@ new FormModel {
 										}
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 4
-										"hAlign": 4
 										"gridx": 2
+										"insets": new java.awt.Insets( 0, 15, 0, 0 )
 									} )
 									add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 										name: "txtZip"
@@ -565,7 +565,6 @@ new FormModel {
 										}
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 5
-										"hAlign": 4
 										"insets": #Insets2
 									} )
 									add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
@@ -858,7 +857,7 @@ new FormModel {
 									"title": "Details"
 								} )
 							}, new FormLayoutConstraints( class java.lang.String ) {
-								"value": "Center"
+								"value": "North"
 							} )
 						} )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )

@@ -1150,8 +1150,8 @@ public class BoyScoutPanel extends JPanel {
                                 lblCity.setForeground(Color.black);
                                 lblCity.setName("lblCity");
                                 pnlContact.add(lblCity, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 15, 5, 5), 0, 0));
 
                                 //---- txtCity ----
                                 txtCity.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1167,8 +1167,8 @@ public class BoyScoutPanel extends JPanel {
                                 lblState.setForeground(Color.black);
                                 lblState.setName("lblState");
                                 pnlContact.add(lblState, new GridBagConstraints(2, 3, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 15, 5, 5), 0, 0));
 
                                 //---- txtState ----
                                 txtState.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1184,8 +1184,8 @@ public class BoyScoutPanel extends JPanel {
                                 lblStreet.setForeground(Color.black);
                                 lblStreet.setName("lblStreet");
                                 pnlContact.add(lblStreet, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 15, 5, 5), 0, 0));
 
                                 //---- txtStreet ----
                                 txtStreet.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1201,8 +1201,8 @@ public class BoyScoutPanel extends JPanel {
                                 lblZip.setForeground(Color.black);
                                 lblZip.setName("lblZip");
                                 pnlContact.add(lblZip, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 15, 5, 5), 0, 0));
 
                                 //---- txtZip ----
                                 txtZip.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1218,7 +1218,7 @@ public class BoyScoutPanel extends JPanel {
                                 lblGuardianName.setForeground(Color.black);
                                 lblGuardianName.setName("lblGuardianName");
                                 pnlContact.add(lblGuardianName, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.EAST, GridBagConstraints.VERTICAL,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                     new Insets(0, 15, 5, 5), 0, 0));
 
                                 //---- txtGuardianName ----
@@ -1509,7 +1509,7 @@ public class BoyScoutPanel extends JPanel {
                             }
                             tabPnlContent.addTab("Details", pnlDetails);
                         }
-                        panel4.add(tabPnlContent, BorderLayout.CENTER);
+                        panel4.add(tabPnlContent, BorderLayout.NORTH);
                     }
                     scrollPane2.setViewportView(panel4);
                 }

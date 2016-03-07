@@ -36,13 +36,15 @@ public class HomePanel extends JPanel {
     private final static String USER_PAGE = "user";
     private final static String ADVANCEMENT_PAGE = "advancement";
     private final static String MERIT_BADGE_PAGE = "meritBadge";
-    private final static String BOY_SCOUTS_PAGE = "boyScoutsBadge";
+    private final static String BOY_SCOUTS_PAGE = "boyScouts";
+    private final static String CAMP_PAGE = "camp";
 
     private UserPanel pnlUser;
     private AdvancementPanel pnlAdvancement;
     private DatabaseSettingsPanel pnlDatabaseSettings;
     private MeritBadgePanel pnlMeritBadge;
     private BoyScoutPanel pnlBoyScouts;
+    private CampPanel pnlCamp;
     private BaseFrame baseFrame;
 
     private String propertyFileName;
@@ -243,6 +245,15 @@ public class HomePanel extends JPanel {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, BOY_SCOUTS_PAGE);
     }
 
+    private void mniCampoutsActionPerformed() {
+        if (pnlCamp == null) {
+            pnlCamp = new CampPanel();
+            pnlCards.add(pnlCamp, CAMP_PAGE);
+        }
+
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, CAMP_PAGE);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -256,6 +267,7 @@ public class HomePanel extends JPanel {
         mniUsers = new JMenuItem();
         mniAdvancements = new JMenuItem();
         mniMeritBadges = new JMenuItem();
+        mniCampouts = new JMenuItem();
         mnuScout = new JMenu();
         mniBoyScouts = new JMenuItem();
         mnuHelp = new JMenu();
@@ -417,6 +429,18 @@ public class HomePanel extends JPanel {
                         }
                     });
                     mnuSetup.add(mniMeritBadges);
+
+                    //---- mniCampouts ----
+                    mniCampouts.setText("Campouts");
+                    mniCampouts.setMnemonic('C');
+                    mniCampouts.setName("mniCampouts");
+                    mniCampouts.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniCampoutsActionPerformed();
+                        }
+                    });
+                    mnuSetup.add(mniCampouts);
                 }
                 menuBar1.add(mnuSetup);
 
@@ -568,6 +592,7 @@ public class HomePanel extends JPanel {
     private JMenuItem mniUsers;
     private JMenuItem mniAdvancements;
     private JMenuItem mniMeritBadges;
+    private JMenuItem mniCampouts;
     private JMenu mnuScout;
     private JMenuItem mniBoyScouts;
     private JMenu mnuHelp;
