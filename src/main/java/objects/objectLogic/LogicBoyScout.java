@@ -1,54 +1,57 @@
 package objects.objectLogic;
 
 import constants.KeyConst;
+import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.User;
 import util.MySqlConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Created by Nathanael on 5/12/2015
  */
 public class LogicBoyScout {
 // todo: change this to work with the boy scout object
-    public static List<User> findAll() {
-        List<User> userList = new ArrayList<>();
+    public static Set<BoyScout> findAll() {
+        Set<BoyScout> boyScoutSet = new LinkedHashSet<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return userList;
+            return boyScoutSet;
         }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM user ORDER BY name");
+            ResultSet rs = statement.executeQuery("SELECT * FROM boyScout ORDER BY name");
 
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(KeyConst.ID.getName()));
-                user.setUserName(rs.getString(KeyConst.USERNAME.getName()));
-                user.setName(rs.getString(KeyConst.NAME.getName()));
-                user.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                user.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                user.setStreet(rs.getString(KeyConst.STREET.getName()));
-                user.setState(rs.getString(KeyConst.STATE.getName()));
-                user.setCity(rs.getString(KeyConst.CITY.getName()));
-                user.setZip(rs.getString(KeyConst.ZIP.getName()));
-                user.setEditable(rs.getBoolean(KeyConst.EDITABLE.getName()));
-                user.setPassword(rs.getString(KeyConst.PASSWORD.getName()));
-                user.setEmail(rs.getString(KeyConst.EMAIL.getName()));
+                BoyScout boyScout = new BoyScout();
+                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
+                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
+                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
+                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
+                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
+                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
+                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
+                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
+                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
+                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
+                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
+                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
+                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
+                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
 
-                userList.add(user);
+                boyScoutSet.add(boyScout);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
 
-        return userList;
+        return boyScoutSet;
     }
 
     public static synchronized User save(final User user) {
@@ -177,5 +180,41 @@ public class LogicBoyScout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static BoyScout findByName(String name) {
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE name LIKE '" + name + "'");
+
+            if (rs.next()) {
+                BoyScout boyScout = new BoyScout();
+                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
+                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
+                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
+                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
+                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
+                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
+                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
+                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
+                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
+                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
+                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
+                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
+                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
+                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
+
+                return boyScout;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
     }
 }

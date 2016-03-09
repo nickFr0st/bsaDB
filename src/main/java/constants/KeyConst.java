@@ -26,6 +26,14 @@ public enum KeyConst {
     PASSWORD("password"),
     EMAIL("email"),
 
+    // Boy Scout
+    BIRTH_DATE("birthDate"),
+    ADVANCEMENT_ID("advancementId"),
+    ADVANCEMENT_DATE("advancementDate"),
+    GUARDIAN_NAME("guardianName"),
+    GUARDIAN_PHONE_NUMBER("guardianPhoneNumber"),
+    NOTE("note"),
+
     // Access Right
     RIGHT_ID("rightId"),
     USER_ID("userId"),

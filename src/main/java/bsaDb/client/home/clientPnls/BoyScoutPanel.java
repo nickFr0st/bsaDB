@@ -10,9 +10,12 @@ import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
+import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.Requirement;
-import objects.objectLogic.LogicAdvancement;
+import objects.objectLogic.LogicBoyScout;
 import objects.objectLogic.LogicRequirement;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 import util.CacheObject;
 import util.Util;
 
@@ -35,7 +38,7 @@ public class BoyScoutPanel extends JPanel {
     private final Color WARNING = new Color(220,177,26);
     private final Color BAD = new Color(255, 0, 0);
 
-    private Advancement advancement;
+    private BoyScout boyScout;
 
     public BoyScoutPanel() {
         initComponents();
@@ -67,13 +70,13 @@ public class BoyScoutPanel extends JPanel {
     }
 
     public void populateAdvancementNameList() {
-        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        List<String> advancementNameList = new ArrayList<>();
-        for (Advancement advancement : advancementList) {
-            advancementNameList.add(advancement.getName());
+        Set<BoyScout> boyScoutSet = LogicBoyScout.findAll();
+        List<String> boyScoutName = new ArrayList<>();
+        for (BoyScout boyScout : boyScoutSet) {
+            boyScoutName.add(boyScout.getName());
         }
 
-        listBoyScoutNames.setListData(Util.getSortedList(advancementNameList));
+        listBoyScoutNames.setListData(Util.getSortedList(boyScoutName));
         listBoyScoutNames.revalidate();
         listBoyScoutNames.repaint();
     }
@@ -116,27 +119,85 @@ public class BoyScoutPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        advancement = CacheObject.getAdvancement(listBoyScoutNames.getSelectedValue().toString());
+        boyScout = LogicBoyScout.findByName(listBoyScoutNames.getSelectedValue().toString());
         loadData();
     }
 
     private void loadData() {
-        if (advancement == null) {
+        if (boyScout == null) {
             return;
         }
 
         enableControls(true);
 
-//        txtName.setText(advancement.getName());
-
-        ImageIcon tryPath = new ImageIcon(advancement.getImgPath());
-        if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
-//            btnBadgeImage.setIcon(noImage);
-        } else {
-            setImage(advancement.getImgPath());
+        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+        String advancementName = "";
+        if (!Util.isEmpty(advancementList)) {
+            for (Advancement advancement : advancementList) {
+                cboRank.addItem(advancement.getName());
+                if (advancement.getId() == boyScout.getAdvancementId()) {
+                    advancementName = advancement.getName();
+                }
+            }
         }
 
-//        loadRequirementSet();
+        // Summary Tab
+        txtName.setText(boyScout.getName());
+        txtPosition.setText(boyScout.getPosition());
+        cboRank.setSelectedItem(advancementName);
+
+        Calendar rankDate = Calendar.getInstance();
+        rankDate.setTime(boyScout.getAdvancementDate());
+        cboRankDate.getModel().setDate(rankDate.get(Calendar.YEAR), rankDate.get(Calendar.MONTH), rankDate.get(Calendar.DATE));
+        cboRankDate.getModel().setSelected(true);
+
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.setTime(boyScout.getBirthDate());
+        cboBirthDate.getModel().setDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
+        cboBirthDate.getModel().setSelected(true);
+
+        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
+        LocalDate now = new LocalDate();
+        Years age = Years.yearsBetween(birthDateTime, now);
+        lblAgeValue.setText(Integer.toString(age.getYears()));
+
+        // todo: handle barGraphs and advancement table
+
+        // Contact Tab
+        if (!Util.isEmpty(boyScout.getPhoneNumber())) {
+            txtPhoneNumber.setText(boyScout.getPhoneNumber());
+        }
+
+        if (!Util.isEmpty(boyScout.getCity())) {
+            txtCity.setText(boyScout.getCity());
+        }
+
+        if (!Util.isEmpty(boyScout.getState())) {
+            txtState.setText(boyScout.getState());
+        }
+
+        if (!Util.isEmpty(boyScout.getStreet())) {
+            txtStreet.setText(boyScout.getStreet());
+        }
+
+        if (!Util.isEmpty(boyScout.getZip())) {
+            txtZip.setText(boyScout.getZip());
+        }
+
+        if (!Util.isEmpty(boyScout.getGuardianName())) {
+            txtGuardianName.setText(boyScout.getGuardianName());
+        }
+
+        if (!Util.isEmpty(boyScout.getGuardianPhoneNumber())) {
+            txtGuardianPhone.setText(boyScout.getGuardianPhoneNumber());
+        }
+
+        if (!Util.isEmpty(boyScout.getNote())) {
+            txtNotes.setText(boyScout.getNote());
+        }
+
+        // Details Tab
+        // todo: handle this information
 
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
@@ -250,21 +311,21 @@ public class BoyScoutPanel extends JPanel {
 
         populateAdvancementNameList();
 
-        listBoyScoutNames.setSelectedValue(advancement.getName(), true);
+        listBoyScoutNames.setSelectedValue(boyScout.getName(), true);
     }
 
     private void saveRecords(Set<Requirement> requirementSet, boolean newAdvancement) {
-        advancement = LogicAdvancement.save(advancement);
+//        boyScout = LogicAdvancement.save(boyScout);
 
         if (newAdvancement) {
             for (Requirement requirement : requirementSet) {
-                requirement.setParentId(advancement.getId());
+                requirement.setParentId(boyScout.getId());
             }
         }
 
         LogicRequirement.save(requirementSet);
 
-        CacheObject.addToAdvancements(advancement);
+//        CacheObject.addToAdvancements(boyScout);
     }
 
 //    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
@@ -313,8 +374,8 @@ public class BoyScoutPanel extends JPanel {
 //    }
 
     private void setData() {
-        if (advancement == null) {
-            advancement = new Advancement();
+        if (boyScout == null) {
+//            boyScout = new Advancement();
         }
 
 //        advancement.setName(txtName.getText());
@@ -328,10 +389,10 @@ public class BoyScoutPanel extends JPanel {
 //        }
 
         int advancementId;
-        if (advancement == null) {
+        if (boyScout == null) {
             advancementId = -1;
         } else {
-            advancementId = advancement.getId();
+            advancementId = boyScout.getId();
         }
 
 //        if (validateRequirements(advancementId, true) == null) {
@@ -351,9 +412,9 @@ public class BoyScoutPanel extends JPanel {
         }
 
         setData();
-        advancement = LogicAdvancement.update(advancement);
+//        boyScout = LogicAdvancement.update(boyScout);
 
-        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(boyScout.getId(), RequirementTypeConst.ADVANCEMENT.getId());
 //        Set<Requirement> newRequirementSet = getRequirementSet(advancement.getId());
         Set<Requirement> deleteRequirementSet = new LinkedHashSet<>();
 
@@ -388,10 +449,10 @@ public class BoyScoutPanel extends JPanel {
 //        }
 
 
-        CacheObject.addToAdvancements(advancement);
+//        CacheObject.addToAdvancements(boyScout);
         populateAdvancementNameList();
 
-        listBoyScoutNames.setSelectedValue(advancement.getName(), true);
+        listBoyScoutNames.setSelectedValue(boyScout.getName(), true);
     }
 
 //    private Set<Requirement> getRequirementSet(int parentId) {
@@ -422,11 +483,11 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        int advancementId = advancement.getId();
+        int advancementId = boyScout.getId();
 
 //        Set<Requirement> requirementSet = validateRequirements(advancement.getId(), false);
 //        LogicRequirement.delete(requirementSet);
-        LogicAdvancement.delete(advancement);
+//        LogicAdvancement.delete(boyScout);
 
         CacheObject.removeFromAdvancements(advancementId);
 

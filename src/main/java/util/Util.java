@@ -9,10 +9,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Created by Nathanael on 5/4/2015
@@ -29,6 +27,10 @@ public class Util {
 
     public static boolean isEmpty(List list) {
         return list == null || list.isEmpty();
+    }
+
+    public static boolean isEmpty(Collection collection) {
+        return collection == null || collection.isEmpty();
     }
 
     public static boolean isEmpty(Set set) {
