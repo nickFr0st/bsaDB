@@ -61,6 +61,7 @@ new FormModel {
 						name: "pnlSearch"
 						"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, false )
 						"opaque": false
+						"maximumSize": new java.awt.Dimension( 190, 2147483647 )
 						auxiliary() {
 							"JavaCodeGenerator.variableLocal": true
 						}
@@ -641,17 +642,17 @@ new FormModel {
 								} )
 								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 									"$columnSpecs": "0:1.0"
-									"$rowSpecs": "0:1.0"
 									"$hGap": 5
 									"$vGap": 5
 									"$alignLeft": true
 									"$alignTop": true
+									"$rowSpecs": "560:1.0"
 								} ) {
 									name: "pnlDetails"
 									"background": new java.awt.Color( 255, 255, 255, 255 )
 									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 										"$columnSpecs": "300, 300"
-										"$rowSpecs": "0, 0, 59, 328"
+										"$rowSpecs": "0, 0, 59, 314"
 										"$hGap": 30
 										"$vGap": 5
 										"$alignLeft": true
@@ -935,7 +936,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 5, 0 )
-			"size": new java.awt.Dimension( 1015, 690 )
+			"size": new java.awt.Dimension( 1015, 680 )
 		} )
 	}
 }

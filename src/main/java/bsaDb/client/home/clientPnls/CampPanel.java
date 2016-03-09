@@ -944,8 +944,8 @@ public class CampPanel extends JPanel {
                             txtLeaders.setDefaultText("Leaders 1, Leader 2...");
                             txtLeaders.setName("txtLeaders");
                             panel1.add(txtLeaders, new GridBagConstraints(1, 5, 3, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 0), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
 
                             //---- lblLeaderError ----
                             lblLeaderError.setText("*error message");
@@ -953,8 +953,8 @@ public class CampPanel extends JPanel {
                             lblLeaderError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblLeaderError.setName("lblLeaderError");
                             panel1.add(lblLeaderError, new GridBagConstraints(1, 6, 3, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 20, 5, 0), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 20, 5, 0), 0, 0));
 
                             //---- lblContactInfo ----
                             lblContactInfo.setText("Who Came:");
@@ -962,8 +962,8 @@ public class CampPanel extends JPanel {
                             lblContactInfo.setForeground(new Color(51, 102, 153));
                             lblContactInfo.setName("lblContactInfo");
                             panel1.add(lblContactInfo, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //---- lblAttendanceError ----
                             lblAttendanceError.setText("*error message");
@@ -971,8 +971,8 @@ public class CampPanel extends JPanel {
                             lblAttendanceError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblAttendanceError.setName("lblAttendanceError");
                             panel1.add(lblAttendanceError, new GridBagConstraints(2, 7, 2, 1, 0.0, 0.0,
-                                    GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                    new Insets(0, 20, 5, 0), 0, 0));
+                                GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                new Insets(0, 20, 5, 0), 0, 0));
 
                             //---- lblName5 ----
                             lblName5.setText("Name:");
@@ -980,8 +980,8 @@ public class CampPanel extends JPanel {
                             lblName5.setForeground(Color.black);
                             lblName5.setName("lblName5");
                             panel1.add(lblName5, new GridBagConstraints(0, 8, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //---- lblName6 ----
                             lblName6.setText("Name:");
@@ -989,8 +989,8 @@ public class CampPanel extends JPanel {
                             lblName6.setForeground(Color.black);
                             lblName6.setName("lblName6");
                             panel1.add(lblName6, new GridBagConstraints(2, 8, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== scrollPane3 ========
                             {
@@ -1001,8 +1001,8 @@ public class CampPanel extends JPanel {
                                 scrollPane3.setViewportView(list1);
                             }
                             panel1.add(scrollPane3, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== scrollPane4 ========
                             {
@@ -1013,8 +1013,8 @@ public class CampPanel extends JPanel {
                                 scrollPane4.setViewportView(list2);
                             }
                             panel1.add(scrollPane4, new GridBagConstraints(2, 9, 2, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 0), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
 
                             //---- lblContactInfo3 ----
                             lblContactInfo3.setText("Notes:");
@@ -1022,8 +1022,8 @@ public class CampPanel extends JPanel {
                             lblContactInfo3.setForeground(new Color(51, 102, 153));
                             lblContactInfo3.setName("lblContactInfo3");
                             panel1.add(lblContactInfo3, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== scrollPane5 ========
                             {

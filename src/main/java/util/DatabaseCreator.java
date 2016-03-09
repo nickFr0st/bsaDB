@@ -112,12 +112,46 @@ public class DatabaseCreator {
 
         String tableSpecialAward = "CREATE TABLE specialAward " +
                 "(id INT NOT NULL," +
-                "scoutId INT NOT NULL," +
-                "scoutTypeId INT NOT NULL," +
+                " scoutId INT NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
                 " name VARCHAR(225) NOT NULL," +
                 " imgPath VARCHAR(255) NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableSpecialAward);
+
+        String tableScoutAdvancement = "CREATE TABLE scoutAdvancement " +
+                "(id INT NOT NULL," +
+                " scoutId INT NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
+                " advancementId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableScoutAdvancement);
+
+        String tableScoutRequirement = "CREATE TABLE scoutRequirement " +
+                "(id INT NOT NULL," +
+                " scoutAdvancementId INT NOT NULL," +
+                " requirementId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableScoutRequirement);
+
+        String tableCamp = "CREATE TABLE camp " +
+                "(id INT NOT NULL," +
+                " name VARCHAR(90) NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
+                " location VARCHAR(255) NULL," +
+                " startDate DATE NOT NULL," +
+                " leaders VARCHAR(255) NULL," +
+                " note BLOB NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableCamp);
+
+        String tableScoutCamp = "CREATE TABLE scoutCamp " +
+                "(id INT NOT NULL," +
+                " scoutId INT NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
+                " campId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableScoutCamp);
 
         statement.executeBatch();
     }

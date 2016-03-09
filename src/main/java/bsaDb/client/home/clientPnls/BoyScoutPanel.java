@@ -715,6 +715,7 @@ public class BoyScoutPanel extends JPanel {
                 {
                     pnlSearch.setBorder(LineBorder.createBlackLineBorder());
                     pnlSearch.setOpaque(false);
+                    pnlSearch.setMaximumSize(new Dimension(190, 2147483647));
                     pnlSearch.setName("pnlSearch");
                     pnlSearch.setLayout(new GridBagLayout());
                     ((GridBagLayout)pnlSearch.getLayout()).columnWidths = new int[] {188, 0};
@@ -1299,7 +1300,7 @@ public class BoyScoutPanel extends JPanel {
                                 pnlDetails.setName("pnlDetails");
                                 pnlDetails.setLayout(new GridBagLayout());
                                 ((GridBagLayout)pnlDetails.getLayout()).columnWidths = new int[] {0, 0};
-                                ((GridBagLayout)pnlDetails.getLayout()).rowHeights = new int[] {0, 0};
+                                ((GridBagLayout)pnlDetails.getLayout()).rowHeights = new int[] {560, 0};
                                 ((GridBagLayout)pnlDetails.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
                                 ((GridBagLayout)pnlDetails.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
 
@@ -1309,7 +1310,7 @@ public class BoyScoutPanel extends JPanel {
                                     pnlDetailContents.setName("pnlDetailContents");
                                     pnlDetailContents.setLayout(new GridBagLayout());
                                     ((GridBagLayout)pnlDetailContents.getLayout()).columnWidths = new int[] {330, 300, 0};
-                                    ((GridBagLayout)pnlDetailContents.getLayout()).rowHeights = new int[] {0, 0, 64, 328, 0};
+                                    ((GridBagLayout)pnlDetailContents.getLayout()).rowHeights = new int[] {0, 0, 64, 314, 0};
                                     ((GridBagLayout)pnlDetailContents.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
                                     ((GridBagLayout)pnlDetailContents.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
