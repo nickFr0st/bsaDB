@@ -5,6 +5,9 @@ import constants.KeyConst;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
@@ -17,7 +20,10 @@ public class MySqlConnector {
     public final static long WAIT_TIME = 500;
 
     private final static String DRIVER = "com.mysql.jdbc.Driver";
-    private final static String DB_PROPERTIES_PATH = "/properties/database.properties";
+    private final static String HOME_DIR = System.getProperty("user.home");
+    private static String DB_PROPERTIES_PATH = HOME_DIR + File.separator + ".bsaDB" + File.separator + "database.properties";
+    public static String USER_PROPERTIES_PATH = HOME_DIR + File.separator + ".bsaDB" + File.separator + "user.properties";
+
     private final static Object lock = new Object();
 
     private static MySqlConnector connector;
@@ -27,11 +33,46 @@ public class MySqlConnector {
 
     private MySqlConnector() {
         try {
+            File file = new File(DB_PROPERTIES_PATH);
+            if (!file.exists()) {
+                File dir = new File(HOME_DIR + File.separator + ".bsaDB");
+                dir.mkdirs();
+                file.createNewFile();
+                createDatabasePropertyFile(file.getCanonicalPath());
+                DB_PROPERTIES_PATH = file.getCanonicalPath();
+
+                File userProperties = new File(USER_PROPERTIES_PATH);
+                userProperties.createNewFile();
+                createUserPropertyFile(userProperties.getCanonicalPath());
+                USER_PROPERTIES_PATH = userProperties.getCanonicalPath();
+            }
+
+
             properties = new Properties();
-            properties.load(getClass().getResourceAsStream(DB_PROPERTIES_PATH));
+            properties.load(new FileReader(DB_PROPERTIES_PATH));
         } catch (IOException ioe) {
             new MessageDialog(null, "Cannot Find Property", "Path \"/properties/database.properties\" does not exist.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             ioe.printStackTrace();
+        }
+    }
+
+    private void createUserPropertyFile(String filePath) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filePath);
+            Properties prop = new Properties();
+            prop.setProperty(KeyConst.SAVED_USER.getName(), "");
+            prop.setProperty(KeyConst.CURRENT_USER.getName(), "");
+            prop.store(writer, null);
+        } catch (IOException e) {
+            // do something
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ignore) {
+                }
+            }
         }
     }
 
@@ -53,7 +94,7 @@ public class MySqlConnector {
 
     public boolean checkForDataBaseConnection() {
         try {
-            properties.load(getClass().getResourceAsStream(DB_PROPERTIES_PATH));
+            properties.load(new FileReader(DB_PROPERTIES_PATH));
             String dbName = properties.getProperty(KeyConst.DB_NAME.getName());
             String userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
             String password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
@@ -76,12 +117,34 @@ public class MySqlConnector {
         return true;
     }
 
+    private void createDatabasePropertyFile(String filePath) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filePath);
+            Properties prop = new Properties();
+            prop.setProperty(KeyConst.DB_NAME.getName(), "");
+            prop.setProperty(KeyConst.DB_USER_NAME.getName(), "");
+            prop.setProperty(KeyConst.DB_PASSWORD.getName(), "");
+            prop.setProperty(KeyConst.DB_URL.getName(), "jdbc:mysql://localhost:3306/");
+            prop.store(writer, null);
+        } catch (IOException e) {
+            // do something
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ignore) {
+                }
+            }
+        }
+    }
+
     private void resetProperties(String name, String rootUser, String rootPassword) {
         properties.setProperty(KeyConst.DB_NAME.getName(), name);
         properties.setProperty(KeyConst.DB_USER_NAME.getName(), rootUser);
         properties.setProperty(KeyConst.DB_PASSWORD.getName(), rootPassword);
 
-        Util.saveProperties(properties, getClass().getResource(DB_PROPERTIES_PATH).toString());
+        Util.saveProperties(properties, DB_PROPERTIES_PATH);
     }
 
     public boolean createDatabase(Frame parentFrame, String name, String rootUser, String rootPassword) {

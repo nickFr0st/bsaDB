@@ -15,12 +15,14 @@ import objects.databaseObjects.User;
 import objects.objectLogic.LogicAccessRight;
 import objects.objectLogic.LogicUser;
 import util.CacheObject;
+import util.MySqlConnector;
 import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,11 +36,6 @@ public class UserPanel extends JPanel {
 
     private User user;
     private Properties properties;
-    private String propertyFileName;
-
-    {
-        propertyFileName = "/properties/users.properties";
-    }
 
     public UserPanel() {
         initComponents();
@@ -56,7 +53,7 @@ public class UserPanel extends JPanel {
     private void setupProperties() {
         properties = new Properties();
         try {
-            properties.load(getClass().getResourceAsStream(propertyFileName));
+            properties.load(new FileReader(MySqlConnector.USER_PROPERTIES_PATH));
         } catch (IOException ignore) {
         }
     }

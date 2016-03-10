@@ -14,6 +14,7 @@ import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.User;
 import util.CacheObject;
+import util.MySqlConnector;
 import util.Util;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,12 +49,6 @@ public class HomePanel extends JPanel {
     private CampPanel pnlCamp;
     private BaseFrame baseFrame;
 
-    private String propertyFileName;
-
-    {
-        propertyFileName = "/properties/users.properties";
-    }
-
     public HomePanel() {
         initComponents();
 
@@ -64,7 +60,7 @@ public class HomePanel extends JPanel {
     private void setupAccessRights() {
         Properties properties = new Properties();
         try {
-            properties.load(getClass().getResourceAsStream(propertyFileName));
+            properties.load(new FileReader(MySqlConnector.USER_PROPERTIES_PATH));
 
             String currentUserName = properties.getProperty(KeyConst.CURRENT_USER.getName());
             User currentUser = CacheObject.getUserByUserName(currentUserName);

@@ -9,12 +9,14 @@ import bsaDb.client.customComponents.JTextFieldDefaultText;
 import constants.KeyConst;
 import objects.databaseObjects.User;
 import util.CacheObject;
+import util.MySqlConnector;
 import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -26,12 +28,7 @@ public class SignInPanel extends JPanel {
 
 
     private Properties properties;
-    private String propertyFileName;
     private BaseFrame baseFrame;
-
-    {
-        propertyFileName = "/properties/users.properties";
-    }
 
     public SignInPanel() {
         initComponents();
@@ -59,7 +56,7 @@ public class SignInPanel extends JPanel {
     private void setupProperties() {
         properties = new Properties();
         try {
-            properties.load(getClass().getResourceAsStream(propertyFileName));
+            properties.load(new FileReader(MySqlConnector.USER_PROPERTIES_PATH));
         } catch (IOException ignore) {
         }
     }
@@ -141,7 +138,7 @@ public class SignInPanel extends JPanel {
         }
 
         properties.setProperty(KeyConst.CURRENT_USER.getName(), txtUserName.getText());
-        Util.saveProperties(properties, getClass().getResource(propertyFileName).toString());
+        Util.saveProperties(properties, MySqlConnector.USER_PROPERTIES_PATH);
 
         txtPassword.setDefault();
 
