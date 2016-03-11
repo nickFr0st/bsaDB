@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Nathanael on 3/5/2016
  */
-public class BoyScout {
+public class BoyScout implements Scout {
 
     public static final int COL_NAME_LENGTH = 90;
     public static final int COL_POSITION_LENGTH = 90;

@@ -34,6 +34,14 @@ public enum KeyConst {
     GUARDIAN_PHONE_NUMBER("guardianPhoneNumber"),
     NOTE("note"),
 
+    // Camp
+    CAMP_ID("campId"),
+    SCOUT_ID("scoutId"),
+    SCOUT_TYPE_ID("scoutTypeId"),
+    LOCATION("location"),
+    START_DATE("startDate"),
+    LEADER("leaders"),
+
     // Access Right
     RIGHT_ID("rightId"),
     USER_ID("userId"),

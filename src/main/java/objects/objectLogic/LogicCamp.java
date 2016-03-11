@@ -1,8 +1,7 @@
 package objects.objectLogic;
 
 import constants.KeyConst;
-import objects.databaseObjects.BoyScout;
-import objects.databaseObjects.Scout;
+import objects.databaseObjects.Camp;
 import objects.databaseObjects.User;
 import util.MySqlConnector;
 
@@ -15,44 +14,65 @@ import java.util.Set;
 /**
  * Created by Nathanael on 5/12/2015
  */
-public class LogicBoyScout {
-// todo: change this to work with the boy scout object
-    public static Set<BoyScout> findAll() {
-        Set<BoyScout> boyScoutSet = new LinkedHashSet<>();
+public class LogicCamp {
+
+    public static Set<Camp> findAll() {
+        Set<Camp> campList = new LinkedHashSet<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return boyScoutSet;
+            return campList;
         }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM boyScout ORDER BY name");
+            ResultSet rs = statement.executeQuery("SELECT * FROM camp ORDER BY name");
 
             while (rs.next()) {
-                BoyScout boyScout = new BoyScout();
-                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
-                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
-                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
-                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
-                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
-                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
-                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
-                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
-                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
-                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
-                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
-                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
+                Camp camp = new Camp();
+                camp.setId(rs.getInt(KeyConst.ID.getName()));
+                camp.setName(rs.getString(KeyConst.NAME.getName()));
+                camp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                camp.setLocation(rs.getString(KeyConst.LOCATION.getName()));
+                camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
+                camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
+                camp.setNote(rs.getString(KeyConst.NOTE.getName()));
 
-                boyScoutSet.add(boyScout);
+                campList.add(camp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return new LinkedHashSet<>();
         }
 
-        return boyScoutSet;
+        return campList;
+    }
+
+    public static Camp findByName(String name) {
+        Camp camp = null;
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return camp;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM camp WHERE name LIKE '" + name + "'");
+
+            if (rs.next()) {
+                camp = new Camp();
+                camp.setId(rs.getInt(KeyConst.ID.getName()));
+                camp.setName(rs.getString(KeyConst.NAME.getName()));
+                camp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                camp.setLocation(rs.getString(KeyConst.LOCATION.getName()));
+                camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
+                camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
+                camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+
+        return camp;
     }
 
     public static synchronized User save(final User user) {
@@ -181,77 +201,5 @@ public class LogicBoyScout {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static BoyScout findByName(String name) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
-
-        try {
-            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE name LIKE '" + name + "'");
-
-            if (rs.next()) {
-                BoyScout boyScout = new BoyScout();
-                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
-                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
-                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
-                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
-                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
-                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
-                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
-                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
-                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
-                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
-                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
-                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
-
-                return boyScout;
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        return null;
-    }
-
-    public static Scout findById(int scoutId) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
-
-        try {
-            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE id = " + scoutId);
-
-            if (rs.next()) {
-                BoyScout boyScout = new BoyScout();
-                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
-                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
-                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
-                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
-                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
-                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
-                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
-                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
-                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
-                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
-                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
-                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
-
-                return boyScout;
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        return null;
     }
 }

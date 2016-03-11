@@ -51,7 +51,7 @@ public class BoyScoutPanel extends JPanel {
 
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
-        populateAdvancementNameList();
+        populateBoyScoutNameList();
         enableControls(false);
     }
 
@@ -69,7 +69,7 @@ public class BoyScoutPanel extends JPanel {
         barProgress.setBackground(Color.white);
     }
 
-    public void populateAdvancementNameList() {
+    public void populateBoyScoutNameList() {
         Set<BoyScout> boyScoutSet = LogicBoyScout.findAll();
         List<String> boyScoutName = new ArrayList<>();
         for (BoyScout boyScout : boyScoutSet) {
@@ -309,7 +309,7 @@ public class BoyScoutPanel extends JPanel {
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
 
-        populateAdvancementNameList();
+        populateBoyScoutNameList();
 
         listBoyScoutNames.setSelectedValue(boyScout.getName(), true);
     }
@@ -450,7 +450,7 @@ public class BoyScoutPanel extends JPanel {
 
 
 //        CacheObject.addToAdvancements(boyScout);
-        populateAdvancementNameList();
+        populateBoyScoutNameList();
 
         listBoyScoutNames.setSelectedValue(boyScout.getName(), true);
     }
@@ -491,7 +491,7 @@ public class BoyScoutPanel extends JPanel {
 
         CacheObject.removeFromAdvancements(advancementId);
 
-        populateAdvancementNameList();
+        populateBoyScoutNameList();
 
         btnDelete.setVisible(false);
         btnSave.setVisible(false);

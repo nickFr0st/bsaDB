@@ -4,29 +4,20 @@
 
 package bsaDb.client.home.clientPnls;
 
-import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
-import bsaDb.client.customComponents.PnlRequirement;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
-import bsaDb.client.home.dialogs.CounselorDialog;
 import constants.RequirementTypeConst;
-import objects.databaseObjects.Counselor;
-import objects.databaseObjects.MeritBadge;
-import objects.databaseObjects.Requirement;
-import objects.objectLogic.LogicCounselor;
-import objects.objectLogic.LogicMeritBadge;
-import objects.objectLogic.LogicRequirement;
+import constants.ScoutTypeConst;
+import objects.databaseObjects.*;
+import objects.objectLogic.*;
 import util.CacheObject;
 import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.util.*;
 import java.util.List;
 
@@ -36,63 +27,61 @@ import java.util.List;
 @SuppressWarnings({"unchecked", "RedundantCast"})
 public class CampPanel extends JPanel {
 
-    private Icon noImage;
-    private MeritBadge meritBadge;
-    private String imagePath;
-    private DefaultTableModel tableModel;
-
-    {
-        imagePath = "";
-    }
+    private Camp camp;
+    private List<String> availableList;
+    private List<String> selectedList;
 
     public CampPanel() {
         initComponents();
 
-        noImage = new ImageIcon(getClass().getResource("/images/no_image.png"));
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
         btnUpdate.setVisible(false);
+        clearAllErrors();
 
         scrollPane3.getVerticalScrollBar().setUnitIncrement(18);
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
-        populateMeritBadgeNameList();
+        for (ScoutTypeConst scoutType : ScoutTypeConst.values()) {
+            cboCampType.addItem(scoutType.getName());
+        }
 
+        populateCampNameList();
         enableControls(false);
     }
 
-    public void populateMeritBadgeNameList() {
-        List<String> meritBadgeNameList = new ArrayList<>();
-        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
-            meritBadgeNameList.add(meritBadge.getName());
+    public void populateCampNameList() {
+        List<String> CampNameList = new ArrayList<>();
+        for (Camp camp : LogicCamp.findAll()) {
+            CampNameList.add(camp.getName());
         }
 
-//        listMeritBadgeNames.setListData(Util.getSortedList(meritBadgeNameList));
-//        listMeritBadgeNames.revalidate();
-//        listMeritBadgeNames.repaint();
+        listCampoutNames.setListData(Util.getSortedList(CampNameList));
+        listCampoutNames.revalidate();
+        listCampoutNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
-        List<String> meritBadgeNameList = new ArrayList<>();
-        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
-            meritBadgeNameList.add(meritBadge.getName());
+        List<String> campNameList = new ArrayList<>();
+        for (Camp campout : LogicCamp.findAll()) {
+            campNameList.add(campout.getName());
         }
 
         if (txtSearchName.isMessageDefault()) {
-//            listMeritBadgeNames.setListData(Util.getSortedList(meritBadgeNameList));
-//            listMeritBadgeNames.revalidate();
+            listCampoutNames.setListData(Util.getSortedList(campNameList));
+            listCampoutNames.revalidate();
             return;
         }
 
         List<String> filteredList = new ArrayList<>();
-        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
-            if (meritBadge.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(meritBadge.getName());
+        for (Camp campout : LogicCamp.findAll()) {
+            if (campout.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
+                filteredList.add(campout.getName());
             }
         }
 
-//        listMeritBadgeNames.setListData(Util.getSortedList(filteredList));
-//        listMeritBadgeNames.revalidate();
+        listCampoutNames.setListData(Util.getSortedList(filteredList));
+        listCampoutNames.revalidate();
     }
 
     private void listUserNamesKeyReleased(KeyEvent e) {
@@ -102,145 +91,87 @@ public class CampPanel extends JPanel {
     }
 
     private void listUserNamesMouseReleased() {
-//        if (listMeritBadgeNames.getSelectedValue() == null) {
-//            return;
-//        }
+        if (listCampoutNames.getSelectedValue() == null) {
+            return;
+        }
 
         clearAllErrors();
         clearData();
 
-//        meritBadge = CacheObject.getMeritBadge(listMeritBadgeNames.getSelectedValue().toString());
+        camp = LogicCamp.findByName(listCampoutNames.getSelectedValue().toString());
         loadData();
     }
 
     private void loadData() {
-        if (meritBadge == null) {
+        if (camp == null) {
             return;
         }
 
         enableControls(true);
 
-        txtName.setText(meritBadge.getName());
-//        chkRequiredForEagle.setSelected(meritBadge.isRequiredForEagle());
-
-        ImageIcon tryPath = new ImageIcon(meritBadge.getImgPath());
-        if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
-//            btnBadgeImage.setIcon(noImage);
-        } else {
-            setImage(meritBadge.getImgPath());
+        Set<BoyScout> scoutList = LogicBoyScout.findAll();
+        for (BoyScout boyScout : scoutList) {
+            availableList.add(boyScout.getName());
         }
 
-        loadRequirements();
+        txtName.setText(camp.getName());
+        cboCampType.setSelectedItem(ScoutTypeConst.getConst(camp.getScoutTypeId()).getName());
+        txtLocation.setText(camp.getLocation());
 
-        loadCounselorTable();
+        Calendar campDate = Calendar.getInstance();
+        campDate.setTime(camp.getStartDate());
+        cboCampDate.getModel().setDate(campDate.get(Calendar.YEAR), campDate.get(Calendar.MONTH), campDate.get(Calendar.DATE));
+        cboCampDate.getModel().setSelected(true);
+
+        txtLeaders.setText(camp.getLeaders());
+        txtNotes.setText(camp.getNote());
+
+
+        List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByCampId(camp.getId());
+        for (ScoutCamp scoutCamp : scoutCampList) {
+            Scout scout;
+            int scoutTypeId = scoutCamp.getScoutTypeId();
+            if (scoutTypeId == ScoutTypeConst.CUB_SCOUT.getId()) {
+                scout = new BoyScout(); // change this to cub scout when cub scouts get added
+            } else if (scoutTypeId == ScoutTypeConst.BOY_SCOUT.getId()) {
+                scout = LogicBoyScout.findById(scoutCamp.getScoutId());
+            } else if (scoutTypeId == ScoutTypeConst.VARSITY_SCOUT.getId()) {
+                scout = new BoyScout();
+            } else {
+                scout = new BoyScout();
+            }
+
+            availableList.remove(scout.getName());
+            selectedList.add(scout.getName());
+        }
+
+        listAvailable.setListData(availableList.toArray());
+        listSelected.setListData(selectedList.toArray());
 
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
         btnSave.setVisible(false);
     }
 
-    private void loadCounselorTable() {
-        clearCounselorTable();
-
-        List<Counselor> counselorList = LogicCounselor.findAllByBadgeId(meritBadge.getId());
-        if (!Util.isEmpty(counselorList)) {
-            for (Counselor counselor : counselorList) {
-                Object[] rowData = new Object[]{counselor.getName(), counselor.getPhoneNumber()};
-                tableModel.addRow(rowData);
-            }
-        }
-    }
-
-    private void clearCounselorTable() {
-        if (tableModel.getRowCount() > 0) {
-            for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
-                tableModel.removeRow(i);
-            }
-        }
-    }
-
-    private List<Counselor> validateCounselors(int badgeId, boolean validate) {
-        List<Counselor> counselorList = new ArrayList<>();
-        Set<String> counselorNameSet = new HashSet<>();
-
-        if (tableModel.getRowCount() <= 0) {
-            return counselorList;
-        }
-
-        for (int i = 0; i < tableModel.getRowCount(); ++i) {
-            String counselorName = (String)tableModel.getValueAt(i, 0);
-
-//            if (validate && Util.isEmpty(counselorName)) {
-//                Util.setError(lblCounselorError, "Counselor name cannot be left blank");
-//                return null;
-//            }
-//
-//            if (validate && !counselorNameSet.add(counselorName)) {
-//                Util.setError(lblCounselorError, "Counselor name '" + counselorName + "' already exists");
-//                return null;
-//            }
-//
-//            String phoneNumber = (String)tableModel.getValueAt(i, 1);
-//            if (validate && Util.isEmpty(phoneNumber)) {
-//                Util.setError(lblCounselorError, "Counselor phone number cannot be left blank");
-//                return null;
-//            }
-//
-//            if (validate && !Util.validatePhoneNumber(phoneNumber)) {
-//                Util.setError(lblCounselorError, "Invalid phone number format: " + phoneNumber);
-//                return null;
-//            }
-
-            Counselor counselor = LogicCounselor.findByNameAndBadgeId(counselorName, badgeId);
-            if (counselor == null) {
-                counselor = new Counselor();
-                if (badgeId > 0) {
-                    counselor.setBadgeId(badgeId);
-                }
-            }
-
-            counselor.setName(counselorName);
-            counselor.setPhoneNumber((String) tableModel.getValueAt(i, 1));
-
-            counselorList.add(counselor);
-        }
-
-        return counselorList;
-    }
-
-    private void loadRequirements() {
-        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
-
-        boolean firstAdded = false;
-        for (Requirement requirement : requirementSet) {
-            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
-//            pnlRequirementList.add(pnlRequirement);
-
-            if (!firstAdded) {
-                firstAdded = true;
-            }
-        }
-
-        scrollPane3.getViewport().setViewPosition(new Point(0, 0));
-
-//        pnlRequirementList.revalidate();
-//        pnlRequirementList.repaint();
-    }
-
     private void enableControls(boolean enable) {
-//        btnBadgeImage.setEnabled(enable);
-//        txtName.setEnabled(enable);
-//        btnAddRequirement.setEnabled(enable);
-//        btnRemoveRequirement.setEnabled(enable);
-//        btnAddCounselor.setEnabled(enable);
-//        btnRemoveCounselor.setEnabled(enable);
-//        tblCounselors.setEnabled(enable);
+        txtName.setEnabled(enable);
+        cboCampType.setEnabled(enable);
+        txtLocation.setEnabled(enable);
+        cboCampDate.setEnabled(enable);
+        txtLeaders.setEnabled(enable);
+        listAvailable.setEnabled(enable);
+        listSelected.setEnabled(enable);
+        btnAdd.setEnabled(enable);
+        btnRemove.setEnabled(enable);
+        txtNotes.setEnabled(enable);
     }
 
     private void clearAllErrors() {
-//        Util.clearError(lblNameError);
-//        Util.clearError(lblRequirementError);
-//        Util.clearError(lblCounselorError);
+        Util.clearError(lblNameError);
+        Util.clearError(lblCampTypeError);
+        Util.clearError(lblLocationError);
+        Util.clearError(lblCampDateError);
+        Util.clearError(lblLeaderError);
     }
 
     private void btnNewActionPerformed() {
@@ -256,21 +187,19 @@ public class CampPanel extends JPanel {
     }
 
     private void clearData() {
-        meritBadge = null;
+        camp = null;
 
-//        btnBadgeImage.setIcon(noImage);
-//        txtName.setDefault();
-//        chkRequiredForEagle.setSelected(false);
-//        imagePath = "";
-//
-//        pnlRequirementList.removeAll();
-//        pnlRequirementList.repaint();
-
-        if (tableModel.getRowCount() > 0) {
-            for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
-                tableModel.removeRow(i);
-            }
-        }
+        txtName.setDefault();
+        cboCampType.setSelectedItem(ScoutTypeConst.CUB_SCOUT.getName());
+        txtLocation.setDefault();
+        cboCampDate.getModel().setValue(null);
+        cboCampDate.getModel().setSelected(true);
+        txtLeaders.setDefault();
+        availableList = new ArrayList<>();
+        selectedList = new ArrayList<>();
+        listAvailable.setListData(availableList.toArray());
+        listSelected.setListData(selectedList.toArray());
+        txtNotes.setText("");
     }
 
     private void btnSaveActionPerformed() {
@@ -280,39 +209,33 @@ public class CampPanel extends JPanel {
 
         setData();
 
-        Set<Requirement> requirementSet = validateRequirements(-1, true);
-        if (requirementSet == null) return;
-
-        List<Counselor> counselorList = validateCounselors(-1, true);
-        if (counselorList == null) return;
-
-        saveRecords(requirementSet, true, counselorList);
+//        saveRecords(requirementSet, true, counselorList);
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
 
-        populateMeritBadgeNameList();
+        populateCampNameList();
 
-//        listMeritBadgeNames.setSelectedValue(meritBadge.getName(), true);
+//        listMeritBadgeNames.setSelectedValue(camp.getName(), true);
     }
 
     private void saveRecords(Set<Requirement> requirementSet, boolean newMeritBadge, List<Counselor> counselorList) {
-        meritBadge = LogicMeritBadge.save(meritBadge);
+//        camp = LogicMeritBadge.save(camp);
 
         if (newMeritBadge) {
             for (Requirement requirement : requirementSet) {
-                requirement.setParentId(meritBadge.getId());
+                requirement.setParentId(camp.getId());
             }
         }
         LogicRequirement.save(requirementSet);
 
         for (Counselor counselor : counselorList) {
-            counselor.setBadgeId(meritBadge.getId());
+            counselor.setBadgeId(camp.getId());
         }
         LogicCounselor.save(counselorList);
 
-        CacheObject.addToMeritBadges(meritBadge);
+//        CacheObject.addToMeritBadges(camp);
     }
 
     private Set<Requirement> validateRequirements(int parentId, boolean validate) {
@@ -361,21 +284,12 @@ public class CampPanel extends JPanel {
     }
 
     private void setData() {
-        if (meritBadge == null) {
-            meritBadge = new MeritBadge();
+        if (camp == null) {
+//            camp = new MeritBadge();
         }
 
-        meritBadge.setName(txtName.getText());
-//        meritBadge.setRequiredForEagle(chkRequiredForEagle.isSelected());
-        if (Util.isEmpty(imagePath) || getImage() == null) {
-            meritBadge.setImgPath("");
-        } else {
-            meritBadge.setImgPath(imagePath);
-        }
-    }
-
-    private Image getImage() {
-        return new ImageIcon(imagePath).getImage();
+        camp.setName(txtName.getText());
+//        camp.setRequiredForEagle(chkRequiredForEagle.isSelected());
     }
 
     private boolean validateFields() {
@@ -386,18 +300,10 @@ public class CampPanel extends JPanel {
         }
 
         int meritBadgeId;
-        if (meritBadge == null) {
+        if (camp == null) {
             meritBadgeId = -1;
         } else {
-            meritBadgeId = meritBadge.getId();
-        }
-
-        if (validateRequirements(meritBadgeId, true) == null) {
-            valid = false;
-        }
-
-        if (validateCounselors(meritBadgeId, true) == null) {
-            valid = false;
+            meritBadgeId = camp.getId();
         }
 
         return valid;
@@ -413,10 +319,10 @@ public class CampPanel extends JPanel {
         }
 
         setData();
-        meritBadge = LogicMeritBadge.update(meritBadge);
+//        camp = LogicMeritBadge.update(camp);
 
-        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(meritBadge.getId(), RequirementTypeConst.MERIT_BADGE.getId());
-        List<Requirement> newRequirementList = getRequirementList(meritBadge.getId());
+        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(camp.getId(), RequirementTypeConst.MERIT_BADGE.getId());
+        List<Requirement> newRequirementList = getRequirementList(camp.getId());
         List<Requirement> deleteRequirementList = new ArrayList<>();
 
         if (newRequirementList.isEmpty()) {
@@ -447,19 +353,10 @@ public class CampPanel extends JPanel {
             }
         }
 
-        List<Counselor> counselorList = validateCounselors(meritBadge.getId(), true);
-        for (Counselor counselor : counselorList) {
-            if (counselor.getId() > 0) {
-                LogicCounselor.update(counselor);
-            } else {
-                LogicCounselor.save(counselor);
-            }
-        }
+//        CacheObject.addToMeritBadges(camp);
+        populateCampNameList();
 
-        CacheObject.addToMeritBadges(meritBadge);
-        populateMeritBadgeNameList();
-
-//        listMeritBadgeNames.setSelectedValue(meritBadge.getName(), true);
+//        listMeritBadgeNames.setSelectedValue(camp.getName(), true);
     }
 
     private List<Requirement> getRequirementList(int parentId) {
@@ -490,18 +387,14 @@ public class CampPanel extends JPanel {
 //            return;
 //        }
 
-        int meritBadgeId = meritBadge.getId();
+        int meritBadgeId = camp.getId();
 
-        Set<Requirement> requirementSet = validateRequirements(meritBadgeId, false);
-        List<Counselor> counselorList = getCounselorListForDeletion(meritBadgeId);
 
-        LogicCounselor.delete(counselorList);
-        LogicRequirement.delete(requirementSet);
-        LogicMeritBadge.delete(meritBadge);
+//        LogicMeritBadge.delete(camp);
 
         CacheObject.removeFromMeritBadges(meritBadgeId);
 
-        populateMeritBadgeNameList();
+        populateCampNameList();
 
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
@@ -510,65 +403,6 @@ public class CampPanel extends JPanel {
         clearAllErrors();
         clearData();
         enableControls(false);
-    }
-
-    private List<Counselor> getCounselorListForDeletion(int meritBadgeId) {
-        List<Counselor> counselorList = new ArrayList<>();
-
-        if (tableModel.getRowCount() <= 0) {
-            return counselorList;
-        }
-
-        for (int i = 0; i < tableModel.getRowCount(); ++i) {
-            String counselorName = (String)tableModel.getValueAt(i, 0);
-
-            Counselor counselor = LogicCounselor.findByNameAndBadgeId(counselorName, meritBadgeId);
-            if (counselor != null) {
-                counselorList.add(counselor);
-            }
-
-        }
-
-        return counselorList;
-    }
-
-    private void btnBadgeImageMouseReleased() {
-//        if (!btnBadgeImage.isEnabled()) {
-//            return;
-//        }
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files(*.jpg, *.png, *.gif, *.jpeg)", "jpg", "png", "gif", "jpeg");
-
-        CustomChooser chooser = new CustomChooser();
-        chooser.setDialogTitle("Select an image");
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileFilter(filter);
-        int returnValue = chooser.showOpenDialog(this);
-        chooser.resetLookAndFeel();
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            setImage(file.getPath());
-        }
-    }
-
-    private void setImage(String imgPath) {
-//        try {
-//            BufferedImage img = ImageIO.read(new File(imgPath));
-//
-//            int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
-//            int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
-//
-//            ImageIcon icon = new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-//            if (icon.getImage() == null) {
-//                btnBadgeImage.setIcon(noImage);
-//                imagePath = "";
-//            } else {
-//                btnBadgeImage.setIcon(icon);
-//                imagePath = imgPath;
-//            }
-//        } catch (IOException ignore) {
-//        }
     }
 
     private void validateName() {
@@ -588,12 +422,12 @@ public class CampPanel extends JPanel {
 //            return true;
 //        }
 //
-//        if (meritBadge == null) {
+//        if (camp == null) {
 //            Util.setError(lblNameError, "A merit badge with the name '" + txtName.getText() + "' already exists");
 //            return false;
 //        }
 //
-//        if (!tempMeritBadge.getName().equals(meritBadge.getName())) {
+//        if (!tempMeritBadge.getName().equals(camp.getName())) {
 //            Util.setError(lblNameError, "A merit badge with the name '" + txtName.getText() + "' already exists");
 //            return false;
 //        }
@@ -601,39 +435,54 @@ public class CampPanel extends JPanel {
         return true;
     }
 
-    private void createUIComponents() {
-        tableModel = new DefaultTableModel(new Object[] {"Name", "Phone Number"}, 0);
-
-//        tblCounselors = new JTable();
-//        tblCounselors.setBackground(Color.WHITE);
-//
-//        JTableHeader header = tblCounselors.getTableHeader();
-//        header.setBackground(new Color(51, 102, 153));
-//        header.setForeground(Color.WHITE);
-//        header.setFont(new Font("Tahoma", Font.PLAIN, 14));
-//
-//
-//        tblCounselors.setModel(tableModel);
-//        tblCounselors.setSurrendersFocusOnKeystroke(true);
-    }
-
-    private void btnAddCounselorMouseReleased() {
-        CounselorDialog dialog = new CounselorDialog((JFrame) SwingUtilities.getWindowAncestor(this));
-        dialog.setVisible(true);
-
-        if (dialog.getBtnChoice() == CounselorDialog.BTN_OK) {
-            Counselor counselor = dialog.getCounselor();
-            Object[] row = new Object[] {counselor.getName(), counselor.getPhoneNumber()};
-            tableModel.addRow(row);
+    private void btnRemoveActionPerformed() {
+        if (listSelected.getSelectedValue() == null) {
+            return;
         }
+
+        List<String> newSection = listSelected.getSelectedValuesList();
+
+        for (String selected : newSection) {
+            int size = selectedList.size();
+            for (int i = 0; i < size; i++) {
+                if (selectedList.get(i).equals(selected)) {
+                    selectedList.remove(i);
+                    break;
+                }
+            }
+        }
+
+        for (String selected : newSection) {
+            availableList.add(selected);
+        }
+
+        listAvailable.setListData(availableList.toArray());
+        listSelected.setListData(selectedList.toArray());
     }
 
-    private void btnRemoveCounselorMouseReleased() {
-//        if (tblCounselors.getSelectedRow() < 0) {
-//            return;
-//        }
-//
-//        tableModel.removeRow(tblCounselors.getSelectedRow());
+    private void btnAddActionPerformed() {
+        if (listAvailable.getSelectedValue() == null) {
+            return;
+        }
+
+        List<String> newSelection = listAvailable.getSelectedValuesList();
+
+        for (String selected : newSelection) {
+            int size = availableList.size();
+            for (int i = 0; i < size; i++) {
+                if (availableList.get(i).equals(selected)) {
+                    availableList.remove(i);
+                    break;
+                }
+            }
+        }
+
+        for (String selected : newSelection) {
+            selectedList.add(selected);
+        }
+
+        listAvailable.setListData(availableList.toArray());
+        listSelected.setListData(selectedList.toArray());
     }
 
     private void initComponents() {
@@ -649,7 +498,7 @@ public class CampPanel extends JPanel {
         scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
         panel1 = new JPanel();
-        JLabel lblContactInfo2 = new JLabel();
+        JLabel lblGeneralInformation = new JLabel();
         lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
         lblCampType = new JLabel();
@@ -665,15 +514,18 @@ public class CampPanel extends JPanel {
         lblLeaders = new JLabel();
         txtLeaders = new JTextFieldDefaultText();
         lblLeaderError = new JLabel();
-        JLabel lblContactInfo = new JLabel();
-        lblAttendanceError = new JLabel();
-        lblName5 = new JLabel();
-        lblName6 = new JLabel();
+        JLabel lblWhoCame = new JLabel();
+        pnlWhoCame = new JPanel();
+        lblAvailable = new JLabel();
+        lblSelected = new JLabel();
         scrollPane3 = new JScrollPane();
-        list1 = new JList();
+        listAvailable = new JList();
+        pnlMoveChoices = new JPanel();
+        btnRemove = new JButton();
+        btnAdd = new JButton();
         scrollPane4 = new JScrollPane();
-        list2 = new JList();
-        JLabel lblContactInfo3 = new JLabel();
+        listSelected = new JList();
+        JLabel lblNotes = new JLabel();
         scrollPane5 = new JScrollPane();
         txtNotes = new JTextArea();
         JPanel panel5 = new JPanel();
@@ -811,16 +663,16 @@ public class CampPanel extends JPanel {
                             panel1.setName("panel1");
                             panel1.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 260, 129, 236, 0};
-                            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 35, 0, 35, 0, 35, 0, 0, 0, 0, 0, 123, 0};
+                            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 35, 0, 35, 0, 35, 0, 0, 0, 0, 123, 0};
                             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
-                            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
-                            //---- lblContactInfo2 ----
-                            lblContactInfo2.setText("General Information:");
-                            lblContactInfo2.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                            lblContactInfo2.setForeground(new Color(51, 102, 153));
-                            lblContactInfo2.setName("lblContactInfo2");
-                            panel1.add(lblContactInfo2, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
+                            //---- lblGeneralInformation ----
+                            lblGeneralInformation.setText("General Information:");
+                            lblGeneralInformation.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                            lblGeneralInformation.setForeground(new Color(51, 102, 153));
+                            lblGeneralInformation.setName("lblGeneralInformation");
+                            panel1.add(lblGeneralInformation, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 5), 0, 0));
 
@@ -956,72 +808,135 @@ public class CampPanel extends JPanel {
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 20, 5, 0), 0, 0));
 
-                            //---- lblContactInfo ----
-                            lblContactInfo.setText("Who Came:");
-                            lblContactInfo.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                            lblContactInfo.setForeground(new Color(51, 102, 153));
-                            lblContactInfo.setName("lblContactInfo");
-                            panel1.add(lblContactInfo, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
+                            //---- lblWhoCame ----
+                            lblWhoCame.setText("Who Came:");
+                            lblWhoCame.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                            lblWhoCame.setForeground(new Color(51, 102, 153));
+                            lblWhoCame.setName("lblWhoCame");
+                            panel1.add(lblWhoCame, new GridBagConstraints(0, 7, 3, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 5), 0, 0));
 
-                            //---- lblAttendanceError ----
-                            lblAttendanceError.setText("*error message");
-                            lblAttendanceError.setForeground(Color.red);
-                            lblAttendanceError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                            lblAttendanceError.setName("lblAttendanceError");
-                            panel1.add(lblAttendanceError, new GridBagConstraints(2, 7, 2, 1, 0.0, 0.0,
-                                GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                new Insets(0, 20, 5, 0), 0, 0));
-
-                            //---- lblName5 ----
-                            lblName5.setText("Name:");
-                            lblName5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                            lblName5.setForeground(Color.black);
-                            lblName5.setName("lblName5");
-                            panel1.add(lblName5, new GridBagConstraints(0, 8, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 5), 0, 0));
-
-                            //---- lblName6 ----
-                            lblName6.setText("Name:");
-                            lblName6.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                            lblName6.setForeground(Color.black);
-                            lblName6.setName("lblName6");
-                            panel1.add(lblName6, new GridBagConstraints(2, 8, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 5), 0, 0));
-
-                            //======== scrollPane3 ========
+                            //======== pnlWhoCame ========
                             {
-                                scrollPane3.setName("scrollPane3");
+                                pnlWhoCame.setOpaque(false);
+                                pnlWhoCame.setName("pnlWhoCame");
+                                pnlWhoCame.setLayout(new GridBagLayout());
+                                ((GridBagLayout)pnlWhoCame.getLayout()).columnWidths = new int[] {308, 0, 300, 0};
+                                ((GridBagLayout)pnlWhoCame.getLayout()).rowHeights = new int[] {0, 183, 0};
+                                ((GridBagLayout)pnlWhoCame.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
+                                ((GridBagLayout)pnlWhoCame.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
-                                //---- list1 ----
-                                list1.setName("list1");
-                                scrollPane3.setViewportView(list1);
+                                //---- lblAvailable ----
+                                lblAvailable.setText("Available:");
+                                lblAvailable.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblAvailable.setForeground(Color.black);
+                                lblAvailable.setName("lblAvailable");
+                                pnlWhoCame.add(lblAvailable, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 5, 5, 8), 0, 0));
+
+                                //---- lblSelected ----
+                                lblSelected.setText("Selected:");
+                                lblSelected.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                lblSelected.setForeground(Color.black);
+                                lblSelected.setName("lblSelected");
+                                pnlWhoCame.add(lblSelected, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 5, 5, 0), 0, 0));
+
+                                //======== scrollPane3 ========
+                                {
+                                    scrollPane3.setName("scrollPane3");
+
+                                    //---- listAvailable ----
+                                    listAvailable.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    listAvailable.setForeground(Color.black);
+                                    listAvailable.setBackground(Color.white);
+                                    listAvailable.setName("listAvailable");
+                                    scrollPane3.setViewportView(listAvailable);
+                                }
+                                pnlWhoCame.add(scrollPane3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 5, 0, 8), 0, 0));
+
+                                //======== pnlMoveChoices ========
+                                {
+                                    pnlMoveChoices.setOpaque(false);
+                                    pnlMoveChoices.setName("pnlMoveChoices");
+                                    pnlMoveChoices.setLayout(new GridBagLayout());
+                                    ((GridBagLayout)pnlMoveChoices.getLayout()).columnWidths = new int[] {0, 0};
+                                    ((GridBagLayout)pnlMoveChoices.getLayout()).rowHeights = new int[] {0, 0, 0};
+                                    ((GridBagLayout)pnlMoveChoices.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlMoveChoices.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+                                    //---- btnRemove ----
+                                    btnRemove.setOpaque(false);
+                                    btnRemove.setFocusPainted(false);
+                                    btnRemove.setIcon(new ImageIcon(getClass().getResource("/images/remove.png")));
+                                    btnRemove.setMargin(new Insets(0, 0, 0, 0));
+                                    btnRemove.setBorder(null);
+                                    btnRemove.setBackground(Color.white);
+                                    btnRemove.setName("btnRemove");
+                                    btnRemove.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            btnRemoveActionPerformed();
+                                        }
+                                    });
+                                    pnlMoveChoices.add(btnRemove, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 0, 0), 0, 0));
+
+                                    //---- btnAdd ----
+                                    btnAdd.setOpaque(false);
+                                    btnAdd.setFocusPainted(false);
+                                    btnAdd.setIcon(new ImageIcon(getClass().getResource("/images/put.png")));
+                                    btnAdd.setMargin(new Insets(0, 0, 0, 0));
+                                    btnAdd.setPreferredSize(new Dimension(32, 32));
+                                    btnAdd.setMinimumSize(new Dimension(32, 32));
+                                    btnAdd.setBorder(null);
+                                    btnAdd.setBackground(Color.white);
+                                    btnAdd.setName("btnAdd");
+                                    btnAdd.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            btnAddActionPerformed();
+                                        }
+                                    });
+                                    pnlMoveChoices.add(btnAdd, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 10, 0), 0, 0));
+                                }
+                                pnlWhoCame.add(pnlMoveChoices, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.NONE,
+                                    new Insets(0, 0, 0, 8), 0, 0));
+
+                                //======== scrollPane4 ========
+                                {
+                                    scrollPane4.setName("scrollPane4");
+
+                                    //---- listSelected ----
+                                    listSelected.setBackground(Color.white);
+                                    listSelected.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    listSelected.setForeground(Color.black);
+                                    listSelected.setName("listSelected");
+                                    scrollPane4.setViewportView(listSelected);
+                                }
+                                pnlWhoCame.add(scrollPane4, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 5, 0, 0), 0, 0));
                             }
-                            panel1.add(scrollPane3, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 5), 0, 0));
-
-                            //======== scrollPane4 ========
-                            {
-                                scrollPane4.setName("scrollPane4");
-
-                                //---- list2 ----
-                                list2.setName("list2");
-                                scrollPane4.setViewportView(list2);
-                            }
-                            panel1.add(scrollPane4, new GridBagConstraints(2, 9, 2, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                            panel1.add(pnlWhoCame, new GridBagConstraints(0, 8, 4, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                                 new Insets(0, 0, 5, 0), 0, 0));
 
-                            //---- lblContactInfo3 ----
-                            lblContactInfo3.setText("Notes:");
-                            lblContactInfo3.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                            lblContactInfo3.setForeground(new Color(51, 102, 153));
-                            lblContactInfo3.setName("lblContactInfo3");
-                            panel1.add(lblContactInfo3, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0,
+                            //---- lblNotes ----
+                            lblNotes.setText("Notes:");
+                            lblNotes.setFont(new Font("Vijaya", Font.PLAIN, 22));
+                            lblNotes.setForeground(new Color(51, 102, 153));
+                            lblNotes.setName("lblNotes");
+                            panel1.add(lblNotes, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 5), 0, 0));
 
@@ -1036,7 +951,7 @@ public class CampPanel extends JPanel {
                                 txtNotes.setName("txtNotes");
                                 scrollPane5.setViewportView(txtNotes);
                             }
-                            panel1.add(scrollPane5, new GridBagConstraints(0, 11, 4, 1, 0.0, 0.0,
+                            panel1.add(scrollPane5, new GridBagConstraints(0, 10, 4, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 0, 0), 0, 0));
                         }
@@ -1166,13 +1081,16 @@ public class CampPanel extends JPanel {
     private JLabel lblLeaders;
     private JTextFieldDefaultText txtLeaders;
     private JLabel lblLeaderError;
-    private JLabel lblAttendanceError;
-    private JLabel lblName5;
-    private JLabel lblName6;
+    private JPanel pnlWhoCame;
+    private JLabel lblAvailable;
+    private JLabel lblSelected;
     private JScrollPane scrollPane3;
-    private JList list1;
+    private JList listAvailable;
+    private JPanel pnlMoveChoices;
+    private JButton btnRemove;
+    private JButton btnAdd;
     private JScrollPane scrollPane4;
-    private JList list2;
+    private JList listSelected;
     private JScrollPane scrollPane5;
     private JTextArea txtNotes;
     private JButton btnSave;
