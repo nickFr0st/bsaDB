@@ -33,26 +33,32 @@ public class MySqlConnector {
 
     private MySqlConnector() {
         try {
-            File file = new File(DB_PROPERTIES_PATH);
-            if (!file.exists()) {
-                File dir = new File(HOME_DIR + File.separator + ".bsaDB");
-                dir.mkdirs();
-                file.createNewFile();
-                createDatabasePropertyFile(file.getCanonicalPath());
-                DB_PROPERTIES_PATH = file.getCanonicalPath();
-
-                File userProperties = new File(USER_PROPERTIES_PATH);
-                userProperties.createNewFile();
-                createUserPropertyFile(userProperties.getCanonicalPath());
-                USER_PROPERTIES_PATH = userProperties.getCanonicalPath();
-            }
-
+            checkForFileExists();
 
             properties = new Properties();
             properties.load(new FileReader(DB_PROPERTIES_PATH));
         } catch (IOException ioe) {
             new MessageDialog(null, "Cannot Find Property", "Path \"/properties/database.properties\" does not exist.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             ioe.printStackTrace();
+        }
+    }
+
+    private void checkForFileExists() {
+        try {
+            File file = new File(DB_PROPERTIES_PATH);
+            File userProperties = new File(USER_PROPERTIES_PATH);
+            if (!file.exists()) {
+                File dir = new File(HOME_DIR + File.separator + ".bsaDB");
+                dir.mkdirs();
+                file.createNewFile();
+                createDatabasePropertyFile(file.getCanonicalPath());
+
+                userProperties.createNewFile();
+                createUserPropertyFile(userProperties.getCanonicalPath());
+            }
+            DB_PROPERTIES_PATH = file.getCanonicalPath();
+            USER_PROPERTIES_PATH = userProperties.getCanonicalPath();
+        } catch (IOException ignore) {
         }
     }
 
@@ -140,6 +146,8 @@ public class MySqlConnector {
     }
 
     private void resetProperties(String name, String rootUser, String rootPassword) {
+        checkForFileExists();
+
         properties.setProperty(KeyConst.DB_NAME.getName(), name);
         properties.setProperty(KeyConst.DB_USER_NAME.getName(), rootUser);
         properties.setProperty(KeyConst.DB_PASSWORD.getName(), rootPassword);
