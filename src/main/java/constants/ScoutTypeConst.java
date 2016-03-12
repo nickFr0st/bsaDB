@@ -4,10 +4,10 @@ package constants;
  * Created by Nathanael on 5/22/2015
  */
 public enum ScoutTypeConst {
-    CUB_SCOUT(10, "Cub Scout"),
+//    CUB_SCOUT(10, "Cub Scout"),
     BOY_SCOUT(20, "Boy Scout"),
-    VARSITY_SCOUT(30, "Varsity Scout"),
-    VENTURE_SCOUT(40, "Venture Scout"),
+//    VARSITY_SCOUT(30, "Varsity Scout"),
+//    VENTURE_SCOUT(40, "Venture Scout"),
     ;
 
     private int id;

@@ -119,7 +119,7 @@ public class BoyScoutPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        boyScout = LogicBoyScout.findByName(listBoyScoutNames.getSelectedValue().toString());
+        boyScout = (BoyScout) LogicBoyScout.findByName(listBoyScoutNames.getSelectedValue().toString());
         loadData();
     }
 

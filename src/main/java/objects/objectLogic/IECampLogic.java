@@ -1,5 +1,6 @@
 package objects.objectLogic;
 
+import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.home.dialogs.MessageDialog;
@@ -11,11 +12,9 @@ import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
+import java.io.*;
+import java.text.ParseException;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -89,229 +88,214 @@ public class IECampLogic {
         return true;
     }
 
-//    public static boolean doImport(Component parent, String importPath) {
-//        try {
-//            CSVReader reader = new CSVReader(new FileReader(importPath), ',');
-//            Map<MeritBadge, MeritBadgeImport> importMap = new HashMap<>();
-//
-//            boolean getMeritBadge = true;
-//            MeritBadge meritBadge = null;
-//            Set<Requirement> requirementSet = new LinkedHashSet<>();
-//            List<Counselor> counselorList = new ArrayList<>();
-//            Set<String> counselorNameSet = new HashSet<>();
-//
-//            String[] record;
-//            int line = 0;
-//            StringBuilder errors = new StringBuilder();
-//
-//            while ((record = reader.readNext()) != null) {
-//                ++line;
-//                String errorLine = "line: " + line + "\n";
-//
-//                // check for the headers
-//                if (record[0].equals("Merit Badge Name") || record[0].equals("Counselor Name") || record[0].equals("Requirement Name")) {
-//                    continue;
-//                }
-//
-//                if (record[0].isEmpty()) {
-//                    getMeritBadge = true;
-//
-//                    if (meritBadge != null) {
-//                        if (!checkForErrors(errors, parent)) {
-//                            return false;
-//                        }
-//
-//                        MeritBadgeImport badgeImport = new MeritBadgeImport();
-//                        badgeImport.setRequirementSet(requirementSet);
-//                        badgeImport.setCounselorList(counselorList);
-//
-//                        importMap.put(meritBadge, badgeImport);
-//
-//                        meritBadge = null;
-//                        requirementSet = new LinkedHashSet<>();
-//                        counselorList = new ArrayList<>();
-//                        counselorNameSet = new HashSet<>();
-//                    }
-//
-//                    continue;
-//                }
-//
-//                if (getMeritBadge) {
-//                    getMeritBadge = false;
-//
-//                    if (record.length < 2) {
-//                        errors.append("There are too few values for the merit badge. ").append(errorLine);
-//                        continue;
-//                    }
-//
-//
-//                    meritBadge = new MeritBadge();
-//                    String badgeName = record[0];
-//
-//                    if (Util.isEmpty(badgeName)){
-//                        errors.append("Merit badge name is missing. ").append(errorLine);
-//                    } else if (badgeName.length() > MeritBadge.COL_NAME_LENGTH) {
-//                        errors.append("Merit badge name is too long. ").append(errorLine);
-//                    }
-//                    meritBadge.setName(badgeName);
-//
-//                    if (!(checkForBoolean(record[1].trim()))) {
-//                        errors.append("invalid value: ").append(record[1]).append(". Accepted values are 'true' or 'false'. ").append(errorLine);
-//                        meritBadge.setRequiredForEagle(false);
-//                        continue;
-//                    } else {
-//                        meritBadge.setRequiredForEagle(Boolean.parseBoolean(record[1].trim()));
-//                    }
-//
-//                    if (record.length == 2) {
-//                        continue;
-//                    }
-//
-//                    String advancementImgPath = record[2];
-//                    if (Util.isEmpty(advancementImgPath)){
-//                        errors.append("Merit badge image path is missing. ").append(errorLine);
-//                    } else if (advancementImgPath.length() > MeritBadge.COL_IMG_PATH_LENGTH) {
-//                        errors.append("Merit badge image path is too long. ").append(errorLine);
-//                    }
-//                    meritBadge.setImgPath(advancementImgPath);
-//                    continue;
-//                }
-//
-//                if (record[0].startsWith("*")) {
-//                    if (record.length < 2) {
-//                        errors.append("Counselors needs both a name and a phone number.").append(errorLine);
-//                        continue;
-//                    }
-//
-//                    Counselor counselor = new Counselor();
-//                    String counselorName = record[0];
-//                    if (Util.isEmpty(counselorName)){
-//                        errors.append("Counselor name is missing. ").append(errorLine);
-//                    } else if (counselorName.length() > Counselor.COL_NAME_LENGTH) {
-//                        errors.append("Counselor name is too long. ").append(errorLine);
-//                    } else if (!counselorNameSet.add(counselorName)) {
-//                        errors.append("Counselor names must be unique per Merit Badge. ").append(errorLine);
-//                    }
-//                    counselor.setName(counselorName.substring(1, counselorName.length()));
-//
-//                    String phoneNumber = record[1];
-//                    if (Util.isEmpty(phoneNumber)){
-//                        errors.append("Phone number is missing. ").append(errorLine);
-//                    } else if (counselorName.length() > Counselor.COL_PHONE_NUMBER_LENGTH) {
-//                        errors.append("Phone number is too long. ").append(errorLine);
-//                    }
-//
-//                    if (!Util.validatePhoneNumber(phoneNumber)) {
-//                        errors.append("Phone number format is incorrect. ").append(errorLine);
-//                    }
-//
-//                    counselor.setPhoneNumber(phoneNumber);
-//                    counselorList.add(counselor);
-//                    continue;
-//                }
-//
-//                if (record.length < 2) {
-//                    errors.append("Requirements needs both a name and a description.").append(errorLine);
-//                    continue;
-//                }
-//
-//                Requirement requirement = new Requirement();
-//                String reqName = record[0];
-//                if (Util.isEmpty(reqName)){
-//                    errors.append("Requirement name is missing. ").append(errorLine);
-//                } else if (reqName.length() > Requirement.COL_NAME_LENGTH) {
-//                    errors.append("Requirement name is too long. ").append(errorLine);
-//                }
-//                requirement.setName(reqName);
-//
-//                String reqDesc = record[1];
-//                if (Util.isEmpty(reqDesc)){
-//                    errors.append("Requirement description is missing. ").append(errorLine);
-//                }
-//                requirement.setDescription(reqDesc);
-//                requirement.setTypeId(RequirementTypeConst.MERIT_BADGE.getId());
-//
-//                requirementSet.add(requirement);
-//            }
-//
-//            reader.close();
-//
-//            if (!checkForErrors(errors, parent)) {
-//                return false;
-//            }
-//
-//            MeritBadgeImport badgeImport = new MeritBadgeImport();
-//            badgeImport.setCounselorList(counselorList);
-//            badgeImport.setRequirementSet(requirementSet);
-//            importMap.put(meritBadge, badgeImport);
-//
-//            for (Map.Entry<MeritBadge, MeritBadgeImport> entry : importMap.entrySet()) {
-//                MeritBadge importedBadge = entry.getKey();
-//                MeritBadge existingBadge = LogicMeritBadge.findByName(importedBadge.getName());
-//                int meritBadgeId;
-//
-//                if (existingBadge != null) {
-//                    meritBadgeId = existingBadge.getId();
-//                    if (!Util.isEmpty(importedBadge.getImgPath())) {
-//                        existingBadge.setImgPath(importedBadge.getImgPath());
-//                    }
-//                    existingBadge.setRequiredForEagle(importedBadge.isRequiredForEagle());
-//                    LogicMeritBadge.update(existingBadge);
-//                    CacheObject.addToMeritBadges(existingBadge);
-//
-//                    LogicCounselor.deleteAllByBadgeId(meritBadgeId);
-//                    LogicRequirement.deleteAllByParentIdAndTypeId(meritBadgeId, RequirementTypeConst.MERIT_BADGE.getId());
-//                } else {
-//                    if (importedBadge.getImgPath() == null) {
-//                        importedBadge.setImgPath("");
-//                    }
-//
-//                    LogicMeritBadge.save(importedBadge);
-//                    CacheObject.addToMeritBadges(importedBadge);
-//                    meritBadgeId = importedBadge.getId();
-//                }
-//
-//
-//                MeritBadgeImport listContainer = importMap.get(importedBadge);
-//                List<Counselor> counselors = listContainer.getCounselorList();
-//                if (!Util.isEmpty(counselors)) {
-//                    for (Counselor counselor : counselors) {
-//                        counselor.setBadgeId(meritBadgeId);
-//                    }
-//                    LogicCounselor.save(counselorList);
-//                }
-//
-//                Set<Requirement> reqList = listContainer.getRequirementSet();
-//                if (!Util.isEmpty(reqList)) {
-//                    for (Requirement req : reqList) {
-//                        req.setParentId(meritBadgeId);
-//                    }
-//                    LogicRequirement.save(reqList);
-//                }
-//            }
-//
-//        } catch (IOException ioe) {
-//            new MessageDialog(null, "Import Error", ioe.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
-//            return false;
-//        }
-//
-//        new MessageDialog(Util.getParent(parent), "Import Successful", "Your merit badges have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
-//        return true;
-//    }
-//
-//    private static boolean checkForBoolean(String arg) {
-//        return !Util.isEmpty(arg) && ("true".equalsIgnoreCase(arg) || "false".equalsIgnoreCase(arg));
-//    }
-//
-//    private static boolean checkForErrors(StringBuilder errors, Component parent) {
-//        if (errors.length() <= 0) {
-//            return true;
-//        }
-//
-//        String errorHeaderMessage = "Please fix the following issues and try again.\n\n";
-//        errors.insert(0, errorHeaderMessage);
-//
-//        new MessageDialog(Util.getParent(parent), "Import Errors", errors.toString(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
-//        return false;
-//    }
+    public static boolean doImport(Component parent, String importPath) {
+        try {
+            CSVReader reader = new CSVReader(new FileReader(importPath), ',');
+            Map<Camp, List<ScoutCamp>> importMap = new HashMap<>();
+
+            boolean getCamp = true;
+            Camp camp = null;
+            List<ScoutCamp> scoutCampList = new ArrayList<>();
+
+            String[] record;
+            int line = 0;
+            StringBuilder errors = new StringBuilder();
+
+            while ((record = reader.readNext()) != null) {
+                ++line;
+                String errorLine = "line: " + line + "\n";
+
+                // check for the headers
+                if (record[0].equals("Camp Name") || record[0].equals("Scouts Attended")) {
+                    continue;
+                }
+
+                if (record[0].isEmpty()) {
+                    getCamp = true;
+
+                    if (camp != null) {
+                        if (!checkForErrors(errors, parent)) {
+                            return false;
+                        }
+
+                        importMap.put(camp, scoutCampList);
+
+                        camp = null;
+                        scoutCampList = new ArrayList<>();
+                    }
+                    continue;
+                }
+
+                if (getCamp) {
+                    getCamp = false;
+
+                    if (record.length < 5) {
+                        errors.append("There are too few values for the camp. ").append(errorLine);
+                        continue;
+                    }
+
+                    camp = new Camp();
+                    String campName = record[0];
+
+                    validateCampName(camp, errors, errorLine, campName);
+                    validateScoutType(camp, record[1], errors, errorLine);
+                    validateLocation(camp, record[2], errors, errorLine);
+                    validateStartDate(camp, record[3], errors, errorLine);
+                    validateLeaders(camp, record[4], errors, errorLine);
+
+                    if (record.length == 5) {
+                        continue;
+                    }
+
+                    String note = record[5];
+                    if (!Util.isEmpty(note)) {
+                        camp.setNote(note);
+                    }
+                    continue;
+                }
+
+                String scoutName = record[0];
+                Scout scout = LogicBoyScout.findByName(scoutName);
+                if (scout == null) {
+                    errors.append("Scout ").append(scoutName).append(" does not exists.").append(errorLine);
+                    continue;
+                }
+
+                ScoutCamp scoutCamp = new ScoutCamp();
+                scoutCamp.setScoutId(scout.getId());
+                scoutCamp.setScoutTypeId(camp.getScoutTypeId());
+
+                scoutCampList.add(scoutCamp);
+            }
+
+            reader.close();
+
+            if (!checkForErrors(errors, parent)) {
+                return false;
+            }
+
+            if (camp != null) {
+                importMap.put(camp, scoutCampList);
+            }
+
+            for (Map.Entry<Camp, List<ScoutCamp>> entry : importMap.entrySet()) {
+                Camp importedCamp = entry.getKey();
+                Camp existingCamp = LogicCamp.findByName(importedCamp.getName());
+                int campId;
+
+                if (existingCamp != null) {
+                    campId = existingCamp.getId();
+                    existingCamp.setLocation(importedCamp.getLocation());
+                    existingCamp.setStartDate(importedCamp.getStartDate());
+                    existingCamp.setLeaders(importedCamp.getLeaders());
+                    existingCamp.setScoutTypeId(importedCamp.getScoutTypeId());
+                    existingCamp.setNote(importedCamp.getNote());
+
+                    LogicCamp.update(existingCamp);
+
+                    LogicScoutCamp.deleteAllByCampId(campId);
+                } else {
+                    LogicCamp.save(importedCamp);
+                    campId = importedCamp.getId();
+                }
+
+                List<ScoutCamp> scoutCamps = entry.getValue();
+                if (!Util.isEmpty(scoutCamps)) {
+                    for (ScoutCamp scoutCamp : scoutCamps) {
+                        scoutCamp.setCampId(campId);
+                    }
+
+                    LogicScoutCamp.save(scoutCamps);
+                }
+            }
+
+        } catch (IOException ioe) {
+            new MessageDialog(null, "Import Error", ioe.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
+            return false;
+        }
+
+        new MessageDialog(Util.getParent(parent), "Import Successful", "Your merit badges have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
+        return true;
+    }
+
+    private static void validateLeaders(Camp camp, String leaders, StringBuilder errors, String errorLine) {
+        if (Util.isEmpty(leaders)) {
+            errors.append("Leaders are missing. ").append(errorLine);
+            return;
+        }
+
+        camp.setLeaders(leaders);
+    }
+
+    private static void validateStartDate(Camp camp, String startDate, StringBuilder errors, String errorLine) {
+        if (Util.isEmpty(startDate)) {
+            errors.append("Start date is missing. ").append(errorLine);
+            return;
+        }
+
+        if (!startDate.matches("\\d{4}/\\d{2}/\\d{2}?")) {
+            errors.append("Invalid date format date. ").append(errorLine);
+            return;
+        }
+
+        try {
+            Date date = Util.DATA_BASE_DATE_FORMAT.parse(startDate);
+            camp.setStartDate(date);
+        } catch (ParseException e) {
+            errors.append("Invalid date format date. ").append(errorLine);
+            return;
+        }
+    }
+
+    private static void validateCampName(Camp camp, StringBuilder errors, String errorLine, String campName) {
+        if (Util.isEmpty(campName)){
+            errors.append("Camp name is missing. ").append(errorLine);
+            return;
+        } else if (campName.length() > Camp.COL_NAME_LENGTH) {
+            errors.append("Camp name is too long. ").append(errorLine);
+            return;
+        }
+        camp.setName(campName);
+    }
+
+    private static void validateLocation(Camp camp, String location, StringBuilder errors, String errorLine) {
+        if (Util.isEmpty(location)) {
+            errors.append("Location is missing. ").append(errorLine);
+            return;
+        }
+
+        if (location.length() > Camp.COL_LOCATION_LENGTH) {
+            errors.append("Location is too long. ").append(errorLine);
+            return;
+        }
+
+        camp.setLocation(location);
+    }
+
+    private static void validateScoutType(Camp camp, String scoutTypeName, StringBuilder errors, String errorLine) {
+        if (Util.isEmpty(scoutTypeName)) {
+            errors.append("Scout type name is missing. ").append(errorLine);
+            return;
+        }
+
+        ScoutTypeConst scoutTypeConst = ScoutTypeConst.getConst(scoutTypeName);
+        if (scoutTypeConst == null) {
+            errors.append("Invalid scout type name. ").append(errorLine);
+            return;
+        }
+
+        camp.setScoutTypeId(scoutTypeConst.getId());
+    }
+
+    private static boolean checkForErrors(StringBuilder errors, Component parent) {
+        if (errors.length() <= 0) {
+            return true;
+        }
+
+        String errorHeaderMessage = "Please fix the following issues and try again.\n\n";
+        errors.insert(0, errorHeaderMessage);
+
+        new MessageDialog(Util.getParent(parent), "Import Errors", errors.toString(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
+        return false;
+    }
 }

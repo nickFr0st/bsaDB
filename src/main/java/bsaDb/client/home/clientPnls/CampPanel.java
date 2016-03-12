@@ -46,7 +46,9 @@ public class CampPanel extends JPanel {
 
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
-        cboCampType.addItem(ScoutTypeConst.BOY_SCOUT.getName());
+        for (ScoutTypeConst scoutTypeConst : ScoutTypeConst.values()) {
+            cboCampType.addItem(scoutTypeConst.getName());
+        }
 
         populateCampNameList();
         enableControls(false);
@@ -133,13 +135,16 @@ public class CampPanel extends JPanel {
         for (ScoutCamp scoutCamp : scoutCampList) {
             Scout scout;
             int scoutTypeId = scoutCamp.getScoutTypeId();
-            if (scoutTypeId == ScoutTypeConst.CUB_SCOUT.getId()) {
-                scout = new BoyScout(); // change this to cub scout when cub scouts get added
-            } else if (scoutTypeId == ScoutTypeConst.BOY_SCOUT.getId()) {
+//            if (scoutTypeId == ScoutTypeConst.CUB_SCOUT.getId()) {
+//                scout = new BoyScout(); // change this to cub scout when cub scouts get added
+//            } else
+            if (scoutTypeId == ScoutTypeConst.BOY_SCOUT.getId()) {
                 scout = LogicBoyScout.findById(scoutCamp.getScoutId());
-            } else if (scoutTypeId == ScoutTypeConst.VARSITY_SCOUT.getId()) {
-                scout = new BoyScout();
-            } else {
+            }
+//            else if (scoutTypeId == ScoutTypeConst.VARSITY_SCOUT.getId()) {
+//                scout = new BoyScout();
+//            }
+            else {
                 scout = new BoyScout();
             }
 
@@ -197,7 +202,7 @@ public class CampPanel extends JPanel {
         camp = null;
 
         txtName.setDefault();
-        cboCampType.setSelectedItem(ScoutTypeConst.CUB_SCOUT.getName());
+        cboCampType.setSelectedItem(ScoutTypeConst.BOY_SCOUT.getName());
         txtLocation.setDefault();
         cboCampDate.getModel().setValue(null);
         cboCampDate.getModel().setSelected(true);

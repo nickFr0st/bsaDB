@@ -7,6 +7,7 @@ package bsaDb.client.home.dialogs.imports;
 import bsaDb.client.home.dialogs.MessageDialog;
 import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
+import objects.objectLogic.IECampLogic;
 import objects.objectLogic.IEMeritBadgeLogic;
 import util.Util;
 
@@ -78,6 +79,9 @@ public class ImportDialog extends JDialog {
                 break;
             case MERIT_BADGE:
                 success = IEMeritBadgeLogic.doImport(this, importPath);
+                break;
+            case CAMPOUT:
+                success = IECampLogic.doImport(this, importPath);
                 break;
         }
 

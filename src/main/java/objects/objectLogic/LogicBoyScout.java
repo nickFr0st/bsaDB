@@ -183,7 +183,7 @@ public class LogicBoyScout {
         }
     }
 
-    public static BoyScout findByName(String name) {
+    public static Scout findByName(String name) {
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return null;
         }

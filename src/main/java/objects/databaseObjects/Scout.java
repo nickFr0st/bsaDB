@@ -6,4 +6,7 @@ package objects.databaseObjects;
 public interface Scout {
     String getName();
     void setName(String name);
+
+    int getId();
+    void setId(int id);
 }

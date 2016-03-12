@@ -153,7 +153,7 @@ public class LogicCamp {
             query.append("'").append(camp.getLocation().replace("'", "''")).append("', ");
             query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate())).append("', ");
             query.append("'").append(camp.getLeaders().replace("'", "''")).append("', ");
-            query.append("'").append(camp.getNote()).append("'");
+            query.append("'").append(camp.getNote().replace("'", "''")).append("'");
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
