@@ -238,6 +238,7 @@ new FormModel {
 											"font": #Font2
 											"maximumSize": #Dimension0
 											"minimumSize": #Dimension1
+											addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cboBirthDateActionPerformed", false ) )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 4
 											"gridx": 1
@@ -296,14 +297,16 @@ new FormModel {
 											name: "barTimeLeft"
 											"value": 50
 											"font": &Font5 new java.awt.Font( "Tahoma", 0, 14 )
+											"maximum": 1095
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 7
 											"gridwidth": 2
 										} )
 										add( new FormComponent( "javax.swing.JProgressBar" ) {
 											name: "barCampsAttended"
-											"value": 50
+											"value": 11
 											"font": #Font5
+											"maximum": 20
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 7
 											"gridx": 4

@@ -38,6 +38,8 @@ public class BoyScoutPanel extends JPanel {
     private final Color WARNING = new Color(220,177,26);
     private final Color BAD = new Color(255, 0, 0);
 
+    private final int maxAge = 14;
+
     private BoyScout boyScout;
 
     public BoyScoutPanel() {
@@ -130,40 +132,20 @@ public class BoyScoutPanel extends JPanel {
 
         enableControls(true);
 
-        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        String advancementName = "";
-        if (!Util.isEmpty(advancementList)) {
-            for (Advancement advancement : advancementList) {
-                cboRank.addItem(advancement.getName());
-                if (advancement.getId() == boyScout.getAdvancementId()) {
-                    advancementName = advancement.getName();
-                }
-            }
-        }
+        loadSummaryTab();
+        loadContactTab();
+        loadDetailsTab();
 
-        // Summary Tab
-        txtName.setText(boyScout.getName());
-        txtPosition.setText(boyScout.getPosition());
-        cboRank.setSelectedItem(advancementName);
+        btnUpdate.setVisible(true);
+        btnDelete.setVisible(true);
+        btnSave.setVisible(false);
+    }
 
-        Calendar rankDate = Calendar.getInstance();
-        rankDate.setTime(boyScout.getAdvancementDate());
-        cboRankDate.getModel().setDate(rankDate.get(Calendar.YEAR), rankDate.get(Calendar.MONTH), rankDate.get(Calendar.DATE));
-        cboRankDate.getModel().setSelected(true);
+    private void loadDetailsTab() {
+        // todo: handle this information
+    }
 
-        Calendar birthDate = Calendar.getInstance();
-        birthDate.setTime(boyScout.getBirthDate());
-        cboBirthDate.getModel().setDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
-        cboBirthDate.getModel().setSelected(true);
-
-        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
-        LocalDate now = new LocalDate();
-        Years age = Years.yearsBetween(birthDateTime, now);
-        lblAgeValue.setText(Integer.toString(age.getYears()));
-
-        // todo: handle barGraphs and advancement table
-
-        // Contact Tab
+    private void loadContactTab() {
         if (!Util.isEmpty(boyScout.getPhoneNumber())) {
             txtPhoneNumber.setText(boyScout.getPhoneNumber());
         }
@@ -195,13 +177,82 @@ public class BoyScoutPanel extends JPanel {
         if (!Util.isEmpty(boyScout.getNote())) {
             txtNotes.setText(boyScout.getNote());
         }
+    }
 
-        // Details Tab
-        // todo: handle this information
+    private void loadSummaryTab() {
+        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+        String advancementName = "";
+        if (!Util.isEmpty(advancementList)) {
+            for (Advancement advancement : advancementList) {
+                cboRank.addItem(advancement.getName());
+                if (advancement.getId() == boyScout.getAdvancementId()) {
+                    advancementName = advancement.getName();
+                }
+            }
+        }
 
-        btnUpdate.setVisible(true);
-        btnDelete.setVisible(true);
-        btnSave.setVisible(false);
+        txtName.setText(boyScout.getName());
+        txtPosition.setText(boyScout.getPosition());
+        cboRank.setSelectedItem(advancementName);
+
+        Calendar rankDate = Calendar.getInstance();
+        rankDate.setTime(boyScout.getAdvancementDate());
+        cboRankDate.getModel().setDate(rankDate.get(Calendar.YEAR), rankDate.get(Calendar.MONTH), rankDate.get(Calendar.DATE));
+        cboRankDate.getModel().setSelected(true);
+
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.setTime(boyScout.getBirthDate());
+        cboBirthDate.getModel().setDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
+        cboBirthDate.getModel().setSelected(true);
+
+        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
+        LocalDate now = new LocalDate();
+        Years age = Years.yearsBetween(birthDateTime, now);
+        lblAgeValue.setText(Integer.toString(age.getYears()));
+
+        setTimeLeftBar();
+
+
+        // todo: handle barGraphs and advancement table
+    }
+
+    private void setTimeLeftBar() {
+        if (!cboBirthDate.getModel().isSelected()) {
+            lblTimeLeftDisplay.setText("birth date not select");
+            barTimeLeft.setValue(barTimeLeft.getMaximum());
+            barTimeLeft.setForeground(AVG);
+            return;
+        }
+
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.set(Calendar.YEAR, cboBirthDate.getModel().getYear());
+        birthDate.set(Calendar.MONTH, cboBirthDate.getModel().getMonth());
+        birthDate.set(Calendar.DATE, cboBirthDate.getModel().getDay());
+
+        if (birthDate.getTime().getTime() >= new Date().getTime()) {
+            lblTimeLeftDisplay.setText("scout hasn't been born yet");
+            barTimeLeft.setValue(barTimeLeft.getMaximum());
+            barTimeLeft.setForeground(BAD);
+            return;
+        }
+
+        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH) + 1, birthDate.get(Calendar.DATE));
+        LocalDate now = new LocalDate();
+        if (Years.yearsBetween(birthDateTime, now).getYears() < 11) {
+            lblTimeLeftDisplay.setText("scout is too young");
+            barTimeLeft.setValue(barTimeLeft.getMaximum());
+            barTimeLeft.setForeground(BAD);
+            return;
+        }
+
+        if (Years.yearsBetween(birthDateTime, now).getYears() > 13) {
+            lblTimeLeftDisplay.setText("age requirement complete");
+            barTimeLeft.setValue(barTimeLeft.getMaximum());
+            barTimeLeft.setForeground(BAD);
+            return;
+        }
+
+        // todo calculate how much time the scout has left
     }
 
 //    private void loadRequirementSet() {
@@ -585,6 +636,27 @@ public class BoyScoutPanel extends JPanel {
         }
 
         return true;
+    }
+
+    private void cboBirthDateActionPerformed() {
+        Util.clearError(lblBirthDateError);
+
+        if (!cboBirthDate.getModel().isSelected()) {
+            Util.setError(lblBirthDateError, "Must select a birth date");
+            lblAgeValue.setText("n/a");
+        } else {
+            LocalDate birthDateTime = new LocalDate(cboBirthDate.getModel().getYear(), cboBirthDate.getModel().getMonth() + 1, cboBirthDate.getModel().getDay());
+            LocalDate now = new LocalDate();
+            Years age = Years.yearsBetween(birthDateTime, now);
+
+            if (age.getYears() < 0) {
+                lblAgeValue.setText("0");
+            } else {
+                lblAgeValue.setText(Integer.toString(age.getYears()));
+            }
+        }
+
+        setTimeLeftBar();
     }
 
 //    private void validateName() {
@@ -986,6 +1058,12 @@ public class BoyScoutPanel extends JPanel {
                                     cboBirthDate.setMaximumSize(new Dimension(32822, 30));
                                     cboBirthDate.setMinimumSize(new Dimension(57, 30));
                                     cboBirthDate.setName("cboBirthDate");
+                                    cboBirthDate.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            cboBirthDateActionPerformed();
+                                        }
+                                    });
                                     pnlGeneral.add(cboBirthDate, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
@@ -1038,14 +1116,16 @@ public class BoyScoutPanel extends JPanel {
                                     //---- barTimeLeft ----
                                     barTimeLeft.setValue(50);
                                     barTimeLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    barTimeLeft.setMaximum(1095);
                                     barTimeLeft.setName("barTimeLeft");
                                     pnlGeneral.add(barTimeLeft, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- barCampsAttended ----
-                                    barCampsAttended.setValue(50);
+                                    barCampsAttended.setValue(11);
                                     barCampsAttended.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    barCampsAttended.setMaximum(20);
                                     barCampsAttended.setName("barCampsAttended");
                                     pnlGeneral.add(barCampsAttended, new GridBagConstraints(4, 7, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
