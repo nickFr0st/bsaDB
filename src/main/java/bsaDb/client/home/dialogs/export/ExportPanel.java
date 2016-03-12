@@ -6,7 +6,9 @@ package bsaDb.client.home.dialogs.export;
 
 import constants.IETypeConst;
 import objects.databaseObjects.Advancement;
+import objects.databaseObjects.Camp;
 import objects.databaseObjects.MeritBadge;
+import objects.objectLogic.LogicCamp;
 import util.CacheObject;
 
 import javax.swing.*;
@@ -16,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author User #2
@@ -56,6 +59,12 @@ public class ExportPanel extends JPanel {
                 Collection<MeritBadge> meritBadgeList = CacheObject.getMeritBadgeList();
                 for (MeritBadge meritBadge : meritBadgeList) {
                     nameSource.add(meritBadge.getName());
+                }
+                break;
+            case CAMPOUT:
+                Set<Camp> campList = LogicCamp.findAll();
+                for (Camp camp : campList) {
+                    nameSource.add(camp.getName());
                 }
                 break;
         }

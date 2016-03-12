@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,6 +43,43 @@ public class LogicCamp {
         } catch (SQLException e) {
             e.printStackTrace();
             return new LinkedHashSet<>();
+        }
+
+        return campList;
+    }
+
+    public static Set<Camp> findAllByName(List<String> nameList) {
+        if (Util.isEmpty(nameList)) {
+            return new LinkedHashSet<>();
+        }
+
+        Set<Camp> campList = new LinkedHashSet<>();
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return campList;
+        }
+
+        for (String name : nameList) {
+            try {
+                Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM camp WHERE name LIKE '" + name + "'");
+
+                if (rs.next()) {
+                    Camp camp = new Camp();
+                    camp.setId(rs.getInt(KeyConst.ID.getName()));
+                    camp.setName(rs.getString(KeyConst.NAME.getName()));
+                    camp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                    camp.setLocation(rs.getString(KeyConst.LOCATION.getName()));
+                    camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
+                    camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
+                    camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+
+                    campList.add(camp);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return new LinkedHashSet<>();
+            }
         }
 
         return campList;

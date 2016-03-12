@@ -8,6 +8,7 @@ import util.Util;
 public enum IETypeConst {
     ADVANCEMENT(10, "Advancement"),
     MERIT_BADGE(20, "Merit Badge"),
+    CAMPOUT(30, "Campout"),
     ;
 
     private int id;
