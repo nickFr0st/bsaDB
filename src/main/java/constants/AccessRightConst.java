@@ -10,6 +10,7 @@ public enum AccessRightConst {
     IMPORTS(40, "Imports"),
     EXPORTS(50, "Exports"),
     MERIT_BADGES(60, "Merit Badges"),
+    CAMPOUTS(70, "Campouts"),
     ;
 
     private int id;

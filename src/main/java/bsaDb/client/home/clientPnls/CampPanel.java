@@ -7,19 +7,24 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
-import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
-import objects.databaseObjects.*;
-import objects.objectLogic.*;
-import util.CacheObject;
+import objects.databaseObjects.BoyScout;
+import objects.databaseObjects.Camp;
+import objects.databaseObjects.Scout;
+import objects.databaseObjects.ScoutCamp;
+import objects.objectLogic.LogicBoyScout;
+import objects.objectLogic.LogicCamp;
+import objects.objectLogic.LogicScoutCamp;
 import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author User #2
@@ -28,8 +33,8 @@ import java.util.List;
 public class CampPanel extends JPanel {
 
     private Camp camp;
-    private List<String> availableList;
-    private List<String> selectedList;
+    private List<String> availableList = new ArrayList<>();
+    private List<String> selectedList = new ArrayList<>();
 
     public CampPanel() {
         initComponents();
@@ -39,12 +44,9 @@ public class CampPanel extends JPanel {
         btnUpdate.setVisible(false);
         clearAllErrors();
 
-        scrollPane3.getVerticalScrollBar().setUnitIncrement(18);
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
-        for (ScoutTypeConst scoutType : ScoutTypeConst.values()) {
-            cboCampType.addItem(scoutType.getName());
-        }
+        cboCampType.addItem(ScoutTypeConst.BOY_SCOUT.getName());
 
         populateCampNameList();
         enableControls(false);
@@ -109,11 +111,6 @@ public class CampPanel extends JPanel {
 
         enableControls(true);
 
-        Set<BoyScout> scoutList = LogicBoyScout.findAll();
-        for (BoyScout boyScout : scoutList) {
-            availableList.add(boyScout.getName());
-        }
-
         txtName.setText(camp.getName());
         cboCampType.setSelectedItem(ScoutTypeConst.getConst(camp.getScoutTypeId()).getName());
         txtLocation.setText(camp.getLocation());
@@ -126,6 +123,11 @@ public class CampPanel extends JPanel {
         txtLeaders.setText(camp.getLeaders());
         txtNotes.setText(camp.getNote());
 
+        availableList = new ArrayList<>();
+        Set<BoyScout> scoutList = LogicBoyScout.findAll();
+        for (BoyScout boyScout : scoutList) {
+            availableList.add(boyScout.getName());
+        }
 
         List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByCampId(camp.getId());
         for (ScoutCamp scoutCamp : scoutCampList) {
@@ -168,7 +170,6 @@ public class CampPanel extends JPanel {
 
     private void clearAllErrors() {
         Util.clearError(lblNameError);
-        Util.clearError(lblCampTypeError);
         Util.clearError(lblLocationError);
         Util.clearError(lblCampDateError);
         Util.clearError(lblLeaderError);
@@ -182,6 +183,12 @@ public class CampPanel extends JPanel {
         enableControls(true);
         clearAllErrors();
         clearData();
+
+        Set<BoyScout> scoutList = LogicBoyScout.findAll();
+        for (BoyScout boyScout : scoutList) {
+            availableList.add(boyScout.getName());
+        }
+        listAvailable.setListData(availableList.toArray());
 
         txtName.requestFocus();
     }
@@ -209,7 +216,21 @@ public class CampPanel extends JPanel {
 
         setData();
 
-//        saveRecords(requirementSet, true, counselorList);
+        LogicCamp.save(camp);
+
+        if (!selectedList.isEmpty()) {
+            List<ScoutCamp> scoutCampList = new ArrayList<>();
+            for (String scoutName : selectedList) {
+                ScoutCamp scoutCamp = new ScoutCamp();
+                scoutCamp.setCampId(camp.getId());
+                scoutCamp.setScoutTypeId(camp.getScoutTypeId());
+                scoutCamp.setScoutId(LogicBoyScout.findByName(scoutName).getId());
+
+                scoutCampList.add(scoutCamp);
+            }
+
+            LogicScoutCamp.save(scoutCampList);
+        }
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
@@ -217,182 +238,116 @@ public class CampPanel extends JPanel {
 
         populateCampNameList();
 
-//        listMeritBadgeNames.setSelectedValue(camp.getName(), true);
-    }
-
-    private void saveRecords(Set<Requirement> requirementSet, boolean newMeritBadge, List<Counselor> counselorList) {
-//        camp = LogicMeritBadge.save(camp);
-
-        if (newMeritBadge) {
-            for (Requirement requirement : requirementSet) {
-                requirement.setParentId(camp.getId());
-            }
-        }
-        LogicRequirement.save(requirementSet);
-
-        for (Counselor counselor : counselorList) {
-            counselor.setBadgeId(camp.getId());
-        }
-        LogicCounselor.save(counselorList);
-
-//        CacheObject.addToMeritBadges(camp);
-    }
-
-    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
-        Set<Requirement> requirementSet = new LinkedHashSet<>();
-        Set<String> reqNameSet = new HashSet<>();
-
-//        for (Component component : pnlRequirementList.getComponents()) {
-//            if (!(component instanceof PnlRequirement)) {
-//                continue;
-//            }
-//
-//            if (!validate && ((PnlRequirement)component).getReqId() < 0) {
-//                continue;
-//            }
-//
-//            String reqName = ((PnlRequirement)component).getName().trim();
-//
-//            if (validate && reqName.isEmpty()) {
-//                Util.setError(lblRequirementError, "Requirement name cannot be left blank");
-//                return null;
-//            }
-//
-//            if (validate && !reqNameSet.add(reqName)) {
-//                Util.setError(lblRequirementError, "Requirement name '" + reqName + "' already exists");
-//                component.requestFocus();
-//                return null;
-//            }
-//
-//            if (validate && ((PnlRequirement)component).getDescription().trim().isEmpty()) {
-//                Util.setError(lblRequirementError, "Requirement description cannot be left blank");
-//                return null;
-//            }
-//
-//            Requirement requirement = new Requirement();
-//            if (parentId > 0) {
-//                requirement.setParentId(parentId);
-//            }
-//            requirement.setName(((PnlRequirement)component).getName());
-//            requirement.setDescription(((PnlRequirement) component).getDescription());
-//            requirement.setId(((PnlRequirement) component).getReqId());
-//            requirement.setTypeId(RequirementTypeConst.MERIT_BADGE.getId());
-//
-//            requirementSet.add(requirement);
-//        }
-        return requirementSet;
+        listCampoutNames.setSelectedValue(camp.getName(), true);
     }
 
     private void setData() {
         if (camp == null) {
-//            camp = new MeritBadge();
+            camp = new Camp();
         }
 
         camp.setName(txtName.getText());
-//        camp.setRequiredForEagle(chkRequiredForEagle.isSelected());
+        camp.setScoutTypeId(ScoutTypeConst.getConst(cboCampType.getSelectedItem().toString()).getId());
+        camp.setLocation(txtLocation.getText());
+
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(Calendar.YEAR, cboCampDate.getModel().getYear());
+        startDate.set(Calendar.MONTH, cboCampDate.getModel().getMonth());
+        startDate.set(Calendar.DATE, cboCampDate.getModel().getDay());
+
+        camp.setStartDate(startDate.getTime());
+        camp.setLeaders(txtLeaders.getText());
+        camp.setNote(txtNotes.getText());
     }
 
     private boolean validateFields() {
-        boolean valid = true;
+        boolean valid = validateCampName();
 
-        if (!validateMeritBadgeName()) {
+        if (!validateLocation()) {
             valid = false;
         }
 
-        int meritBadgeId;
-        if (camp == null) {
-            meritBadgeId = -1;
-        } else {
-            meritBadgeId = camp.getId();
+        if (!validateLeaders()) {
+            valid = false;
+        }
+
+        if (!validateCampDate()) {
+            valid = false;
         }
 
         return valid;
     }
 
+    private boolean validateCampDate() {
+        Util.clearError(lblCampDateError);
+
+        if (!cboCampDate.getModel().isSelected()) {
+            Util.setError(lblCampDateError, "Must select a start date");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateLeaders() {
+        Util.clearError(lblLeaderError);
+
+        if (txtLeaders.isMessageDefault()) {
+            Util.setError(lblLeaderError, "Cannot leave leaders blank");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateLocation() {
+        Util.clearError(lblLocationError);
+
+        if (txtLocation.isMessageDefault()) {
+            Util.setError(lblLocationError, "Cannot leave location blank");
+            return false;
+        }
+        return true;
+    }
+
     private void btnUpdateActionPerformed() {
-//        if (listMeritBadgeNames.getSelectedValue() == null) {
-//            return;
-//        }
+        if (listCampoutNames.getSelectedValue() == null) {
+            return;
+        }
 
         if (!validateFields()) {
             return;
         }
 
         setData();
-//        camp = LogicMeritBadge.update(camp);
+        LogicCamp.update(camp);
 
-        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(camp.getId(), RequirementTypeConst.MERIT_BADGE.getId());
-        List<Requirement> newRequirementList = getRequirementList(camp.getId());
-        List<Requirement> deleteRequirementList = new ArrayList<>();
+        LogicScoutCamp.deleteAllByCampId(camp.getId());
 
-        if (newRequirementList.isEmpty()) {
-            deleteRequirementList.addAll(currentRequirementSet);
-        } else {
-            for (Requirement requirement : currentRequirementSet) {
-                boolean addToList = true;
-                for (Requirement newRequirement : newRequirementList) {
-                    if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
-                        addToList = false;
-                    }
-                }
-                if (addToList) {
-                    deleteRequirementList.add(requirement);
-                }
+        if (!selectedList.isEmpty()) {
+            List<ScoutCamp> scoutCampList = new ArrayList<>();
+            for (String scoutName : selectedList) {
+                ScoutCamp scoutCamp = new ScoutCamp();
+                scoutCamp.setCampId(camp.getId());
+                scoutCamp.setScoutTypeId(camp.getScoutTypeId());
+                scoutCamp.setScoutId(LogicBoyScout.findByName(scoutName).getId());
+
+                scoutCampList.add(scoutCamp);
             }
+
+            LogicScoutCamp.save(scoutCampList);
         }
 
-        for (Requirement deleteRequirement :  deleteRequirementList) {
-            LogicRequirement.delete(deleteRequirement);
-        }
 
-        for (Requirement requirement : newRequirementList) {
-            if (requirement.getId() > 0) {
-                LogicRequirement.update(requirement);
-            } else {
-                LogicRequirement.save(requirement);
-            }
-        }
-
-//        CacheObject.addToMeritBadges(camp);
         populateCampNameList();
-
-//        listMeritBadgeNames.setSelectedValue(camp.getName(), true);
-    }
-
-    private List<Requirement> getRequirementList(int parentId) {
-        List<Requirement> requirementList = new ArrayList<>();
-
-//        for (Component component : pnlRequirementList.getComponents()) {
-//            if (!(component instanceof PnlRequirement)) {
-//                continue;
-//            }
-//
-//            Requirement requirement = new Requirement();
-//            if (parentId > 0) {
-//                requirement.setParentId(parentId);
-//            }
-//            requirement.setName(((PnlRequirement)component).getName());
-//            requirement.setDescription(((PnlRequirement) component).getDescription());
-//            requirement.setId(((PnlRequirement) component).getReqId());
-//            requirement.setTypeId(RequirementTypeConst.MERIT_BADGE.getId());
-//
-//            requirementList.add(requirement);
-//        }
-
-        return requirementList;
+        listCampoutNames.setSelectedValue(camp.getName(), true);
     }
 
     private void btnDeleteActionPerformed() {
-//        if (listMeritBadgeNames.getSelectedValue() == null) {
-//            return;
-//        }
+        if (listCampoutNames.getSelectedValue() == null) {
+            return;
+        }
 
-        int meritBadgeId = camp.getId();
-
-
-//        LogicMeritBadge.delete(camp);
-
-        CacheObject.removeFromMeritBadges(meritBadgeId);
+        LogicScoutCamp.deleteAllByCampId(camp.getId());
+        LogicCamp.delete(camp);
 
         populateCampNameList();
 
@@ -405,32 +360,23 @@ public class CampPanel extends JPanel {
         enableControls(false);
     }
 
-    private void validateName() {
-        validateMeritBadgeName();
-    }
+    private boolean validateCampName() {
+        Util.clearError(lblNameError);
 
-    private boolean validateMeritBadgeName() {
-//        Util.clearError(lblNameError);
-//
-//        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
-//            Util.setError(lblNameError, "Name cannot be left blank");
-//            return false;
-//        }
-//
-//        MeritBadge tempMeritBadge = CacheObject.getMeritBadge(txtName.getText());
-//        if (tempMeritBadge == null) {
-//            return true;
-//        }
-//
-//        if (camp == null) {
-//            Util.setError(lblNameError, "A merit badge with the name '" + txtName.getText() + "' already exists");
-//            return false;
-//        }
-//
-//        if (!tempMeritBadge.getName().equals(camp.getName())) {
-//            Util.setError(lblNameError, "A merit badge with the name '" + txtName.getText() + "' already exists");
-//            return false;
-//        }
+        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
+            Util.setError(lblNameError, "Name cannot be left blank");
+            return false;
+        }
+
+        Camp tempCamp = LogicCamp.findByName(txtName.getText());
+        if (tempCamp == null) {
+            return true;
+        }
+
+        if (camp == null || !tempCamp.getName().equals(camp.getName())) {
+            Util.setError(lblNameError, "A camp with the name '" + txtName.getText() + "' already exists");
+            return false;
+        }
 
         return true;
     }
@@ -485,6 +431,15 @@ public class CampPanel extends JPanel {
         listSelected.setListData(selectedList.toArray());
     }
 
+    private void cboCampTypeActionPerformed() {
+        if (cboCampType.getSelectedItem().toString().equals(ScoutTypeConst.BOY_SCOUT.getName())) {
+            Set<BoyScout> scoutList = LogicBoyScout.findAll();
+            for (BoyScout boyScout : scoutList) {
+                availableList.add(boyScout.getName());
+            }
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -497,36 +452,35 @@ public class CampPanel extends JPanel {
         JPanel panel3 = new JPanel();
         scrollPane2 = new JScrollPane();
         JPanel panel4 = new JPanel();
-        panel1 = new JPanel();
+        JPanel panel1 = new JPanel();
         JLabel lblGeneralInformation = new JLabel();
-        lblName = new JLabel();
+        JLabel lblName = new JLabel();
         txtName = new JTextFieldDefaultText();
-        lblCampType = new JLabel();
+        JLabel lblCampType = new JLabel();
         cboCampType = new JComboBox();
         lblNameError = new JLabel();
-        lblCampTypeError = new JLabel();
-        lblLocation = new JLabel();
+        JLabel lblLocation = new JLabel();
         txtLocation = new JTextFieldDefaultText();
-        lblCampDate = new JLabel();
+        JLabel lblCampDate = new JLabel();
         cboCampDate = new JDatePicker();
         lblLocationError = new JLabel();
         lblCampDateError = new JLabel();
-        lblLeaders = new JLabel();
+        JLabel lblLeaders = new JLabel();
         txtLeaders = new JTextFieldDefaultText();
         lblLeaderError = new JLabel();
         JLabel lblWhoCame = new JLabel();
-        pnlWhoCame = new JPanel();
-        lblAvailable = new JLabel();
-        lblSelected = new JLabel();
-        scrollPane3 = new JScrollPane();
+        JPanel pnlWhoCame = new JPanel();
+        JLabel lblAvailable = new JLabel();
+        JLabel lblSelected = new JLabel();
+        JScrollPane scrollPane3 = new JScrollPane();
         listAvailable = new JList();
-        pnlMoveChoices = new JPanel();
+        JPanel pnlMoveChoices = new JPanel();
         btnRemove = new JButton();
         btnAdd = new JButton();
-        scrollPane4 = new JScrollPane();
+        JScrollPane scrollPane4 = new JScrollPane();
         listSelected = new JList();
         JLabel lblNotes = new JLabel();
-        scrollPane5 = new JScrollPane();
+        JScrollPane scrollPane5 = new JScrollPane();
         txtNotes = new JTextArea();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
@@ -689,6 +643,18 @@ public class CampPanel extends JPanel {
                             txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
                             txtName.setDefaultText("Camp Name");
                             txtName.setName("txtName");
+                            txtName.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateCampName();
+                                }
+                            });
+                            txtName.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateCampName();
+                                }
+                            });
                             panel1.add(txtName, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 5), 0, 0));
@@ -707,6 +673,12 @@ public class CampPanel extends JPanel {
                             cboCampType.setBackground(Color.white);
                             cboCampType.setForeground(Color.black);
                             cboCampType.setName("cboCampType");
+                            cboCampType.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    cboCampTypeActionPerformed();
+                                }
+                            });
                             panel1.add(cboCampType, new GridBagConstraints(3, 1, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 0), 0, 0));
@@ -719,15 +691,6 @@ public class CampPanel extends JPanel {
                             panel1.add(lblNameError, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 20, 5, 5), 0, 0));
-
-                            //---- lblCampTypeError ----
-                            lblCampTypeError.setText("*error message");
-                            lblCampTypeError.setForeground(Color.red);
-                            lblCampTypeError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                            lblCampTypeError.setName("lblCampTypeError");
-                            panel1.add(lblCampTypeError, new GridBagConstraints(2, 2, 2, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 20, 5, 0), 0, 0));
 
                             //---- lblLocation ----
                             lblLocation.setText("Location:");
@@ -742,6 +705,18 @@ public class CampPanel extends JPanel {
                             txtLocation.setFont(new Font("Tahoma", Font.PLAIN, 14));
                             txtLocation.setDefaultText("Location");
                             txtLocation.setName("txtLocation");
+                            txtLocation.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateLocation();
+                                }
+                            });
+                            txtLocation.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateLocation();
+                                }
+                            });
                             panel1.add(txtLocation, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 5), 0, 0));
@@ -760,6 +735,12 @@ public class CampPanel extends JPanel {
                             cboCampDate.setMaximumSize(new Dimension(32822, 30));
                             cboCampDate.setMinimumSize(new Dimension(57, 30));
                             cboCampDate.setName("cboCampDate");
+                            cboCampDate.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    validateCampDate();
+                                }
+                            });
                             panel1.add(cboCampDate, new GridBagConstraints(3, 3, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 0), 0, 0));
@@ -795,6 +776,18 @@ public class CampPanel extends JPanel {
                             txtLeaders.setFont(new Font("Tahoma", Font.PLAIN, 14));
                             txtLeaders.setDefaultText("Leaders 1, Leader 2...");
                             txtLeaders.setName("txtLeaders");
+                            txtLeaders.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateLeaders();
+                                }
+                            });
+                            txtLeaders.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateLeaders();
+                                }
+                            });
                             panel1.add(txtLeaders, new GridBagConstraints(1, 5, 3, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 0), 0, 0));
@@ -1065,33 +1058,19 @@ public class CampPanel extends JPanel {
     private JTextFieldDefaultText txtSearchName;
     private JList listCampoutNames;
     private JScrollPane scrollPane2;
-    private JPanel panel1;
-    private JLabel lblName;
     private JTextFieldDefaultText txtName;
-    private JLabel lblCampType;
     private JComboBox cboCampType;
     private JLabel lblNameError;
-    private JLabel lblCampTypeError;
-    private JLabel lblLocation;
     private JTextFieldDefaultText txtLocation;
-    private JLabel lblCampDate;
     private JDatePicker cboCampDate;
     private JLabel lblLocationError;
     private JLabel lblCampDateError;
-    private JLabel lblLeaders;
     private JTextFieldDefaultText txtLeaders;
     private JLabel lblLeaderError;
-    private JPanel pnlWhoCame;
-    private JLabel lblAvailable;
-    private JLabel lblSelected;
-    private JScrollPane scrollPane3;
     private JList listAvailable;
-    private JPanel pnlMoveChoices;
     private JButton btnRemove;
     private JButton btnAdd;
-    private JScrollPane scrollPane4;
     private JList listSelected;
-    private JScrollPane scrollPane5;
     private JTextArea txtNotes;
     private JButton btnSave;
     private JButton btnUpdate;

@@ -41,4 +41,81 @@ public class LogicScoutCamp {
 
         return scoutCampList;
     }
+
+    public static synchronized void deleteAllByCampId(final int campId) {
+        if (campId <= 1) {
+            return;
+        }
+
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteScoutCampByCampId(campId);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteScoutCampByCampId(Integer campId) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM scoutCamp WHERE campId = " + campId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static synchronized List<ScoutCamp> save(List<ScoutCamp> scoutCampList) {
+        if (scoutCampList == null) {
+            return null;
+        }
+
+        for (final ScoutCamp scoutCamp : scoutCampList) {
+            try {
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveScoutCamp(scoutCamp);
+                    }
+                });
+
+                t.start();
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return scoutCampList;
+    }
+
+    private static void saveScoutCamp(ScoutCamp scoutCamp) {
+        if (scoutCamp.getId() < 0) {
+            scoutCamp.setId(MySqlConnector.getInstance().getNextId("scoutCamp"));
+        }
+
+        if (scoutCamp.getId() < 0) {
+            return;
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO scoutCamp VALUES(");
+            query.append(scoutCamp.getId()).append(", ");
+            query.append(scoutCamp.getScoutId()).append(", ");
+            query.append(scoutCamp.getScoutTypeId()).append(", ");
+            query.append(scoutCamp.getCampId());
+            query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

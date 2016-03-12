@@ -84,6 +84,8 @@ public class HomePanel extends JPanel {
                     mniExports.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.MERIT_BADGES.getId()) {
                     mniMeritBadges.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.CAMPOUTS.getId()) {
+                    mniCampouts.setEnabled(true);
                 }
             }
 
@@ -98,6 +100,7 @@ public class HomePanel extends JPanel {
         mniImports.setEnabled(false);
         mniExports.setEnabled(false);
         mniMeritBadges.setEnabled(false);
+        mniCampouts.setEnabled(false);
     }
 
     public HomePanel(BaseFrame baseFrame) {

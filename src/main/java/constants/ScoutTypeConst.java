@@ -35,4 +35,14 @@ public enum ScoutTypeConst {
 
         return null;
     }
+
+    public static ScoutTypeConst getConst(String name) {
+        for (ScoutTypeConst scoutType : ScoutTypeConst.values()) {
+            if (scoutType.getName().equals(name)) {
+                return scoutType;
+            }
+        }
+
+        return null;
+    }
 }

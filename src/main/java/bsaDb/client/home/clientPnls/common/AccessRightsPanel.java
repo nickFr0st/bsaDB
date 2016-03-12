@@ -33,6 +33,7 @@ public class AccessRightsPanel extends JPanel {
         chkUsers.setEnabled(enabled);
         chkAdvancements.setEnabled(enabled);
         chkMeritBadges.setEnabled(enabled);
+        chkCampouts.setEnabled(enabled);
     }
 
     public void populateRights(User user) {
@@ -55,12 +56,14 @@ public class AccessRightsPanel extends JPanel {
                 chkExports.setSelected(true);
             } else if (accessRight.getRightId() == AccessRightConst.MERIT_BADGES.getId()) {
                 chkMeritBadges.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.CAMPOUTS.getId()) {
+                chkCampouts.setSelected(true);
             }
         }
     }
 
     public List<Integer> getAccessRightIdList() {
-        List<Integer> accessRightIdList = new ArrayList<Integer>();
+        List<Integer> accessRightIdList = new ArrayList<>();
 
         if (chkDatabaseSettings.isSelected()) {
             accessRightIdList.add(AccessRightConst.DATABASE_SETTINGS.getId());
@@ -80,6 +83,9 @@ public class AccessRightsPanel extends JPanel {
         if (chkMeritBadges.isSelected()) {
             accessRightIdList.add(AccessRightConst.MERIT_BADGES.getId());
         }
+        if (chkCampouts.isSelected()) {
+            accessRightIdList.add(AccessRightConst.CAMPOUTS.getId());
+        }
 
         return accessRightIdList;
     }
@@ -91,6 +97,7 @@ public class AccessRightsPanel extends JPanel {
         chkImports.setSelected(false);
         chkExports.setSelected(false);
         chkMeritBadges.setSelected(false);
+        chkCampouts.setSelected(false);
     }
 
     private void initComponents() {
@@ -98,6 +105,7 @@ public class AccessRightsPanel extends JPanel {
         chkDatabaseSettings = new JCheckBox();
         chkMeritBadges = new JCheckBox();
         chkImports = new JCheckBox();
+        chkCampouts = new JCheckBox();
         chkExports = new JCheckBox();
         chkUsers = new JCheckBox();
         chkAdvancements = new JCheckBox();
@@ -109,9 +117,9 @@ public class AccessRightsPanel extends JPanel {
         setName("this");
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
         ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- chkDatabaseSettings ----
         chkDatabaseSettings.setText("Database Settings");
@@ -143,6 +151,16 @@ public class AccessRightsPanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 20), 0, 0));
 
+        //---- chkCampouts ----
+        chkCampouts.setText("Campouts");
+        chkCampouts.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chkCampouts.setForeground(Color.black);
+        chkCampouts.setOpaque(false);
+        chkCampouts.setName("chkCampouts");
+        add(chkCampouts, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 0), 0, 0));
+
         //---- chkExports ----
         chkExports.setText("Exports");
         chkExports.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -171,7 +189,7 @@ public class AccessRightsPanel extends JPanel {
         chkAdvancements.setName("chkAdvancements");
         add(chkAdvancements, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 0, 20), 0, 0));
+            new Insets(5, 5, 5, 20), 0, 0));
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -179,6 +197,7 @@ public class AccessRightsPanel extends JPanel {
     private JCheckBox chkDatabaseSettings;
     private JCheckBox chkMeritBadges;
     private JCheckBox chkImports;
+    private JCheckBox chkCampouts;
     private JCheckBox chkExports;
     private JCheckBox chkUsers;
     private JCheckBox chkAdvancements;

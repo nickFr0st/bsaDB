@@ -22,6 +22,7 @@ public class Camp {
     {
         id = -1;
         name = "";
+        note = "";
     }
 
     public Camp() {

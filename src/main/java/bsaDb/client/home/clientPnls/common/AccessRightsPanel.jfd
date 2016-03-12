@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 			"$columnSpecs": "0, 0"
-			"$rowSpecs": "0, 0, 0, 0, 0"
+			"$rowSpecs": "0, 0, 0, 0, 0, 0"
 			"$hGap": 20
 			"$vGap": 5
 			"$alignLeft": true
@@ -42,6 +42,17 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridy": 1
 				"insets": new java.awt.Insets( 5, 5, 0, 0 )
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "chkCampouts"
+				"text": "Campouts"
+				"font": #Font0
+				"foreground": #Color0
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+				"insets": #Insets0
+				"gridy": 1
+				"gridx": 1
 			} )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "chkExports"

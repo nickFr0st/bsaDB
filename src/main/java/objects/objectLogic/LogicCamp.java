@@ -2,8 +2,8 @@ package objects.objectLogic;
 
 import constants.KeyConst;
 import objects.databaseObjects.Camp;
-import objects.databaseObjects.User;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,8 +75,8 @@ public class LogicCamp {
         return camp;
     }
 
-    public static synchronized User save(final User user) {
-        if (user == null) {
+    public static synchronized Camp save(final Camp camp) {
+        if (camp == null) {
              return null;
         }
 
@@ -84,7 +84,7 @@ public class LogicCamp {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    saveUser(user);
+                    saveCamp(camp);
                 }
             });
 
@@ -94,33 +94,28 @@ public class LogicCamp {
             e.printStackTrace();
         }
 
-        return user;
+        return camp;
     }
 
-    private static void saveUser(User user) {
-        if (user.getId() < 0) {
-            user.setId(MySqlConnector.getInstance().getNextId("user"));
+    private static void saveCamp(Camp camp) {
+        if (camp.getId() < 0) {
+            camp.setId(MySqlConnector.getInstance().getNextId("camp"));
         }
 
-        if (user.getId() < 0) {
+        if (camp.getId() < 0) {
             return;
         }
 
         try {
             StringBuilder query = new StringBuilder();
-            query.append("INSERT INTO user VALUES(");
-            query.append(user.getId()).append(", ");
-            query.append("'").append(user.getUserName().replace("'", "''")).append("', ");
-            query.append("'").append(user.getName().replace("'", "''")).append("', ");
-            query.append("'").append(user.getPosition().replace("'", "''")).append("', ");
-            query.append("'").append(user.getPhoneNumber()).append("', ");
-            query.append("'").append(user.getState().replace("'", "''")).append("', ");
-            query.append("'").append(user.getCity().replace("'", "''")).append("', ");
-            query.append("'").append(user.getStreet().replace("'", "''")).append("', ");
-            query.append("'").append(user.getZip()).append("', ");
-            query.append(true).append(", ");
-            query.append("'").append(user.getPassword().replace("'", "''")).append("', ");
-            query.append("'").append(user.getEmail().replace("'", "''")).append("'");
+            query.append("INSERT INTO camp VALUES(");
+            query.append(camp.getId()).append(", ");
+            query.append("'").append(camp.getName().replace("'", "''")).append("', ");
+            query.append(camp.getScoutTypeId()).append(", ");
+            query.append("'").append(camp.getLocation().replace("'", "''")).append("', ");
+            query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate())).append("', ");
+            query.append("'").append(camp.getLeaders().replace("'", "''")).append("', ");
+            query.append("'").append(camp.getNote()).append("'");
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -130,8 +125,8 @@ public class LogicCamp {
         }
     }
 
-    public static synchronized User update(final User user) {
-        if (user == null) {
+    public static synchronized Camp update(final Camp camp) {
+        if (camp == null) {
             return null;
         }
 
@@ -139,7 +134,7 @@ public class LogicCamp {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    updateUser(user);
+                    updateCamp(camp);
                 }
             });
 
@@ -149,24 +144,20 @@ public class LogicCamp {
             e.printStackTrace();
         }
 
-        return user;
+        return camp;
     }
 
-    private static void updateUser(User user) {
+    private static void updateCamp(Camp camp) {
         try {
             StringBuilder query = new StringBuilder();
-            query.append("UPDATE user SET ");
-            query.append("username = '").append(user.getUserName().replace("'", "''")).append("', ");
-            query.append("name = '").append(user.getName().replace("'", "''")).append("', ");
-            query.append("position = '").append(user.getPosition().replace("'", "''")).append("', ");
-            query.append("phoneNumber = '").append(user.getPhoneNumber()).append("', ");
-            query.append("state = '").append(user.getState().replace("'", "''")).append("', ");
-            query.append("city = '").append(user.getCity().replace("'", "''")).append("', ");
-            query.append("street = '").append(user.getStreet().replace("'", "''")).append("', ");
-            query.append("zip = '").append(user.getZip()).append("', ");
-            query.append("password = '").append(user.getPassword().replace("'", "''")).append("', ");
-            query.append("email = '").append(user.getEmail().replace("'", "''")).append("' ");
-            query.append("WHERE id = ").append(user.getId());
+            query.append("UPDATE camp SET ");
+            query.append("name = '").append(camp.getName().replace("'", "''")).append("', ");
+            query.append("scoutTypeId = ").append(camp.getScoutTypeId()).append(", ");
+            query.append("location = '").append(camp.getLocation()).append("', ");
+            query.append("startDate = '").append(Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate())).append("', ");
+            query.append("leaders = '").append(camp.getLeaders().replace("'", "''")).append("', ");
+            query.append("note = '").append(camp.getNote().replace("'", "''")).append("' ");
+            query.append("WHERE id = ").append(camp.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate(query.toString());
@@ -175,8 +166,8 @@ public class LogicCamp {
         }
     }
 
-    public static synchronized void delete(final User user) {
-        if (user == null || user.getId() <= 1) {
+    public static synchronized void delete(final Camp camp) {
+        if (camp == null || camp.getId() <= 1) {
              return;
         }
 
@@ -184,7 +175,7 @@ public class LogicCamp {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    deleteUser(user.getId());
+                    deleteCamp(camp.getId());
                 }
             });
             t.start();
@@ -194,10 +185,10 @@ public class LogicCamp {
         }
     }
 
-    private static void deleteUser(Integer id) {
+    private static void deleteCamp(Integer id) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM user WHERE id = " + id);
+            statement.executeUpdate("DELETE FROM camp WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
         }
