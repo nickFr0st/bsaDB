@@ -192,6 +192,7 @@ new FormModel {
 											"font": new java.awt.Font( "Tahoma", 0, 14 )
 											"background": new java.awt.Color( 255, 255, 255, 255 )
 											"foreground": new java.awt.Color( 0, 0, 0, 255 )
+											addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cboRankActionPerformed", false ) )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridx": 1
 											"gridy": 2
@@ -210,6 +211,7 @@ new FormModel {
 											"font": &Font2 new java.awt.Font( "Tahoma", 0, 14 )
 											"maximumSize": &Dimension0 new java.awt.Dimension( 32822, 30 )
 											"minimumSize": &Dimension1 new java.awt.Dimension( 57, 30 )
+											addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cboRankDateActionPerformed", false ) )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 2
 											"gridx": 5

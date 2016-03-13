@@ -152,9 +152,14 @@ public class IEAdvancementLogic {
                     String timeRequirement = record[1];
                     if (!Util.isEmpty(timeRequirement)) {
                         try {
-                            advancement.setTimeRequirement(Integer.parseInt(timeRequirement));
+                            int value = Integer.parseInt(timeRequirement);
+                            if (value <= 0) {
+                                errors.append("Invalid Time Requirement, must be a positive whole number. ").append(errorLine);
+                            } else {
+                                advancement.setTimeRequirement(value);
+                            }
                         } catch (NumberFormatException e) {
-                            errors.append("Invalid Time Requirement, must use whole numbers. ").append(errorLine);
+                            errors.append("Invalid Time Requirement, must be a whole number. ").append(errorLine);
                         }
                     }
 

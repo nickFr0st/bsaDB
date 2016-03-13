@@ -72,8 +72,10 @@ public class BoyScoutPanel extends JPanel {
         barCampsAttended.setForeground(BAD);
         lblCampsAttendedDisplay.setText("0 of " + barCampsAttended.getMaximum());
 
-        barWaitPeriod.setForeground(AVG);
         barWaitPeriod.setBackground(Color.white);
+        barWaitPeriod.setValue(0);
+        barWaitPeriod.setForeground(GOOD);
+        lblWaitPeriodDisplay.setText("no time requirement for this advancement");
 
         barProgress.setForeground(AVG);
         barProgress.setBackground(Color.white);
@@ -228,11 +230,102 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setProgressBar() {
-//        if ()
+        // todo: add logic
     }
 
     private void setWaitingPeriodBar() {
-        // todo: add logic
+        Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
+        Integer timeRequirement = advancement.getTimeRequirement();
+        if (timeRequirement == null) {
+            barWaitPeriod.setValue(barWaitPeriod.getMaximum());
+            barWaitPeriod.setForeground(GOOD);
+            lblWaitPeriodDisplay.setText("no time requirement for this advancement");
+            return;
+        }
+
+        if (!cboRankDate.getModel().isSelected()) {
+            lblWaitPeriodDisplay.setText("rank date not select");
+            barWaitPeriod.setValue(0);
+            barWaitPeriod.setForeground(BAD);
+            return;
+        }
+
+        Calendar rankDate = Calendar.getInstance();
+        rankDate.set(Calendar.YEAR, cboRankDate.getModel().getYear());
+        rankDate.set(Calendar.MONTH, cboRankDate.getModel().getMonth());
+        rankDate.set(Calendar.DATE, cboRankDate.getModel().getDay());
+
+        Date now = new Date();
+        if (rankDate.getTime().getTime() > now.getTime()) {
+            lblWaitPeriodDisplay.setText("rank date cannot be after today's date");
+            barWaitPeriod.setValue(0);
+            barWaitPeriod.setForeground(BAD);
+            return;
+        }
+
+        Calendar completedDate = Calendar.getInstance();
+        completedDate.set(Calendar.YEAR, cboRankDate.getModel().getYear());
+        completedDate.set(Calendar.MONTH, cboRankDate.getModel().getMonth() + 6);
+        completedDate.set(Calendar.DATE, cboRankDate.getModel().getDay());
+
+        LocalDate rankTime = new LocalDate(cboRankDate.getModel().getYear(), cboRankDate.getModel().getMonth() + 1, cboRankDate.getModel().getDay());
+        LocalDate dateCompleted = new LocalDate(completedDate.get(Calendar.YEAR), completedDate.get(Calendar.MONTH) + 1, completedDate.get(Calendar.DATE));
+
+        Days days = Days.daysBetween(rankTime, dateCompleted);
+        barWaitPeriod.setMaximum(days.getDays());
+
+        LocalDate localDate = new LocalDate();
+        Days remaining = Days.daysBetween(rankTime, localDate);
+
+        int value = 0;
+        if (remaining.getDays() >= barWaitPeriod.getMaximum()) {
+            value = barWaitPeriod.getMaximum();
+        } else if (remaining.getDays() > 0) {
+            value = remaining.getDays();
+        }
+
+        barWaitPeriod.setValue(value);
+
+        int thirty = (int)(.30 * barWaitPeriod.getMaximum());
+        int sixty = (int)(.60 * barWaitPeriod.getMaximum());
+        int eighty = (int)(.80 * barWaitPeriod.getMaximum());
+
+        if (value < thirty) {
+            barWaitPeriod.setForeground(BAD);
+        } else if (value < sixty) {
+            barWaitPeriod.setForeground(WARNING);
+        } else if (value < eighty) {
+            barWaitPeriod.setForeground(AVG);
+        } else {
+            barWaitPeriod.setForeground(GOOD);
+        }
+
+        if (value >= barWaitPeriod.getMaximum()) {
+            lblWaitPeriodDisplay.setText("waiting period requirement complete");
+            return;
+        }
+
+        long diff = completedDate.getTime().getTime() - now.getTime();
+        LocalDate displayDate = new LocalDate(diff);
+
+        String display = "";
+        String comma = "";
+        int month = displayDate.getMonthOfYear() - 1;
+        if (month > 0) {
+            display += month + " mo";
+            comma = ", ";
+        }
+
+        int day = displayDate.getDayOfMonth() - 1;
+        if (day > 0) {
+            display += comma;
+            display += day + " day";
+            if (day > 1) {
+                display += "s";
+            }
+        }
+
+        lblWaitPeriodDisplay.setText(display);
     }
 
     private void setCampsAttendedBar() {
@@ -339,19 +432,16 @@ public class BoyScoutPanel extends JPanel {
             comma = ", ";
         }
 
-        display += comma;
-
-
-        int month = displayDate.getMonthOfYear();
+        int month = displayDate.getMonthOfYear() -1;
         if (month >= 0) {
+            display += comma;
             display += month + " mo";
             comma = ", ";
         }
 
-        display += comma;
-
-        int day = displayDate.getDayOfMonth();
+        int day = displayDate.getDayOfMonth() -1;
         if (day > 0) {
+            display += comma;
             display += day + " day";
             if (day > 1) {
                 display += "s";
@@ -765,6 +855,14 @@ public class BoyScoutPanel extends JPanel {
         setTimeLeftBar();
     }
 
+    private void cboRankDateActionPerformed() {
+        setWaitingPeriodBar();
+    }
+
+    private void cboRankActionPerformed() {
+        cboRankDateActionPerformed();
+    }
+
 //    private void validateName() {
 //        validateAdvancementName();
 //    }
@@ -1119,6 +1217,12 @@ public class BoyScoutPanel extends JPanel {
                                     cboRank.setBackground(Color.white);
                                     cboRank.setForeground(Color.black);
                                     cboRank.setName("cboRank");
+                                    cboRank.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            cboRankActionPerformed();
+                                        }
+                                    });
                                     pnlGeneral.add(cboRank, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
@@ -1137,6 +1241,12 @@ public class BoyScoutPanel extends JPanel {
                                     cboRankDate.setMaximumSize(new Dimension(32822, 30));
                                     cboRankDate.setMinimumSize(new Dimension(57, 30));
                                     cboRankDate.setName("cboRankDate");
+                                    cboRankDate.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            cboRankDateActionPerformed();
+                                        }
+                                    });
                                     pnlGeneral.add(cboRankDate, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 0), 0, 0));
