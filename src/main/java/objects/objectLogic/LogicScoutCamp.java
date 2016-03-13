@@ -118,4 +118,31 @@ public class LogicScoutCamp {
             e.printStackTrace();
         }
     }
+
+    public static List<ScoutCamp> findAllByScoutIdAndScoutTypeId(int scoutId, int scoutTypeId) {
+        List<ScoutCamp> scoutCampList = new ArrayList<>();
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return scoutCampList;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM scoutCamp WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId);
+
+            while (rs.next()) {
+                ScoutCamp scoutCamp = new ScoutCamp();
+                scoutCamp.setId(rs.getInt(KeyConst.ID.getName()));
+                scoutCamp.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+                scoutCamp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                scoutCamp.setCampId(rs.getInt(KeyConst.CAMP_ID.getName()));
+
+                scoutCampList.add(scoutCamp);
+            }
+        } catch (SQLException e) {
+            return new ArrayList<>();
+        }
+
+        return scoutCampList;
+    }
 }

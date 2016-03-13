@@ -9,11 +9,15 @@ import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import constants.RequirementTypeConst;
+import constants.ScoutTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.Requirement;
+import objects.databaseObjects.ScoutCamp;
 import objects.objectLogic.LogicBoyScout;
 import objects.objectLogic.LogicRequirement;
+import objects.objectLogic.LogicScoutCamp;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import util.CacheObject;
@@ -58,11 +62,15 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setupProgressBars() {
-        barTimeLeft.setForeground(AVG);
         barTimeLeft.setBackground(Color.white);
+        lblTimeLeftDisplay.setText("birth date not select");
+        barTimeLeft.setValue(0);
+        barTimeLeft.setForeground(AVG);
 
-        barCampsAttended.setForeground(AVG);
         barCampsAttended.setBackground(Color.white);
+        barCampsAttended.setValue(0);
+        barCampsAttended.setForeground(BAD);
+        lblCampsAttendedDisplay.setText("0 of " + barCampsAttended.getMaximum());
 
         barWaitPeriod.setForeground(AVG);
         barWaitPeriod.setBackground(Color.white);
@@ -205,21 +213,52 @@ public class BoyScoutPanel extends JPanel {
         cboBirthDate.getModel().setDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
         cboBirthDate.getModel().setSelected(true);
 
-        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH), birthDate.get(Calendar.DATE));
+        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH) + 1, birthDate.get(Calendar.DATE));
         LocalDate now = new LocalDate();
         Years age = Years.yearsBetween(birthDateTime, now);
         lblAgeValue.setText(Integer.toString(age.getYears()));
 
         setTimeLeftBar();
+        setCampsAttendedBar();
 
 
         // todo: handle barGraphs and advancement table
     }
 
+    private void setCampsAttendedBar() {
+        if (boyScout.getId() < 0) {
+            barCampsAttended.setValue(0);
+            barCampsAttended.setForeground(BAD);
+            lblCampsAttendedDisplay.setText("0 of " + barCampsAttended.getMaximum());
+            return;
+        }
+
+        List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
+        if (scoutCampList.isEmpty()) {
+            barCampsAttended.setValue(0);
+            barCampsAttended.setForeground(BAD);
+            lblCampsAttendedDisplay.setText("0 of " + barCampsAttended.getMaximum());
+        }
+
+        int value = scoutCampList.size();
+        barCampsAttended.setValue(value);
+        lblCampsAttendedDisplay.setText(value + " of " + barCampsAttended.getMaximum());
+
+        if (value < 6) {
+            barCampsAttended.setForeground(BAD);
+        } else if (value < 12) {
+            barCampsAttended.setForeground(WARNING);
+        } else if (value < 16) {
+            barCampsAttended.setForeground(AVG);
+        } else {
+            barCampsAttended.setForeground(GOOD);
+        }
+    }
+
     private void setTimeLeftBar() {
         if (!cboBirthDate.getModel().isSelected()) {
             lblTimeLeftDisplay.setText("birth date not select");
-            barTimeLeft.setValue(barTimeLeft.getMaximum());
+            barTimeLeft.setValue(0);
             barTimeLeft.setForeground(AVG);
             return;
         }
@@ -252,7 +291,64 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        // todo calculate how much time the scout has left
+        Calendar max = Calendar.getInstance();
+        max.add(Calendar.YEAR, -14);
+
+        LocalDate maxDate = new LocalDate(max.get(Calendar.YEAR), max.get(Calendar.MONTH), max.get(Calendar.DATE));
+
+        Days days = Days.daysBetween(maxDate, birthDateTime);
+
+        int value = 0;
+        if (days.getDays() > 0) {
+            value = barTimeLeft.getMaximum() - days.getDays();
+        }
+
+        barTimeLeft.setValue(value);
+
+        if (value < 328) {
+            barTimeLeft.setForeground(GOOD);
+        } else if (value < 766) {
+            barTimeLeft.setForeground(AVG);
+        } else if (value < 985) {
+            barTimeLeft.setForeground(WARNING);
+        } else {
+            barTimeLeft.setForeground(BAD);
+        }
+
+        long diff = max.getTimeInMillis() - birthDate.getTimeInMillis();
+        LocalDate displayDate = new LocalDate(diff);
+
+        String display = "";
+        String comma = "";
+        Years year = Years.yearsBetween(maxDate, birthDateTime);
+        if (year.getYears() > 0) {
+            display += year.getYears() + " yr";
+            if (year.getYears() > 1) {
+                display += "s";
+            }
+            comma = ", ";
+        }
+
+        display += comma;
+
+
+        int month = displayDate.getMonthOfYear();
+        if (month >= 0) {
+            display += month + " mo";
+            comma = ", ";
+        }
+
+        display += comma;
+
+        int day = displayDate.getDayOfMonth();
+        if (day > 0) {
+            display += day + " day";
+            if (day > 1) {
+                display += "s";
+            }
+        }
+
+        lblTimeLeftDisplay.setText(display);
     }
 
 //    private void loadRequirementSet() {
