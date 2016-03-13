@@ -148,55 +148,6 @@ new FormModel {
 								"vAlign": 0
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-								"$columnSpecs": "0, 215:1.0"
-								"$rowSpecs": "0, 0"
-								"$hGap": 5
-								"$vGap": 5
-								"$alignLeft": true
-								"$alignTop": true
-							} ) {
-								name: "panel6"
-								"opaque": false
-								auxiliary() {
-									"JavaCodeGenerator.variableLocal": true
-								}
-								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "lblName"
-									"text": "Name:"
-									"font": new java.awt.Font( "Tahoma", 0, 14 )
-									"foreground": new java.awt.Color( 0, 0, 0, 255 )
-									auxiliary() {
-										"JavaCodeGenerator.variableLocal": true
-									}
-								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-									"insets": new java.awt.Insets( 0, 10, 0, 0 )
-								} )
-								add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
-									name: "txtName"
-									"defaultText": "Advancement Name"
-									"font": new java.awt.Font( "Tahoma", 0, 14 )
-									"preferredSize": new java.awt.Dimension( 138, 30 )
-									"minimumSize": new java.awt.Dimension( 14, 30 )
-									addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateName", false ) )
-									addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateName", false ) )
-								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-									"gridx": 1
-								} )
-								add( new FormComponent( "javax.swing.JLabel" ) {
-									name: "lblNameError"
-									"text": "* Error Message"
-									"foreground": sfield java.awt.Color red
-									"font": &Font0 new java.awt.Font( "Tahoma", 2, 11 )
-									"visible": false
-								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-									"gridy": 1
-									"gridwidth": 2
-									"insets": &Insets0 new java.awt.Insets( 0, 10, 0, 0 )
-								} )
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 1
-							} )
-							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 								"$columnSpecs": "450"
 								"$rowSpecs": "0, 0:1.0"
 								"$hGap": 5
@@ -257,10 +208,10 @@ new FormModel {
 										name: "lblRequirementError"
 										"text": "* Error Message"
 										"foreground": sfield java.awt.Color red
-										"font": #Font0
+										"font": &Font0 new java.awt.Font( "Tahoma", 2, 11 )
 										"visible": false
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-										"insets": #Insets0
+										"insets": &Insets0 new java.awt.Insets( 0, 10, 0, 0 )
 										"gridx": 3
 									} )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
@@ -279,6 +230,91 @@ new FormModel {
 								"gridx": 1
 								"gridheight": 2
 								"insets": new java.awt.Insets( 0, 0, 5, 10 )
+							} )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+								"$columnSpecs": "0, 215:1.0"
+								"$rowSpecs": "0, 0, 0, 0"
+								"$hGap": 5
+								"$vGap": 5
+								"$alignLeft": true
+								"$alignTop": true
+							} ) {
+								name: "panel6"
+								"opaque": false
+								auxiliary() {
+									"JavaCodeGenerator.variableLocal": true
+								}
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblName"
+									"text": "Name:"
+									"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
+									"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
+									auxiliary() {
+										"JavaCodeGenerator.variableLocal": true
+									}
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"insets": &Insets1 new java.awt.Insets( 0, 10, 0, 0 )
+								} )
+								add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+									name: "txtName"
+									"defaultText": "Advancement Name"
+									"font": &Font2 new java.awt.Font( "Tahoma", 0, 14 )
+									"preferredSize": &Dimension0 new java.awt.Dimension( 138, 30 )
+									"minimumSize": &Dimension1 new java.awt.Dimension( 14, 30 )
+									addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateAdvancementName", false ) )
+									addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateAdvancementName", false ) )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 1
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblNameError"
+									"text": "* Error Message"
+									"foreground": sfield java.awt.Color red
+									"font": #Font0
+									"visible": false
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 1
+									"gridwidth": 2
+									"insets": #Insets0
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblTimeRequirement"
+									"text": "Time Requirement:"
+									"font": #Font1
+									"foreground": #Color0
+									auxiliary() {
+										"JavaCodeGenerator.variableLocal": true
+									}
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"insets": #Insets1
+									"gridy": 2
+								} )
+								add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+									name: "txtTimeRequirement"
+									"defaultText": "Number of months"
+									"font": #Font2
+									"preferredSize": #Dimension0
+									"minimumSize": #Dimension1
+									"toolTipText": "Number of months required to be at this rank."
+									addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateTimeRequirement", false ) )
+									addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateTimeRequirement", false ) )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 2
+									"gridx": 1
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblTimeRequirementError"
+									"text": "* Error Message"
+									"foreground": sfield java.awt.Color red
+									"font": #Font0
+									"visible": false
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 3
+									"insets": #Insets0
+									"gridwidth": 2
+								} )
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 1
 							} )
 						} )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )

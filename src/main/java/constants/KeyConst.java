@@ -16,6 +16,7 @@ public enum KeyConst {
     ID("id"),
     USERNAME("username"),
     NAME("name"),
+    TIME_REQUIREMENT("timeRequirement"),
     POSITION("position"),
     PHONE_NUMBER("phoneNumber"),
     STREET("street"),

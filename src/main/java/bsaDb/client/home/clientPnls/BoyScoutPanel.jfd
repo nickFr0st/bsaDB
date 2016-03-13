@@ -122,7 +122,7 @@ new FormModel {
 								"font": new java.awt.Font( "Tahoma", 0, 18 )
 								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 									"$columnSpecs": "0:1.0"
-									"$rowSpecs": "0"
+									"$rowSpecs": "0:1.0"
 									"$hGap": 5
 									"$vGap": 10
 									"$alignLeft": true

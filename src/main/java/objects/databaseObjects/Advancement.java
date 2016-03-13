@@ -10,6 +10,7 @@ public class Advancement {
     private int id;
     private String name;
     private String imgPath;
+    private Integer timeRequirement;
 
     public Advancement() {
         id = -1;
@@ -37,5 +38,13 @@ public class Advancement {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public Integer getTimeRequirement() {
+        return timeRequirement;
+    }
+
+    public void setTimeRequirement(Integer timeRequirement) {
+        this.timeRequirement = timeRequirement;
     }
 }

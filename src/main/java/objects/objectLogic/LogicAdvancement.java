@@ -29,6 +29,7 @@ public class LogicAdvancement {
                 Advancement advancement = new Advancement();
                 advancement.setId(rs.getInt(KeyConst.ID.getName()));
                 advancement.setName(rs.getString(KeyConst.NAME.getName()));
+                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
                 advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
                 advancementList.add(advancement);
             }
@@ -75,6 +76,7 @@ public class LogicAdvancement {
             query.append("INSERT INTO advancement VALUES(");
             query.append(advancement.getId()).append(", ");
             query.append("'").append(advancement.getName().replace("'", "''")).append("', ");
+            query.append(advancement.getTimeRequirement()).append(", ");
             query.append("'").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("'");
             query.append(")");
 
@@ -140,6 +142,7 @@ public class LogicAdvancement {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE advancement SET ");
             query.append("name = '").append(advancement.getName().replace("'", "''")).append("', ");
+            query.append("timeRequirement = ").append(advancement.getTimeRequirement()).append(", ");
             query.append("imgPath = '").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("' ");
             query.append("WHERE id = ").append(advancement.getId());
 

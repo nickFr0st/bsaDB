@@ -220,9 +220,19 @@ public class BoyScoutPanel extends JPanel {
 
         setTimeLeftBar();
         setCampsAttendedBar();
+        setWaitingPeriodBar();
+        setProgressBar();
 
 
         // todo: handle barGraphs and advancement table
+    }
+
+    private void setProgressBar() {
+//        if ()
+    }
+
+    private void setWaitingPeriodBar() {
+        // todo: add logic
     }
 
     private void setCampsAttendedBar() {
@@ -1040,7 +1050,7 @@ public class BoyScoutPanel extends JPanel {
                                 ((GridBagLayout)pnlSummary.getLayout()).columnWidths = new int[] {0, 0};
                                 ((GridBagLayout)pnlSummary.getLayout()).rowHeights = new int[] {0, 0};
                                 ((GridBagLayout)pnlSummary.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
-                                ((GridBagLayout)pnlSummary.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+                                ((GridBagLayout)pnlSummary.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
 
                                 //======== pnlGeneral ========
                                 {

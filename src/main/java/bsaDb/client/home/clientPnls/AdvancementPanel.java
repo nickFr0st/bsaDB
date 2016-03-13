@@ -120,6 +120,9 @@ public class AdvancementPanel extends JPanel {
         enableControls(true);
 
         txtName.setText(advancement.getName());
+        if (advancement.getTimeRequirement() != null) {
+            txtTimeRequirement.setText(advancement.getTimeRequirement().toString());
+        }
 
         ImageIcon tryPath = new ImageIcon(advancement.getImgPath());
         if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
@@ -162,6 +165,7 @@ public class AdvancementPanel extends JPanel {
     private void enableControls(boolean enable) {
         btnBadgeImage.setEnabled(enable);
         txtName.setEnabled(enable);
+        txtTimeRequirement.setEnabled(enable);
         btnAddRequirement.setEnabled(enable);
         btnRemoveRequirement.setEnabled(enable);
     }
@@ -169,6 +173,7 @@ public class AdvancementPanel extends JPanel {
     private void clearAllErrors() {
         Util.clearError(lblNameError);
         Util.clearError(lblRequirementError);
+        Util.clearError(lblTimeRequirementError);
     }
 
     private void btnNewActionPerformed() {
@@ -188,6 +193,7 @@ public class AdvancementPanel extends JPanel {
 
         btnBadgeImage.setIcon(noImage);
         txtName.setDefault();
+        txtTimeRequirement.setDefault();
         imagePath = "";
 
         pnlRequirementList.removeAll();
@@ -280,6 +286,10 @@ public class AdvancementPanel extends JPanel {
         }
 
         advancement.setName(txtName.getText());
+        if (!txtTimeRequirement.isMessageDefault()) {
+            advancement.setTimeRequirement(Integer.parseInt(txtTimeRequirement.getText()));
+        }
+
         if (Util.isEmpty(imagePath) || getImage() == null) {
             advancement.setImgPath("");
         } else {
@@ -295,6 +305,10 @@ public class AdvancementPanel extends JPanel {
         boolean valid = true;
 
         if (!validateAdvancementName()) {
+            valid = false;
+        }
+
+        if (!validateTimeRequirement()) {
             valid = false;
         }
 
@@ -459,10 +473,6 @@ public class AdvancementPanel extends JPanel {
         }
     }
 
-    private void validateName() {
-        validateAdvancementName();
-    }
-
     private boolean validateAdvancementName() {
         Util.clearError(lblNameError);
 
@@ -483,6 +493,23 @@ public class AdvancementPanel extends JPanel {
 
         if (!tempAdvancement.getName().equals(advancement.getName())) {
             Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateTimeRequirement() {
+        Util.clearError(lblTimeRequirementError);
+
+        if (txtTimeRequirement.isMessageDefault()) {
+            return true;
+        }
+
+        try {
+            int timeRequirement = Integer.parseInt(txtTimeRequirement.getText());
+        } catch (NumberFormatException e) {
+            Util.setError(lblTimeRequirementError, "Invalid value, whole numbers only");
             return false;
         }
 
@@ -526,10 +553,6 @@ public class AdvancementPanel extends JPanel {
         JPanel panel4 = new JPanel();
         JPanel panel1 = new JPanel();
         btnBadgeImage = new JLabel();
-        JPanel panel6 = new JPanel();
-        JLabel lblName = new JLabel();
-        txtName = new JTextFieldDefaultText();
-        lblNameError = new JLabel();
         JPanel panel7 = new JPanel();
         JPanel panel8 = new JPanel();
         JLabel lblRequirement = new JLabel();
@@ -538,6 +561,13 @@ public class AdvancementPanel extends JPanel {
         lblRequirementError = new JLabel();
         scrollPane3 = new JScrollPane();
         pnlRequirementList = new JPanel();
+        JPanel panel6 = new JPanel();
+        JLabel lblName = new JLabel();
+        txtName = new JTextFieldDefaultText();
+        lblNameError = new JLabel();
+        JLabel lblTimeRequirement = new JLabel();
+        txtTimeRequirement = new JTextFieldDefaultText();
+        lblTimeRequirementError = new JLabel();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -698,61 +728,6 @@ public class AdvancementPanel extends JPanel {
                             GridBagConstraints.CENTER, GridBagConstraints.NONE,
                             new Insets(0, 0, 10, 20), 0, 0));
 
-                        //======== panel6 ========
-                        {
-                            panel6.setOpaque(false);
-                            panel6.setName("panel6");
-                            panel6.setLayout(new GridBagLayout());
-                            ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0};
-                            ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
-
-                            //---- lblName ----
-                            lblName.setText("Name:");
-                            lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                            lblName.setForeground(Color.black);
-                            lblName.setName("lblName");
-                            panel6.add(lblName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 5, 5), 0, 0));
-
-                            //---- txtName ----
-                            txtName.setDefaultText("Advancement Name");
-                            txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                            txtName.setPreferredSize(new Dimension(138, 30));
-                            txtName.setMinimumSize(new Dimension(14, 30));
-                            txtName.setName("txtName");
-                            txtName.addKeyListener(new KeyAdapter() {
-                                @Override
-                                public void keyReleased(KeyEvent e) {
-                                    validateName();
-                                }
-                            });
-                            txtName.addFocusListener(new FocusAdapter() {
-                                @Override
-                                public void focusLost(FocusEvent e) {
-                                    validateName();
-                                }
-                            });
-                            panel6.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 0), 0, 0));
-
-                            //---- lblNameError ----
-                            lblNameError.setText("* Error Message");
-                            lblNameError.setForeground(Color.red);
-                            lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                            lblNameError.setVisible(false);
-                            lblNameError.setName("lblNameError");
-                            panel6.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 0, 0), 0, 0));
-                        }
-                        panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 0, 0, 20), 0, 0));
-
                         //======== panel7 ========
                         {
                             panel7.setOpaque(false);
@@ -861,6 +836,103 @@ public class AdvancementPanel extends JPanel {
                         panel4.add(panel7, new GridBagConstraints(1, 0, 1, 2, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                             new Insets(0, 0, 5, 10), 0, 0));
+
+                        //======== panel6 ========
+                        {
+                            panel6.setOpaque(false);
+                            panel6.setName("panel6");
+                            panel6.setLayout(new GridBagLayout());
+                            ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+
+                            //---- lblName ----
+                            lblName.setText("Name:");
+                            lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            lblName.setForeground(Color.black);
+                            lblName.setName("lblName");
+                            panel6.add(lblName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 5, 5), 0, 0));
+
+                            //---- txtName ----
+                            txtName.setDefaultText("Advancement Name");
+                            txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            txtName.setPreferredSize(new Dimension(138, 30));
+                            txtName.setMinimumSize(new Dimension(14, 30));
+                            txtName.setName("txtName");
+                            txtName.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateAdvancementName();
+                                }
+                            });
+                            txtName.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateAdvancementName();
+                                }
+                            });
+                            panel6.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
+
+                            //---- lblNameError ----
+                            lblNameError.setText("* Error Message");
+                            lblNameError.setForeground(Color.red);
+                            lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                            lblNameError.setVisible(false);
+                            lblNameError.setName("lblNameError");
+                            panel6.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 5, 0), 0, 0));
+
+                            //---- lblTimeRequirement ----
+                            lblTimeRequirement.setText("Time Requirement:");
+                            lblTimeRequirement.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            lblTimeRequirement.setForeground(Color.black);
+                            lblTimeRequirement.setName("lblTimeRequirement");
+                            panel6.add(lblTimeRequirement, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 5, 5), 0, 0));
+
+                            //---- txtTimeRequirement ----
+                            txtTimeRequirement.setDefaultText("Number of months");
+                            txtTimeRequirement.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            txtTimeRequirement.setPreferredSize(new Dimension(138, 30));
+                            txtTimeRequirement.setMinimumSize(new Dimension(14, 30));
+                            txtTimeRequirement.setToolTipText("Number of months required to be at this rank.");
+                            txtTimeRequirement.setName("txtTimeRequirement");
+                            txtTimeRequirement.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateTimeRequirement();
+                                }
+                            });
+                            txtTimeRequirement.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateTimeRequirement();
+                                }
+                            });
+                            panel6.add(txtTimeRequirement, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
+
+                            //---- lblTimeRequirementError ----
+                            lblTimeRequirementError.setText("* Error Message");
+                            lblTimeRequirementError.setForeground(Color.red);
+                            lblTimeRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                            lblTimeRequirementError.setVisible(false);
+                            lblTimeRequirementError.setName("lblTimeRequirementError");
+                            panel6.add(lblTimeRequirementError, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 0, 0), 0, 0));
+                        }
+                        panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                            new Insets(0, 0, 0, 20), 0, 0));
                     }
                     scrollPane2.setViewportView(panel4);
                 }
@@ -969,13 +1041,15 @@ public class AdvancementPanel extends JPanel {
     private JList listAdvancementNames;
     private JScrollPane scrollPane2;
     private JLabel btnBadgeImage;
-    private JTextFieldDefaultText txtName;
-    private JLabel lblNameError;
     private JLabel btnAddRequirement;
     private JLabel btnRemoveRequirement;
     private JLabel lblRequirementError;
     private JScrollPane scrollPane3;
     private JPanel pnlRequirementList;
+    private JTextFieldDefaultText txtName;
+    private JLabel lblNameError;
+    private JTextFieldDefaultText txtTimeRequirement;
+    private JLabel lblTimeRequirementError;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;

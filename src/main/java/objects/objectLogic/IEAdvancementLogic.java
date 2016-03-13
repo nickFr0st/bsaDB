@@ -41,7 +41,7 @@ public class IEAdvancementLogic {
             CSVWriter csvWriter = new CSVWriter(writer, ',');
             java.util.List<String[]> records = new ArrayList<>();
 
-            records.add(new String[]{"Advancement Name", "Advancement Image Path"});
+            records.add(new String[]{"Advancement Name", "Time Requirement", "Advancement Image Path"});
             records.add(new String[]{"Requirement Name", "Requirement Description"});
 
             boolean firstPass = true;
@@ -51,9 +51,17 @@ public class IEAdvancementLogic {
                 }
 
                 if (Util.isEmpty(advancement.getImgPath())) {
-                    records.add(new String[]{advancement.getName()});
+                    if (advancement.getTimeRequirement() == null) {
+                        records.add(new String[]{advancement.getName(), ""});
+                    } else {
+                        records.add(new String[]{advancement.getName(), advancement.getTimeRequirement().toString()});
+                    }
                 } else {
-                    records.add(new String[]{advancement.getName(), advancement.getImgPath()});
+                    if (advancement.getTimeRequirement() == null) {
+                        records.add(new String[]{advancement.getName(), "", advancement.getImgPath()});
+                    } else {
+                        records.add(new String[]{advancement.getName(), advancement.getTimeRequirement().toString(), advancement.getImgPath()});
+                    }
                 }
 
                 Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
@@ -141,11 +149,20 @@ public class IEAdvancementLogic {
                     }
                     advancement.setName(advancementName);
 
-                    if (record.length == 1) {
+                    String timeRequirement = record[1];
+                    if (!Util.isEmpty(timeRequirement)) {
+                        try {
+                            advancement.setTimeRequirement(Integer.parseInt(timeRequirement));
+                        } catch (NumberFormatException e) {
+                            errors.append("Invalid Time Requirement, must use whole numbers. ").append(errorLine);
+                        }
+                    }
+
+                    if (record.length == 2) {
                         continue;
                     }
 
-                    String advancementImgPath = record[1];
+                    String advancementImgPath = record[2];
                     if (Util.isEmpty(advancementImgPath)){
                         errors.append("Advancement image path is missing. ").append(errorLine);
                     } else if (advancementImgPath.length() > Advancement.COL_IMG_PATH_LENGTH) {
