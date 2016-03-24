@@ -254,7 +254,7 @@ public class BoyScoutPanel extends JPanel {
 
         Calendar completedDate = Calendar.getInstance();
         completedDate.set(Calendar.YEAR, cboRankDate.getModel().getYear());
-        completedDate.set(Calendar.MONTH, cboRankDate.getModel().getMonth() + 6);
+        completedDate.set(Calendar.MONTH, cboRankDate.getModel().getMonth() + timeRequirement);
         completedDate.set(Calendar.DATE, cboRankDate.getModel().getDay());
 
         LocalDate rankTime = new LocalDate(cboRankDate.getModel().getYear(), cboRankDate.getModel().getMonth() + 1, cboRankDate.getModel().getDay());
@@ -312,6 +312,11 @@ public class BoyScoutPanel extends JPanel {
             if (day > 1) {
                 display += "s";
             }
+        }
+
+        if (Util.isEmpty(display)) {
+            display = "waiting period requirement complete";
+            barWaitPeriod.setValue(barWaitPeriod.getMaximum());
         }
 
         lblWaitPeriodDisplay.setText(display);
