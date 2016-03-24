@@ -10,13 +10,11 @@ import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
-import objects.databaseObjects.Advancement;
-import objects.databaseObjects.BoyScout;
-import objects.databaseObjects.Requirement;
-import objects.databaseObjects.ScoutCamp;
+import objects.databaseObjects.*;
 import objects.objectLogic.LogicBoyScout;
 import objects.objectLogic.LogicRequirement;
 import objects.objectLogic.LogicScoutCamp;
+import objects.objectLogic.LogicScoutRequirement;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -219,7 +217,38 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setProgressBar() {
-        // todo: add logic
+        Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
+        if (advancement == null) {
+            barProgress.setValue(barProgress.getMaximum());
+            barProgress.setForeground(BAD);
+            lblProgressDisplay.setText("no advancement selected");
+            return;
+        }
+
+        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+        if (Util.isEmpty(requirementSet)) {
+            barProgress.setValue(barProgress.getMaximum());
+            barProgress.setForeground(GOOD);
+            lblProgressDisplay.setText("no requirements for badge");
+            return;
+        }
+
+        barProgress.setMaximum(requirementSet.size());
+
+        Set<ScoutRequirement> scoutRequirementSet = LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), advancement.getId());
+        int value = scoutRequirementSet.size();
+        barProgress.setValue(value);
+        lblProgressDisplay.setText(value + " of " + barProgress.getMaximum());
+
+        if (value < barProgress.getMaximum() * .30) {
+            barWaitPeriod.setForeground(BAD);
+        } else if (value < barProgress.getMaximum() * .60) {
+            barWaitPeriod.setForeground(WARNING);
+        } else if (value < barProgress.getMaximum() * .80) {
+            barWaitPeriod.setForeground(AVG);
+        } else {
+            barWaitPeriod.setForeground(GOOD);
+        }
     }
 
     private void setWaitingPeriodBar() {

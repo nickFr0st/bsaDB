@@ -121,17 +121,11 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableSpecialAward);
 
-        String tableScoutAdvancement = "CREATE TABLE scoutAdvancement " +
+        String tableScoutRequirement = "CREATE TABLE scoutRequirement " +
                 "(id INT NOT NULL," +
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " advancementId INT NOT NULL," +
-                " PRIMARY KEY (id))";
-        statement.addBatch(tableScoutAdvancement);
-
-        String tableScoutRequirement = "CREATE TABLE scoutRequirement " +
-                "(id INT NOT NULL," +
-                " scoutAdvancementId INT NOT NULL," +
                 " requirementId INT NOT NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableScoutRequirement);

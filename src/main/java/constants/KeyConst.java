@@ -34,6 +34,7 @@ public enum KeyConst {
     GUARDIAN_NAME("guardianName"),
     GUARDIAN_PHONE_NUMBER("guardianPhoneNumber"),
     NOTE("note"),
+    REQUIREMENT_ID("requirementId"),
 
     // Camp
     CAMP_ID("campId"),

@@ -6,7 +6,9 @@ package objects.databaseObjects;
 public class ScoutRequirement {
 
     private int id;
-    private int scoutAdvancementId;
+    private int scoutId;
+    private int scoutTypeId;
+    private int advancementId;
     private int requirementId;
 
     public ScoutRequirement() {
@@ -21,12 +23,28 @@ public class ScoutRequirement {
         this.id = id;
     }
 
-    public int getScoutAdvancementId() {
-        return scoutAdvancementId;
+    public int getScoutId() {
+        return scoutId;
     }
 
-    public void setScoutAdvancementId(int scoutAdvancementId) {
-        this.scoutAdvancementId = scoutAdvancementId;
+    public void setScoutId(int scoutId) {
+        this.scoutId = scoutId;
+    }
+
+    public int getScoutTypeId() {
+        return scoutTypeId;
+    }
+
+    public void setScoutTypeId(int scoutTypeId) {
+        this.scoutTypeId = scoutTypeId;
+    }
+
+    public int getAdvancementId() {
+        return advancementId;
+    }
+
+    public void setAdvancementId(int advancementId) {
+        this.advancementId = advancementId;
     }
 
     public int getRequirementId() {
