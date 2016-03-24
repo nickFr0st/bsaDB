@@ -215,7 +215,7 @@ public class BoyScoutPanel extends JPanel {
         setProgressBar();
 
 
-        // todo: handle barGraphs and advancement table
+        // todo: handle advancement table
     }
 
     private void setProgressBar() {
@@ -275,15 +275,11 @@ public class BoyScoutPanel extends JPanel {
 
         barWaitPeriod.setValue(value);
 
-        int thirty = (int)(.30 * barWaitPeriod.getMaximum());
-        int sixty = (int)(.60 * barWaitPeriod.getMaximum());
-        int eighty = (int)(.80 * barWaitPeriod.getMaximum());
-
-        if (value < thirty) {
+        if (value < barWaitPeriod.getMaximum() * .30) {
             barWaitPeriod.setForeground(BAD);
-        } else if (value < sixty) {
+        } else if (value < barWaitPeriod.getMaximum() * .60) {
             barWaitPeriod.setForeground(WARNING);
-        } else if (value < eighty) {
+        } else if (value < barWaitPeriod.getMaximum() * .80) {
             barWaitPeriod.setForeground(AVG);
         } else {
             barWaitPeriod.setForeground(GOOD);
@@ -402,11 +398,11 @@ public class BoyScoutPanel extends JPanel {
 
         barTimeLeft.setValue(value);
 
-        if (value < 328) {
+        if (value < barTimeLeft.getMaximum() * .30) {
             barTimeLeft.setForeground(GOOD);
-        } else if (value < 766) {
+        } else if (value < barTimeLeft.getMaximum() * .60) {
             barTimeLeft.setForeground(AVG);
-        } else if (value < 985) {
+        } else if (value < barTimeLeft.getMaximum() * .90) {
             barTimeLeft.setForeground(WARNING);
         } else {
             barTimeLeft.setForeground(BAD);
@@ -427,7 +423,7 @@ public class BoyScoutPanel extends JPanel {
         }
 
         int month = displayDate.getMonthOfYear() -1;
-        if (month >= 0) {
+        if (month > 0) {
             display += comma;
             display += month + " mo";
             comma = ", ";
