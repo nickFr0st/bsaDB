@@ -786,6 +786,7 @@ public class BoyScoutPanel extends JPanel {
 
     private void cboRankDateActionPerformed() {
         setWaitingPeriodBar();
+        setProgressBar();
     }
 
     private void cboRankActionPerformed() {
