@@ -42,8 +42,6 @@ public class BoyScoutPanel extends JPanel {
     private final Color WARNING = new Color(220,177,26);
     private final Color BAD = new Color(255, 0, 0);
 
-    private final int maxAge = 14;
-
     private BoyScout boyScout;
 
     public BoyScoutPanel() {
@@ -551,65 +549,6 @@ public class BoyScoutPanel extends JPanel {
         listBoyScoutNames.setSelectedValue(boyScout, true);
     }
 
-    private void saveRecords(Set<Requirement> requirementSet, boolean newAdvancement) {
-//        boyScout = LogicAdvancement.save(boyScout);
-
-        if (newAdvancement) {
-            for (Requirement requirement : requirementSet) {
-                requirement.setParentId(boyScout.getId());
-            }
-        }
-
-        LogicRequirement.save(requirementSet);
-
-//        CacheObject.addToAdvancements(boyScout);
-    }
-
-//    private Set<Requirement> validateRequirements(int parentId, boolean validate) {
-//        Set<Requirement> requirementSet = new LinkedHashSet<>();
-//        Set<String> reqNameSet = new HashSet<>();
-//
-//        for (Component component : pnlRequirementList.getComponents()) {
-//            if (!(component instanceof PnlRequirement)) {
-//                continue;
-//            }
-//
-//            if (!validate && ((PnlRequirement)component).getReqId() < 0) {
-//                continue;
-//            }
-//
-//            String reqName = ((PnlRequirement)component).getName().trim();
-//
-//            if (validate && reqName.isEmpty()) {
-//                Util.setError(lblRequirementError, "Requirement name cannot be left blank");
-//                return null;
-//            }
-//
-//            if (validate && !reqNameSet.add(reqName)) {
-//                Util.setError(lblRequirementError, "Requirement name '" + reqName + "' already exists");
-//                component.requestFocus();
-//                return null;
-//            }
-//
-//            if (validate && ((PnlRequirement)component).getDescription().trim().isEmpty()) {
-//                Util.setError(lblRequirementError, "Requirement description cannot be left blank");
-//                return null;
-//            }
-//
-//            Requirement requirement = new Requirement();
-//            if (parentId > 0) {
-//                requirement.setParentId(parentId);
-//            }
-//            requirement.setName(((PnlRequirement)component).getName());
-//            requirement.setDescription(((PnlRequirement) component).getDescription());
-//            requirement.setId(((PnlRequirement) component).getReqId());
-//            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
-//
-//            requirementSet.add(requirement);
-//        }
-//        return requirementSet;
-//    }
-
     private void setData() {
         if (boyScout == null) {
 //            boyScout = new Advancement();
@@ -692,29 +631,6 @@ public class BoyScoutPanel extends JPanel {
         listBoyScoutNames.setSelectedValue(boyScout, true);
     }
 
-//    private Set<Requirement> getRequirementSet(int parentId) {
-//        Set<Requirement> requirementSet = new LinkedHashSet<>();
-//
-//        for (Component component : pnlRequirementList.getComponents()) {
-//            if (!(component instanceof PnlRequirement)) {
-//                continue;
-//            }
-//
-//            Requirement requirement = new Requirement();
-//            if (parentId > 0) {
-//                requirement.setParentId(parentId);
-//            }
-//            requirement.setName(((PnlRequirement)component).getName());
-//            requirement.setDescription(((PnlRequirement) component).getDescription());
-//            requirement.setId(((PnlRequirement) component).getReqId());
-//            requirement.setTypeId(RequirementTypeConst.ADVANCEMENT.getId());
-//
-//            requirementSet.add(requirement);
-//        }
-//
-//        return requirementSet;
-//    }
-
     private void btnDeleteActionPerformed() {
         if (listBoyScoutNames.getSelectedValue() == null) {
             return;
@@ -737,14 +653,6 @@ public class BoyScoutPanel extends JPanel {
         clearAllErrors();
         clearData();
         enableControls(false);
-    }
-
-    private void changeToHand() {
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
-
-    private void setDefaultCursor() {
-        setCursor(Cursor.getDefaultCursor());
     }
 
     private void btnBadgeImageMouseReleased() {
