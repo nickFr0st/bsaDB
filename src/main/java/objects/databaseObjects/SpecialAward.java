@@ -10,12 +10,14 @@ public class SpecialAward {
     private int scoutTypeId;
     private String name;
     private String imgPath;
+    private String description;
 
     {
         id = -1;
         scoutId = -1;
         name = "";
         imgPath = "";
+        description = "";
     }
 
     public int getId() {
@@ -56,5 +58,13 @@ public class SpecialAward {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

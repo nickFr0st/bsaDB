@@ -117,6 +117,7 @@ public class DatabaseCreator {
                 " scoutTypeId INT NOT NULL," +
                 " name VARCHAR(225) NOT NULL," +
                 " imgPath VARCHAR(255) NULL," +
+                " description BLOB NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableSpecialAward);
 
