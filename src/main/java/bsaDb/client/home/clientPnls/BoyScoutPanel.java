@@ -75,8 +75,10 @@ public class BoyScoutPanel extends JPanel {
         barWaitPeriod.setForeground(GOOD);
         lblWaitPeriodDisplay.setText("no time requirement for this advancement");
 
-        barProgress.setForeground(AVG);
         barProgress.setBackground(Color.white);
+        barProgress.setForeground(AVG);
+        barProgress.setValue(0);
+        lblProgressDisplay.setText("");
     }
 
     public void populateBoyScoutNameList() {
