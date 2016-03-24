@@ -154,4 +154,28 @@ public class BoyScout implements Scout {
     public void setNote(String note) {
         this.note = note;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BoyScout boyScout = (BoyScout) o;
+
+        if (!name.equals(boyScout.name)) return false;
+        return birthDate.equals(boyScout.birthDate);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + birthDate.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

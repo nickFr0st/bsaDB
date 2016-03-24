@@ -59,38 +59,25 @@ public class UserPanel extends JPanel {
     }
 
     public void populateUserNameList() {
-        Collection<User> userList = CacheObject.getUserList();
-        List<String> userNameList = new ArrayList<>();
-        for (User user : userList) {
-            userNameList.add(user.getUserName());
-        }
-
-        listUserNames.setListData(Util.getSortedList(userNameList));
+        listUserNames.setListData(Util.getSortedList((Collection) CacheObject.getUserList()));
         listUserNames.revalidate();
     }
 
     private void txtSearchNameKeyReleased() {
-        // instead of the logic get this from a cached list
-        Collection<User> userList = CacheObject.getUserList();
-        List<String> userNameList = new ArrayList<>();
-        for (User user : userList) {
-            userNameList.add(user.getUserName());
-        }
-
         if (txtSearchName.isMessageDefault()) {
-            listUserNames.setListData(Util.getSortedList(userNameList));
+            listUserNames.setListData(Util.getSortedList((Collection) CacheObject.getUserList()));
             listUserNames.revalidate();
             return;
         }
 
-        List<String> filteredList = new ArrayList<>();
-        for (User user : userList) {
+        List<User> filteredList = new ArrayList<>();
+        for (User user : CacheObject.getUserList()) {
             if (user.getUserName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(user.getUserName());
+                filteredList.add(user);
             }
         }
 
-        listUserNames.setListData(Util.getSortedList(filteredList));
+        listUserNames.setListData(Util.getSortedList((ArrayList) filteredList));
         listUserNames.revalidate();
     }
 
@@ -108,7 +95,7 @@ public class UserPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        user = CacheObject.getUserByUserName(listUserNames.getSelectedValue().toString());
+        user = (User) listUserNames.getSelectedValue();
         loadData();
     }
 

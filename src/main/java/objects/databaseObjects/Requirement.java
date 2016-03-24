@@ -3,7 +3,7 @@ package objects.databaseObjects;
 /**
  * Created by Nathanael on 5/19/2015
  */
-public class Requirement {
+public class Requirement implements Compare {
 
     public static final int COL_NAME_LENGTH = 44;
 

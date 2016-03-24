@@ -2,6 +2,7 @@ package util;
 
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
+import objects.databaseObjects.Compare;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,22 +88,6 @@ public class Util {
         return value ? 1 : 0;
     }
 
-    public static String csvWrap(String str) {
-        if (isEmpty(str)) {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder(str);
-        int id = 0;
-        while (sb.indexOf("\"", id) >= 0) {
-            id = sb.indexOf("\"", id);
-            sb.insert(id, "\"");
-            id = id + 2;
-        }
-
-        return "\"" + sb.toString() + "\"";
-    }
-
     public static Frame getParent(Component panel) {
         return (JFrame) SwingUtilities.getWindowAncestor(panel);
     }
@@ -111,14 +96,14 @@ public class Util {
         return (JFrame) SwingUtilities.getWindowAncestor(dialog);
     }
 
-    public static Object[] getSortedList(List<String> nameList) {
-        if (Util.isEmpty(nameList)) {
+    public static Object[] getSortedList(Collection<Compare> compareList) {
+        if (Util.isEmpty(compareList)) {
             return new Object[0];
         }
 
         NameComparator comparator = new NameComparator();
-        TreeSet<String> sortedNames = new TreeSet<>(comparator);
-        sortedNames.addAll(nameList);
+        TreeSet<Compare> sortedNames = new TreeSet<>(comparator);
+        sortedNames.addAll(compareList);
         return sortedNames.toArray();
     }
 }

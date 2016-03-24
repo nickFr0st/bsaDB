@@ -3,7 +3,7 @@ package objects.databaseObjects;
 /**
  * Created by Nathanael on 5/18/2015
  */
-public class MeritBadge {
+public class MeritBadge implements Compare {
     public static final int COL_NAME_LENGTH = 254;
     public static final int COL_IMG_PATH_LENGTH = 254;
 
@@ -46,5 +46,25 @@ public class MeritBadge {
 
     public void setRequiredForEagle(boolean requiredForEagle) {
         this.requiredForEagle = requiredForEagle;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MeritBadge that = (MeritBadge) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

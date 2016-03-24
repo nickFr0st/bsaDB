@@ -21,10 +21,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author User #2
@@ -55,36 +53,28 @@ public class CampPanel extends JPanel {
     }
 
     public void populateCampNameList() {
-        List<String> CampNameList = new ArrayList<>();
-        for (Camp camp : LogicCamp.findAll()) {
-            CampNameList.add(camp.getName());
-        }
-
-        listCampoutNames.setListData(Util.getSortedList(CampNameList));
+        listCampoutNames.setListData(Util.getSortedList((LinkedHashSet) LogicCamp.findAll()));
         listCampoutNames.revalidate();
         listCampoutNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
-        List<String> campNameList = new ArrayList<>();
-        for (Camp campout : LogicCamp.findAll()) {
-            campNameList.add(campout.getName());
-        }
+        LinkedHashSet campSet = (LinkedHashSet) LogicCamp.findAll();
 
         if (txtSearchName.isMessageDefault()) {
-            listCampoutNames.setListData(Util.getSortedList(campNameList));
+            listCampoutNames.setListData(Util.getSortedList(campSet));
             listCampoutNames.revalidate();
             return;
         }
 
-        List<String> filteredList = new ArrayList<>();
-        for (Camp campout : LogicCamp.findAll()) {
+        List<Camp> filteredList = new ArrayList<>();
+        for (Camp campout : (LinkedHashSet<Camp>) campSet) {
             if (campout.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(campout.getName());
+                filteredList.add(campout);
             }
         }
 
-        listCampoutNames.setListData(Util.getSortedList(filteredList));
+        listCampoutNames.setListData(Util.getSortedList((ArrayList) filteredList));
         listCampoutNames.revalidate();
     }
 
@@ -102,7 +92,7 @@ public class CampPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        camp = LogicCamp.findByName(listCampoutNames.getSelectedValue().toString());
+        camp = (Camp) listCampoutNames.getSelectedValue();
         loadData();
     }
 
@@ -243,7 +233,7 @@ public class CampPanel extends JPanel {
 
         populateCampNameList();
 
-        listCampoutNames.setSelectedValue(camp.getName(), true);
+        listCampoutNames.setSelectedValue(camp, true);
     }
 
     private void setData() {
@@ -343,7 +333,7 @@ public class CampPanel extends JPanel {
 
 
         populateCampNameList();
-        listCampoutNames.setSelectedValue(camp.getName(), true);
+        listCampoutNames.setSelectedValue(camp, true);
     }
 
     private void btnDeleteActionPerformed() {

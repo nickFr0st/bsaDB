@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Nathanael on 3/8/2016
  */
-public class Camp {
+public class Camp implements Compare {
 
     public static final int COL_NAME_LENGTH = 90;
     public static final int COL_LOCATION_LENGTH = 255;
@@ -82,5 +82,29 @@ public class Camp {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Camp camp = (Camp) o;
+
+        if (scoutTypeId != camp.scoutTypeId) return false;
+        return name.equals(camp.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + scoutTypeId;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

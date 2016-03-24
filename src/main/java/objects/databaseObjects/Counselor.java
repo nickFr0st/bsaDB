@@ -3,7 +3,7 @@ package objects.databaseObjects;
 /**
  * Created by Malloch on 7/10/14
  */
-public class Counselor {
+public class Counselor implements Compare {
     public static final int COL_NAME_LENGTH = 90;
     public static final int COL_PHONE_NUMBER_LENGTH = 20;
 

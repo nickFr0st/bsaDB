@@ -82,38 +82,27 @@ public class BoyScoutPanel extends JPanel {
     }
 
     public void populateBoyScoutNameList() {
-        Set<BoyScout> boyScoutSet = LogicBoyScout.findAll();
-        List<String> boyScoutName = new ArrayList<>();
-        for (BoyScout boyScout : boyScoutSet) {
-            boyScoutName.add(boyScout.getName());
-        }
-
-        listBoyScoutNames.setListData(Util.getSortedList(boyScoutName));
+        listBoyScoutNames.setListData(Util.getSortedList((LinkedHashSet) LogicBoyScout.findAll()));
         listBoyScoutNames.revalidate();
         listBoyScoutNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
-        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        List<String> advancementNameList = new ArrayList<>();
-        for (Advancement advancement : advancementList) {
-            advancementNameList.add(advancement.getName());
-        }
-
+        LinkedHashSet boyScoutSet = (LinkedHashSet) LogicBoyScout.findAll();
         if (txtSearchName.isMessageDefault()) {
-            listBoyScoutNames.setListData(Util.getSortedList(advancementNameList));
+            listBoyScoutNames.setListData(Util.getSortedList(boyScoutSet));
             listBoyScoutNames.revalidate();
             return;
         }
 
-        List<String> filteredList = new ArrayList<>();
-        for (Advancement advancement : advancementList) {
-            if (advancement.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(advancement.getName());
+        List<BoyScout> filteredList = new ArrayList<>();
+        for (BoyScout boyScout : (LinkedHashSet<BoyScout>) boyScoutSet) {
+            if (boyScout.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
+                filteredList.add(boyScout);
             }
         }
 
-        listBoyScoutNames.setListData(Util.getSortedList(filteredList));
+        listBoyScoutNames.setListData(Util.getSortedList((ArrayList) filteredList));
         listBoyScoutNames.revalidate();
     }
 
@@ -131,7 +120,7 @@ public class BoyScoutPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        boyScout = (BoyScout) LogicBoyScout.findByName(listBoyScoutNames.getSelectedValue().toString());
+        boyScout = (BoyScout) listBoyScoutNames.getSelectedValue();
         loadData();
     }
 
@@ -558,7 +547,7 @@ public class BoyScoutPanel extends JPanel {
 
         populateBoyScoutNameList();
 
-        listBoyScoutNames.setSelectedValue(boyScout.getName(), true);
+        listBoyScoutNames.setSelectedValue(boyScout, true);
     }
 
     private void saveRecords(Set<Requirement> requirementSet, boolean newAdvancement) {
@@ -699,7 +688,7 @@ public class BoyScoutPanel extends JPanel {
 //        CacheObject.addToAdvancements(boyScout);
         populateBoyScoutNameList();
 
-        listBoyScoutNames.setSelectedValue(boyScout.getName(), true);
+        listBoyScoutNames.setSelectedValue(boyScout, true);
     }
 
 //    private Set<Requirement> getRequirementSet(int parentId) {

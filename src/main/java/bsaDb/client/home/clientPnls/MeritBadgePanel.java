@@ -66,36 +66,26 @@ public class MeritBadgePanel extends JPanel {
     }
 
     public void populateMeritBadgeNameList() {
-        List<String> meritBadgeNameList = new ArrayList<>();
-        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
-            meritBadgeNameList.add(meritBadge.getName());
-        }
-
-        listMeritBadgeNames.setListData(Util.getSortedList(meritBadgeNameList));
+        listMeritBadgeNames.setListData(Util.getSortedList((Collection) CacheObject.getMeritBadgeList()));
         listMeritBadgeNames.revalidate();
         listMeritBadgeNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
-        List<String> meritBadgeNameList = new ArrayList<>();
-        for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
-            meritBadgeNameList.add(meritBadge.getName());
-        }
-
         if (txtSearchName.isMessageDefault()) {
-            listMeritBadgeNames.setListData(Util.getSortedList(meritBadgeNameList));
+            listMeritBadgeNames.setListData(Util.getSortedList((Collection) CacheObject.getMeritBadgeList()));
             listMeritBadgeNames.revalidate();
             return;
         }
 
-        List<String> filteredList = new ArrayList<>();
+        List<MeritBadge> filteredList = new ArrayList<>();
         for (MeritBadge meritBadge : CacheObject.getMeritBadgeList()) {
             if (meritBadge.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(meritBadge.getName());
+                filteredList.add(meritBadge);
             }
         }
 
-        listMeritBadgeNames.setListData(Util.getSortedList(filteredList));
+        listMeritBadgeNames.setListData(Util.getSortedList((ArrayList) filteredList));
         listMeritBadgeNames.revalidate();
     }
 
@@ -113,7 +103,7 @@ public class MeritBadgePanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        meritBadge = CacheObject.getMeritBadge(listMeritBadgeNames.getSelectedValue().toString());
+        meritBadge = (MeritBadge) listMeritBadgeNames.getSelectedValue();
         loadData();
     }
 
@@ -298,7 +288,7 @@ public class MeritBadgePanel extends JPanel {
 
         populateMeritBadgeNameList();
 
-        listMeritBadgeNames.setSelectedValue(meritBadge.getName(), true);
+        listMeritBadgeNames.setSelectedValue(meritBadge, true);
     }
 
     private void saveRecords(Set<Requirement> requirementSet, boolean newMeritBadge, List<Counselor> counselorList) {
@@ -463,7 +453,7 @@ public class MeritBadgePanel extends JPanel {
         CacheObject.addToMeritBadges(meritBadge);
         populateMeritBadgeNameList();
 
-        listMeritBadgeNames.setSelectedValue(meritBadge.getName(), true);
+        listMeritBadgeNames.setSelectedValue(meritBadge, true);
     }
 
     private List<Requirement> getRequirementList(int parentId) {

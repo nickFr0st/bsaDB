@@ -3,7 +3,7 @@ package objects.databaseObjects;
 /**
  * Created by Nathanael on 5/12/2015
  */
-public class User {
+public class User implements Compare {
 
     public static final int COL_USER_NAME_LENGTH = 30;
     public static final int COL_NAME_LENGTH = 90;
@@ -136,5 +136,26 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return userName.equals(user.userName);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return userName.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return userName;
     }
 }

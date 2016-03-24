@@ -59,38 +59,27 @@ public class AdvancementPanel extends JPanel {
     }
 
     public void populateAdvancementNameList() {
-        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        List<String> advancementNameList = new ArrayList<>();
-        for (Advancement advancement : advancementList) {
-            advancementNameList.add(advancement.getName());
-        }
-
-        listAdvancementNames.setListData(Util.getSortedList(advancementNameList));
+        listAdvancementNames.setListData(Util.getSortedList((Collection) CacheObject.getAdvancementList()));
         listAdvancementNames.revalidate();
         listAdvancementNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
         Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        List<String> advancementNameList = new ArrayList<>();
-        for (Advancement advancement : advancementList) {
-            advancementNameList.add(advancement.getName());
-        }
-
         if (txtSearchName.isMessageDefault()) {
-            listAdvancementNames.setListData(Util.getSortedList(advancementNameList));
+            listAdvancementNames.setListData(Util.getSortedList((Collection) CacheObject.getAdvancementList()));
             listAdvancementNames.revalidate();
             return;
         }
 
-        List<String> filteredList = new ArrayList<>();
+        List<Advancement> filteredList = new ArrayList<>();
         for (Advancement advancement : advancementList) {
             if (advancement.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(advancement.getName());
+                filteredList.add(advancement);
             }
         }
 
-        listAdvancementNames.setListData(Util.getSortedList(filteredList));
+        listAdvancementNames.setListData(filteredList.toArray());
         listAdvancementNames.revalidate();
     }
 
@@ -108,7 +97,7 @@ public class AdvancementPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-        advancement = CacheObject.getAdvancement(listAdvancementNames.getSelectedValue().toString());
+        advancement = (Advancement) listAdvancementNames.getSelectedValue();
         loadData();
     }
 
@@ -218,7 +207,7 @@ public class AdvancementPanel extends JPanel {
 
         populateAdvancementNameList();
 
-        listAdvancementNames.setSelectedValue(advancement.getName(), true);
+        listAdvancementNames.setSelectedValue(advancement, true);
     }
 
     private void saveRecords(Set<Requirement> requirementSet, boolean newAdvancement) {
@@ -376,7 +365,7 @@ public class AdvancementPanel extends JPanel {
         CacheObject.addToAdvancements(advancement);
         populateAdvancementNameList();
 
-        listAdvancementNames.setSelectedValue(advancement.getName(), true);
+        listAdvancementNames.setSelectedValue(advancement, true);
     }
 
     private Set<Requirement> getRequirementSet(int parentId) {
