@@ -24,6 +24,8 @@ import util.Util;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -41,6 +43,8 @@ public class BoyScoutPanel extends JPanel {
     private final Color BAD = new Color(255, 0, 0);
 
     private BoyScout boyScout;
+
+    private DefaultTableModel tableModel;
 
     public BoyScoutPanel() {
         initComponents();
@@ -254,7 +258,7 @@ public class BoyScoutPanel extends JPanel {
     private void setWaitingPeriodBar() {
         Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
         Integer timeRequirement = advancement.getTimeRequirement();
-        if (timeRequirement == null) {
+        if (timeRequirement == null || timeRequirement == 0) {
             barWaitPeriod.setValue(barWaitPeriod.getMaximum());
             barWaitPeriod.setForeground(GOOD);
             lblWaitPeriodDisplay.setText("no time requirement for this advancement");
@@ -416,7 +420,7 @@ public class BoyScoutPanel extends JPanel {
         Calendar max = Calendar.getInstance();
         max.add(Calendar.YEAR, -14);
 
-        LocalDate maxDate = new LocalDate(max.get(Calendar.YEAR), max.get(Calendar.MONTH), max.get(Calendar.DATE));
+        LocalDate maxDate = new LocalDate(max.get(Calendar.YEAR), max.get(Calendar.MONTH) + 1, max.get(Calendar.DATE));
 
         Days days = Days.daysBetween(maxDate, birthDateTime);
 
@@ -793,6 +797,21 @@ public class BoyScoutPanel extends JPanel {
         cboRankDateActionPerformed();
     }
 
+    private void createUIComponents() {
+        tableModel = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed", "Notes"}, 0);
+
+        tblProgress = new JTable();
+        tblProgress.setBackground(Color.WHITE);
+
+        JTableHeader header = tblProgress.getTableHeader();
+        header.setBackground(new Color(51, 102, 153));
+        header.setForeground(Color.WHITE);
+        header.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+        tblProgress.setModel(tableModel);
+        tblProgress.setSurrendersFocusOnKeystroke(true);
+    }
+
 //    private void validateName() {
 //        validateAdvancementName();
 //    }
@@ -848,6 +867,8 @@ public class BoyScoutPanel extends JPanel {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        createUIComponents();
+
         TitlePanel pnlTitle = new TitlePanel();
         JPanel pnlContents = new JPanel();
         JPanel panel2 = new JPanel();
@@ -890,7 +911,6 @@ public class BoyScoutPanel extends JPanel {
         lblProgressDisplay = new JLabel();
         lblProgressTable = new JLabel();
         scrollPane3 = new JScrollPane();
-        tblProgress = new JTable();
         pnlContact = new JPanel();
         JLabel lblContactInfo = new JLabel();
         JLabel lblPhoneNumber = new JLabel();
@@ -1362,6 +1382,10 @@ public class BoyScoutPanel extends JPanel {
                                         //---- tblProgress ----
                                         tblProgress.setPreferredScrollableViewportSize(new Dimension(450, 150));
                                         tblProgress.setMaximumSize(new Dimension(2147483647, 200));
+                                        tblProgress.setBackground(Color.white);
+                                        tblProgress.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                        tblProgress.setForeground(Color.black);
+                                        tblProgress.setFillsViewportHeight(true);
                                         tblProgress.setName("tblProgress");
                                         scrollPane3.setViewportView(tblProgress);
                                     }
