@@ -3,7 +3,7 @@ package objects.databaseObjects;
 /**
  * Created by Nathanael on 5/12/2015
  */
-public class User implements Compare {
+public class User implements  Comparable<User> {
 
     public static final int COL_USER_NAME_LENGTH = 30;
     public static final int COL_NAME_LENGTH = 90;
@@ -157,5 +157,10 @@ public class User implements Compare {
     @Override
     public String toString() {
         return userName;
+    }
+
+    @Override
+    public int compareTo(User user) {
+        return name.compareTo(user.name);
     }
 }

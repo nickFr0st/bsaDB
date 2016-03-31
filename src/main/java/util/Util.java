@@ -3,6 +3,7 @@ package util;
 import bsaDb.client.customComponents.JPasswordFieldDefaultText;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import objects.databaseObjects.Compare;
+import objects.databaseObjects.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -103,6 +104,17 @@ public class Util {
 
         NameComparator comparator = new NameComparator();
         TreeSet<Compare> sortedNames = new TreeSet<>(comparator);
+        sortedNames.addAll(compareList);
+        return sortedNames.toArray();
+    }
+
+    public static Object[] getSortedUserList(Collection<User> compareList) {
+        if (Util.isEmpty(compareList)) {
+            return new Object[0];
+        }
+
+        UserNameComparator comparator = new UserNameComparator();
+        TreeSet<User> sortedNames = new TreeSet<>(comparator);
         sortedNames.addAll(compareList);
         return sortedNames.toArray();
     }

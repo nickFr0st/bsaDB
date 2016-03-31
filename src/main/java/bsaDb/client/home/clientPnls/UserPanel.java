@@ -25,7 +25,6 @@ import java.awt.event.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -59,13 +58,13 @@ public class UserPanel extends JPanel {
     }
 
     public void populateUserNameList() {
-        listUserNames.setListData(Util.getSortedList((Collection) CacheObject.getUserList()));
+        listUserNames.setListData(Util.getSortedUserList(CacheObject.getUserList()));
         listUserNames.revalidate();
     }
 
     private void txtSearchNameKeyReleased() {
         if (txtSearchName.isMessageDefault()) {
-            listUserNames.setListData(Util.getSortedList((Collection) CacheObject.getUserList()));
+            listUserNames.setListData(Util.getSortedUserList(CacheObject.getUserList()));
             listUserNames.revalidate();
             return;
         }
@@ -77,7 +76,7 @@ public class UserPanel extends JPanel {
             }
         }
 
-        listUserNames.setListData(Util.getSortedList((ArrayList) filteredList));
+        listUserNames.setListData(Util.getSortedUserList((ArrayList) filteredList));
         listUserNames.revalidate();
     }
 
