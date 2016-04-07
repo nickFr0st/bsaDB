@@ -1,5 +1,7 @@
 package objects.databaseObjects;
 
+import java.util.Date;
+
 /**
  * Created by Malloch on 3/8/2016
  */
@@ -10,6 +12,8 @@ public class ScoutRequirement {
     private int scoutTypeId;
     private int advancementId;
     private int requirementId;
+    private Date dateCompleted;
+    private String note;
 
     public ScoutRequirement() {
         id = -1;
@@ -53,5 +57,21 @@ public class ScoutRequirement {
 
     public void setRequirementId(int requirementId) {
         this.requirementId = requirementId;
+    }
+
+    public Date getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(Date dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

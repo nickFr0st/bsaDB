@@ -127,6 +127,8 @@ public class DatabaseCreator {
                 " scoutTypeId INT NOT NULL," +
                 " advancementId INT NOT NULL," +
                 " requirementId INT NOT NULL," +
+                " dateCompleted DATE NOT NULL," +
+                " note BLOB NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableScoutRequirement);
 

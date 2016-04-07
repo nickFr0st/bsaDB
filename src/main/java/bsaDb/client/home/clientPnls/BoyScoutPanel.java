@@ -216,8 +216,40 @@ public class BoyScoutPanel extends JPanel {
         setWaitingPeriodBar();
         setProgressBar();
 
+        setAdvancementTable();
+    }
 
-        // todo: handle advancement table
+    private void setAdvancementTable() {
+        Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
+        if (advancement == null) {
+            // clear table
+            return;
+        }
+
+        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+        if (requirementSet.isEmpty()) {
+            // clear table
+            return;
+        }
+
+        Set<ScoutRequirement> scoutRequirementSet = LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), advancement.getId());
+
+        for (Requirement requirement : requirementSet) {
+            Object[] row = new Object[4];
+            ScoutRequirement scoutRequirement = null;
+            for (ScoutRequirement scoutReq : scoutRequirementSet) {
+                if (scoutReq.getRequirementId() == requirement.getId()) {
+                    scoutRequirement = scoutReq;
+                    break;
+                }
+            }
+
+            if (scoutRequirement == null) {
+                tableModel.addRow(new Object[]{Boolean.FALSE, requirement.getName(), "", ""});
+            } else {
+                tableModel.addRow(new Object[]{Boolean.TRUE, requirement.getName(), Util.DISPLAY_DATE_FORMAT.format(scoutRequirement.getDateCompleted()), scoutRequirement.getNote()});
+            }
+        }
     }
 
     private void setProgressBar() {
@@ -798,7 +830,26 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void createUIComponents() {
-        tableModel = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed", "Notes"}, 0);
+        tableModel = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed", "Notes"}, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return Boolean.class;
+                    default:
+                        return String.class;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return true;
+                }
+
+                return false;
+            }
+        };
 
         tblProgress = new JTable();
         tblProgress.setBackground(Color.WHITE);
@@ -909,7 +960,9 @@ public class BoyScoutPanel extends JPanel {
         barProgress = new JProgressBar();
         lblWaitPeriodDisplay = new JLabel();
         lblProgressDisplay = new JLabel();
+        panel1 = new JPanel();
         lblProgressTable = new JLabel();
+        btnEditAdvancementProgress = new JLabel();
         scrollPane3 = new JScrollPane();
         pnlContact = new JPanel();
         JLabel lblContactInfo = new JLabel();
@@ -1366,14 +1419,39 @@ public class BoyScoutPanel extends JPanel {
                                         GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                                         new Insets(0, 0, 5, 0), 0, 0));
 
-                                    //---- lblProgressTable ----
-                                    lblProgressTable.setText("Progress of Current Advancement");
-                                    lblProgressTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblProgressTable.setForeground(Color.black);
-                                    lblProgressTable.setName("lblProgressTable");
-                                    pnlGeneral.add(lblProgressTable, new GridBagConstraints(0, 12, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 0, 5, 5), 0, 0));
+                                    //======== panel1 ========
+                                    {
+                                        panel1.setOpaque(false);
+                                        panel1.setName("panel1");
+                                        panel1.setLayout(new GridBagLayout());
+                                        ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {198, 0, 0};
+                                        ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0};
+                                        ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+                                        ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
+
+                                        //---- lblProgressTable ----
+                                        lblProgressTable.setText("Progress of Current Advancement");
+                                        lblProgressTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                        lblProgressTable.setForeground(Color.black);
+                                        lblProgressTable.setName("lblProgressTable");
+                                        panel1.add(lblProgressTable, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- btnEditAdvancementProgress ----
+                                        btnEditAdvancementProgress.setIcon(new ImageIcon(getClass().getResource("/images/edit.png")));
+                                        btnEditAdvancementProgress.setVerticalAlignment(SwingConstants.BOTTOM);
+                                        btnEditAdvancementProgress.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnEditAdvancementProgress.setPreferredSize(new Dimension(20, 20));
+                                        btnEditAdvancementProgress.setToolTipText("Edit selected advancement");
+                                        btnEditAdvancementProgress.setName("btnEditAdvancementProgress");
+                                        panel1.add(btnEditAdvancementProgress, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 0), 0, 0));
+                                    }
+                                    pnlGeneral.add(panel1, new GridBagConstraints(0, 12, 6, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 0), 0, 0));
 
                                     //======== scrollPane3 ========
                                     {
@@ -1959,7 +2037,9 @@ public class BoyScoutPanel extends JPanel {
     private JProgressBar barProgress;
     private JLabel lblWaitPeriodDisplay;
     private JLabel lblProgressDisplay;
+    private JPanel panel1;
     private JLabel lblProgressTable;
+    private JLabel btnEditAdvancementProgress;
     private JScrollPane scrollPane3;
     private JTable tblProgress;
     private JPanel pnlContact;
