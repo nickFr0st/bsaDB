@@ -64,6 +64,9 @@ public enum KeyConst {
 
     // Counselor
     BADGE_ID("badgeId"),
+
+    // Special Awards
+    DATE_RECEIVED("dateReceived"),
     ;
 
     String name;

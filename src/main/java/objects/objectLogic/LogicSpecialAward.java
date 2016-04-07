@@ -62,6 +62,7 @@ public class LogicSpecialAward {
                 specialAward.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
                 specialAward.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
                 specialAward.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                specialAward.setDateReceived(rs.getDate(KeyConst.DATE_RECEIVED.getName()));
 
                 specialAwardList.add(specialAward);
             }

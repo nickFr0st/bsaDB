@@ -144,7 +144,7 @@ public class BoyScoutPanel extends JPanel {
         List<SpecialAward> specialAwardList = LogicSpecialAward.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
         if (!Util.isEmpty(specialAwardList)) {
             for (SpecialAward specialAward : specialAwardList) {
-                tblModelSpecialAwards.addRow(new Object[]{specialAward.getName(), specialAward.getDescription(), specialAward.getDateReceived()});
+                tblModelSpecialAwards.addRow(new Object[]{specialAward.getName(), specialAward.getDescription(), Util.DISPLAY_DATE_FORMAT.format(specialAward.getDateReceived())});
             }
         }
 
