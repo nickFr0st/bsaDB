@@ -67,6 +67,31 @@ public class LogicMeritBadge {
         return null;
     }
 
+    public static MeritBadge findById(int meritBadgeId) {
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM meritBadge WHERE id = " + meritBadgeId);
+
+            if (rs.next()) {
+                MeritBadge meritBadge = new MeritBadge();
+                meritBadge.setId(rs.getInt(KeyConst.ID.getName()));
+                meritBadge.setName(rs.getString(KeyConst.NAME.getName()));
+                meritBadge.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+                meritBadge.setRequiredForEagle(rs.getBoolean(KeyConst.REQUIRED_FOR_EAGLE.getName()));
+                return meritBadge;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
+
     public static synchronized MeritBadge save(final MeritBadge meritBadge) {
         if (meritBadge == null) {
             return null;

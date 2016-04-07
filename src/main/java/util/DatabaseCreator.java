@@ -116,8 +116,8 @@ public class DatabaseCreator {
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " name VARCHAR(225) NOT NULL," +
-                " imgPath VARCHAR(255) NULL," +
                 " description BLOB NULL," +
+                " dateReceived DATE NOT NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableSpecialAward);
 
@@ -128,9 +128,16 @@ public class DatabaseCreator {
                 " advancementId INT NOT NULL," +
                 " requirementId INT NOT NULL," +
                 " dateCompleted DATE NOT NULL," +
-                " note BLOB NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableScoutRequirement);
+
+        String tableScoutMeritBadge = "CREATE TABLE scoutMeritBadge " +
+                "(id INT NOT NULL," +
+                " scoutId INT NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
+                " meritBadgeId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableScoutMeritBadge);
 
         String tableCamp = "CREATE TABLE camp " +
                 "(id INT NOT NULL," +

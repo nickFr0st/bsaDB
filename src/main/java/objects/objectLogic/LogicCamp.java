@@ -113,6 +113,34 @@ public class LogicCamp {
         return camp;
     }
 
+    public static Camp findById(int campId) {
+        Camp camp = null;
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return camp;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM camp WHERE id = " + campId);
+
+            if (rs.next()) {
+                camp = new Camp();
+                camp.setId(rs.getInt(KeyConst.ID.getName()));
+                camp.setName(rs.getString(KeyConst.NAME.getName()));
+                camp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                camp.setLocation(rs.getString(KeyConst.LOCATION.getName()));
+                camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
+                camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
+                camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+
+        return camp;
+    }
+
     public static synchronized Camp save(final Camp camp) {
         if (camp == null) {
              return null;

@@ -33,7 +33,6 @@ public class LogicScoutRequirement {
                 scoutRequirement.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
                 scoutRequirement.setRequirementId(rs.getInt(KeyConst.REQUIREMENT_ID.getName()));
                 scoutRequirement.setDateCompleted(rs.getDate(KeyConst.REQUIREMENT_DATE_COMPLETED.getName()));
-                scoutRequirement.setNote(rs.getString(KeyConst.NOTE.getName()));
                 scoutRequirementSet.add(scoutRequirement);
             }
 

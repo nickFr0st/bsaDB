@@ -3,14 +3,14 @@ package objects.databaseObjects;
 /**
  * Created by Malloch on 3/8/2016
  */
-public class ScoutAdvancement {
+public class ScoutMeritBadge {
 
     private int id;
     private int scoutId;
     private int scoutTypeId;
-    private int advancementId;
+    private int meritBadgeId;
 
-    public ScoutAdvancement() {
+    public ScoutMeritBadge() {
         id = -1;
     }
 
@@ -38,11 +38,11 @@ public class ScoutAdvancement {
         this.scoutTypeId = scoutTypeId;
     }
 
-    public int getAdvancementId() {
-        return advancementId;
+    public int getMeritBadgeId() {
+        return meritBadgeId;
     }
 
-    public void setAdvancementId(int advancementId) {
-        this.advancementId = advancementId;
+    public void setMeritBadgeId(int meritBadgeId) {
+        this.meritBadgeId = meritBadgeId;
     }
 }

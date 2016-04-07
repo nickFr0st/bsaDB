@@ -2,6 +2,7 @@ package objects.objectLogic;
 
 import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
+import objects.databaseObjects.SpecialAward;
 import util.MySqlConnector;
 
 import java.sql.ResultSet;
@@ -41,6 +42,35 @@ public class LogicSpecialAward {
         }
 
         return accessRightList;
+    }
+
+    public static List<SpecialAward> findAllByScoutIdAndScoutTypeId(int scoutId, int scoutTypeId) {
+        List<SpecialAward> specialAwardList = new ArrayList<>();
+
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return specialAwardList;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM specialAward WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId + " ORDER BY name");
+
+            while (rs.next()) {
+                SpecialAward specialAward = new SpecialAward();
+                specialAward.setId(rs.getInt(KeyConst.ID.getName()));
+                specialAward.setName(rs.getString(KeyConst.NAME.getName()));
+                specialAward.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
+                specialAward.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+                specialAward.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+
+                specialAwardList.add(specialAward);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
+        return specialAwardList;
     }
 
     public static synchronized AccessRight save(final AccessRight accessRight) {

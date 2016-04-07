@@ -13,7 +13,6 @@ public class ScoutRequirement {
     private int advancementId;
     private int requirementId;
     private Date dateCompleted;
-    private String note;
 
     public ScoutRequirement() {
         id = -1;
@@ -65,13 +64,5 @@ public class ScoutRequirement {
 
     public void setDateCompleted(Date dateCompleted) {
         this.dateCompleted = dateCompleted;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 }

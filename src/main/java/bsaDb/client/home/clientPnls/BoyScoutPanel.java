@@ -11,10 +11,7 @@ import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.*;
-import objects.objectLogic.LogicBoyScout;
-import objects.objectLogic.LogicRequirement;
-import objects.objectLogic.LogicScoutCamp;
-import objects.objectLogic.LogicScoutRequirement;
+import objects.objectLogic.*;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -45,6 +42,7 @@ public class BoyScoutPanel extends JPanel {
     private BoyScout boyScout;
 
     private DefaultTableModel tableModel;
+    private DefaultTableModel tblModelSpecialAwards;
 
     public BoyScoutPanel() {
         initComponents();
@@ -143,7 +141,32 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void loadDetailsTab() {
-        // todo: handle this information
+        List<SpecialAward> specialAwardList = LogicSpecialAward.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(specialAwardList)) {
+            for (SpecialAward specialAward : specialAwardList) {
+                tblModelSpecialAwards.addRow(new Object[]{specialAward.getName(), specialAward.getDescription(), specialAward.getDateReceived()});
+            }
+        }
+
+        Set<ScoutMeritBadge> scoutMeritBadgeSet = LogicScoutMeritBadge.findByAllScoutIdScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(scoutMeritBadgeSet)) {
+            List<MeritBadge> meritBadgeList = new ArrayList<>();
+            for (ScoutMeritBadge scoutMeritBadge : scoutMeritBadgeSet) {
+                meritBadgeList.add(LogicMeritBadge.findById(scoutMeritBadge.getMeritBadgeId()));
+            }
+
+            listMeritBadges.setListData(meritBadgeList.toArray());
+        }
+
+        List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(scoutCampList)) {
+            List<Camp> campList = new ArrayList<>();
+            for (ScoutCamp scoutCamp : scoutCampList) {
+                campList.add(LogicCamp.findById(scoutCamp.getCampId()));
+            }
+
+            listCamps.setListData(campList.toArray());
+        }
     }
 
     private void loadContactTab() {
@@ -245,9 +268,9 @@ public class BoyScoutPanel extends JPanel {
             }
 
             if (scoutRequirement == null) {
-                tableModel.addRow(new Object[]{Boolean.FALSE, requirement.getName(), "", ""});
+                tableModel.addRow(new Object[]{Boolean.FALSE, requirement.getName(), ""});
             } else {
-                tableModel.addRow(new Object[]{Boolean.TRUE, requirement.getName(), Util.DISPLAY_DATE_FORMAT.format(scoutRequirement.getDateCompleted()), scoutRequirement.getNote()});
+                tableModel.addRow(new Object[]{Boolean.TRUE, requirement.getName(), Util.DISPLAY_DATE_FORMAT.format(scoutRequirement.getDateCompleted())});
             }
         }
     }
@@ -830,7 +853,32 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void createUIComponents() {
-        tableModel = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed", "Notes"}, 0) {
+        createSpecialAwardsTable();
+        createProgressTable();
+    }
+
+    private void createSpecialAwardsTable() {
+        tblModelSpecialAwards = new DefaultTableModel(new Object[] {"Name", "Description", "Date Received"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tblSpecialAwards = new JTable();
+        tblSpecialAwards.setBackground(Color.WHITE);
+        tblSpecialAwards.setFillsViewportHeight(true);
+
+        JTableHeader header = tblSpecialAwards.getTableHeader();
+        header.setBackground(new Color(51, 102, 153));
+        header.setForeground(Color.WHITE);
+        header.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+        tblSpecialAwards.setModel(tblModelSpecialAwards);
+    }
+
+    private void createProgressTable() {
+        tableModel = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed"}, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
@@ -843,10 +891,6 @@ public class BoyScoutPanel extends JPanel {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (column == 0) {
-                    return true;
-                }
-
                 return false;
             }
         };
@@ -861,6 +905,10 @@ public class BoyScoutPanel extends JPanel {
 
         tblProgress.setModel(tableModel);
         tblProgress.setSurrendersFocusOnKeystroke(true);
+    }
+
+    private void btnEditAdvancementProgressMouseReleased() {
+        // TODO add your code here
     }
 
 //    private void validateName() {
@@ -993,7 +1041,6 @@ public class BoyScoutPanel extends JPanel {
         btnRemoveAward = new JLabel();
         lblRequirementError = new JLabel();
         scrollPane5 = new JScrollPane();
-        tblSpecialAwards = new JTable();
         JPanel panel9 = new JPanel();
         JLabel lblMeritBadges = new JLabel();
         btnAddMeritBadge = new JLabel();
@@ -1445,6 +1492,12 @@ public class BoyScoutPanel extends JPanel {
                                         btnEditAdvancementProgress.setPreferredSize(new Dimension(20, 20));
                                         btnEditAdvancementProgress.setToolTipText("Edit selected advancement");
                                         btnEditAdvancementProgress.setName("btnEditAdvancementProgress");
+                                        btnEditAdvancementProgress.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnEditAdvancementProgressMouseReleased();
+                                            }
+                                        });
                                         panel1.add(btnEditAdvancementProgress, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 0), 0, 0));
@@ -1760,6 +1813,7 @@ public class BoyScoutPanel extends JPanel {
 
                                         //---- tblSpecialAwards ----
                                         tblSpecialAwards.setPreferredScrollableViewportSize(new Dimension(450, 100));
+                                        tblSpecialAwards.setBackground(Color.white);
                                         tblSpecialAwards.setName("tblSpecialAwards");
                                         scrollPane5.setViewportView(tblSpecialAwards);
                                     }

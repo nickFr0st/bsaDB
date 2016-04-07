@@ -1,5 +1,7 @@
 package objects.databaseObjects;
 
+import java.util.Date;
+
 /**
  * Created by Nathanael on 5/16/2015
  */
@@ -9,14 +11,13 @@ public class SpecialAward {
     private int scoutId;
     private int scoutTypeId;
     private String name;
-    private String imgPath;
     private String description;
+    private Date dateReceived;
 
     {
         id = -1;
         scoutId = -1;
         name = "";
-        imgPath = "";
         description = "";
     }
 
@@ -52,19 +53,19 @@ public class SpecialAward {
         this.name = name;
     }
 
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDateReceived() {
+        return dateReceived;
+    }
+
+    public void setDateReceived(Date dateReceived) {
+        this.dateReceived = dateReceived;
     }
 }

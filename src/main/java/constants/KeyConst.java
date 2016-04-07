@@ -36,6 +36,7 @@ public enum KeyConst {
     NOTE("note"),
     REQUIREMENT_ID("requirementId"),
     REQUIREMENT_DATE_COMPLETED("dateCompleted"),
+    MERIT_BADGE_ID("meritBadgeId"),
 
     // Camp
     CAMP_ID("campId"),
