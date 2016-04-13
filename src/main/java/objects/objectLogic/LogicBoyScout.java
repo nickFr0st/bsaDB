@@ -155,8 +155,8 @@ public class LogicBoyScout {
         }
     }
 
-    public static synchronized void delete(final User user) {
-        if (user == null || user.getId() <= 1) {
+    public static synchronized void delete(final BoyScout boyScout) {
+        if (boyScout == null || boyScout.getId() < 1) {
              return;
         }
 
@@ -164,7 +164,7 @@ public class LogicBoyScout {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    deleteUser(user.getId());
+                    deleteBoyScout(boyScout.getId());
                 }
             });
             t.start();
@@ -174,10 +174,10 @@ public class LogicBoyScout {
         }
     }
 
-    private static void deleteUser(Integer id) {
+    private static void deleteBoyScout(Integer id) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM user WHERE id = " + id);
+            statement.executeUpdate("DELETE FROM boyScout WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
         }

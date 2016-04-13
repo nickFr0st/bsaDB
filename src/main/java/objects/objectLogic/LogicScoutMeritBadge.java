@@ -3,6 +3,7 @@ package objects.objectLogic;
 import constants.KeyConst;
 import objects.databaseObjects.ScoutMeritBadge;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -39,5 +40,43 @@ public class LogicScoutMeritBadge {
         }
 
         return scoutMeritBadgeSet;
+    }
+
+    public static synchronized void delete(Set<ScoutMeritBadge> scoutMeritBadgeSet) {
+        if (Util.isEmpty(scoutMeritBadgeSet)) {
+            return;
+        }
+
+        for (ScoutMeritBadge scoutMeritBadge : scoutMeritBadgeSet) {
+            delete(scoutMeritBadge.getId());
+        }
+    }
+
+    public static synchronized void delete(final Integer id) {
+        if (id < 1) {
+            return;
+        }
+
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteScoutMeritBadge(id);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteScoutMeritBadge(Integer id) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM scoutMeritBadge WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

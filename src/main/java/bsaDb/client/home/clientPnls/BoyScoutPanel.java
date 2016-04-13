@@ -780,13 +780,36 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        int advancementId = boyScout.getId();
+        int boyScoutId = boyScout.getId();
 
-//        Set<Requirement> requirementSet = validateRequirements(advancement.getId(), false);
-//        LogicRequirement.delete(requirementSet);
-//        LogicAdvancement.delete(boyScout);
+        List<SpecialAward> specialAwardList = LogicSpecialAward.findAllByScoutIdAndScoutTypeId(boyScoutId, ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(specialAwardList)) {
+            LogicSpecialAward.delete(specialAwardList);
+        }
 
-        CacheObject.removeFromAdvancements(advancementId);
+        Set<ScoutMeritBadge> scoutMeritBadgeList = LogicScoutMeritBadge.findByAllScoutIdScoutTypeId(boyScoutId, ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(scoutMeritBadgeList)) {
+            LogicScoutMeritBadge.delete(scoutMeritBadgeList);
+        }
+
+        List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScoutId, ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(scoutCampList)) {
+            LogicScoutCamp.delete(scoutCampList);
+        }
+
+        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+        List<ScoutRequirement> scoutRequirementList = new ArrayList<>();
+        if (!Util.isEmpty(advancementList)) {
+            for (Advancement advancement : advancementList) {
+                scoutRequirementList.addAll(LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScoutId, ScoutTypeConst.BOY_SCOUT.getId(), advancement.getId()));
+            }
+        }
+
+        if (!Util.isEmpty(scoutRequirementList)) {
+            LogicScoutRequirement.delete(scoutRequirementList);
+        }
+
+        LogicBoyScout.delete(boyScout);
 
         populateBoyScoutNameList();
 

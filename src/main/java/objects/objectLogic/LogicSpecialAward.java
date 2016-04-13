@@ -4,6 +4,7 @@ import constants.KeyConst;
 import objects.databaseObjects.AccessRight;
 import objects.databaseObjects.SpecialAward;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -118,6 +119,16 @@ public class LogicSpecialAward {
         }
     }
 
+    public static synchronized void delete(List<SpecialAward> specialAwardList) {
+        if (Util.isEmpty(specialAwardList)) {
+            return;
+        }
+
+        for (SpecialAward specialAward : specialAwardList) {
+            delete(specialAward.getId());
+        }
+    }
+
     public static synchronized void delete(final Integer id) {
         if (id < 1) {
             return;
@@ -127,7 +138,7 @@ public class LogicSpecialAward {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    deleteAccessRight(id);
+                    deleteSpecialAward(id);
                 }
             });
             t.start();
@@ -137,10 +148,10 @@ public class LogicSpecialAward {
         }
     }
 
-    private static void deleteAccessRight(Integer id) {
+    private static void deleteSpecialAward(Integer id) {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM accessRight WHERE id = " + id);
+            statement.executeUpdate("DELETE FROM specialAward WHERE id = " + id);
         } catch (Exception e) {
             e.printStackTrace();
         }

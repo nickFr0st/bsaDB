@@ -3,6 +3,7 @@ package objects.objectLogic;
 import constants.KeyConst;
 import objects.databaseObjects.ScoutCamp;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -144,5 +145,43 @@ public class LogicScoutCamp {
         }
 
         return scoutCampList;
+    }
+
+    public static synchronized void delete(List<ScoutCamp> scoutCampList) {
+        if (Util.isEmpty(scoutCampList)) {
+            return;
+        }
+
+        for (ScoutCamp scoutCamp : scoutCampList) {
+            delete(scoutCamp.getId());
+        }
+    }
+
+    public static synchronized void delete(final Integer id) {
+        if (id < 1) {
+            return;
+        }
+
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteScoutCamp(id);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteScoutCamp(Integer id) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM scoutCamp WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

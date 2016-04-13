@@ -3,10 +3,12 @@ package objects.objectLogic;
 import constants.KeyConst;
 import objects.databaseObjects.ScoutRequirement;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,5 +43,43 @@ public class LogicScoutRequirement {
         }
 
         return scoutRequirementSet;
+    }
+
+    public static synchronized void delete(List<ScoutRequirement> scoutCampList) {
+        if (Util.isEmpty(scoutCampList)) {
+            return;
+        }
+
+        for (ScoutRequirement scoutRequirement : scoutCampList) {
+            delete(scoutRequirement.getId());
+        }
+    }
+
+    public static synchronized void delete(final Integer id) {
+        if (id < 1) {
+            return;
+        }
+
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteScoutRequirement(id);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteScoutRequirement(Integer id) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM scoutRequirement WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
