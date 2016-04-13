@@ -75,16 +75,22 @@ public class LogicSpecialAward {
         return specialAwardList;
     }
 
-    public static synchronized AccessRight save(final AccessRight accessRight) {
-        if (accessRight == null) {
-            return null;
+    public static synchronized void save(List<SpecialAward> specialAwardList) {
+        if (Util.isEmpty(specialAwardList)) {
+            return;
         }
 
+        for (SpecialAward specialAward : specialAwardList) {
+            save(specialAward);
+        }
+    }
+
+    public static synchronized SpecialAward save(final SpecialAward specialAward) {
         try {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    saveAccessRight(accessRight);
+                    saveSpecialAward(specialAward);
                 }
             });
             t.start();
@@ -93,24 +99,24 @@ public class LogicSpecialAward {
             e.printStackTrace();
         }
 
-        return accessRight;
+        return specialAward;
     }
 
-    private static void saveAccessRight(AccessRight accessRight) {
-        if (accessRight.getId() < 0) {
-            accessRight.setId(MySqlConnector.getInstance().getNextId("accessRight"));
-        }
-
-        if (accessRight.getId() < 0) {
-            return;
+    private static void saveSpecialAward(SpecialAward specialAward) {
+        if (specialAward.getId() < 0) {
+            specialAward.setId(MySqlConnector.getInstance().getNextId("specialAward"));
         }
 
         try {
             StringBuilder query = new StringBuilder();
-            query.append("INSERT INTO accessRight VALUES(");
-            query.append(accessRight.getId()).append(", ");
-            query.append(accessRight.getUserId()).append(", ");
-            query.append(accessRight.getRightId()).append(")");
+            query.append("INSERT INTO specialAward VALUES(");
+            query.append(specialAward.getId()).append(", ");
+            query.append(specialAward.getScoutId()).append(", ");
+            query.append(specialAward.getScoutTypeId()).append(", ");
+            query.append("'").append(specialAward.getName().replace("'", "''")).append("', ");
+            query.append("'").append(specialAward.getDescription().replace("'", "''")).append("', ");
+            query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(specialAward.getDateReceived())).append("'");
+            query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate(query.toString());

@@ -210,4 +210,30 @@ public class LogicRequirement {
             e.printStackTrace();
         }
     }
+
+    public static Requirement findByParentIdAndTypeIdAndName(int parentId, int typeId, String requirementName) {
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM requirement WHERE parentId = " + parentId + " AND typeId = " + typeId + " AND name LIKE '" + requirementName + "' ORDER BY id");
+
+            if (rs.next()) {
+                Requirement requirement = new Requirement();
+                requirement.setId(rs.getInt(KeyConst.ID.getName()));
+                requirement.setName(rs.getString(KeyConst.NAME.getName()));
+                requirement.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
+                requirement.setParentId(rs.getInt(KeyConst.PARENT_ID.getName()));
+                requirement.setTypeId(rs.getInt(KeyConst.TYPE_ID.getName()));
+                return requirement;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
 }

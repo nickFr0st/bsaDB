@@ -82,4 +82,54 @@ public class LogicScoutRequirement {
             e.printStackTrace();
         }
     }
+
+    public static synchronized void save(List<ScoutRequirement> scoutRequirementList) {
+        if (Util.isEmpty(scoutRequirementList)) {
+            return;
+        }
+
+        for (ScoutRequirement scoutRequirement : scoutRequirementList) {
+            save(scoutRequirement);
+        }
+    }
+
+    public static synchronized ScoutRequirement save(final ScoutRequirement scoutRequirement) {
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    saveScoutRequirement(scoutRequirement);
+                }
+            });
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return scoutRequirement;
+    }
+
+    private static void saveScoutRequirement(ScoutRequirement scoutRequirement) {
+        if (scoutRequirement.getId() < 0) {
+            scoutRequirement.setId(MySqlConnector.getInstance().getNextId("scoutRequirement"));
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO scoutRequirement VALUES(");
+            query.append(scoutRequirement.getId()).append(", ");
+            query.append(scoutRequirement.getScoutId()).append(", ");
+            query.append(scoutRequirement.getScoutTypeId()).append(", ");
+            query.append(scoutRequirement.getAdvancementId()).append(", ");
+            query.append(scoutRequirement.getRequirementId()).append(", ");
+            query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(scoutRequirement.getDateCompleted())).append("'");
+            query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

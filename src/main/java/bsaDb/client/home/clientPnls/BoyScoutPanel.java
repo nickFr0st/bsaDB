@@ -4,7 +4,6 @@
 
 package bsaDb.client.home.clientPnls;
 
-import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
@@ -20,12 +19,13 @@ import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class BoyScoutPanel extends JPanel {
 
     private BoyScout boyScout;
 
-    private DefaultTableModel tableModel;
+    private DefaultTableModel tblModelProgress;
     private DefaultTableModel tblModelSpecialAwards;
 
     public BoyScoutPanel() {
@@ -234,22 +234,29 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setAdvancementTable() {
-        Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
+        Advancement advancement = (Advancement)cboRank.getSelectedItem();
         if (advancement == null) {
-            // clear table
+            if (tblModelProgress.getRowCount() > 0) {
+                for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
+                    tblModelProgress.removeRow(i);
+                }
+            }
             return;
         }
 
         Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
         if (requirementSet.isEmpty()) {
-            // clear table
+            if (tblModelProgress.getRowCount() > 0) {
+                for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
+                    tblModelProgress.removeRow(i);
+                }
+            }
             return;
         }
 
         Set<ScoutRequirement> scoutRequirementSet = LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), advancement.getId());
 
         for (Requirement requirement : requirementSet) {
-            Object[] row = new Object[4];
             ScoutRequirement scoutRequirement = null;
             for (ScoutRequirement scoutReq : scoutRequirementSet) {
                 if (scoutReq.getRequirementId() == requirement.getId()) {
@@ -259,9 +266,9 @@ public class BoyScoutPanel extends JPanel {
             }
 
             if (scoutRequirement == null) {
-                tableModel.addRow(new Object[]{Boolean.FALSE, requirement.getName(), ""});
+                tblModelProgress.addRow(new Object[]{Boolean.FALSE, requirement.getName(), ""});
             } else {
-                tableModel.addRow(new Object[]{Boolean.TRUE, requirement.getName(), Util.DISPLAY_DATE_FORMAT.format(scoutRequirement.getDateCompleted())});
+                tblModelProgress.addRow(new Object[]{Boolean.TRUE, requirement.getName(), Util.DISPLAY_DATE_FORMAT.format(scoutRequirement.getDateCompleted())});
             }
         }
     }
@@ -274,7 +281,7 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
+        Advancement advancement = (Advancement) cboRank.getSelectedItem();
         if (advancement == null) {
             barProgress.setValue(barProgress.getMaximum());
             barProgress.setForeground(BAD);
@@ -316,7 +323,7 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
+        Advancement advancement = (Advancement)cboRank.getSelectedItem();
         Integer timeRequirement = advancement.getTimeRequirement();
         if (timeRequirement == null || timeRequirement == 0) {
             barWaitPeriod.setValue(barWaitPeriod.getMaximum());
@@ -650,13 +657,13 @@ public class BoyScoutPanel extends JPanel {
         Collection<Advancement> advancementList = CacheObject.getAdvancementList();
         if (!Util.isEmpty(advancementList)) {
             for (Advancement advancement : advancementList) {
-                cboRank.addItem(advancement.getName());
+                cboRank.addItem(advancement);
             }
         }
 
-        if (tableModel.getRowCount() > 0) {
-            for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
-                tableModel.removeRow(i);
+        if (tblModelProgress.getRowCount() > 0) {
+            for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
+                tblModelProgress.removeRow(i);
             }
         }
 
@@ -679,10 +686,95 @@ public class BoyScoutPanel extends JPanel {
 
         setData();
 
-//        Set<Requirement> requirementSet = validateRequirements(-1, true);
-//        if (requirementSet == null) return;
+        boyScout = LogicBoyScout.save(boyScout);
 
-//        saveRecords(requirementSet, true);
+        List<ScoutRequirement> scoutRequirementList = new ArrayList<>();
+        for (int i = 0; i < tblModelProgress.getRowCount(); ++i) {
+            Boolean isCompleted = (Boolean) tblModelProgress.getValueAt(i, 0);
+            if (!isCompleted) {
+                continue;
+            }
+
+            String requirementName = (String) tblModelProgress.getValueAt(i, 1);
+            String dateCompleted = (String) tblModelProgress.getValueAt(i, 2);
+
+            ScoutRequirement scoutRequirement = new ScoutRequirement();
+            scoutRequirement.setAdvancementId(boyScout.getAdvancementId());
+            try {
+                DateFormat df = new SimpleDateFormat();
+                scoutRequirement.setDateCompleted(df.parse(dateCompleted));
+            } catch (ParseException ignore) {
+            }
+
+            scoutRequirement.setScoutId(boyScout.getId());
+            scoutRequirement.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
+            scoutRequirement.setRequirementId(LogicRequirement.findByParentIdAndTypeIdAndName(boyScout.getAdvancementId(), RequirementTypeConst.ADVANCEMENT.getId(), requirementName).getId());
+
+            scoutRequirementList.add(scoutRequirement);
+        }
+
+        if (!Util.isEmpty(scoutRequirementList)) {
+            LogicScoutRequirement.save(scoutRequirementList);
+        }
+
+        List<SpecialAward> specialAwardList = new ArrayList<>();
+        for (int i = 0; i < tblModelSpecialAwards.getRowCount(); ++i) {
+            String name = (String) tblModelSpecialAwards.getValueAt(i, 0);
+            String description = (String) tblModelSpecialAwards.getValueAt(i, 1);
+            String dateReceived = (String) tblModelSpecialAwards.getValueAt(i, 2);
+
+            SpecialAward specialAward = new SpecialAward();
+            specialAward.setName(name);
+            specialAward.setDescription(description);
+            try {
+                DateFormat df = new SimpleDateFormat();
+                specialAward.setDateReceived(df.parse(dateReceived));
+            } catch (ParseException ignore) {
+            }
+
+            specialAward.setScoutId(boyScout.getId());
+            specialAward.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
+
+            specialAwardList.add(specialAward);
+        }
+
+        if (!Util.isEmpty(specialAwardList)) {
+            LogicSpecialAward.save(specialAwardList);
+        }
+
+        List<ScoutMeritBadge> scoutMeritBadgeList = new ArrayList<>();
+        for (int i = 0; i < listMeritBadges.getModel().getSize(); i++) {
+            MeritBadge meritBadge = (MeritBadge) listMeritBadges.getModel().getElementAt(i);
+
+            ScoutMeritBadge scoutMeritBadge = new ScoutMeritBadge();
+            scoutMeritBadge.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
+            scoutMeritBadge.setScoutId(boyScout.getId());
+            scoutMeritBadge.setMeritBadgeId(meritBadge.getId());
+
+            scoutMeritBadgeList.add(scoutMeritBadge);
+        }
+
+        if (!Util.isEmpty(scoutMeritBadgeList)) {
+            LogicScoutMeritBadge.save(scoutMeritBadgeList);
+        }
+
+        List<ScoutCamp> scoutCampList = new ArrayList<>();
+        for (int i = 0; i < listCamps.getModel().getSize(); i++) {
+            Camp camp = (Camp) listCamps.getModel().getElementAt(i);
+
+            ScoutCamp scoutCamp = new ScoutCamp();
+            scoutCamp.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
+            scoutCamp.setScoutId(boyScout.getId());
+            scoutCamp.setCampId(camp.getId());
+
+            scoutCampList.add(scoutCamp);
+        }
+
+        if (!Util.isEmpty(scoutCampList)) {
+            LogicScoutCamp.save(scoutCampList);
+        }
+
+        clearAllErrors();
 
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
@@ -695,29 +787,94 @@ public class BoyScoutPanel extends JPanel {
 
     private void setData() {
         if (boyScout == null) {
-//            boyScout = new Advancement();
+            boyScout = new BoyScout();
         }
 
-//        advancement.setName(txtName.getText());
+        boyScout.setName(txtName.getText());
+        if (!txtPosition.isMessageDefault()) {
+            boyScout.setPosition(txtPosition.getText());
+        }
+        boyScout.setAdvancementId(((Advancement)cboRank.getSelectedItem()).getId());
+
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.set(Calendar.YEAR, cboBirthDate.getModel().getYear());
+        birthDate.set(Calendar.MONTH, cboBirthDate.getModel().getMonth());
+        birthDate.set(Calendar.DATE, cboBirthDate.getModel().getDay());
+        boyScout.setBirthDate(birthDate.getTime());
+
+        Calendar rankDate = Calendar.getInstance();
+        rankDate.set(Calendar.YEAR, cboRankDate.getModel().getYear());
+        rankDate.set(Calendar.MONTH, cboRankDate.getModel().getMonth());
+        rankDate.set(Calendar.DATE, cboRankDate.getModel().getDay());
+        boyScout.setAdvancementDate(rankDate.getTime());
+
+        if (!txtPhoneNumber.isMessageDefault()) {
+            boyScout.setPhoneNumber(txtPhoneNumber.getText());
+        }
+
+        if (!txtCity.isMessageDefault()) {
+            boyScout.setCity(txtCity.getText());
+        }
+
+        if (!txtState.isMessageDefault()) {
+            boyScout.setState(txtState.getText());
+        }
+
+        if (!txtStreet.isMessageDefault()) {
+            boyScout.setStreet(txtStreet.getText());
+        }
+
+        if (!txtZip.isMessageDefault()) {
+            boyScout.setZip(txtZip.getText());
+        }
+
+        if (!txtGuardianName.isMessageDefault()) {
+            boyScout.setGuardianName(txtGuardianName.getText());
+        }
+
+        if (!txtGuardianPhone.isMessageDefault()) {
+            boyScout.setGuardianPhoneNumber(txtGuardianPhone.getText());
+        }
+
+        if (!Util.isEmpty(txtNotes.getText())) {
+            boyScout.setNote(txtNotes.getText());
+        }
     }
 
     private boolean validateFields() {
         boolean valid = true;
 
-//        if (!validateAdvancementName()) {
-//            valid = false;
-//        }
-
-        int advancementId;
-        if (boyScout == null) {
-            advancementId = -1;
-        } else {
-            advancementId = boyScout.getId();
+        if (!validateAdvancementName()) {
+            valid = false;
         }
 
-//        if (validateRequirements(advancementId, true) == null) {
-//            valid = false;
-//        }
+        if (!cboRankDate.getModel().isSelected()) {
+            Util.setError(lblRankDateError, "must select a valid rank date");
+            valid = false;
+        }
+
+        if (lblWaitPeriodDisplay.getText().equals("rank date cannot be after today's date") || lblWaitPeriodDisplay.getText().equals("rank date not select")) {
+            Util.setError(lblRankDateError, "must select a valid rank date");
+            valid = false;
+        }
+
+        if (!cboBirthDate.getModel().isSelected()) {
+            Util.setError(lblBirthDateError, "must select a valid birth date");
+            valid = false;
+        }
+
+        if (lblTimeLeftDisplay.getText().equals("birth date not select") || lblTimeLeftDisplay.getText().equals("scout hasn't been born yet") || lblTimeLeftDisplay.getText().equals("scout is too young")) {
+            Util.setError(lblBirthDateError, "must select a valid birth date");
+            valid = false;
+        }
+
+        if (!txtPhoneNumber.isMessageDefault() && lblPhoneNumberError.isVisible()) {
+            valid = false;
+        }
+
+        if (!txtGuardianPhone.isMessageDefault() && lblGuardianPhoneError.isVisible()) {
+            valid = false;
+        }
 
         return valid;
     }
@@ -822,45 +979,6 @@ public class BoyScoutPanel extends JPanel {
         enableControls(false);
     }
 
-    private void btnBadgeImageMouseReleased() {
-//        if (!btnBadgeImage.isEnabled()) {
-//            return;
-//        }
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files(*.jpg, *.png, *.gif, *.jpeg)", "jpg", "png", "gif", "jpeg");
-
-        CustomChooser chooser = new CustomChooser();
-        chooser.setDialogTitle("Select an image");
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileFilter(filter);
-        int returnValue = chooser.showOpenDialog(this);
-        chooser.resetLookAndFeel();
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            setImage(file.getPath());
-        }
-    }
-
-    private void setImage(String imgPath) {
-//        try {
-//            BufferedImage img = ImageIO.read(new File(imgPath));
-//
-//            int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
-//            int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
-//
-//            ImageIcon icon = new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-//            if (icon.getImage() == null) {
-//                btnBadgeImage.setIcon(noImage);
-//                imagePath = "";
-//            } else {
-//                btnBadgeImage.setIcon(icon);
-//                imagePath = imgPath;
-//            }
-//        } catch (IOException ignore) {
-//        }
-    }
-
     private void validatePhoneNumber() {
         validatePhoneNum();
     }
@@ -959,7 +1077,7 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void createProgressTable() {
-        tableModel = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed"}, 0) {
+        tblModelProgress = new DefaultTableModel(new Object[] {"Completed", "Requirement", "Date Completed"}, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
@@ -984,7 +1102,7 @@ public class BoyScoutPanel extends JPanel {
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-        tblProgress.setModel(tableModel);
+        tblProgress.setModel(tblModelProgress);
         tblProgress.setSurrendersFocusOnKeystroke(true);
     }
 
@@ -996,31 +1114,26 @@ public class BoyScoutPanel extends JPanel {
 //        validateAdvancementName();
 //    }
 
-//    private boolean validateAdvancementName() {
-//        Util.clearError(lblNameError);
-//
-//        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
-//            Util.setError(lblNameError, "Name cannot be left blank");
-//            return false;
-//        }
-//
-//        Advancement tempAdvancement = CacheObject.getAdvancement(txtName.getText());
-//        if (tempAdvancement == null) {
-//            return true;
-//        }
-//
-//        if (advancement == null) {
-//            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
-//            return false;
-//        }
-//
-//        if (!tempAdvancement.getName().equals(advancement.getName())) {
-//            Util.setError(lblNameError, "An advancement with the name '" + txtName.getText() + "' already exists");
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    private boolean validateAdvancementName() {
+        Util.clearError(lblNameError);
+
+        if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
+            Util.setError(lblNameError, "Name cannot be left blank");
+            return false;
+        }
+
+        Scout tempBoyScout = LogicBoyScout.findByName(txtName.getText());
+        if (tempBoyScout == null) {
+            return true;
+        }
+
+        if (boyScout == null || !tempBoyScout.getName().equals(boyScout.getName())) {
+            Util.setError(lblNameError, "A Boy Scout with the name '" + txtName.getText() + "' already exists");
+            return false;
+        }
+
+        return true;
+    }
 
 //    private void btnAddRequirementMouseReleased() {
 //        if (!btnAddRequirement.isEnabled()) {

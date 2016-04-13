@@ -5,6 +5,7 @@ import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.Scout;
 import objects.databaseObjects.User;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,8 +56,8 @@ public class LogicBoyScout {
         return boyScoutSet;
     }
 
-    public static synchronized User save(final User user) {
-        if (user == null) {
+    public static synchronized BoyScout save(final BoyScout boyScout) {
+        if (boyScout == null) {
              return null;
         }
 
@@ -64,7 +65,7 @@ public class LogicBoyScout {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    saveUser(user);
+                    saveBoyScout(boyScout);
                 }
             });
 
@@ -74,33 +75,35 @@ public class LogicBoyScout {
             e.printStackTrace();
         }
 
-        return user;
+        return boyScout;
     }
 
-    private static void saveUser(User user) {
-        if (user.getId() < 0) {
-            user.setId(MySqlConnector.getInstance().getNextId("user"));
+    private static void saveBoyScout(BoyScout boyScout) {
+        if (boyScout.getId() < 0) {
+            boyScout.setId(MySqlConnector.getInstance().getNextId("boyScout"));
         }
 
-        if (user.getId() < 0) {
+        if (boyScout.getId() < 0) {
             return;
         }
 
         try {
             StringBuilder query = new StringBuilder();
-            query.append("INSERT INTO user VALUES(");
-            query.append(user.getId()).append(", ");
-            query.append("'").append(user.getUserName().replace("'", "''")).append("', ");
-            query.append("'").append(user.getName().replace("'", "''")).append("', ");
-            query.append("'").append(user.getPosition().replace("'", "''")).append("', ");
-            query.append("'").append(user.getPhoneNumber()).append("', ");
-            query.append("'").append(user.getState().replace("'", "''")).append("', ");
-            query.append("'").append(user.getCity().replace("'", "''")).append("', ");
-            query.append("'").append(user.getStreet().replace("'", "''")).append("', ");
-            query.append("'").append(user.getZip()).append("', ");
-            query.append(true).append(", ");
-            query.append("'").append(user.getPassword().replace("'", "''")).append("', ");
-            query.append("'").append(user.getEmail().replace("'", "''")).append("'");
+            query.append("INSERT INTO boyScout VALUES(");
+            query.append(boyScout.getId()).append(", ");
+            query.append("'").append(boyScout.getName().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getPosition().replace("'", "''")).append("', ");
+            query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(boyScout.getBirthDate())).append("', ");
+            query.append(boyScout.getAdvancementId()).append(", ");
+            query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(boyScout.getAdvancementDate())).append("', ");
+            query.append("'").append(boyScout.getPhoneNumber().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getGuardianPhoneNumber().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getGuardianName().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getStreet().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getCity().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getState().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getZip()).append("', ");
+            query.append("'").append(boyScout.getNote()).append("'");
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -183,7 +186,7 @@ public class LogicBoyScout {
         }
     }
 
-    public static Scout findByName(String name) {
+    public static BoyScout findByName(String name) {
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return null;
         }

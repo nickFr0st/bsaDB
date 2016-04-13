@@ -8,6 +8,7 @@ import util.Util;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,6 +76,55 @@ public class LogicScoutMeritBadge {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate("DELETE FROM scoutMeritBadge WHERE id = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static synchronized List<ScoutMeritBadge> save(List<ScoutMeritBadge> scoutMeritBadgeList) {
+        if (scoutMeritBadgeList == null) {
+            return null;
+        }
+
+        for (final ScoutMeritBadge scoutMeritBadge : scoutMeritBadgeList) {
+            try {
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveScoutMeritBadge(scoutMeritBadge);
+                    }
+                });
+
+                t.start();
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return scoutMeritBadgeList;
+    }
+
+    private static void saveScoutMeritBadge(ScoutMeritBadge scoutMeritBadge) {
+        if (scoutMeritBadge.getId() < 0) {
+            scoutMeritBadge.setId(MySqlConnector.getInstance().getNextId("scoutMeritBadge"));
+        }
+
+        if (scoutMeritBadge.getId() < 0) {
+            return;
+        }
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("INSERT INTO scoutMeritBadge VALUES(");
+            query.append(scoutMeritBadge.getId()).append(", ");
+            query.append(scoutMeritBadge.getScoutId()).append(", ");
+            query.append(scoutMeritBadge.getScoutTypeId()).append(", ");
+            query.append(scoutMeritBadge.getMeritBadgeId());
+            query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
