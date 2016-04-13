@@ -56,24 +56,25 @@ public class BoyScoutPanel extends JPanel {
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
         populateBoyScoutNameList();
+        clearData();
         enableControls(false);
     }
 
     private void setupProgressBars() {
         barTimeLeft.setBackground(Color.white);
-        lblTimeLeftDisplay.setText("birth date not select");
+        lblTimeLeftDisplay.setText("");
         barTimeLeft.setValue(0);
         barTimeLeft.setForeground(AVG);
 
         barCampsAttended.setBackground(Color.white);
         barCampsAttended.setValue(0);
         barCampsAttended.setForeground(BAD);
-        lblCampsAttendedDisplay.setText("0 of " + barCampsAttended.getMaximum());
+        lblCampsAttendedDisplay.setText("");
 
         barWaitPeriod.setBackground(Color.white);
         barWaitPeriod.setValue(0);
         barWaitPeriod.setForeground(GOOD);
-        lblWaitPeriodDisplay.setText("no time requirement for this advancement");
+        lblWaitPeriodDisplay.setText("");
 
         barProgress.setBackground(Color.white);
         barProgress.setForeground(AVG);
@@ -204,20 +205,10 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void loadSummaryTab() {
-        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-        String advancementName = "";
-        if (!Util.isEmpty(advancementList)) {
-            for (Advancement advancement : advancementList) {
-                cboRank.addItem(advancement.getName());
-                if (advancement.getId() == boyScout.getAdvancementId()) {
-                    advancementName = advancement.getName();
-                }
-            }
-        }
 
         txtName.setText(boyScout.getName());
         txtPosition.setText(boyScout.getPosition());
-        cboRank.setSelectedItem(advancementName);
+        cboRank.setSelectedItem(CacheObject.getAdvancement(boyScout.getAdvancementId()));
 
         Calendar rankDate = Calendar.getInstance();
         rankDate.setTime(boyScout.getAdvancementDate());
@@ -618,23 +609,67 @@ public class BoyScoutPanel extends JPanel {
         clearAllErrors();
         clearData();
 
-//        txtName.requestFocus();
+        txtName.requestFocus();
     }
 
     private void clearData() {
         boyScout = null;
 
-        // Summary Tab
+        clearSummaryTab();
+        clearContactTab();
+        clearDetailsTab();
+    }
+
+    private void clearDetailsTab() {
+        if (tblModelSpecialAwards.getRowCount() > 0) {
+            for (int i = tblModelSpecialAwards.getRowCount() - 1; i > -1; i--) {
+                tblModelSpecialAwards.removeRow(i);
+            }
+        }
+
+        listMeritBadges.setListData(new Object[]{});
+        listCamps.setListData(new Object[]{});
+    }
+
+    private void clearContactTab() {
+        txtPhoneNumber.setDefault();
+        txtCity.setDefault();
+        txtState.setDefault();
+        txtStreet.setDefault();
+        txtZip.setDefault();
+        txtGuardianName.setDefault();
+        txtGuardianPhone.setDefault();
+        txtNotes.setText("");
+    }
+
+    private void clearSummaryTab() {
         txtName.setDefault();
         txtPosition.setDefault();
-        cboRank.setSelectedIndex(-1);
-//
-//        btnBadgeImage.setIcon(noImage);
-//        txtName.setDefault();
-//        imagePath = "";
-//
-//        pnlRequirementList.removeAll();
-//        pnlRequirementList.repaint();
+
+        cboRank.removeAllItems();
+        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+        if (!Util.isEmpty(advancementList)) {
+            for (Advancement advancement : advancementList) {
+                cboRank.addItem(advancement.getName());
+            }
+        }
+
+        if (tableModel.getRowCount() > 0) {
+            for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
+                tableModel.removeRow(i);
+            }
+        }
+
+        Calendar now = Calendar.getInstance();
+        cboRankDate.getModel().setDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
+        cboRankDate.getModel().setSelected(false);
+
+        cboBirthDate.getModel().setDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
+        cboBirthDate.getModel().setSelected(false);
+
+        lblAgeValue.setText("");
+
+        setupProgressBars();
     }
 
     private void btnSaveActionPerformed() {
@@ -863,6 +898,10 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void cboRankDateActionPerformed() {
+        if (boyScout == null) {
+            return;
+        }
+
         setWaitingPeriodBar();
         setProgressBar();
     }
@@ -1224,7 +1263,7 @@ public class BoyScoutPanel extends JPanel {
                                     pnlGeneral.setOpaque(false);
                                     pnlGeneral.setName("pnlGeneral");
                                     pnlGeneral.setLayout(new GridBagLayout());
-                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 207, 36, 0, 0, 195, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 207, 36, 30, 0, 195, 0};
                                     ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 35, 0, 24, 25, 0, 35, 25, 0, 35, 201, 0};
                                     ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
                                     ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
@@ -1363,7 +1402,6 @@ public class BoyScoutPanel extends JPanel {
                                         new Insets(0, 10, 5, 5), 0, 0));
 
                                     //---- lblAgeValue ----
-                                    lblAgeValue.setText("12");
                                     lblAgeValue.setFont(new Font("Tahoma", Font.BOLD, 14));
                                     lblAgeValue.setForeground(new Color(32, 154, 26));
                                     lblAgeValue.setName("lblAgeValue");

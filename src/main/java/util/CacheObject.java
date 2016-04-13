@@ -196,6 +196,22 @@ public class CacheObject {
         return null;
     }
 
+    public static Advancement getAdvancement(int id) {
+        if (id < 0) {
+            return null;
+        }
+
+        getAdvancementList();
+
+        for (Advancement advancement : cachedAdvancements.values()) {
+            if (advancement.getId() == id) {
+                return advancement;
+            }
+        }
+
+        return null;
+    }
+
     public static void addToAdvancements(Advancement advancement) {
         if (cachedAdvancements == null) {
             getAdvancementList();
