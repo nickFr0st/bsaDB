@@ -276,6 +276,13 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setProgressBar() {
+        if (cboRank.getSelectedItem() == null) {
+            barProgress.setValue(barProgress.getMaximum());
+            barProgress.setForeground(BAD);
+            lblProgressDisplay.setText("no advancement selected");
+            return;
+        }
+
         Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
         if (advancement == null) {
             barProgress.setValue(barProgress.getMaximum());
@@ -300,17 +307,24 @@ public class BoyScoutPanel extends JPanel {
         lblProgressDisplay.setText(value + " of " + barProgress.getMaximum());
 
         if (value < barProgress.getMaximum() * .30) {
-            barWaitPeriod.setForeground(BAD);
+            barProgress.setForeground(BAD);
         } else if (value < barProgress.getMaximum() * .60) {
-            barWaitPeriod.setForeground(WARNING);
+            barProgress.setForeground(WARNING);
         } else if (value < barProgress.getMaximum() * .80) {
-            barWaitPeriod.setForeground(AVG);
+            barProgress.setForeground(AVG);
         } else {
-            barWaitPeriod.setForeground(GOOD);
+            barProgress.setForeground(GOOD);
         }
     }
 
     private void setWaitingPeriodBar() {
+        if (cboRank.getSelectedItem() == null) {
+            barWaitPeriod.setValue(barWaitPeriod.getMaximum());
+            barWaitPeriod.setForeground(BAD);
+            lblWaitPeriodDisplay.setText("no advancement selected");
+            return;
+        }
+
         Advancement advancement = CacheObject.getAdvancement(cboRank.getSelectedItem().toString());
         Integer timeRequirement = advancement.getTimeRequirement();
         if (timeRequirement == null || timeRequirement == 0) {
@@ -608,7 +622,12 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void clearData() {
-//        advancement = null;
+        boyScout = null;
+
+        // Summary Tab
+        txtName.setDefault();
+        txtPosition.setDefault();
+        cboRank.setSelectedIndex(-1);
 //
 //        btnBadgeImage.setIcon(noImage);
 //        txtName.setDefault();
