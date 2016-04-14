@@ -796,7 +796,7 @@ public class AdvancementPanel extends JPanel {
 
                                 //---- lblRequirementError ----
                                 lblRequirementError.setText("* Error Message");
-                                lblRequirementError.setForeground(Color.red);
+                                lblRequirementError.setForeground(new Color(206, 17, 38));
                                 lblRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                 lblRequirementError.setVisible(false);
                                 lblRequirementError.setName("lblRequirementError");
@@ -873,7 +873,7 @@ public class AdvancementPanel extends JPanel {
 
                             //---- lblNameError ----
                             lblNameError.setText("* Error Message");
-                            lblNameError.setForeground(Color.red);
+                            lblNameError.setForeground(new Color(206, 17, 38));
                             lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblNameError.setVisible(false);
                             lblNameError.setName("lblNameError");
@@ -915,7 +915,7 @@ public class AdvancementPanel extends JPanel {
 
                             //---- lblTimeRequirementError ----
                             lblTimeRequirementError.setText("* Error Message");
-                            lblTimeRequirementError.setForeground(Color.red);
+                            lblTimeRequirementError.setForeground(new Color(206, 17, 38));
                             lblTimeRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblTimeRequirementError.setVisible(false);
                             lblTimeRequirementError.setName("lblTimeRequirementError");

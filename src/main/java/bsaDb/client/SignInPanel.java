@@ -225,7 +225,7 @@ public class SignInPanel extends JPanel {
 
             //---- lblUserNameError ----
             lblUserNameError.setText("* Error Message");
-            lblUserNameError.setForeground(Color.red);
+            lblUserNameError.setForeground(new Color(206, 17, 38));
             lblUserNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
             lblUserNameError.setVisible(false);
             lblUserNameError.setName("lblUserNameError");
@@ -256,7 +256,7 @@ public class SignInPanel extends JPanel {
 
             //---- lblPasswordError ----
             lblPasswordError.setText("* Error Message");
-            lblPasswordError.setForeground(Color.red);
+            lblPasswordError.setForeground(new Color(206, 17, 38));
             lblPasswordError.setFont(new Font("Tahoma", Font.ITALIC, 11));
             lblPasswordError.setVisible(false);
             lblPasswordError.setName("lblPasswordError");

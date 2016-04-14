@@ -147,7 +147,7 @@ public class CounselorDialog extends JDialog {
                 //---- lblNameError ----
                 lblNameError.setText("text");
                 lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                lblNameError.setForeground(Color.red);
+                lblNameError.setForeground(new Color(206, 17, 38));
                 lblNameError.setName("lblNameError");
                 contentPanel.add(lblNameError, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -174,7 +174,7 @@ public class CounselorDialog extends JDialog {
                 //---- lblPhoneError ----
                 lblPhoneError.setText("text");
                 lblPhoneError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                lblPhoneError.setForeground(Color.red);
+                lblPhoneError.setForeground(new Color(206, 17, 38));
                 lblPhoneError.setName("lblPhoneError");
                 contentPanel.add(lblPhoneError, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,

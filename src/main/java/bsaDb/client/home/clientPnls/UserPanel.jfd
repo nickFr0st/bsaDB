@@ -183,7 +183,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblUsernameError"
 								"text": "* Error Message"
-								"foreground": sfield java.awt.Color red
+								"foreground": new java.awt.Color( 206, 17, 38, 255 )
 								"font": &Font3 new java.awt.Font( "Tahoma", 2, 11 )
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -195,7 +195,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblPasswordError"
 								"text": "* Error Message"
-								"foreground": sfield java.awt.Color red
+								"foreground": new java.awt.Color( 206, 17, 38, 255 )
 								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -250,7 +250,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblNameError"
 								"text": "* Error Message"
-								"foreground": sfield java.awt.Color red
+								"foreground": new java.awt.Color( 206, 17, 38, 255 )
 								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -322,7 +322,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblPhoneNumberError"
 								"text": "* Error Message"
-								"foreground": sfield java.awt.Color red
+								"foreground": new java.awt.Color( 206, 17, 38, 255 )
 								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -334,7 +334,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "lblEmailError"
 								"text": "* Error Message"
-								"foreground": sfield java.awt.Color red
+								"foreground": new java.awt.Color( 206, 17, 38, 255 )
 								"font": #Font3
 								"visible": false
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {

@@ -680,7 +680,7 @@ public class CampPanel extends JPanel {
 
                             //---- lblNameError ----
                             lblNameError.setText("*error message");
-                            lblNameError.setForeground(Color.red);
+                            lblNameError.setForeground(new Color(206, 17, 38));
                             lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblNameError.setName("lblNameError");
                             panel1.add(lblNameError, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
@@ -742,7 +742,7 @@ public class CampPanel extends JPanel {
 
                             //---- lblLocationError ----
                             lblLocationError.setText("*error message");
-                            lblLocationError.setForeground(Color.red);
+                            lblLocationError.setForeground(new Color(206, 17, 38));
                             lblLocationError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblLocationError.setName("lblLocationError");
                             panel1.add(lblLocationError, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0,
@@ -751,7 +751,7 @@ public class CampPanel extends JPanel {
 
                             //---- lblCampDateError ----
                             lblCampDateError.setText("*error message");
-                            lblCampDateError.setForeground(Color.red);
+                            lblCampDateError.setForeground(new Color(206, 17, 38));
                             lblCampDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblCampDateError.setName("lblCampDateError");
                             panel1.add(lblCampDateError, new GridBagConstraints(2, 4, 2, 1, 0.0, 0.0,
@@ -789,7 +789,7 @@ public class CampPanel extends JPanel {
 
                             //---- lblLeaderError ----
                             lblLeaderError.setText("*error message");
-                            lblLeaderError.setForeground(Color.red);
+                            lblLeaderError.setForeground(new Color(206, 17, 38));
                             lblLeaderError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblLeaderError.setName("lblLeaderError");
                             panel1.add(lblLeaderError, new GridBagConstraints(1, 6, 3, 1, 0.0, 0.0,

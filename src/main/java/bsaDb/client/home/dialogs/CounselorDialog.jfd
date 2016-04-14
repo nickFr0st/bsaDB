@@ -40,7 +40,7 @@ new FormModel {
 						name: "lblNameError"
 						"text": "text"
 						"font": &Font2 new java.awt.Font( "Tahoma", 2, 11 )
-						"foreground": sfield java.awt.Color red
+						"foreground": new java.awt.Color( 206, 17, 38, 255 )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridy": 1
 						"gridx": 1
@@ -66,7 +66,7 @@ new FormModel {
 						name: "lblPhoneError"
 						"text": "text"
 						"font": #Font2
-						"foreground": sfield java.awt.Color red
+						"foreground": new java.awt.Color( 206, 17, 38, 255 )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridy": 3
 						"gridx": 1

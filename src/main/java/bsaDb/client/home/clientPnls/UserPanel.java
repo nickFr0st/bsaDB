@@ -694,7 +694,7 @@ public class UserPanel extends JPanel {
 
                         //---- lblUsernameError ----
                         lblUsernameError.setText("* Error Message");
-                        lblUsernameError.setForeground(Color.red);
+                        lblUsernameError.setForeground(new Color(206, 17, 38));
                         lblUsernameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                         lblUsernameError.setVisible(false);
                         lblUsernameError.setName("lblUsernameError");
@@ -704,7 +704,7 @@ public class UserPanel extends JPanel {
 
                         //---- lblPasswordError ----
                         lblPasswordError.setText("* Error Message");
-                        lblPasswordError.setForeground(Color.red);
+                        lblPasswordError.setForeground(new Color(206, 17, 38));
                         lblPasswordError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                         lblPasswordError.setVisible(false);
                         lblPasswordError.setName("lblPasswordError");
@@ -760,7 +760,7 @@ public class UserPanel extends JPanel {
 
                         //---- lblNameError ----
                         lblNameError.setText("* Error Message");
-                        lblNameError.setForeground(Color.red);
+                        lblNameError.setForeground(new Color(206, 17, 38));
                         lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                         lblNameError.setVisible(false);
                         lblNameError.setName("lblNameError");
@@ -837,7 +837,7 @@ public class UserPanel extends JPanel {
 
                         //---- lblPhoneNumberError ----
                         lblPhoneNumberError.setText("* Error Message");
-                        lblPhoneNumberError.setForeground(Color.red);
+                        lblPhoneNumberError.setForeground(new Color(206, 17, 38));
                         lblPhoneNumberError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                         lblPhoneNumberError.setVisible(false);
                         lblPhoneNumberError.setName("lblPhoneNumberError");
@@ -847,7 +847,7 @@ public class UserPanel extends JPanel {
 
                         //---- lblEmailError ----
                         lblEmailError.setText("* Error Message");
-                        lblEmailError.setForeground(Color.red);
+                        lblEmailError.setForeground(new Color(206, 17, 38));
                         lblEmailError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                         lblEmailError.setVisible(false);
                         lblEmailError.setName("lblEmailError");

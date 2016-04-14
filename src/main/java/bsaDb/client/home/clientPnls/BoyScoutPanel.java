@@ -1440,7 +1440,7 @@ public class BoyScoutPanel extends JPanel {
 
                                     //---- lblNameError ----
                                     lblNameError.setText("*error message");
-                                    lblNameError.setForeground(Color.red);
+                                    lblNameError.setForeground(new Color(206, 17, 38));
                                     lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                     lblNameError.setName("lblNameError");
                                     pnlGeneral.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
@@ -1497,7 +1497,7 @@ public class BoyScoutPanel extends JPanel {
 
                                     //---- lblRankDateError ----
                                     lblRankDateError.setText("*error message");
-                                    lblRankDateError.setForeground(Color.red);
+                                    lblRankDateError.setForeground(new Color(206, 17, 38));
                                     lblRankDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                     lblRankDateError.setName("lblRankDateError");
                                     pnlGeneral.add(lblRankDateError, new GridBagConstraints(4, 3, 2, 1, 0.0, 0.0,
@@ -1547,7 +1547,7 @@ public class BoyScoutPanel extends JPanel {
 
                                     //---- lblBirthDateError ----
                                     lblBirthDateError.setText("*error message");
-                                    lblBirthDateError.setForeground(Color.red);
+                                    lblBirthDateError.setForeground(new Color(206, 17, 38));
                                     lblBirthDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                     lblBirthDateError.setName("lblBirthDateError");
                                     pnlGeneral.add(lblBirthDateError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
@@ -1773,7 +1773,7 @@ public class BoyScoutPanel extends JPanel {
 
                                 //---- lblPhoneNumberError ----
                                 lblPhoneNumberError.setText("*error message");
-                                lblPhoneNumberError.setForeground(Color.red);
+                                lblPhoneNumberError.setForeground(new Color(206, 17, 38));
                                 lblPhoneNumberError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                 lblPhoneNumberError.setName("lblPhoneNumberError");
                                 pnlContact.add(lblPhoneNumberError, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
@@ -1896,7 +1896,7 @@ public class BoyScoutPanel extends JPanel {
 
                                 //---- lblGuardianPhoneError ----
                                 lblGuardianPhoneError.setText("*error message");
-                                lblGuardianPhoneError.setForeground(Color.red);
+                                lblGuardianPhoneError.setForeground(new Color(206, 17, 38));
                                 lblGuardianPhoneError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                 lblGuardianPhoneError.setName("lblGuardianPhoneError");
                                 pnlContact.add(lblGuardianPhoneError, new GridBagConstraints(2, 6, 2, 1, 0.0, 0.0,

@@ -172,7 +172,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblNameError"
 											"text": "*error message"
-											"foreground": &Color0 new java.awt.Color( 255, 0, 0, 255 )
+											"foreground": new java.awt.Color( 206, 17, 38, 255 )
 											"font": &Font0 new java.awt.Font( "Tahoma", 2, 11 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 1
@@ -201,7 +201,7 @@ new FormModel {
 											name: "lblRankDate"
 											"text": "Rank Date:"
 											"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
-											"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
+											"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridx": 4
 											"gridy": 2
@@ -219,7 +219,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblRankDateError"
 											"text": "*error message"
-											"foreground": &Color2 new java.awt.Color( 255, 0, 0, 255 )
+											"foreground": new java.awt.Color( 206, 17, 38, 255 )
 											"font": &Font3 new java.awt.Font( "Tahoma", 2, 11 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridx": 4
@@ -231,7 +231,7 @@ new FormModel {
 											name: "lblBirthDate"
 											"text": "Birth Date:"
 											"font": #Font1
-											"foreground": #Color1
+											"foreground": #Color0
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 4
 										} )
@@ -266,7 +266,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblBirthDateError"
 											"text": "*error message"
-											"foreground": #Color2
+											"foreground": new java.awt.Color( 206, 17, 38, 255 )
 											"font": #Font3
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 5
@@ -277,7 +277,7 @@ new FormModel {
 											name: "lblTimeLeft"
 											"text": "Time Left in Boy Scouts"
 											"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
-											"foreground": &Color3 new java.awt.Color( 0, 0, 0, 255 )
+											"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 6
 											"gridwidth": 2
@@ -287,7 +287,7 @@ new FormModel {
 											name: "lblCampsAttended"
 											"text": "Number of Camps Attended"
 											"font": #Font4
-											"foreground": #Color3
+											"foreground": #Color1
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridx": 4
 											"gridy": 6
@@ -317,7 +317,7 @@ new FormModel {
 											name: "lblTimeLeftDisplay"
 											"text": "1 yr, 6 mon, 2 days"
 											"font": &Font6 new java.awt.Font( "Tahoma", 0, 12 )
-											"foreground": &Color4 new java.awt.Color( 0, 0, 0, 255 )
+											"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 8
 											"gridwidth": 2
@@ -328,7 +328,7 @@ new FormModel {
 											name: "lblCampsAttendedDisplay"
 											"text": "11 of 21"
 											"font": #Font6
-											"foreground": #Color4
+											"foreground": #Color2
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 8
 											"hAlign": 0
@@ -340,7 +340,7 @@ new FormModel {
 											name: "lblWaitPeriod"
 											"text": "Waiting Period for Next Advancement"
 											"font": #Font4
-											"foreground": #Color3
+											"foreground": #Color1
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 9
 											"gridwidth": 2
@@ -377,7 +377,7 @@ new FormModel {
 											name: "lblWaitPeriodDisplay"
 											"text": "2 mo, 3 days"
 											"font": #Font6
-											"foreground": #Color4
+											"foreground": #Color2
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 11
 											"hAlign": 0
@@ -409,7 +409,7 @@ new FormModel {
 												name: "lblProgressTable"
 												"text": "Progress of Current Advancement"
 												"font": #Font4
-												"foreground": #Color3
+												"foreground": #Color1
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"vAlign": 3
 											} )
@@ -479,7 +479,7 @@ new FormModel {
 										name: "lblPhoneNumber"
 										"text": "Phone Number:"
 										"font": &Font8 new java.awt.Font( "Tahoma", 0, 14 )
-										"foreground": &Color5 new java.awt.Color( 0, 0, 0, 255 )
+										"foreground": &Color3 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -501,7 +501,7 @@ new FormModel {
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "lblPhoneNumberError"
 										"text": "*error message"
-										"foreground": #Color0
+										"foreground": new java.awt.Color( 206, 17, 38, 255 )
 										"font": #Font0
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 2
@@ -512,7 +512,7 @@ new FormModel {
 										name: "lblCity"
 										"text": "City:"
 										"font": &Font10 new java.awt.Font( "Tahoma", 0, 14 )
-										"foreground": &Color6 new java.awt.Color( 0, 0, 0, 255 )
+										"foreground": &Color4 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -532,7 +532,7 @@ new FormModel {
 										name: "lblState"
 										"text": "State:"
 										"font": #Font10
-										"foreground": #Color6
+										"foreground": #Color4
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -553,7 +553,7 @@ new FormModel {
 										name: "lblStreet"
 										"text": "Street:"
 										"font": #Font10
-										"foreground": #Color6
+										"foreground": #Color4
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -573,7 +573,7 @@ new FormModel {
 										name: "lblZip"
 										"text": "Zip:"
 										"font": #Font10
-										"foreground": #Color6
+										"foreground": #Color4
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -594,7 +594,7 @@ new FormModel {
 										name: "lblGuardianName"
 										"text": "Parent Name:"
 										"font": #Font8
-										"foreground": #Color5
+										"foreground": #Color3
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -614,7 +614,7 @@ new FormModel {
 										name: "lblGuardianPhone"
 										"text": "Parent Phone Number:"
 										"font": #Font10
-										"foreground": #Color6
+										"foreground": #Color4
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -637,7 +637,7 @@ new FormModel {
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "lblGuardianPhoneError"
 										"text": "*error message"
-										"foreground": #Color0
+										"foreground": new java.awt.Color( 206, 17, 38, 255 )
 										"font": #Font0
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 										"gridy": 6

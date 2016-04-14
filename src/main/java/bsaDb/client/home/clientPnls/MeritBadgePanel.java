@@ -892,7 +892,7 @@ public class MeritBadgePanel extends JPanel {
 
                             //---- lblNameError ----
                             lblNameError.setText("* Error Message");
-                            lblNameError.setForeground(Color.red);
+                            lblNameError.setForeground(new Color(206, 17, 38));
                             lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblNameError.setVisible(false);
                             lblNameError.setName("lblNameError");
@@ -922,7 +922,7 @@ public class MeritBadgePanel extends JPanel {
 
                                 //---- lblCounselorError ----
                                 lblCounselorError.setText("* Error Message");
-                                lblCounselorError.setForeground(Color.red);
+                                lblCounselorError.setForeground(new Color(206, 17, 38));
                                 lblCounselorError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                 lblCounselorError.setVisible(false);
                                 lblCounselorError.setName("lblCounselorError");
@@ -1068,7 +1068,7 @@ public class MeritBadgePanel extends JPanel {
 
                                 //---- lblRequirementError ----
                                 lblRequirementError.setText("* Error Message");
-                                lblRequirementError.setForeground(Color.red);
+                                lblRequirementError.setForeground(new Color(206, 17, 38));
                                 lblRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                 lblRequirementError.setVisible(false);
                                 lblRequirementError.setName("lblRequirementError");

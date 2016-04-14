@@ -185,7 +185,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblNameError"
 									"text": "* Error Message"
-									"foreground": sfield java.awt.Color red
+									"foreground": new java.awt.Color( 206, 17, 38, 255 )
 									"font": &Font0 new java.awt.Font( "Tahoma", 2, 11 )
 									"visible": false
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -220,7 +220,7 @@ new FormModel {
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "lblCounselorError"
 										"text": "* Error Message"
-										"foreground": sfield java.awt.Color red
+										"foreground": new java.awt.Color( 206, 17, 38, 255 )
 										"font": new java.awt.Font( "Tahoma", 2, 11 )
 										"visible": false
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -360,7 +360,7 @@ new FormModel {
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "lblRequirementError"
 										"text": "* Error Message"
-										"foreground": sfield java.awt.Color red
+										"foreground": new java.awt.Color( 206, 17, 38, 255 )
 										"font": #Font0
 										"visible": false
 									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
