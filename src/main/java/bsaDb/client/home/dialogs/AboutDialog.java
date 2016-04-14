@@ -70,7 +70,7 @@ public class AboutDialog extends JDialog {
                 //======== panel3 ========
                 {
                     panel3.setBorder(LineBorder.createBlackLineBorder());
-                    panel3.setBackground(new Color(202, 183, 160));
+                    panel3.setBackground(new Color(179, 148, 117));
                     panel3.setName("panel3");
                     panel3.setLayout(new GridBagLayout());
                     ((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {125, 0};
@@ -157,8 +157,8 @@ public class AboutDialog extends JDialog {
                             new Insets(0, 0, 0, 0), 0, 0));
                     }
                     panel4.add(panel5, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                            new Insets(0, 10, 5, 0), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 10, 5, 0), 0, 0));
 
                     //======== buttonBar ========
                     {
@@ -172,7 +172,7 @@ public class AboutDialog extends JDialog {
 
                         //---- btnOkay ----
                         btnOkay.setText("Okay");
-                        btnOkay.setBackground(new Color(51, 102, 153));
+                        btnOkay.setBackground(new Color(0, 63, 135));
                         btnOkay.setForeground(Color.white);
                         btnOkay.setFont(new Font("Tahoma", Font.PLAIN, 14));
                         btnOkay.setFocusPainted(false);

@@ -628,7 +628,7 @@ public class UserPanel extends JPanel {
                         //---- lblGeneralInfo ----
                         lblGeneralInfo.setText("General Information:");
                         lblGeneralInfo.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                        lblGeneralInfo.setForeground(new Color(51, 102, 153));
+                        lblGeneralInfo.setForeground(new Color(0, 63, 135));
                         lblGeneralInfo.setName("lblGeneralInfo");
                         panel4.add(lblGeneralInfo, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -771,7 +771,7 @@ public class UserPanel extends JPanel {
                         //---- lblContactInfo ----
                         lblContactInfo.setText("Contact Information:");
                         lblContactInfo.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                        lblContactInfo.setForeground(new Color(51, 102, 153));
+                        lblContactInfo.setForeground(new Color(0, 63, 135));
                         lblContactInfo.setName("lblContactInfo");
                         panel4.add(lblContactInfo, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -965,7 +965,7 @@ public class UserPanel extends JPanel {
 
                     //---- btnSave ----
                     btnSave.setText("Save");
-                    btnSave.setBackground(new Color(51, 102, 153));
+                    btnSave.setBackground(new Color(0, 63, 135));
                     btnSave.setFocusPainted(false);
                     btnSave.setForeground(Color.white);
                     btnSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -983,7 +983,7 @@ public class UserPanel extends JPanel {
 
                     //---- btnUpdate ----
                     btnUpdate.setText("Update");
-                    btnUpdate.setBackground(new Color(51, 102, 153));
+                    btnUpdate.setBackground(new Color(0, 63, 135));
                     btnUpdate.setForeground(Color.white);
                     btnUpdate.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnUpdate.setFocusPainted(false);
@@ -1001,7 +1001,7 @@ public class UserPanel extends JPanel {
 
                     //---- btnDelete ----
                     btnDelete.setText("Delete");
-                    btnDelete.setBackground(new Color(207, 0, 0));
+                    btnDelete.setBackground(new Color(206, 17, 38));
                     btnDelete.setForeground(Color.white);
                     btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnDelete.setFocusPainted(false);

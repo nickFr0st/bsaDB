@@ -153,7 +153,7 @@ public class ExportDialog extends JDialog {
 
                 //---- btnExport ----
                 btnExport.setText("Export");
-                btnExport.setBackground(new Color(51, 102, 153));
+                btnExport.setBackground(new Color(0, 63, 135));
                 btnExport.setForeground(Color.white);
                 btnExport.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnExport.setFocusPainted(false);
@@ -170,7 +170,7 @@ public class ExportDialog extends JDialog {
 
                 //---- btnCancel ----
                 btnCancel.setText("Cancel");
-                btnCancel.setBackground(new Color(207, 0, 0));
+                btnCancel.setBackground(new Color(206, 17, 38));
                 btnCancel.setForeground(Color.white);
                 btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnCancel.setFocusPainted(false);

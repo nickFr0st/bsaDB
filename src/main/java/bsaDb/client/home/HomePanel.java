@@ -288,7 +288,7 @@ public class HomePanel extends JPanel {
 
         //======== panel1 ========
         {
-            panel1.setBackground(new Color(202, 183, 160));
+            panel1.setBackground(new Color(179, 148, 117));
             panel1.setName("panel1");
             panel1.setLayout(new GridBagLayout());
             ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
@@ -298,7 +298,7 @@ public class HomePanel extends JPanel {
 
             //======== menuBar1 ========
             {
-                menuBar1.setBackground(new Color(202, 183, 160));
+                menuBar1.setBackground(new Color(179, 148, 117));
                 menuBar1.setMargin(new Insets(0, 10, 0, 10));
                 menuBar1.setBorderPainted(false);
                 menuBar1.setName("menuBar1");

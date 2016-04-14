@@ -42,7 +42,7 @@ public class ExportSelectPanel extends JPanel {
         //---- lblInstruction ----
         lblInstruction.setText("Please select what you would like to export.");
         lblInstruction.setFont(new Font("Vijaya", Font.PLAIN, 22));
-        lblInstruction.setForeground(new Color(51, 102, 153));
+        lblInstruction.setForeground(new Color(0, 63, 135));
         lblInstruction.setName("lblInstruction");
         add(lblInstruction, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,

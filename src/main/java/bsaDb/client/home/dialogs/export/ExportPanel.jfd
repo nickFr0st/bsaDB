@@ -19,7 +19,7 @@ new FormModel {
 				name: "rbtnExportAll"
 				"text": "Export All"
 				"font": new java.awt.Font( "Vijaya", 0, 20 )
-				"foreground": &Color0 new java.awt.Color( 51, 102, 153, 255 )
+				"foreground": new java.awt.Color( 0, 63, 135, 255 )
 				"opaque": false
 				"$buttonGroup": new FormReference( "buttonGroup1" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "rbtnExportAllActionPerformed", false ) )
@@ -46,7 +46,7 @@ new FormModel {
 				name: "rbtnExportSelected"
 				"text": "Export Selected"
 				"font": new java.awt.Font( "Vijaya", 0, 20 )
-				"foreground": #Color0
+				"foreground": new java.awt.Color( 0, 63, 135, 255 )
 				"opaque": false
 				"$buttonGroup": new FormReference( "buttonGroup1" )
 				auxiliary() {
@@ -62,7 +62,7 @@ new FormModel {
 				name: "lblAvailable"
 				"text": "Available"
 				"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
-				"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
+				"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true
 				}
@@ -75,7 +75,7 @@ new FormModel {
 				name: "lblSelected"
 				"text": "Selected"
 				"font": #Font0
-				"foreground": #Color1
+				"foreground": #Color0
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true
 				}

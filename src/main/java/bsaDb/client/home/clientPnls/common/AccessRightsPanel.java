@@ -112,7 +112,7 @@ public class AccessRightsPanel extends JPanel {
 
         //======== this ========
         setBorder(new TitledBorder(new LineBorder(new Color(51, 102, 153)), "Access Rights", TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION,
-            new Font("Vijaya", Font.PLAIN, 22), new Color(51, 102, 153)));
+            new Font("Vijaya", Font.PLAIN, 22), new Color(0, 63, 135)));
         setBackground(Color.white);
         setName("this");
         setLayout(new GridBagLayout());

@@ -167,7 +167,7 @@ public class ExportPanel extends JPanel {
         //---- rbtnExportAll ----
         rbtnExportAll.setText("Export All");
         rbtnExportAll.setFont(new Font("Vijaya", Font.PLAIN, 20));
-        rbtnExportAll.setForeground(new Color(51, 102, 153));
+        rbtnExportAll.setForeground(new Color(0, 63, 135));
         rbtnExportAll.setOpaque(false);
         rbtnExportAll.setName("rbtnExportAll");
         rbtnExportAll.addActionListener(new ActionListener() {
@@ -193,7 +193,7 @@ public class ExportPanel extends JPanel {
         //---- rbtnExportSelected ----
         rbtnExportSelected.setText("Export Selected");
         rbtnExportSelected.setFont(new Font("Vijaya", Font.PLAIN, 20));
-        rbtnExportSelected.setForeground(new Color(51, 102, 153));
+        rbtnExportSelected.setForeground(new Color(0, 63, 135));
         rbtnExportSelected.setOpaque(false);
         rbtnExportSelected.setName("rbtnExportSelected");
         rbtnExportSelected.addActionListener(new ActionListener() {

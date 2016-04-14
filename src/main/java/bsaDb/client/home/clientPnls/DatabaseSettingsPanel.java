@@ -216,7 +216,7 @@ public class DatabaseSettingsPanel extends JPanel {
             //---- lblConnection ----
             lblConnection.setText("Current database connection:");
             lblConnection.setFont(new Font("Vijaya", Font.PLAIN, 22));
-            lblConnection.setForeground(new Color(51, 102, 153));
+            lblConnection.setForeground(new Color(0, 63, 135));
             lblConnection.setName("lblConnection");
             panel1.add(lblConnection, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -225,7 +225,7 @@ public class DatabaseSettingsPanel extends JPanel {
             //---- lblConnectionName ----
             lblConnectionName.setText("dbName");
             lblConnectionName.setFont(new Font("Vijaya", Font.PLAIN, 22));
-            lblConnectionName.setForeground(new Color(32, 154, 26));
+            lblConnectionName.setForeground(new Color(0, 107, 63));
             lblConnectionName.setName("lblConnectionName");
             panel1.add(lblConnectionName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -344,7 +344,7 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnCreate.setMaximumSize(new Dimension(90, 30));
                 btnCreate.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnCreate.setMargin(new Insets(5, 20, 5, 20));
-                btnCreate.setBackground(new Color(51, 102, 153));
+                btnCreate.setBackground(new Color(0, 63, 135));
                 btnCreate.setForeground(Color.white);
                 btnCreate.setFocusPainted(false);
                 btnCreate.setToolTipText("<html>On database creatation a defualt user will be added.<br>\ndefualt user credentials are: <br>\nusername: admin<br>\npassword: admin\n</html>");
@@ -366,7 +366,7 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnConnect.setMaximumSize(new Dimension(90, 30));
                 btnConnect.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnConnect.setMargin(new Insets(5, 20, 5, 20));
-                btnConnect.setBackground(new Color(51, 102, 153));
+                btnConnect.setBackground(new Color(0, 63, 135));
                 btnConnect.setForeground(Color.white);
                 btnConnect.setFocusPainted(false);
                 btnConnect.setName("btnConnect");

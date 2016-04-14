@@ -619,7 +619,7 @@ public class CampPanel extends JPanel {
                             //---- lblGeneralInformation ----
                             lblGeneralInformation.setText("General Information:");
                             lblGeneralInformation.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                            lblGeneralInformation.setForeground(new Color(51, 102, 153));
+                            lblGeneralInformation.setForeground(new Color(0, 63, 135));
                             lblGeneralInformation.setName("lblGeneralInformation");
                             panel1.add(lblGeneralInformation, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -799,7 +799,7 @@ public class CampPanel extends JPanel {
                             //---- lblWhoCame ----
                             lblWhoCame.setText("Who Came:");
                             lblWhoCame.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                            lblWhoCame.setForeground(new Color(51, 102, 153));
+                            lblWhoCame.setForeground(new Color(0, 63, 135));
                             lblWhoCame.setName("lblWhoCame");
                             panel1.add(lblWhoCame, new GridBagConstraints(0, 7, 3, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -922,7 +922,7 @@ public class CampPanel extends JPanel {
                             //---- lblNotes ----
                             lblNotes.setText("Notes:");
                             lblNotes.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                            lblNotes.setForeground(new Color(51, 102, 153));
+                            lblNotes.setForeground(new Color(0, 63, 135));
                             lblNotes.setName("lblNotes");
                             panel1.add(lblNotes, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -983,7 +983,7 @@ public class CampPanel extends JPanel {
 
                     //---- btnSave ----
                     btnSave.setText("Save");
-                    btnSave.setBackground(new Color(51, 102, 153));
+                    btnSave.setBackground(new Color(0, 63, 135));
                     btnSave.setFocusPainted(false);
                     btnSave.setForeground(Color.white);
                     btnSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1001,7 +1001,7 @@ public class CampPanel extends JPanel {
 
                     //---- btnUpdate ----
                     btnUpdate.setText("Update");
-                    btnUpdate.setBackground(new Color(51, 102, 153));
+                    btnUpdate.setBackground(new Color(0, 63, 135));
                     btnUpdate.setForeground(Color.white);
                     btnUpdate.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnUpdate.setFocusPainted(false);
@@ -1019,7 +1019,7 @@ public class CampPanel extends JPanel {
 
                     //---- btnDelete ----
                     btnDelete.setText("Delete");
-                    btnDelete.setBackground(new Color(207, 0, 0));
+                    btnDelete.setBackground(new Color(206, 17, 38));
                     btnDelete.setForeground(Color.white);
                     btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnDelete.setFocusPainted(false);

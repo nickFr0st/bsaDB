@@ -625,7 +625,7 @@ public class MeritBadgePanel extends JPanel {
         tblCounselors.setBackground(Color.WHITE);
 
         JTableHeader header = tblCounselors.getTableHeader();
-        header.setBackground(new Color(51, 102, 153));
+        header.setBackground(new Color(0, 63, 135));
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
@@ -933,7 +933,7 @@ public class MeritBadgePanel extends JPanel {
                                 //---- lblCounselors ----
                                 lblCounselors.setText("Counselors");
                                 lblCounselors.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                lblCounselors.setForeground(new Color(51, 102, 153));
+                                lblCounselors.setForeground(new Color(0, 63, 135));
                                 lblCounselors.setName("lblCounselors");
                                 panel10.add(lblCounselors, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                                     GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
@@ -1030,7 +1030,7 @@ public class MeritBadgePanel extends JPanel {
                                 //---- lblRequirement ----
                                 lblRequirement.setText("Requirements");
                                 lblRequirement.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                lblRequirement.setForeground(new Color(51, 102, 153));
+                                lblRequirement.setForeground(new Color(0, 63, 135));
                                 lblRequirement.setName("lblRequirement");
                                 panel8.add(lblRequirement, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1138,7 +1138,7 @@ public class MeritBadgePanel extends JPanel {
 
                     //---- btnSave ----
                     btnSave.setText("Save");
-                    btnSave.setBackground(new Color(51, 102, 153));
+                    btnSave.setBackground(new Color(0, 63, 135));
                     btnSave.setFocusPainted(false);
                     btnSave.setForeground(Color.white);
                     btnSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1156,7 +1156,7 @@ public class MeritBadgePanel extends JPanel {
 
                     //---- btnUpdate ----
                     btnUpdate.setText("Update");
-                    btnUpdate.setBackground(new Color(51, 102, 153));
+                    btnUpdate.setBackground(new Color(0, 63, 135));
                     btnUpdate.setForeground(Color.white);
                     btnUpdate.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnUpdate.setFocusPainted(false);
@@ -1174,7 +1174,7 @@ public class MeritBadgePanel extends JPanel {
 
                     //---- btnDelete ----
                     btnDelete.setText("Delete");
-                    btnDelete.setBackground(new Color(207, 0, 0));
+                    btnDelete.setBackground(new Color(206, 17, 38));
                     btnDelete.setForeground(Color.white);
                     btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnDelete.setFocusPainted(false);

@@ -128,7 +128,7 @@ public class CounselorDialog extends JDialog {
 
                 //---- lblName ----
                 lblName.setText("Name:");
-                lblName.setForeground(new Color(51, 102, 153));
+                lblName.setForeground(new Color(0, 63, 135));
                 lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 lblName.setName("lblName");
                 contentPanel.add(lblName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -155,7 +155,7 @@ public class CounselorDialog extends JDialog {
 
                 //---- lblPhone ----
                 lblPhone.setText("Phone Number:");
-                lblPhone.setForeground(new Color(51, 102, 153));
+                lblPhone.setForeground(new Color(0, 63, 135));
                 lblPhone.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 lblPhone.setName("lblPhone");
                 contentPanel.add(lblPhone, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
@@ -213,7 +213,7 @@ public class CounselorDialog extends JDialog {
                 cancelButton.setText("Cancel");
                 cancelButton.setForeground(Color.white);
                 cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                cancelButton.setBackground(new Color(206, 0, 0));
+                cancelButton.setBackground(new Color(206, 17, 38));
                 cancelButton.setFocusPainted(false);
                 cancelButton.setName("cancelButton");
                 cancelButton.addMouseListener(new MouseAdapter() {

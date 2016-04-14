@@ -34,10 +34,10 @@ import java.util.List;
  */
 public class BoyScoutPanel extends JPanel {
 
-    private final Color GOOD = new Color(32, 154, 26);
-    private final Color AVG = new Color(51, 102, 153);
-    private final Color WARNING = new Color(220,177,26);
-    private final Color BAD = new Color(255, 0, 0);
+    private final Color GOOD = new Color(0,107,63);
+    private final Color AVG = new Color(0, 63, 135);
+    private final Color WARNING = new Color(255,204,0);
+    private final Color BAD = new Color(206, 17, 38);
 
     private BoyScout boyScout;
 
@@ -1069,7 +1069,7 @@ public class BoyScoutPanel extends JPanel {
         tblSpecialAwards.setFillsViewportHeight(true);
 
         JTableHeader header = tblSpecialAwards.getTableHeader();
-        header.setBackground(new Color(51, 102, 153));
+        header.setBackground(new Color(0, 63, 135));
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
@@ -1098,7 +1098,7 @@ public class BoyScoutPanel extends JPanel {
         tblProgress.setBackground(Color.WHITE);
 
         JTableHeader header = tblProgress.getTableHeader();
-        header.setBackground(new Color(51, 102, 153));
+        header.setBackground(new Color(0, 63, 135));
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
@@ -1372,7 +1372,7 @@ public class BoyScoutPanel extends JPanel {
 
                     //======== panel4 ========
                     {
-                        panel4.setBackground(new Color(202, 183, 160));
+                        panel4.setBackground(new Color(179, 148, 117));
                         panel4.setName("panel4");
                         panel4.setLayout(new BorderLayout());
 
@@ -1539,7 +1539,7 @@ public class BoyScoutPanel extends JPanel {
 
                                     //---- lblAgeValue ----
                                     lblAgeValue.setFont(new Font("Tahoma", Font.BOLD, 14));
-                                    lblAgeValue.setForeground(new Color(32, 154, 26));
+                                    lblAgeValue.setForeground(new Color(0, 107, 63));
                                     lblAgeValue.setName("lblAgeValue");
                                     pnlGeneral.add(lblAgeValue, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1736,7 +1736,7 @@ public class BoyScoutPanel extends JPanel {
                                 //---- lblContactInfo ----
                                 lblContactInfo.setText("Contact Information:");
                                 lblContactInfo.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                lblContactInfo.setForeground(new Color(51, 102, 153));
+                                lblContactInfo.setForeground(new Color(0, 63, 135));
                                 lblContactInfo.setName("lblContactInfo");
                                 pnlContact.add(lblContactInfo, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1906,7 +1906,7 @@ public class BoyScoutPanel extends JPanel {
                                 //---- lblNotes ----
                                 lblNotes.setText("Notes:");
                                 lblNotes.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                lblNotes.setForeground(new Color(51, 102, 153));
+                                lblNotes.setForeground(new Color(0, 63, 135));
                                 lblNotes.setName("lblNotes");
                                 pnlContact.add(lblNotes, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1962,7 +1962,7 @@ public class BoyScoutPanel extends JPanel {
                                         //---- lblSpecialAwards ----
                                         lblSpecialAwards.setText("Special Awards");
                                         lblSpecialAwards.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                        lblSpecialAwards.setForeground(new Color(51, 102, 153));
+                                        lblSpecialAwards.setForeground(new Color(0, 63, 135));
                                         lblSpecialAwards.setName("lblSpecialAwards");
                                         panel8.add(lblSpecialAwards, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -2027,7 +2027,7 @@ public class BoyScoutPanel extends JPanel {
                                         //---- lblMeritBadges ----
                                         lblMeritBadges.setText("Merit Badges");
                                         lblMeritBadges.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                        lblMeritBadges.setForeground(new Color(51, 102, 153));
+                                        lblMeritBadges.setForeground(new Color(0, 63, 135));
                                         lblMeritBadges.setName("lblMeritBadges");
                                         panel9.add(lblMeritBadges, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -2078,7 +2078,7 @@ public class BoyScoutPanel extends JPanel {
                                         //---- lblCamps ----
                                         lblCamps.setText("Camps");
                                         lblCamps.setFont(new Font("Vijaya", Font.PLAIN, 22));
-                                        lblCamps.setForeground(new Color(51, 102, 153));
+                                        lblCamps.setForeground(new Color(0, 63, 135));
                                         lblCamps.setName("lblCamps");
                                         panel10.add(lblCamps, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -2184,7 +2184,7 @@ public class BoyScoutPanel extends JPanel {
 
                     //---- btnSave ----
                     btnSave.setText("Save");
-                    btnSave.setBackground(new Color(51, 102, 153));
+                    btnSave.setBackground(new Color(0, 63, 135));
                     btnSave.setFocusPainted(false);
                     btnSave.setForeground(Color.white);
                     btnSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -2202,7 +2202,7 @@ public class BoyScoutPanel extends JPanel {
 
                     //---- btnUpdate ----
                     btnUpdate.setText("Update");
-                    btnUpdate.setBackground(new Color(51, 102, 153));
+                    btnUpdate.setBackground(new Color(0, 63, 135));
                     btnUpdate.setForeground(Color.white);
                     btnUpdate.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnUpdate.setFocusPainted(false);
@@ -2220,7 +2220,7 @@ public class BoyScoutPanel extends JPanel {
 
                     //---- btnDelete ----
                     btnDelete.setText("Delete");
-                    btnDelete.setBackground(new Color(207, 0, 0));
+                    btnDelete.setBackground(new Color(206, 17, 38));
                     btnDelete.setForeground(Color.white);
                     btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
                     btnDelete.setFocusPainted(false);

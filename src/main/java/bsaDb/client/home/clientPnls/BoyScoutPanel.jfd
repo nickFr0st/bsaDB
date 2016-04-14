@@ -111,7 +111,7 @@ new FormModel {
 						name: "scrollPane2"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 							name: "panel4"
-							"background": new java.awt.Color( 202, 183, 160, 255 )
+							"background": new java.awt.Color( 179, 148, 117, 255 )
 							auxiliary() {
 								"JavaCodeGenerator.variableLocal": true
 							}
@@ -258,7 +258,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblAgeValue"
 											"font": new java.awt.Font( "Tahoma", 1, 14 )
-											"foreground": new java.awt.Color( 32, 154, 26, 255 )
+											"foreground": new java.awt.Color( 0, 107, 63, 255 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 4
 											"gridx": 3
@@ -467,7 +467,7 @@ new FormModel {
 										name: "lblContactInfo"
 										"text": "Contact Information:"
 										"font": &Font7 new java.awt.Font( "Vijaya", 0, 22 )
-										"foreground": &Color5 new java.awt.Color( 51, 102, 153, 255 )
+										"foreground": new java.awt.Color( 0, 63, 135, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -479,7 +479,7 @@ new FormModel {
 										name: "lblPhoneNumber"
 										"text": "Phone Number:"
 										"font": &Font8 new java.awt.Font( "Tahoma", 0, 14 )
-										"foreground": &Color6 new java.awt.Color( 0, 0, 0, 255 )
+										"foreground": &Color5 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -512,7 +512,7 @@ new FormModel {
 										name: "lblCity"
 										"text": "City:"
 										"font": &Font10 new java.awt.Font( "Tahoma", 0, 14 )
-										"foreground": &Color7 new java.awt.Color( 0, 0, 0, 255 )
+										"foreground": &Color6 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -532,7 +532,7 @@ new FormModel {
 										name: "lblState"
 										"text": "State:"
 										"font": #Font10
-										"foreground": #Color7
+										"foreground": #Color6
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -553,7 +553,7 @@ new FormModel {
 										name: "lblStreet"
 										"text": "Street:"
 										"font": #Font10
-										"foreground": #Color7
+										"foreground": #Color6
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -573,7 +573,7 @@ new FormModel {
 										name: "lblZip"
 										"text": "Zip:"
 										"font": #Font10
-										"foreground": #Color7
+										"foreground": #Color6
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -594,7 +594,7 @@ new FormModel {
 										name: "lblGuardianName"
 										"text": "Parent Name:"
 										"font": #Font8
-										"foreground": #Color6
+										"foreground": #Color5
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -614,7 +614,7 @@ new FormModel {
 										name: "lblGuardianPhone"
 										"text": "Parent Phone Number:"
 										"font": #Font10
-										"foreground": #Color7
+										"foreground": #Color6
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -649,7 +649,7 @@ new FormModel {
 										name: "lblNotes"
 										"text": "Notes:"
 										"font": #Font7
-										"foreground": #Color5
+										"foreground": new java.awt.Color( 0, 63, 135, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -711,7 +711,7 @@ new FormModel {
 												name: "lblSpecialAwards"
 												"text": "Special Awards"
 												"font": &Font11 new java.awt.Font( "Vijaya", 0, 22 )
-												"foreground": &Color8 new java.awt.Color( 51, 102, 153, 255 )
+												"foreground": new java.awt.Color( 0, 63, 135, 255 )
 												auxiliary() {
 													"JavaCodeGenerator.variableLocal": true
 												}
@@ -778,7 +778,7 @@ new FormModel {
 												name: "lblMeritBadges"
 												"text": "Merit Badges"
 												"font": #Font11
-												"foreground": #Color8
+												"foreground": new java.awt.Color( 0, 63, 135, 255 )
 												auxiliary() {
 													"JavaCodeGenerator.variableLocal": true
 												}
@@ -832,7 +832,7 @@ new FormModel {
 												name: "lblCamps"
 												"text": "Camps"
 												"font": #Font11
-												"foreground": #Color8
+												"foreground": new java.awt.Color( 0, 63, 135, 255 )
 												auxiliary() {
 													"JavaCodeGenerator.variableLocal": true
 												}
@@ -929,7 +929,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnSave"
 							"text": "Save"
-							"background": new java.awt.Color( 51, 102, 153, 255 )
+							"background": new java.awt.Color( 0, 63, 135, 255 )
 							"focusPainted": false
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
@@ -941,7 +941,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnUpdate"
 							"text": "Update"
-							"background": new java.awt.Color( 51, 102, 153, 255 )
+							"background": new java.awt.Color( 0, 63, 135, 255 )
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"focusPainted": false
@@ -953,7 +953,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnDelete"
 							"text": "Delete"
-							"background": new java.awt.Color( 207, 0, 0, 255 )
+							"background": new java.awt.Color( 206, 17, 38, 255 )
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"focusPainted": false

@@ -161,7 +161,7 @@ public class ImportDialog extends JDialog {
                 btnImport.setText("Import");
                 btnImport.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnImport.setForeground(Color.white);
-                btnImport.setBackground(new Color(51, 102, 153));
+                btnImport.setBackground(new Color(0, 63, 135));
                 btnImport.setFocusPainted(false);
                 btnImport.setName("btnImport");
                 btnImport.addActionListener(new ActionListener() {
@@ -178,7 +178,7 @@ public class ImportDialog extends JDialog {
                 btnCancel.setText("Cancel");
                 btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 14));
                 btnCancel.setForeground(Color.white);
-                btnCancel.setBackground(new Color(207, 0, 0));
+                btnCancel.setBackground(new Color(206, 17, 38));
                 btnCancel.setFocusPainted(false);
                 btnCancel.setName("btnCancel");
                 btnCancel.addActionListener(new ActionListener() {

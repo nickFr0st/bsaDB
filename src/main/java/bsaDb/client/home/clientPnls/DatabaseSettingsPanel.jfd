@@ -34,7 +34,7 @@ new FormModel {
 					name: "lblConnection"
 					"text": "Current database connection:"
 					"font": new java.awt.Font( "Vijaya", 0, 22 )
-					"foreground": new java.awt.Color( 51, 102, 153, 255 )
+					"foreground": new java.awt.Color( 0, 63, 135, 255 )
 					auxiliary() {
 						"JavaCodeGenerator.variableLocal": true
 					}
@@ -43,7 +43,7 @@ new FormModel {
 					name: "lblConnectionName"
 					"text": "dbName"
 					"font": new java.awt.Font( "Vijaya", 0, 22 )
-					"foreground": new java.awt.Color( 32, 154, 26, 255 )
+					"foreground": new java.awt.Color( 0, 107, 63, 255 )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
 				} )
@@ -136,8 +136,8 @@ new FormModel {
 						"maximumSize": &Dimension2 new java.awt.Dimension( 90, 30 )
 						"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
 						"margin": &Insets0 new java.awt.Insets( 5, 20, 5, 20 )
-						"background": &Color0 new java.awt.Color( 51, 102, 153, 255 )
-						"foreground": &Color1 new java.awt.Color( 255, 255, 255, 255 )
+						"background": new java.awt.Color( 0, 63, 135, 255 )
+						"foreground": &Color0 new java.awt.Color( 255, 255, 255, 255 )
 						"focusPainted": false
 						"toolTipText": "<html>On database creatation a defualt user will be added.<br>\ndefualt user credentials are: <br>\nusername: admin<br>\npassword: admin\n</html>"
 						auxiliary() {
@@ -157,8 +157,8 @@ new FormModel {
 						"maximumSize": #Dimension2
 						"font": #Font1
 						"margin": #Insets0
-						"background": #Color0
-						"foreground": #Color1
+						"background": new java.awt.Color( 0, 63, 135, 255 )
+						"foreground": #Color0
 						"focusPainted": false
 						auxiliary() {
 							"JavaCodeGenerator.variableLocal": true

@@ -87,7 +87,7 @@ public class PnlRequirement extends JPanel {
         ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 1.0E-4};
 
         //---- lblBorder ----
-        lblBorder.setBackground(new Color(51, 102, 153));
+        lblBorder.setBackground(new Color(0, 63, 135));
         lblBorder.setOpaque(true);
         lblBorder.setMaximumSize(new Dimension(0, 2));
         lblBorder.setMinimumSize(new Dimension(0, 2));

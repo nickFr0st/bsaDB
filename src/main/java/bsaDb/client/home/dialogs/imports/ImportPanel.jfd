@@ -17,7 +17,7 @@ new FormModel {
 				name: "lblSelectMessage"
 				"text": "Please select a file to import"
 				"font": new java.awt.Font( "Vijaya", 0, 20 )
-				"foreground": &Color0 new java.awt.Color( 51, 102, 153, 255 )
+				"foreground": new java.awt.Color( 0, 63, 135, 255 )
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true
 				}
@@ -35,7 +35,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btnBrowse"
 				"text": "Browse"
-				"background": new java.awt.Color( 51, 102, 153, 255 )
+				"background": new java.awt.Color( 0, 63, 135, 255 )
 				"font": new java.awt.Font( "Tahoma", 0, 14 )
 				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 				"focusPainted": false
@@ -48,7 +48,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "lblImportInstructionMessage"
 				"text": "Import file instructions"
-				"foreground": #Color0
+				"foreground": new java.awt.Color( 0, 63, 135, 255 )
 				"font": new java.awt.Font( "Vijaya", 0, 20 )
 				auxiliary() {
 					"JavaCodeGenerator.variableLocal": true

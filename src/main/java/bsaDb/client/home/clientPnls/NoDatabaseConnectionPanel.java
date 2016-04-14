@@ -128,7 +128,7 @@ public class NoDatabaseConnectionPanel extends JPanel {
                     //---- label1 ----
                     label1.setText("You do not have an active connection to a MySQL database.");
                     label1.setFont(new Font("Tahoma", Font.BOLD, 14));
-                    label1.setForeground(Color.red);
+                    label1.setForeground(new Color(206, 17, 38));
                     label1.setName("label1");
                     panel3.add(label1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -161,7 +161,7 @@ public class NoDatabaseConnectionPanel extends JPanel {
                     button1.setBorderPainted(false);
                     button1.setOpaque(false);
                     button1.setBackground(Color.white);
-                    button1.setForeground(new Color(51, 102, 153));
+                    button1.setForeground(new Color(0, 63, 135));
                     button1.setFocusPainted(false);
                     button1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     button1.setName("button1");
@@ -192,7 +192,7 @@ public class NoDatabaseConnectionPanel extends JPanel {
 
             //---- btnSetup ----
             btnSetup.setText("Configure Database");
-            btnSetup.setBackground(new Color(51, 102, 153));
+            btnSetup.setBackground(new Color(0, 63, 135));
             btnSetup.setForeground(Color.white);
             btnSetup.setFont(new Font("Tahoma", Font.PLAIN, 14));
             btnSetup.setFocusPainted(false);

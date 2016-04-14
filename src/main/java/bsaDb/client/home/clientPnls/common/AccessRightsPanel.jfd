@@ -12,7 +12,7 @@ new FormModel {
 			"$alignTop": true
 		} ) {
 			name: "this"
-			"border": new javax.swing.border.TitledBorder( new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 1, false ), "Access Rights", 1, 0, new java.awt.Font( "Vijaya", 0, 22 ), new java.awt.Color( 51, 102, 153, 255 ) )
+			"border": new javax.swing.border.TitledBorder( new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 1, false ), "Access Rights", 1, 0, new java.awt.Font( "Vijaya", 0, 22 ), new java.awt.Color( 0, 63, 135, 255 ) )
 			"background": new java.awt.Color( 255, 255, 255, 255 )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "chkDatabaseSettings"

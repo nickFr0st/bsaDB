@@ -68,7 +68,7 @@ public final class ComponentColorDefaults {
         colors = new HashMap<>();
 
         colors.put(Key.FG_MONTH_SELECTOR, Color.white);
-        colors.put(Key.BG_MONTH_SELECTOR, new Color(51, 102, 153));
+        colors.put(Key.BG_MONTH_SELECTOR, new Color(0, 63, 135));
 
         colors.put(Key.FG_GRID_HEADER, new Color(10, 36, 106));
         colors.put(Key.BG_GRID_HEADER, Color.LIGHT_GRAY);

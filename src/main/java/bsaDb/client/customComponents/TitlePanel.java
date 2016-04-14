@@ -60,14 +60,14 @@ public class TitlePanel extends JPanel {
         //---- lblTitle ----
         lblTitle.setText("Page Name");
         lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 22));
-        lblTitle.setForeground(new Color(51, 102, 153));
+        lblTitle.setForeground(new Color(0, 63, 135));
         lblTitle.setName("lblTitle");
         add(lblTitle, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(10, 10, 0, 0), 0, 0));
 
         //---- lblLine ----
-        lblLine.setBackground(new Color(51, 102, 153));
+        lblLine.setBackground(new Color(0, 63, 135));
         lblLine.setOpaque(true);
         lblLine.setPreferredSize(new Dimension(0, 2));
         lblLine.setMinimumSize(new Dimension(0, 2));

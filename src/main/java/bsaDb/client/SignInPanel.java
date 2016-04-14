@@ -281,7 +281,7 @@ public class SignInPanel extends JPanel {
             btnSignIn.setMaximumSize(new Dimension(90, 30));
             btnSignIn.setFont(new Font("Tahoma", Font.PLAIN, 14));
             btnSignIn.setMargin(new Insets(5, 20, 5, 20));
-            btnSignIn.setBackground(new Color(51, 102, 153));
+            btnSignIn.setBackground(new Color(0, 63, 135));
             btnSignIn.setForeground(Color.white);
             btnSignIn.setFocusPainted(false);
             btnSignIn.setName("btnSignIn");

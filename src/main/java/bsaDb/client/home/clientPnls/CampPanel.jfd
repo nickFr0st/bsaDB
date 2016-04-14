@@ -135,7 +135,7 @@ new FormModel {
 									name: "lblGeneralInformation"
 									"text": "General Information:"
 									"font": &Font0 new java.awt.Font( "Vijaya", 0, 22 )
-									"foreground": &Color0 new java.awt.Color( 51, 102, 153, 255 )
+									"foreground": new java.awt.Color( 0, 63, 135, 255 )
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
@@ -146,7 +146,7 @@ new FormModel {
 									name: "lblName"
 									"text": "Name:"
 									"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
-									"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
+									"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
@@ -190,7 +190,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblNameError"
 									"text": "*error message"
-									"foreground": &Color2 new java.awt.Color( 255, 0, 0, 255 )
+									"foreground": &Color1 new java.awt.Color( 255, 0, 0, 255 )
 									"font": &Font3 new java.awt.Font( "Tahoma", 2, 11 )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 2
@@ -201,7 +201,7 @@ new FormModel {
 									name: "lblLocation"
 									"text": "Location:"
 									"font": #Font1
-									"foreground": #Color1
+									"foreground": #Color0
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
@@ -245,7 +245,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblLocationError"
 									"text": "*error message"
-									"foreground": #Color2
+									"foreground": #Color1
 									"font": #Font3
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 4
@@ -255,7 +255,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblCampDateError"
 									"text": "*error message"
-									"foreground": #Color2
+									"foreground": #Color1
 									"font": #Font3
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 4
@@ -267,7 +267,7 @@ new FormModel {
 									name: "lblLeaders"
 									"text": "Leaders:"
 									"font": #Font1
-									"foreground": #Color1
+									"foreground": #Color0
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
@@ -289,7 +289,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblLeaderError"
 									"text": "*error message"
-									"foreground": #Color2
+									"foreground": #Color1
 									"font": #Font3
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 6
@@ -301,7 +301,7 @@ new FormModel {
 									name: "lblWhoCame"
 									"text": "Who Came:"
 									"font": #Font0
-									"foreground": #Color0
+									"foreground": new java.awt.Color( 0, 63, 135, 255 )
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
@@ -326,7 +326,7 @@ new FormModel {
 										name: "lblAvailable"
 										"text": "Available:"
 										"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
-										"foreground": &Color3 new java.awt.Color( 0, 0, 0, 255 )
+										"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -337,7 +337,7 @@ new FormModel {
 										name: "lblSelected"
 										"text": "Selected:"
 										"font": #Font4
-										"foreground": #Color3
+										"foreground": #Color2
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -428,7 +428,7 @@ new FormModel {
 									name: "lblNotes"
 									"text": "Notes:"
 									"font": #Font0
-									"foreground": #Color0
+									"foreground": new java.awt.Color( 0, 63, 135, 255 )
 									auxiliary() {
 										"JavaCodeGenerator.variableLocal": true
 									}
@@ -484,7 +484,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnSave"
 							"text": "Save"
-							"background": new java.awt.Color( 51, 102, 153, 255 )
+							"background": new java.awt.Color( 0, 63, 135, 255 )
 							"focusPainted": false
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
@@ -496,7 +496,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnUpdate"
 							"text": "Update"
-							"background": new java.awt.Color( 51, 102, 153, 255 )
+							"background": new java.awt.Color( 0, 63, 135, 255 )
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"focusPainted": false
@@ -508,7 +508,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "btnDelete"
 							"text": "Delete"
-							"background": new java.awt.Color( 207, 0, 0, 255 )
+							"background": new java.awt.Color( 206, 17, 38, 255 )
 							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"font": new java.awt.Font( "Tahoma", 0, 14 )
 							"focusPainted": false
