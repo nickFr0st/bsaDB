@@ -94,7 +94,6 @@ new FormModel {
 					"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
 					"minimumSize": new java.awt.Dimension( 200, 57 )
 					"maximumSize": new java.awt.Dimension( 300, 57 )
-					"preferredSize": new java.awt.Dimension( 200, 57 )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 				"gridy": 4
@@ -150,7 +149,6 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JList" ) {
 					name: "listExport"
 					"font": #Font1
-					"preferredSize": new java.awt.Dimension( 200, 57 )
 					"minimumSize": new java.awt.Dimension( 200, 57 )
 					"maximumSize": new java.awt.Dimension( 300, 57 )
 				} )

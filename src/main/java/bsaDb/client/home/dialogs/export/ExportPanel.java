@@ -232,7 +232,6 @@ public class ExportPanel extends JPanel {
             listSource.setFont(new Font("Tahoma", Font.PLAIN, 14));
             listSource.setMinimumSize(new Dimension(200, 57));
             listSource.setMaximumSize(new Dimension(300, 57));
-            listSource.setPreferredSize(new Dimension(200, 57));
             listSource.setName("listSource");
             scrollPane1.setViewportView(listSource);
         }
@@ -298,7 +297,6 @@ public class ExportPanel extends JPanel {
 
             //---- listExport ----
             listExport.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            listExport.setPreferredSize(new Dimension(200, 57));
             listExport.setMinimumSize(new Dimension(200, 57));
             listExport.setMaximumSize(new Dimension(300, 57));
             listExport.setName("listExport");
