@@ -65,7 +65,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label2"
 								"text": "BSA Database"
-								"font": new java.awt.Font( "Verdana", 1, 20 )
+								"font": new java.awt.Font( "Tahoma", 1, 22 )
 								"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridwidth": 2
@@ -73,7 +73,7 @@ new FormModel {
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label3"
 								"text": "Version 1.0"
-								"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
+								"font": &Font0 new java.awt.Font( "Tahoma", 0, 12 )
 								"foreground": #Color0
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 1
@@ -88,7 +88,7 @@ new FormModel {
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label7"
-								"text": "How it works:"
+								"text": "About the Product:"
 								"font": new java.awt.Font( "Tahoma", 1, 14 )
 								"foreground": #Color0
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -100,9 +100,9 @@ new FormModel {
 								"wrapStyleWord": true
 								"lineWrap": true
 								"editable": false
-								"font": new java.awt.Font( "Tahoma", 0, 13 )
+								"font": new java.awt.Font( "Tahoma", 0, 12 )
 								"foreground": new java.awt.Color( 0, 0, 0, 255 )
-								"text": "this is a simple boy scout tracking programed to help you track your scouts"
+								"text": "BSA Database is an easy to use scout tracking program.\nThis project uses an active MySql server connection.\nBSA Database helps you track various information points for your troop and boys individually.\nsome of the information points are:\n- Campouts\n- Advancement Progress\n- Age Tracking\n- Merit Badges Earned\n- etc."
 								"background": new java.awt.Color( 255, 255, 255, 255 )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 4

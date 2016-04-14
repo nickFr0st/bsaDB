@@ -109,7 +109,7 @@ public class AboutDialog extends JDialog {
 
                         //---- label2 ----
                         label2.setText("BSA Database");
-                        label2.setFont(new Font("Verdana", Font.BOLD, 20));
+                        label2.setFont(new Font("Tahoma", Font.BOLD, 22));
                         label2.setForeground(Color.black);
                         label2.setName("label2");
                         panel5.add(label2, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
@@ -118,7 +118,7 @@ public class AboutDialog extends JDialog {
 
                         //---- label3 ----
                         label3.setText("Version 1.0");
-                        label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                        label3.setFont(new Font("Tahoma", Font.PLAIN, 12));
                         label3.setForeground(Color.black);
                         label3.setName("label3");
                         panel5.add(label3, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
@@ -127,7 +127,7 @@ public class AboutDialog extends JDialog {
 
                         //---- label4 ----
                         label4.setText("By Nathanael Malloch");
-                        label4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                        label4.setFont(new Font("Tahoma", Font.PLAIN, 12));
                         label4.setForeground(Color.black);
                         label4.setName("label4");
                         panel5.add(label4, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
@@ -135,7 +135,7 @@ public class AboutDialog extends JDialog {
                             new Insets(0, 0, 5, 5), 0, 0));
 
                         //---- label7 ----
-                        label7.setText("How it works:");
+                        label7.setText("About the Product:");
                         label7.setFont(new Font("Tahoma", Font.BOLD, 14));
                         label7.setForeground(Color.black);
                         label7.setName("label7");
@@ -147,9 +147,9 @@ public class AboutDialog extends JDialog {
                         textArea1.setWrapStyleWord(true);
                         textArea1.setLineWrap(true);
                         textArea1.setEditable(false);
-                        textArea1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                        textArea1.setFont(new Font("Tahoma", Font.PLAIN, 12));
                         textArea1.setForeground(Color.black);
-                        textArea1.setText("this is a simple boy scout tracking programed to help you track your scouts");
+                        textArea1.setText("BSA Database is an easy to use scout tracking program.\nThis project uses an active MySql server connection.\nBSA Database helps you track various information points for your troop and boys individually.\nsome of the information points are:\n- Campouts\n- Advancement Progress\n- Age Tracking\n- Merit Badges Earned\n- etc.");
                         textArea1.setBackground(Color.white);
                         textArea1.setName("textArea1");
                         panel5.add(textArea1, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0,
