@@ -338,7 +338,7 @@ new FormModel {
 										} )
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblWaitPeriod"
-											"text": "Waiting Period for Next Advancement"
+											"text": "Time Requirement"
 											"font": #Font4
 											"foreground": #Color1
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {

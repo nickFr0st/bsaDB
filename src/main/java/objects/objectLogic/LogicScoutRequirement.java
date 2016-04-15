@@ -7,6 +7,7 @@ import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +46,7 @@ public class LogicScoutRequirement {
         return scoutRequirementSet;
     }
 
-    public static synchronized void delete(List<ScoutRequirement> scoutCampList) {
+    public static synchronized void delete(Collection<ScoutRequirement> scoutCampList) {
         if (Util.isEmpty(scoutCampList)) {
             return;
         }
@@ -125,6 +126,42 @@ public class LogicScoutRequirement {
             query.append(scoutRequirement.getRequirementId()).append(", ");
             query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(scoutRequirement.getDateCompleted())).append("'");
             query.append(")");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            statement.executeUpdate(query.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static synchronized ScoutRequirement update(final ScoutRequirement scoutRequirement) {
+        if (scoutRequirement == null) {
+            return null;
+        }
+
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateBoyScout(scoutRequirement);
+                }
+            });
+
+            t.start();
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return scoutRequirement;
+    }
+
+    private static void updateBoyScout(ScoutRequirement scoutRequirement) {
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("UPDATE scoutRequirement SET ");
+            query.append("birthCompleted = '").append(Util.DATA_BASE_DATE_FORMAT.format(scoutRequirement.getDateCompleted())).append("' ");
+            query.append("WHERE id = ").append(scoutRequirement.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate(query.toString());

@@ -282,12 +282,6 @@ public class BoyScoutPanel extends JPanel {
         }
 
         Advancement advancement = (Advancement) cboRank.getSelectedItem();
-        if (advancement == null) {
-            barProgress.setValue(barProgress.getMaximum());
-            barProgress.setForeground(BAD);
-            lblProgressDisplay.setText("no advancement selected");
-            return;
-        }
 
         Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
         if (Util.isEmpty(requirementSet)) {
@@ -688,6 +682,20 @@ public class BoyScoutPanel extends JPanel {
 
         boyScout = LogicBoyScout.save(boyScout);
 
+        saveRelatedScoutData();
+
+        clearAllErrors();
+
+        btnSave.setVisible(false);
+        btnUpdate.setVisible(true);
+        btnDelete.setVisible(true);
+
+        populateBoyScoutNameList();
+
+        listBoyScoutNames.setSelectedValue(boyScout, true);
+    }
+
+    private void saveRelatedScoutData() {
         List<ScoutRequirement> scoutRequirementList = new ArrayList<>();
         for (int i = 0; i < tblModelProgress.getRowCount(); ++i) {
             Boolean isCompleted = (Boolean) tblModelProgress.getValueAt(i, 0);
@@ -773,16 +781,6 @@ public class BoyScoutPanel extends JPanel {
         if (!Util.isEmpty(scoutCampList)) {
             LogicScoutCamp.save(scoutCampList);
         }
-
-        clearAllErrors();
-
-        btnSave.setVisible(false);
-        btnUpdate.setVisible(true);
-        btnDelete.setVisible(true);
-
-        populateBoyScoutNameList();
-
-        listBoyScoutNames.setSelectedValue(boyScout, true);
     }
 
     private void setData() {
@@ -889,44 +887,17 @@ public class BoyScoutPanel extends JPanel {
         }
 
         setData();
-//        boyScout = LogicAdvancement.update(boyScout);
+        boyScout = LogicBoyScout.update(boyScout);
 
-        Set<Requirement> currentRequirementSet = LogicRequirement.findAllByParentIdAndTypeId(boyScout.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-//        Set<Requirement> newRequirementSet = getRequirementSet(advancement.getId());
-        Set<Requirement> deleteRequirementSet = new LinkedHashSet<>();
+        LogicScoutRequirement.delete(LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), boyScout.getAdvancementId()));
+        LogicSpecialAward.delete(LogicSpecialAward.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId()));
+        LogicScoutMeritBadge.delete(LogicScoutMeritBadge.findByAllScoutIdScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId()));
+        LogicScoutCamp.delete(LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId()));
 
-//        if (newRequirementSet.isEmpty()) {
-//            for (Requirement requirement : currentRequirementSet) {
-//                deleteRequirementSet.add(requirement);
-//            }
-//        } else {
-//            for (Requirement requirement : currentRequirementSet) {
-//                boolean addToList = true;
-//                for (Requirement newRequirement : newRequirementSet) {
-//                    if (newRequirement.getId() > 0 && newRequirement.getId() == requirement.getId()) {
-//                        addToList = false;
-//                    }
-//                }
-//                if (addToList) {
-//                    deleteRequirementSet.add(requirement);
-//                }
-//            }
-//        }
-//
-//        for (Requirement deleteRequirement :  deleteRequirementSet) {
-//            LogicRequirement.delete(deleteRequirement);
-//        }
-//
-//        for (Requirement requirement : newRequirementSet) {
-//            if (requirement.getId() > 0) {
-//                LogicRequirement.update(requirement);
-//            } else {
-//                LogicRequirement.save(requirement);
-//            }
-//        }
+        saveRelatedScoutData();
 
+        clearAllErrors();
 
-//        CacheObject.addToAdvancements(boyScout);
         populateBoyScoutNameList();
 
         listBoyScoutNames.setSelectedValue(boyScout, true);
@@ -1110,9 +1081,9 @@ public class BoyScoutPanel extends JPanel {
         // TODO add your code here
     }
 
-//    private void validateName() {
-//        validateAdvancementName();
-//    }
+    private void validateName() {
+        validateAdvancementName();
+    }
 
     private boolean validateAdvancementName() {
         Util.clearError(lblNameError);
@@ -1134,29 +1105,6 @@ public class BoyScoutPanel extends JPanel {
 
         return true;
     }
-
-//    private void btnAddRequirementMouseReleased() {
-//        if (!btnAddRequirement.isEnabled()) {
-//            return;
-//        }
-//
-//        PnlRequirement pnlRequirement = new PnlRequirement("[name]", "[description]", pnlRequirementList.getComponentCount() > 0, -1);
-//        pnlRequirementList.add(pnlRequirement);
-//
-//        pnlRequirement.getTxtReqName().requestFocus();
-//
-//        pnlRequirementList.revalidate();
-//    }
-
-//    private void btnRemoveRequirementMouseReleased() {
-//        if (!btnRemoveRequirement.isEnabled() || pnlRequirementList.getComponentCount() == 0 || !(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent() instanceof PnlRequirement)) {
-//            return;
-//        }
-//
-//        pnlRequirementList.remove(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().getParent());
-//        pnlRequirementList.revalidate();
-//        pnlRequirementList.repaint();
-//    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -1609,7 +1557,7 @@ public class BoyScoutPanel extends JPanel {
                                         new Insets(0, 0, 5, 0), 0, 0));
 
                                     //---- lblWaitPeriod ----
-                                    lblWaitPeriod.setText("Waiting Period for Next Advancement");
+                                    lblWaitPeriod.setText("Time Requirement");
                                     lblWaitPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     lblWaitPeriod.setForeground(Color.black);
                                     lblWaitPeriod.setName("lblWaitPeriod");

@@ -3,7 +3,6 @@ package objects.objectLogic;
 import constants.KeyConst;
 import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.Scout;
-import objects.databaseObjects.User;
 import util.MySqlConnector;
 import util.Util;
 
@@ -113,8 +112,8 @@ public class LogicBoyScout {
         }
     }
 
-    public static synchronized User update(final User user) {
-        if (user == null) {
+    public static synchronized BoyScout update(final BoyScout boyScout) {
+        if (boyScout == null) {
             return null;
         }
 
@@ -122,7 +121,7 @@ public class LogicBoyScout {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    updateUser(user);
+                    updateBoyScout(boyScout);
                 }
             });
 
@@ -132,24 +131,27 @@ public class LogicBoyScout {
             e.printStackTrace();
         }
 
-        return user;
+        return boyScout;
     }
 
-    private static void updateUser(User user) {
+    private static void updateBoyScout(BoyScout boyScout) {
         try {
             StringBuilder query = new StringBuilder();
-            query.append("UPDATE user SET ");
-            query.append("username = '").append(user.getUserName().replace("'", "''")).append("', ");
-            query.append("name = '").append(user.getName().replace("'", "''")).append("', ");
-            query.append("position = '").append(user.getPosition().replace("'", "''")).append("', ");
-            query.append("phoneNumber = '").append(user.getPhoneNumber()).append("', ");
-            query.append("state = '").append(user.getState().replace("'", "''")).append("', ");
-            query.append("city = '").append(user.getCity().replace("'", "''")).append("', ");
-            query.append("street = '").append(user.getStreet().replace("'", "''")).append("', ");
-            query.append("zip = '").append(user.getZip()).append("', ");
-            query.append("password = '").append(user.getPassword().replace("'", "''")).append("', ");
-            query.append("email = '").append(user.getEmail().replace("'", "''")).append("' ");
-            query.append("WHERE id = ").append(user.getId());
+            query.append("UPDATE boyScout SET ");
+            query.append("name = '").append(boyScout.getName().replace("'", "''")).append("', ");
+            query.append("position = '").append(boyScout.getPosition().replace("'", "''")).append("', ");
+            query.append("birthDate = '").append(Util.DATA_BASE_DATE_FORMAT.format(boyScout.getBirthDate())).append("', ");
+            query.append("advancementId = ").append(boyScout.getAdvancementId()).append(", ");
+            query.append("advancementDate = '").append(Util.DATA_BASE_DATE_FORMAT.format(boyScout.getAdvancementDate())).append("', ");
+            query.append("phoneNumber = '").append(boyScout.getPhoneNumber()).append("', ");
+            query.append("guardianName = '").append(boyScout.getGuardianName().replace("'", "''")).append("', ");
+            query.append("guardianPhoneNumber = '").append(boyScout.getGuardianPhoneNumber()).append("', ");
+            query.append("street = '").append(boyScout.getStreet().replace("'", "''")).append("', ");
+            query.append("city = '").append(boyScout.getCity().replace("'", "''")).append("', ");
+            query.append("state = '").append(boyScout.getState().replace("'", "''")).append("', ");
+            query.append("zip = '").append(boyScout.getZip()).append("', ");
+            query.append("note = '").append(boyScout.getNote()).append("' ");
+            query.append("WHERE id = ").append(boyScout.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             statement.executeUpdate(query.toString());

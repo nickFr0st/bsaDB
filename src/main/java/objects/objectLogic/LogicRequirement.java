@@ -236,4 +236,30 @@ public class LogicRequirement {
 
         return null;
     }
+
+    public static Requirement findById(int requirementId) {
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM requirement WHERE id = " + requirementId);
+
+            if (rs.next()) {
+                Requirement requirement = new Requirement();
+                requirement.setId(rs.getInt(KeyConst.ID.getName()));
+                requirement.setName(rs.getString(KeyConst.NAME.getName()));
+                requirement.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
+                requirement.setParentId(rs.getInt(KeyConst.PARENT_ID.getName()));
+                requirement.setTypeId(rs.getInt(KeyConst.TYPE_ID.getName()));
+                return requirement;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
 }
