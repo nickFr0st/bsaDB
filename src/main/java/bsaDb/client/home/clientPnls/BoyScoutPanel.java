@@ -461,33 +461,31 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        LocalDate birthDateTime = new LocalDate(birthDate.get(Calendar.YEAR), birthDate.get(Calendar.MONTH) + 1, birthDate.get(Calendar.DATE));
-        LocalDate now = new LocalDate();
-        if (Years.yearsBetween(birthDateTime, now).getYears() < 11) {
+        Calendar minAgeDate = Calendar.getInstance();
+        minAgeDate.add(Calendar.YEAR, -11);
+
+        if (birthDate.getTimeInMillis() - minAgeDate.getTimeInMillis() >= 0) {
             lblTimeLeftDisplay.setText("scout is too young");
             barTimeLeft.setValue(barTimeLeft.getMaximum());
             barTimeLeft.setForeground(BAD);
             return;
         }
 
-        if (Years.yearsBetween(birthDateTime, now).getYears() > 13) {
+        Calendar maxAgeDate = Calendar.getInstance();
+        maxAgeDate.add(Calendar.YEAR, -14);
+
+        long displayTime = birthDate.getTimeInMillis() - maxAgeDate.getTimeInMillis();
+        if (displayTime <= 0) {
             lblTimeLeftDisplay.setText("age requirement complete");
             barTimeLeft.setValue(barTimeLeft.getMaximum());
             barTimeLeft.setForeground(BAD);
             return;
         }
 
-        Calendar max = Calendar.getInstance();
-        max.add(Calendar.YEAR, -14);
-
-        LocalDate maxDate = new LocalDate(max.get(Calendar.YEAR), max.get(Calendar.MONTH) + 1, max.get(Calendar.DATE));
-
-        Days days = Days.daysBetween(maxDate, birthDateTime);
-
-        int value = 0;
-        if (days.getDays() > 0) {
-            value = barTimeLeft.getMaximum() - days.getDays();
-        }
+        LocalDate birthDateTime = new LocalDate(birthDate.getTimeInMillis());
+        LocalDate minDate = new LocalDate(minAgeDate.getTimeInMillis());
+        Days minDays = Days.daysBetween(birthDateTime, minDate);
+        int value = minDays.getDays();
 
         barTimeLeft.setValue(value);
 
@@ -501,12 +499,12 @@ public class BoyScoutPanel extends JPanel {
             barTimeLeft.setForeground(BAD);
         }
 
-        long diff = max.getTimeInMillis() - birthDate.getTimeInMillis();
-        LocalDate displayDate = new LocalDate(diff);
+        LocalDate maxDate = new LocalDate(maxAgeDate.getTimeInMillis());
 
         String display = "";
         String comma = "";
-        Years year = Years.yearsBetween(maxDate, birthDateTime);
+        LocalDate displayDate = new LocalDate(displayTime);
+        Years year =  Years.yearsBetween(maxDate, birthDateTime);
         if (year.getYears() > 0) {
             display += year.getYears() + " yr";
             if (year.getYears() > 1) {
@@ -531,32 +529,12 @@ public class BoyScoutPanel extends JPanel {
             }
         }
 
+        if (Util.isEmpty(display)) {
+            display = "age requirement complete";
+        }
+
         lblTimeLeftDisplay.setText(display);
     }
-
-//    private void loadRequirementSet() {
-//        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-//
-//        boolean firstAdded = false;
-//        for (Requirement requirement : requirementSet) {
-//            PnlRequirement pnlRequirement = new PnlRequirement(requirement.getName(), requirement.getDescription(), firstAdded, requirement.getId());
-//            pnlRequirementList.add(pnlRequirement);
-//
-//            if (!firstAdded) {
-//                firstAdded = true;
-//            }
-//        }
-//
-//
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                scrollPane3.getViewport().setViewPosition(new Point(0, 0));
-//            }
-//        });
-//
-//        pnlRequirementList.revalidate();
-//        pnlRequirementList.repaint();
-//    }
 
     private void enableControls(boolean enable) {
         // Settings Tab
