@@ -118,11 +118,12 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        clearAllErrors();
         clearData();
 
         boyScout = (BoyScout) listBoyScoutNames.getSelectedValue();
         loadData();
+
+        clearAllErrors();
     }
 
     private void loadData() {
@@ -229,8 +230,6 @@ public class BoyScoutPanel extends JPanel {
         setCampsAttendedBar();
         setWaitingPeriodBar();
         setProgressBar();
-
-        setAdvancementTable();
     }
 
     private void setAdvancementTable() {
@@ -842,7 +841,7 @@ public class BoyScoutPanel extends JPanel {
     private boolean validateFields() {
         boolean valid = true;
 
-        if (!validateAdvancementName()) {
+        if (!validateBoyScoutName()) {
             valid = false;
         }
 
@@ -1013,13 +1012,33 @@ public class BoyScoutPanel extends JPanel {
         if (boyScout == null) {
             return;
         }
+        Util.clearError(lblRankDateError);
+
+        if (!cboRankDate.getModel().isSelected()) {
+            Util.setError(lblRankDateError, "must select a valid rank date");
+        }
 
         setWaitingPeriodBar();
-        setProgressBar();
+    }
+
+    private void updateProgressTable() {
+        if (tblModelProgress.getRowCount() > 0) {
+            for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
+                tblModelProgress.removeRow(i);
+            }
+        }
+
+        setAdvancementTable();
     }
 
     private void cboRankActionPerformed() {
+        if (boyScout == null) {
+            return;
+        }
         cboRankDateActionPerformed();
+
+        setProgressBar();
+        updateProgressTable();
     }
 
     private void createUIComponents() {
@@ -1082,10 +1101,10 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void validateName() {
-        validateAdvancementName();
+        validateBoyScoutName();
     }
 
-    private boolean validateAdvancementName() {
+    private boolean validateBoyScoutName() {
         Util.clearError(lblNameError);
 
         if (txtName.isMessageDefault() || txtName.getText().trim().isEmpty()) {
@@ -1365,6 +1384,18 @@ public class BoyScoutPanel extends JPanel {
                                     txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     txtName.setDefaultText("Scout Name");
                                     txtName.setName("txtName");
+                                    txtName.addKeyListener(new KeyAdapter() {
+                                        @Override
+                                        public void keyReleased(KeyEvent e) {
+                                            validateName();
+                                        }
+                                    });
+                                    txtName.addFocusListener(new FocusAdapter() {
+                                        @Override
+                                        public void focusLost(FocusEvent e) {
+                                            validateName();
+                                        }
+                                    });
                                     pnlGeneral.add(txtName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
