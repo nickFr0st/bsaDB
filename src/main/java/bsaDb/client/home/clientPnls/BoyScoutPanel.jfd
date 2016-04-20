@@ -417,10 +417,10 @@ new FormModel {
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnEditAdvancementProgress"
-												"icon": new com.jformdesigner.model.SwingIcon( 0, "/images/edit.png" )
+												"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/images/edit.png" )
 												"verticalAlignment": 3
-												"cursor": new java.awt.Cursor( 12 )
-												"preferredSize": new java.awt.Dimension( 20, 20 )
+												"cursor": &Cursor0 new java.awt.Cursor( 12 )
+												"preferredSize": &Dimension2 new java.awt.Dimension( 20, 20 )
 												"toolTipText": "Edit selected advancement"
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnEditAdvancementProgressMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -697,7 +697,7 @@ new FormModel {
 										name: "pnlDetailContents"
 										"opaque": false
 										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-											"$columnSpecs": "0, 0, 0, 0:1.0"
+											"$columnSpecs": "0, 0, 0, 0, 0:1.0"
 											"$rowSpecs": "0"
 											"$hGap": 5
 											"$vGap": 5
@@ -722,28 +722,31 @@ new FormModel {
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnAddAward"
-												"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/images/add.png" )
+												"icon": &SwingIcon1 new com.jformdesigner.model.SwingIcon( 0, "/images/add.png" )
 												"toolTipText": "Add a new award"
-												"cursor": &Cursor0 new java.awt.Cursor( 12 )
+												"cursor": &Cursor1 new java.awt.Cursor( 12 )
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddAwardMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 1
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
-												name: "btnRemoveAward"
-												"icon": &SwingIcon1 new com.jformdesigner.model.SwingIcon( 0, "/images/delete.png" )
-												"toolTipText": "Remove selected award"
+												name: "btnEditSpecialAward"
+												"icon": #SwingIcon0
+												"verticalAlignment": 3
 												"cursor": #Cursor0
+												"preferredSize": #Dimension2
+												"toolTipText": "Edit selected advancement"
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnEditSpecialAwardMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 2
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
-												name: "lblRequirementError"
-												"text": "* Error Message"
-												"foreground": sfield java.awt.Color red
-												"font": &Font12 new java.awt.Font( "Tahoma", 2, 11 )
-												"visible": false
+												name: "btnRemoveAward"
+												"icon": &SwingIcon2 new com.jformdesigner.model.SwingIcon( 0, "/images/delete.png" )
+												"toolTipText": "Remove selected award"
+												"cursor": #Cursor1
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveAwardMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-												"insets": &Insets4 new java.awt.Insets( 0, 10, 0, 0 )
 												"gridx": 3
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -789,18 +792,18 @@ new FormModel {
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnAddMeritBadge"
-												"icon": #SwingIcon0
+												"icon": #SwingIcon1
 												"toolTipText": "Add a merit badge"
-												"cursor": #Cursor0
+												"cursor": #Cursor1
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddMeritBadgeMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 1
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnRemoveMeritBadge"
-												"icon": #SwingIcon1
+												"icon": #SwingIcon2
 												"toolTipText": "Remove selected merit badge"
-												"cursor": #Cursor0
+												"cursor": #Cursor1
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveMeritBadgeMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 2
@@ -809,10 +812,10 @@ new FormModel {
 												name: "lblRequirementError2"
 												"text": "* Error Message"
 												"foreground": sfield java.awt.Color red
-												"font": #Font12
+												"font": &Font12 new java.awt.Font( "Tahoma", 2, 11 )
 												"visible": false
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-												"insets": #Insets4
+												"insets": &Insets4 new java.awt.Insets( 0, 10, 0, 0 )
 												"gridx": 3
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -845,18 +848,18 @@ new FormModel {
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnAddCamp"
-												"icon": #SwingIcon0
+												"icon": #SwingIcon1
 												"toolTipText": "Add a camp"
-												"cursor": #Cursor0
+												"cursor": #Cursor1
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddCampMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 1
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnRemoveCamp"
-												"icon": #SwingIcon1
+												"icon": #SwingIcon2
 												"toolTipText": "Remove selected camp"
-												"cursor": #Cursor0
+												"cursor": #Cursor1
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveCampMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 2

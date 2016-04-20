@@ -10,6 +10,7 @@ import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import bsaDb.client.home.dialogs.EditScoutAdvancementDialog;
 import bsaDb.client.home.dialogs.ScoutCampDialog;
 import bsaDb.client.home.dialogs.ScoutMeritBadgeDialog;
+import bsaDb.client.home.dialogs.SpecialAwardDialog;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.*;
@@ -27,9 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -156,7 +154,7 @@ public class BoyScoutPanel extends JPanel {
         List<SpecialAward> specialAwardList = LogicSpecialAward.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
         if (!Util.isEmpty(specialAwardList)) {
             for (SpecialAward specialAward : specialAwardList) {
-                tblModelSpecialAwards.addRow(new Object[]{specialAward.getName(), specialAward.getDescription(), Util.DISPLAY_DATE_FORMAT.format(specialAward.getDateReceived())});
+                tblModelSpecialAwards.addRow(new Object[]{specialAward.getName(), specialAward.getDescription(), specialAward.getDateReceived()});
             }
         }
 
@@ -718,17 +716,12 @@ public class BoyScoutPanel extends JPanel {
         for (int i = 0; i < tblModelSpecialAwards.getRowCount(); ++i) {
             String name = (String) tblModelSpecialAwards.getValueAt(i, 0);
             String description = (String) tblModelSpecialAwards.getValueAt(i, 1);
-            String dateReceived = (String) tblModelSpecialAwards.getValueAt(i, 2);
+            Date dateReceived = (Date) tblModelSpecialAwards.getValueAt(i, 2);
 
             SpecialAward specialAward = new SpecialAward();
             specialAward.setName(name);
             specialAward.setDescription(description);
-            try {
-                DateFormat df = new SimpleDateFormat();
-                specialAward.setDateReceived(df.parse(dateReceived));
-            } catch (ParseException ignore) {
-            }
-
+            specialAward.setDateReceived(dateReceived);
             specialAward.setScoutId(boyScout.getId());
             specialAward.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
 
@@ -1039,12 +1032,34 @@ public class BoyScoutPanel extends JPanel {
     private void createSpecialAwardsTable() {
         tblModelSpecialAwards = new DefaultTableModel(new Object[] {"Name", "Description", "Date Received"}, 0) {
             @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 2:
+                        return Date.class;
+                    default:
+                        return String.class;
+                }
+            }
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (value instanceof Date) {
+                    value = Util.DISPLAY_DATE_FORMAT_LONG.format(value);
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        };
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
         tblSpecialAwards = new JTable();
+        tblSpecialAwards.setDefaultRenderer(String.class, centerRenderer);
+        tblSpecialAwards.setDefaultRenderer(Date.class, centerRenderer);
         tblSpecialAwards.setBackground(Color.WHITE);
         tblSpecialAwards.setFillsViewportHeight(true);
         tblSpecialAwards.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1198,6 +1213,49 @@ public class BoyScoutPanel extends JPanel {
         mdlCampList.removeElementAt(listCamps.getSelectedIndex());
     }
 
+    private void btnRemoveAwardMouseReleased() {
+        if (tblSpecialAwards.getSelectedRow() < 0) {
+            return;
+        }
+
+        tblModelSpecialAwards.removeRow(tblSpecialAwards.getSelectedRow());
+    }
+
+    private void btnAddAwardMouseReleased() {
+        SpecialAwardDialog dialog = new SpecialAwardDialog((JFrame) SwingUtilities.getWindowAncestor(this), null);
+
+        if (dialog.getBtnChoice() != SpecialAwardDialog.BTN_OK) {
+            return;
+        }
+
+        SpecialAward specialAward = dialog.getSpecialAward();
+        Object[] row = new Object[] {specialAward.getName(), specialAward.getDescription(), specialAward.getDateReceived()};
+        tblModelSpecialAwards.addRow(row);
+    }
+
+    private void btnEditSpecialAwardMouseReleased() {
+        int selectedRow = tblSpecialAwards.getSelectedRow();
+        if (selectedRow < 0) {
+            return;
+        }
+
+        SpecialAward specialAward = new SpecialAward();
+        specialAward.setName((String) tblModelSpecialAwards.getValueAt(selectedRow, 0));
+        specialAward.setDescription((String) tblModelSpecialAwards.getValueAt(selectedRow, 1));
+        specialAward.setDateReceived((Date) tblModelSpecialAwards.getValueAt(selectedRow, 2));
+
+        SpecialAwardDialog dialog = new SpecialAwardDialog((JFrame) SwingUtilities.getWindowAncestor(this), specialAward);
+
+        if (dialog.getBtnChoice() != SpecialAwardDialog.BTN_OK) {
+            return;
+        }
+
+        SpecialAward updatedSpecialAward = dialog.getSpecialAward();
+        tblModelSpecialAwards.setValueAt(updatedSpecialAward.getName(), selectedRow, 0);
+        tblModelSpecialAwards.setValueAt(updatedSpecialAward.getDescription(), selectedRow, 1);
+        tblModelSpecialAwards.setValueAt(updatedSpecialAward.getDateReceived(), selectedRow, 2);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         createUIComponents();
@@ -1272,8 +1330,8 @@ public class BoyScoutPanel extends JPanel {
         JPanel panel8 = new JPanel();
         JLabel lblSpecialAwards = new JLabel();
         btnAddAward = new JLabel();
+        btnEditSpecialAward = new JLabel();
         btnRemoveAward = new JLabel();
-        lblRequirementError = new JLabel();
         scrollPane5 = new JScrollPane();
         JPanel panel9 = new JPanel();
         JLabel lblMeritBadges = new JLabel();
@@ -2006,9 +2064,9 @@ public class BoyScoutPanel extends JPanel {
                                         panel8.setOpaque(false);
                                         panel8.setName("panel8");
                                         panel8.setLayout(new GridBagLayout());
-                                        ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
+                                        ((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0, 0};
                                         ((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0};
-                                        ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                                        ((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
                                         ((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
                                         //---- lblSpecialAwards ----
@@ -2025,7 +2083,30 @@ public class BoyScoutPanel extends JPanel {
                                         btnAddAward.setToolTipText("Add a new award");
                                         btnAddAward.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                         btnAddAward.setName("btnAddAward");
+                                        btnAddAward.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnAddAwardMouseReleased();
+                                            }
+                                        });
                                         panel8.add(btnAddAward, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- btnEditSpecialAward ----
+                                        btnEditSpecialAward.setIcon(new ImageIcon(getClass().getResource("/images/edit.png")));
+                                        btnEditSpecialAward.setVerticalAlignment(SwingConstants.BOTTOM);
+                                        btnEditSpecialAward.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                                        btnEditSpecialAward.setPreferredSize(new Dimension(20, 20));
+                                        btnEditSpecialAward.setToolTipText("Edit selected advancement");
+                                        btnEditSpecialAward.setName("btnEditSpecialAward");
+                                        btnEditSpecialAward.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnEditSpecialAwardMouseReleased();
+                                            }
+                                        });
+                                        panel8.add(btnEditSpecialAward, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 5), 0, 0));
 
@@ -2034,19 +2115,15 @@ public class BoyScoutPanel extends JPanel {
                                         btnRemoveAward.setToolTipText("Remove selected award");
                                         btnRemoveAward.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                         btnRemoveAward.setName("btnRemoveAward");
-                                        panel8.add(btnRemoveAward, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                        btnRemoveAward.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnRemoveAwardMouseReleased();
+                                            }
+                                        });
+                                        panel8.add(btnRemoveAward, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 5), 0, 0));
-
-                                        //---- lblRequirementError ----
-                                        lblRequirementError.setText("* Error Message");
-                                        lblRequirementError.setForeground(Color.red);
-                                        lblRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                                        lblRequirementError.setVisible(false);
-                                        lblRequirementError.setName("lblRequirementError");
-                                        panel8.add(lblRequirementError, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-                                            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                            new Insets(0, 10, 0, 0), 0, 0));
                                     }
                                     pnlDetailContents.add(panel8, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -2380,8 +2457,8 @@ public class BoyScoutPanel extends JPanel {
     private JPanel pnlDetails;
     private JPanel pnlDetailContents;
     private JLabel btnAddAward;
+    private JLabel btnEditSpecialAward;
     private JLabel btnRemoveAward;
-    private JLabel lblRequirementError;
     private JScrollPane scrollPane5;
     private JTable tblSpecialAwards;
     private JLabel btnAddMeritBadge;
