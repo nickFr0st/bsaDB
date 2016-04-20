@@ -497,7 +497,7 @@ public class AdvancementPanel extends JPanel {
 
         try {
             int timeRequirement = Integer.parseInt(txtTimeRequirement.getText());
-            if (timeRequirement <= 0) {
+            if (timeRequirement < 0) {
                 Util.setError(lblTimeRequirementError, "Invalid value, must be positive whole numbers only");
                 return false;
             }
