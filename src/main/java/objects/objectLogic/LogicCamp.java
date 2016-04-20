@@ -17,16 +17,31 @@ import java.util.Set;
  */
 public class LogicCamp {
 
-    public static Set<Camp> findAll() {
+    public static Set<Camp> findAll(List<Camp> excludedCamps) {
         Set<Camp> campList = new LinkedHashSet<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return campList;
         }
 
+        StringBuilder ids = new StringBuilder();
+        if (!Util.isEmpty(excludedCamps)) {
+            for (Camp badge : excludedCamps) {
+                if (!ids.toString().isEmpty()) {
+                    ids.append(",");
+                }
+                ids.append(badge.getId());
+            }
+        }
+
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM camp ORDER BY name");
+            ResultSet rs;
+            if (ids.toString().isEmpty()) {
+                rs = statement.executeQuery("SELECT * FROM camp ORDER BY name");
+            } else {
+                rs = statement.executeQuery("SELECT * FROM camp WHERE id NOT IN(" + ids + ")  ORDER BY name");
+            }
 
             while (rs.next()) {
                 Camp camp = new Camp();

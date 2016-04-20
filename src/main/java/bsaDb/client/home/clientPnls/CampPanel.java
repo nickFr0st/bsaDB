@@ -53,13 +53,13 @@ public class CampPanel extends JPanel {
     }
 
     public void populateCampNameList() {
-        listCampoutNames.setListData(Util.getSortedList((LinkedHashSet) LogicCamp.findAll()));
+        listCampoutNames.setListData(Util.getSortedList((LinkedHashSet) LogicCamp.findAll(null)));
         listCampoutNames.revalidate();
         listCampoutNames.repaint();
     }
 
     private void txtSearchNameKeyReleased() {
-        LinkedHashSet campSet = (LinkedHashSet) LogicCamp.findAll();
+        LinkedHashSet campSet = (LinkedHashSet) LogicCamp.findAll(null);
 
         if (txtSearchName.isMessageDefault()) {
             listCampoutNames.setListData(Util.getSortedList(campSet));

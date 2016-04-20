@@ -848,6 +848,7 @@ new FormModel {
 												"icon": #SwingIcon0
 												"toolTipText": "Add a camp"
 												"cursor": #Cursor0
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddCampMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 1
 											} )
@@ -856,6 +857,7 @@ new FormModel {
 												"icon": #SwingIcon1
 												"toolTipText": "Remove selected camp"
 												"cursor": #Cursor0
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveCampMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 2
 											} )
@@ -890,6 +892,9 @@ new FormModel {
 											name: "scrollPane7"
 											add( new FormComponent( "javax.swing.JList" ) {
 												name: "listCamps"
+												auxiliary() {
+													"JavaCodeGenerator.customCreateCode": "new JList(mdlCampList);"
+												}
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridx": 1

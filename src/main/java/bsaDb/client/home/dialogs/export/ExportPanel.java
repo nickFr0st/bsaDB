@@ -62,7 +62,7 @@ public class ExportPanel extends JPanel {
                 }
                 break;
             case CAMPOUT:
-                Set<Camp> campList = LogicCamp.findAll();
+                Set<Camp> campList = LogicCamp.findAll(null);
                 for (Camp camp : campList) {
                     nameSource.add(camp.getName());
                 }

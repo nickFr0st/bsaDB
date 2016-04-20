@@ -8,6 +8,7 @@ import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import bsaDb.client.home.dialogs.EditScoutAdvancementDialog;
+import bsaDb.client.home.dialogs.ScoutCampDialog;
 import bsaDb.client.home.dialogs.ScoutMeritBadgeDialog;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
@@ -48,9 +49,11 @@ public class BoyScoutPanel extends JPanel {
     private DefaultTableModel tblModelSpecialAwards;
 
     DefaultListModel<MeritBadge> mdlMeritBadgeList;
+    DefaultListModel<Camp> mdlCampList;
 
     public BoyScoutPanel() {
         mdlMeritBadgeList = new DefaultListModel();
+        mdlCampList = new DefaultListModel();
 
         initComponents();
 
@@ -177,7 +180,10 @@ public class BoyScoutPanel extends JPanel {
                 campList.add(LogicCamp.findById(scoutCamp.getCampId()));
             }
 
-            listCamps.setListData(campList.toArray());
+            mdlCampList.removeAllElements();
+            for (Camp camp : campList) {
+                mdlCampList.addElement(camp);
+            }
         }
     }
 
@@ -617,7 +623,7 @@ public class BoyScoutPanel extends JPanel {
         }
 
         mdlMeritBadgeList.removeAllElements();
-        listCamps.setListData(new Object[]{});
+        mdlCampList.removeAllElements();
     }
 
     private void clearContactTab() {
@@ -1144,8 +1150,8 @@ public class BoyScoutPanel extends JPanel {
 
     private void btnAddMeritBadgeMouseReleased() {
         List<MeritBadge> meritBadgeList = new ArrayList<>();
-        for (int i = 0; i < listMeritBadges.getModel().getSize(); i++) {
-            meritBadgeList.add(((MeritBadge) listMeritBadges.getModel().getElementAt(i)));
+        for (int i = 0; i < mdlMeritBadgeList.getSize(); i++) {
+            meritBadgeList.add(mdlMeritBadgeList.getElementAt(i));
         }
 
         ScoutMeritBadgeDialog dialog = new ScoutMeritBadgeDialog((JFrame) SwingUtilities.getWindowAncestor(this), meritBadgeList);
@@ -1165,6 +1171,31 @@ public class BoyScoutPanel extends JPanel {
         }
 
         mdlMeritBadgeList.removeElementAt(listMeritBadges.getSelectedIndex());
+    }
+
+    private void btnAddCampMouseReleased() {
+        List<Camp> campList = new ArrayList<>();
+        for (int i = 0; i < mdlCampList.getSize(); i++) {
+            campList.add(mdlCampList.getElementAt(i));
+        }
+
+        ScoutCampDialog dialog = new ScoutCampDialog((JFrame) SwingUtilities.getWindowAncestor(this), campList);
+        if (dialog.getBtnChoice() != ScoutCampDialog.BTN_OK) {
+            return;
+        }
+
+        mdlCampList.removeAllElements();
+        for (Camp camp : dialog.getSelectedCamps()) {
+            mdlCampList.addElement(camp);
+        }
+    }
+
+    private void btnRemoveCampMouseReleased() {
+        if (listCamps.getSelectedIndex() == -1) {
+            return;
+        }
+
+        mdlCampList.removeElementAt(listCamps.getSelectedIndex());
     }
 
     private void initComponents() {
@@ -1257,7 +1288,7 @@ public class BoyScoutPanel extends JPanel {
         scrollPane6 = new JScrollPane();
         listMeritBadges = new JList(mdlMeritBadgeList);
         scrollPane7 = new JScrollPane();
-        listCamps = new JList();
+        listCamps = new JList(mdlCampList);
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -2122,6 +2153,12 @@ public class BoyScoutPanel extends JPanel {
                                         btnAddCamp.setToolTipText("Add a camp");
                                         btnAddCamp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                         btnAddCamp.setName("btnAddCamp");
+                                        btnAddCamp.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnAddCampMouseReleased();
+                                            }
+                                        });
                                         panel10.add(btnAddCamp, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 5), 0, 0));
@@ -2131,6 +2168,12 @@ public class BoyScoutPanel extends JPanel {
                                         btnRemoveCamp.setToolTipText("Remove selected camp");
                                         btnRemoveCamp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                         btnRemoveCamp.setName("btnRemoveCamp");
+                                        btnRemoveCamp.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnRemoveCampMouseReleased();
+                                            }
+                                        });
                                         panel10.add(btnRemoveCamp, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 5), 0, 0));
