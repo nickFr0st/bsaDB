@@ -46,6 +46,33 @@ public class LogicScoutRequirement {
         return scoutRequirementSet;
     }
 
+    public static ScoutRequirement findByScoutIdScoutTypeIdAdvancementIdAndRequirementId(int scoutId, int scoutTypeId, int advancementId, int requirementId) {
+        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
+            return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM scoutRequirement WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId + " AND advancementId = " + advancementId + " AND requirementId = " + requirementId);
+
+            if (rs.next()) {
+                ScoutRequirement scoutRequirement = new ScoutRequirement();
+                scoutRequirement.setId(rs.getInt(KeyConst.ID.getName()));
+                scoutRequirement.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+                scoutRequirement.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                scoutRequirement.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
+                scoutRequirement.setRequirementId(rs.getInt(KeyConst.REQUIREMENT_ID.getName()));
+                scoutRequirement.setDateCompleted(rs.getDate(KeyConst.REQUIREMENT_DATE_COMPLETED.getName()));
+                return scoutRequirement;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
+
     public static synchronized void delete(Collection<ScoutRequirement> scoutCampList) {
         if (Util.isEmpty(scoutCampList)) {
             return;

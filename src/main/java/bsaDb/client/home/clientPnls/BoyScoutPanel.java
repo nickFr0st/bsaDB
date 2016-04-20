@@ -7,6 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
+import bsaDb.client.home.dialogs.EditScoutAdvancementDialog;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.*;
@@ -19,6 +20,7 @@ import util.Util;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -265,9 +267,9 @@ public class BoyScoutPanel extends JPanel {
             }
 
             if (scoutRequirement == null) {
-                tblModelProgress.addRow(new Object[]{Boolean.FALSE, requirement.getName(), ""});
+                tblModelProgress.addRow(new Object[]{Boolean.FALSE, requirement.getName(), null});
             } else {
-                tblModelProgress.addRow(new Object[]{Boolean.TRUE, requirement.getName(), Util.DISPLAY_DATE_FORMAT.format(scoutRequirement.getDateCompleted())});
+                tblModelProgress.addRow(new Object[]{Boolean.TRUE, requirement.getName(), scoutRequirement.getDateCompleted()});
             }
         }
     }
@@ -544,6 +546,7 @@ public class BoyScoutPanel extends JPanel {
         cboRankDate.setEnabled(enable);
         cboBirthDate.setEnabled(enable);
         tblProgress.setEnabled(enable);
+        btnEditAdvancementProgress.setEnabled(enable);
 
         // Contact Info Tab
         txtPhoneNumber.setEnabled(enable);
@@ -681,16 +684,11 @@ public class BoyScoutPanel extends JPanel {
             }
 
             String requirementName = (String) tblModelProgress.getValueAt(i, 1);
-            String dateCompleted = (String) tblModelProgress.getValueAt(i, 2);
+            Date dateCompleted = (Date) tblModelProgress.getValueAt(i, 2);
 
             ScoutRequirement scoutRequirement = new ScoutRequirement();
             scoutRequirement.setAdvancementId(boyScout.getAdvancementId());
-            try {
-                DateFormat df = new SimpleDateFormat();
-                scoutRequirement.setDateCompleted(df.parse(dateCompleted));
-            } catch (ParseException ignore) {
-            }
-
+            scoutRequirement.setDateCompleted(dateCompleted);
             scoutRequirement.setScoutId(boyScout.getId());
             scoutRequirement.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
             scoutRequirement.setRequirementId(LogicRequirement.findByParentIdAndTypeIdAndName(boyScout.getAdvancementId(), RequirementTypeConst.ADVANCEMENT.getId(), requirementName).getId());
@@ -1035,6 +1033,7 @@ public class BoyScoutPanel extends JPanel {
         tblSpecialAwards = new JTable();
         tblSpecialAwards.setBackground(Color.WHITE);
         tblSpecialAwards.setFillsViewportHeight(true);
+        tblSpecialAwards.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JTableHeader header = tblSpecialAwards.getTableHeader();
         header.setBackground(new Color(0, 63, 135));
@@ -1051,6 +1050,8 @@ public class BoyScoutPanel extends JPanel {
                 switch (columnIndex) {
                     case 0:
                         return Boolean.class;
+                    case 2:
+                        return Date.class;
                     default:
                         return String.class;
                 }
@@ -1062,8 +1063,23 @@ public class BoyScoutPanel extends JPanel {
             }
         };
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (value instanceof Date) {
+                    value = Util.DISPLAY_DATE_FORMAT_LONG.format(value);
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        };
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+
         tblProgress = new JTable();
+        tblProgress.setDefaultRenderer(String.class, centerRenderer);
+        tblProgress.setDefaultRenderer(Date.class, centerRenderer);
         tblProgress.setBackground(Color.WHITE);
+        tblProgress.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JTableHeader header = tblProgress.getTableHeader();
         header.setBackground(new Color(0, 63, 135));
@@ -1075,7 +1091,22 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void btnEditAdvancementProgressMouseReleased() {
-        // TODO add your code here
+        int selectedRow = tblProgress.getSelectedRow();
+        if (selectedRow < 0) {
+            return;
+        }
+
+        Boolean isCompleted = (Boolean) tblModelProgress.getValueAt(selectedRow, 0);
+        String name = (String) tblModelProgress.getValueAt(selectedRow, 1);
+        Date dateCompleted = (Date) tblModelProgress.getValueAt(selectedRow, 2);
+        EditScoutAdvancementDialog dialog = new EditScoutAdvancementDialog(Util.getParent(this), name, isCompleted, dateCompleted);
+
+        if (dialog.getBtnChoice() != EditScoutAdvancementDialog.BTN_OK) {
+            return;
+        }
+
+        tblModelProgress.setValueAt(dialog.getCompleted(), selectedRow, 0);
+        tblModelProgress.setValueAt(dialog.getCompletedDate(), selectedRow, 2);
     }
 
     private void validateName() {
