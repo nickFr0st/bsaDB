@@ -232,7 +232,7 @@ public class CacheObject {
     public static Collection<MeritBadge> getMeritBadgeList() {
         if (cachedMeritBadges == null) {
             cachedMeritBadges = new HashMap<>();
-            List<MeritBadge> meritBadgeList = LogicMeritBadge.findAll();
+            List<MeritBadge> meritBadgeList = LogicMeritBadge.findAll(null);
             for (MeritBadge meritBadge : meritBadgeList) {
                 cachedMeritBadges.put(meritBadge.getId(), meritBadge);
             }

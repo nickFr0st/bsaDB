@@ -638,11 +638,13 @@ public class MeritBadgePanel extends JPanel {
         CounselorDialog dialog = new CounselorDialog((JFrame) SwingUtilities.getWindowAncestor(this));
         dialog.setVisible(true);
 
-        if (dialog.getBtnChoice() == CounselorDialog.BTN_OK) {
-            Counselor counselor = dialog.getCounselor();
-            Object[] row = new Object[] {counselor.getName(), counselor.getPhoneNumber()};
-            tableModel.addRow(row);
+        if (dialog.getBtnChoice() != CounselorDialog.BTN_OK) {
+            return;
         }
+
+        Counselor counselor = dialog.getCounselor();
+        Object[] row = new Object[] {counselor.getName(), counselor.getPhoneNumber()};
+        tableModel.addRow(row);
     }
 
     private void btnRemoveCounselorMouseReleased() {

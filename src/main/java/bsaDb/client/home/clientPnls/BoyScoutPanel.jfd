@@ -792,6 +792,7 @@ new FormModel {
 												"icon": #SwingIcon0
 												"toolTipText": "Add a merit badge"
 												"cursor": #Cursor0
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnAddMeritBadgeMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 1
 											} )

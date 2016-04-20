@@ -15,16 +15,31 @@ import java.util.List;
  */
 public class LogicMeritBadge {
 
-    public static List<MeritBadge> findAll() {
+    public static List<MeritBadge> findAll(List<MeritBadge> excludedBadges) {
         List<MeritBadge> meritBadgeList = new ArrayList<>();
 
         if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
             return meritBadgeList;
         }
 
+        StringBuilder ids = new StringBuilder();
+        if (!Util.isEmpty(excludedBadges)) {
+            for (MeritBadge badge : excludedBadges) {
+                if (!ids.toString().isEmpty()) {
+                    ids.append(",");
+                }
+                ids.append(badge.getId());
+            }
+        }
+
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM meritBadge ORDER BY name");
+            ResultSet rs;
+            if (ids.toString().isEmpty()) {
+                rs = statement.executeQuery("SELECT * FROM meritBadge ORDER BY name");
+            } else {
+                rs = statement.executeQuery("SELECT * FROM meritBadge WHERE id NOT IN(" + ids + ")  ORDER BY name");
+            }
 
             while (rs.next()) {
                 MeritBadge meritBadge = new MeritBadge();

@@ -8,6 +8,7 @@ import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
 import bsaDb.client.home.dialogs.EditScoutAdvancementDialog;
+import bsaDb.client.home.dialogs.ScoutMeritBadgeDialog;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.*;
@@ -1134,6 +1135,20 @@ public class BoyScoutPanel extends JPanel {
         return true;
     }
 
+    private void btnAddMeritBadgeMouseReleased() {
+        List<MeritBadge> meritBadgeList = new ArrayList<>();
+        for (int i = 0; i < listMeritBadges.getModel().getSize(); i++) {
+            meritBadgeList.add(((MeritBadge) listMeritBadges.getModel().getElementAt(i)));
+        }
+
+        ScoutMeritBadgeDialog dialog = new ScoutMeritBadgeDialog((JFrame) SwingUtilities.getWindowAncestor(this), meritBadgeList);
+        if (dialog.getBtnChoice() != ScoutMeritBadgeDialog.BTN_OK) {
+            return;
+        }
+
+        listMeritBadges.setListData(dialog.getSelectedMeritBadges().toArray());
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         createUIComponents();
@@ -2026,6 +2041,12 @@ public class BoyScoutPanel extends JPanel {
                                         btnAddMeritBadge.setToolTipText("Add a merit badge");
                                         btnAddMeritBadge.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                         btnAddMeritBadge.setName("btnAddMeritBadge");
+                                        btnAddMeritBadge.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnAddMeritBadgeMouseReleased();
+                                            }
+                                        });
                                         panel9.add(btnAddMeritBadge, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 5), 0, 0));
