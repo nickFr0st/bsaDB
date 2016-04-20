@@ -801,6 +801,7 @@ new FormModel {
 												"icon": #SwingIcon1
 												"toolTipText": "Remove selected merit badge"
 												"cursor": #Cursor0
+												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnRemoveMeritBadgeMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 2
 											} )
@@ -877,6 +878,9 @@ new FormModel {
 											name: "scrollPane6"
 											add( new FormComponent( "javax.swing.JList" ) {
 												name: "listMeritBadges"
+												auxiliary() {
+													"JavaCodeGenerator.customCreateCode": "new JList(mdlMeritBadgeList);"
+												}
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 3

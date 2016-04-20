@@ -47,7 +47,11 @@ public class BoyScoutPanel extends JPanel {
     private DefaultTableModel tblModelProgress;
     private DefaultTableModel tblModelSpecialAwards;
 
+    DefaultListModel<MeritBadge> mdlMeritBadgeList;
+
     public BoyScoutPanel() {
+        mdlMeritBadgeList = new DefaultListModel();
+
         initComponents();
 
         setupProgressBars();
@@ -160,7 +164,10 @@ public class BoyScoutPanel extends JPanel {
                 meritBadgeList.add(LogicMeritBadge.findById(scoutMeritBadge.getMeritBadgeId()));
             }
 
-            listMeritBadges.setListData(meritBadgeList.toArray());
+            mdlMeritBadgeList.removeAllElements();
+            for (MeritBadge meritBadge : meritBadgeList) {
+                mdlMeritBadgeList.addElement(meritBadge);
+            }
         }
 
         List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
@@ -609,7 +616,7 @@ public class BoyScoutPanel extends JPanel {
             }
         }
 
-        listMeritBadges.setListData(new Object[]{});
+        mdlMeritBadgeList.removeAllElements();
         listCamps.setListData(new Object[]{});
     }
 
@@ -1146,7 +1153,18 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        listMeritBadges.setListData(dialog.getSelectedMeritBadges().toArray());
+        mdlMeritBadgeList.removeAllElements();
+        for (MeritBadge meritBadge : dialog.getSelectedMeritBadges()) {
+            mdlMeritBadgeList.addElement(meritBadge);
+        }
+    }
+
+    private void btnRemoveMeritBadgeMouseReleased() {
+        if (listMeritBadges.getSelectedIndex() == -1) {
+            return;
+        }
+
+        mdlMeritBadgeList.removeElementAt(listMeritBadges.getSelectedIndex());
     }
 
     private void initComponents() {
@@ -1237,7 +1255,7 @@ public class BoyScoutPanel extends JPanel {
         btnRemoveCamp = new JLabel();
         lblRequirementError3 = new JLabel();
         scrollPane6 = new JScrollPane();
-        listMeritBadges = new JList();
+        listMeritBadges = new JList(mdlMeritBadgeList);
         scrollPane7 = new JScrollPane();
         listCamps = new JList();
         JPanel panel5 = new JPanel();
@@ -2056,6 +2074,12 @@ public class BoyScoutPanel extends JPanel {
                                         btnRemoveMeritBadge.setToolTipText("Remove selected merit badge");
                                         btnRemoveMeritBadge.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                                         btnRemoveMeritBadge.setName("btnRemoveMeritBadge");
+                                        btnRemoveMeritBadge.addMouseListener(new MouseAdapter() {
+                                            @Override
+                                            public void mouseReleased(MouseEvent e) {
+                                                btnRemoveMeritBadgeMouseReleased();
+                                            }
+                                        });
                                         panel9.add(btnRemoveMeritBadge, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 5), 0, 0));
