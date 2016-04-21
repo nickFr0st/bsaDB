@@ -580,6 +580,7 @@ public class BoyScoutPanel extends JPanel {
         btnRemoveMeritBadge.setEnabled(enable);
         btnAddCamp.setEnabled(enable);
         btnRemoveCamp.setEnabled(enable);
+        btnEditSpecialAward.setEnabled(enable);
     }
 
     private void clearAllErrors() {
