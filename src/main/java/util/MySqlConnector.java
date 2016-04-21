@@ -1,6 +1,7 @@
 package util;
 
 import bsaDb.client.home.dialogs.MessageDialog;
+import constants.ConnectionConst;
 import constants.KeyConst;
 
 import javax.swing.*;
@@ -121,6 +122,35 @@ public class MySqlConnector {
         }
 
         return true;
+    }
+
+    public ConnectionConst checkConnection() {
+        try {
+            properties.load(new FileReader(DB_PROPERTIES_PATH));
+            String dbName = properties.getProperty(KeyConst.DB_NAME.getName());
+            String userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
+            String password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
+
+            if (Util.isEmpty(dbName) || userName == null || password == null) {
+                return ConnectionConst.NO_SERVER_CONNECTION;
+            }
+
+            Class.forName(DRIVER).newInstance();
+
+            // test the connection
+            connection = DriverManager.getConnection(DB_PATH + dbName, userName, password);
+        } catch (SQLException sqle) {
+            if (sqle.getErrorCode() == 0) {
+                return ConnectionConst.NO_SERVER_CONNECTION;
+            } else {
+                return ConnectionConst.NO_DATABASE_CONNECTION;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ConnectionConst.NO_SERVER_CONNECTION;
+        }
+
+        return ConnectionConst.CONNECTION_GOOD;
     }
 
     private void createDatabasePropertyFile(String filePath) {

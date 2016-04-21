@@ -18,14 +18,14 @@ import java.net.URISyntaxException;
 /**
  * @author User #2
  */
-public class NoDatabaseConnectionPanel extends JPanel {
+public class NoServerConnectionPanel extends JPanel {
     BaseFrame baseFrame;
 
-    public NoDatabaseConnectionPanel() {
+    public NoServerConnectionPanel() {
         initComponents();
     }
 
-    public NoDatabaseConnectionPanel(BaseFrame baseFrame) {
+    public NoServerConnectionPanel(BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
 
         initComponents();

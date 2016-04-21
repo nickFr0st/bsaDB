@@ -5,7 +5,7 @@
 package bsaDb.client;
 
 import bsaDb.client.home.HomePanel;
-import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
+import bsaDb.client.home.clientPnls.NoServerConnectionPanel;
 import bsaDb.client.home.dialogs.MessageDialog;
 import util.CacheObject;
 import util.MySqlConnector;
@@ -19,7 +19,8 @@ import java.awt.event.WindowEvent;
  * Created by Nathanael
  */
 public class BaseFrame extends JFrame {
-    public final static String NO_CONNECTION_PAGE = "noConnection";
+    public final static String NO_SERVER_CONNECTION_PAGE = "noServerConnection";
+    public final static String NO_DATABASE_CONNECTION_PAGE = "noDataBaseConnection";
     public final static String SIGN_IN_PAGE = "signIn";
     public final static String HOME_PAGE = "home";
 
@@ -36,13 +37,23 @@ public class BaseFrame extends JFrame {
                 }
         );
 
-        pnlCards.add(new NoDatabaseConnectionPanel(this), NO_CONNECTION_PAGE);
+        pnlCards.add(new NoServerConnectionPanel(this), NO_SERVER_CONNECTION_PAGE);
+        pnlCards.add(new NoServerConnectionPanel(this), NO_DATABASE_CONNECTION_PAGE);
         pnlCards.add(new SignInPanel(this), SIGN_IN_PAGE);
 
-        if (MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            CacheObject.setupCache();
-            slideCard(SIGN_IN_PAGE);
+        switch (MySqlConnector.getInstance().checkConnection()) {
+            case NO_SERVER_CONNECTION:
+                slideCard(NO_SERVER_CONNECTION_PAGE);
+                break;
+            case NO_DATABASE_CONNECTION:
+                slideCard(NO_DATABASE_CONNECTION_PAGE);
+                break;
+            default:
+                CacheObject.setupCache();
+                slideCard(SIGN_IN_PAGE);
         }
+
+        setVisible(true);
     }
 
     public void slideCard(final String moveToPage) {

@@ -7,7 +7,6 @@ import bsaDb.client.BaseFrame;
  */
 public class ProgramDriver {
     public static void main(String[] args) {
-        BaseFrame baseFrame = new BaseFrame();
-        baseFrame.setVisible(true);
+        new BaseFrame();
     }
 }
