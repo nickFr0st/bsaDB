@@ -14,7 +14,7 @@ new FormModel {
 			name: "this"
 			"background": new java.awt.Color( 255, 255, 255, 255 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-				"$columnSpecs": "20, 0:1.0, 20"
+				"$columnSpecs": "50, 736:1.0, 50"
 				"$rowSpecs": "35, 0, 0, 0"
 				"$hGap": 5
 				"$vGap": 5
@@ -43,7 +43,7 @@ new FormModel {
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 						"$columnSpecs": "0, 0"
-						"$rowSpecs": "0, 0, 0, 0, 0, 0"
+						"$rowSpecs": "0, 0, 0, 0, 0"
 						"$hGap": 5
 						"$vGap": 5
 						"$alignLeft": true
@@ -53,42 +53,18 @@ new FormModel {
 						"opaque": false
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label5"
-							"text": "BSA Database requires an active connection to MySql"
+							"text": "BSA Database requires an active connection to MySql Server"
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
+							"foreground": new java.awt.Color( 0, 0, 0, 255 )
 							auxiliary() {
 								"JavaCodeGenerator.variableLocal": true
 							}
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 							"insets": new java.awt.Insets( 20, 0, 0, 0 )
 						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label1"
-							"text": "You do not have an active connection to a MySQL database."
-							"font": new java.awt.Font( "Tahoma", 1, 14 )
-							"foreground": new java.awt.Color( 206, 17, 38, 255 )
-							auxiliary() {
-								"JavaCodeGenerator.variableLocal": true
-							}
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 1
-							"insets": new java.awt.Insets( 0, 10, 0, 10 )
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label2"
-							"text": "In order to create an active database connection you must first setup a MySQL server."
-							"font": new java.awt.Font( "Tahoma", 1, 14 )
-							"foreground": #Color0
-							auxiliary() {
-								"JavaCodeGenerator.variableLocal": true
-							}
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 2
-							"insets": new java.awt.Insets( 5, 0, 0, 0 )
-						} )
 						add( new FormComponent( "javax.swing.JTextArea" ) {
-							name: "textArea3"
-							"text": "- To setup a MySQL server click on the following link, install the MySQL server."
+							name: "textArea4"
+							"text": "- If you have already installed and setup MySql Server please make \n  sure your server is started then restart BSA Database\n\n- If you haven't installed MySql Server yet please follow the \n  instructions on the link below to get the server setup"
 							"wrapStyleWord": true
 							"lineWrap": true
 							"editable": false
@@ -99,26 +75,29 @@ new FormModel {
 								"JavaCodeGenerator.variableLocal": true
 							}
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 3
+							"gridy": 1
 							"insets": new java.awt.Insets( 5, 10, 0, 10 )
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button1"
-							"text": "https://dev.mysql.com/downloads/mysql/"
-							"borderPainted": false
-							"opaque": false
-							"background": new java.awt.Color( 255, 255, 255, 255 )
-							"foreground": new java.awt.Color( 0, 63, 135, 255 )
+							"text": "MySql Server"
+							"background": new java.awt.Color( 0, 63, 135, 255 )
+							"foreground": new java.awt.Color( 255, 255, 255, 255 )
 							"focusPainted": false
 							"cursor": new java.awt.Cursor( 12 )
+							"toolTipText": "https://dev.mysql.com/downloads/mysql/"
+							"font": new java.awt.Font( "Segoe UI", 1, 14 )
+							"preferredSize": new java.awt.Dimension( 200, 36 )
+							"minimumSize": new java.awt.Dimension( 200, 36 )
+							"maximumSize": new java.awt.Dimension( 200, 36 )
 							auxiliary() {
 								"JavaCodeGenerator.variableLocal": true
 							}
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", false ) )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 4
-							"hAlign": 2
-							"insets": new java.awt.Insets( 0, 10, 0, 0 )
+							"gridy": 2
+							"hAlign": 0
+							"insets": new java.awt.Insets( 10, 0, 10, 0 )
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label4"
@@ -129,7 +108,7 @@ new FormModel {
 								"JavaCodeGenerator.variableLocal": true
 							}
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 5
+							"gridy": 3
 							"insets": new java.awt.Insets( 0, 10, 0, 10 )
 						} )
 					}, new FormLayoutConstraints( class java.lang.String ) {
@@ -139,35 +118,10 @@ new FormModel {
 					"gridx": 1
 					"gridy": 1
 				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "btnSetup"
-					"text": "Configure Database"
-					"background": new java.awt.Color( 0, 63, 135, 255 )
-					"foreground": new java.awt.Color( 255, 255, 255, 255 )
-					"font": new java.awt.Font( "Tahoma", 0, 14 )
-					"focusPainted": false
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSetupActionPerformed", false ) )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridx": 1
-					"gridy": 2
-					"hAlign": 2
-					"insets": new java.awt.Insets( 5, 20, 5, 0 )
-				} )
-				add( new FormComponent( "bsaDb.client.home.clientPnls.DatabaseSettingsPanel" ) {
-					name: "pnlDatabaseSettings"
-					"border": new javax.swing.border.LineBorder( new java.awt.Color( 51, 102, 153, 255 ), 2, false )
-					auxiliary() {
-						"JavaCodeGenerator.customCreateCode": "new DatabaseSettingsPanel(baseFrame, false);"
-					}
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridx": 1
-					"gridy": 3
-					"insets": new java.awt.Insets( 10, 0, 0, 0 )
-				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 850, 650 )
+			"size": new java.awt.Dimension( 850, 560 )
 		} )
 	}
 }

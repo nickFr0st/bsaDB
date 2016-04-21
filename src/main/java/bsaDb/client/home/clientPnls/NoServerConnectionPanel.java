@@ -7,7 +7,6 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.BaseFrame;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,8 +28,6 @@ public class NoServerConnectionPanel extends JPanel {
         this.baseFrame = baseFrame;
 
         initComponents();
-
-        pnlDatabaseSettings.setVisible(false);
     }
 
     private void button1ActionPerformed() {
@@ -45,14 +42,6 @@ public class NoServerConnectionPanel extends JPanel {
         }
     }
 
-    private void btnSetupActionPerformed() {
-        if (pnlDatabaseSettings.isVisible()) {
-            return;
-        }
-
-        pnlDatabaseSettings.setVisible(true);
-    }
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -61,13 +50,9 @@ public class NoServerConnectionPanel extends JPanel {
         label6 = new JLabel();
         panel3 = new JPanel();
         JLabel label5 = new JLabel();
-        JLabel label1 = new JLabel();
-        JLabel label2 = new JLabel();
-        JTextArea textArea3 = new JTextArea();
+        JTextArea textArea4 = new JTextArea();
         JButton button1 = new JButton();
         JLabel label4 = new JLabel();
-        btnSetup = new JButton();
-        pnlDatabaseSettings = new DatabaseSettingsPanel(baseFrame, false);
 
         //======== this ========
         setBackground(Color.white);
@@ -83,7 +68,7 @@ public class NoServerConnectionPanel extends JPanel {
             panel1.setOpaque(false);
             panel1.setName("panel1");
             panel1.setLayout(new GridBagLayout());
-            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {25, 0, 20, 0};
+            ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {55, 741, 50, 0};
             ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {40, 0, 0, 0, 0};
             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 1.0, 0.0, 1.0E-4};
             ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
@@ -112,12 +97,12 @@ public class NoServerConnectionPanel extends JPanel {
                     panel3.setName("panel3");
                     panel3.setLayout(new GridBagLayout());
                     ((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {0, 0, 0};
-                    ((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
+                    ((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
                     ((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-                    ((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                    ((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                     //---- label5 ----
-                    label5.setText("BSA Database requires an active connection to MySql");
+                    label5.setText("BSA Database requires an active connection to MySql Server");
                     label5.setFont(new Font("Tahoma", Font.BOLD, 16));
                     label5.setForeground(Color.black);
                     label5.setName("label5");
@@ -125,45 +110,30 @@ public class NoServerConnectionPanel extends JPanel {
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(20, 0, 5, 5), 0, 0));
 
-                    //---- label1 ----
-                    label1.setText("You do not have an active connection to a MySQL database.");
-                    label1.setFont(new Font("Tahoma", Font.BOLD, 14));
-                    label1.setForeground(new Color(206, 17, 38));
-                    label1.setName("label1");
-                    panel3.add(label1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 10, 5, 15), 0, 0));
-
-                    //---- label2 ----
-                    label2.setText("In order to create an active database connection you must first setup a MySQL server.");
-                    label2.setFont(new Font("Tahoma", Font.BOLD, 14));
-                    label2.setForeground(Color.black);
-                    label2.setName("label2");
-                    panel3.add(label2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(5, 0, 5, 5), 0, 0));
-
-                    //---- textArea3 ----
-                    textArea3.setText("- To setup a MySQL server click on the following link, install the MySQL server.");
-                    textArea3.setWrapStyleWord(true);
-                    textArea3.setLineWrap(true);
-                    textArea3.setEditable(false);
-                    textArea3.setOpaque(false);
-                    textArea3.setForeground(Color.black);
-                    textArea3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-                    textArea3.setName("textArea3");
-                    panel3.add(textArea3, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                    //---- textArea4 ----
+                    textArea4.setText("- If you have already installed and setup MySql Server please make \n  sure your server is started then restart BSA Database\n\n- If you haven't installed MySql Server yet please follow the \n  instructions on the link below to get the server setup");
+                    textArea4.setWrapStyleWord(true);
+                    textArea4.setLineWrap(true);
+                    textArea4.setEditable(false);
+                    textArea4.setOpaque(false);
+                    textArea4.setForeground(Color.black);
+                    textArea4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                    textArea4.setName("textArea4");
+                    panel3.add(textArea4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(5, 10, 5, 15), 0, 0));
 
                     //---- button1 ----
-                    button1.setText("https://dev.mysql.com/downloads/mysql/");
-                    button1.setBorderPainted(false);
-                    button1.setOpaque(false);
-                    button1.setBackground(Color.white);
-                    button1.setForeground(new Color(0, 63, 135));
+                    button1.setText("MySql Server");
+                    button1.setBackground(new Color(0, 63, 135));
+                    button1.setForeground(Color.white);
                     button1.setFocusPainted(false);
                     button1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    button1.setToolTipText("https://dev.mysql.com/downloads/mysql/");
+                    button1.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                    button1.setPreferredSize(new Dimension(200, 36));
+                    button1.setMinimumSize(new Dimension(200, 36));
+                    button1.setMaximumSize(new Dimension(200, 36));
                     button1.setName("button1");
                     button1.addActionListener(new ActionListener() {
                         @Override
@@ -171,48 +141,24 @@ public class NoServerConnectionPanel extends JPanel {
                             button1ActionPerformed();
                         }
                     });
-                    panel3.add(button1, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
-                        new Insets(0, 10, 5, 5), 0, 0));
+                    panel3.add(button1, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+                        new Insets(10, 0, 15, 5), 0, 0));
 
                     //---- label4 ----
                     label4.setText("<HTML>- Once your MySQL server is active, click on the button below <BR>&nbsp;&nbsp;&nbsp;to create and configure your database.</HTML>");
                     label4.setFont(new Font("Tahoma", Font.PLAIN, 13));
                     label4.setForeground(Color.black);
                     label4.setName("label4");
-                    panel3.add(label4, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
+                    panel3.add(label4, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 10, 0, 15), 0, 0));
+                        new Insets(0, 10, 5, 15), 0, 0));
                 }
                 panel2.add(panel3, BorderLayout.CENTER);
             }
             panel1.add(panel2, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 5, 5), 0, 0));
-
-            //---- btnSetup ----
-            btnSetup.setText("Configure Database");
-            btnSetup.setBackground(new Color(0, 63, 135));
-            btnSetup.setForeground(Color.white);
-            btnSetup.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            btnSetup.setFocusPainted(false);
-            btnSetup.setName("btnSetup");
-            btnSetup.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnSetupActionPerformed();
-                }
-            });
-            panel1.add(btnSetup, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.WEST, GridBagConstraints.VERTICAL,
-                new Insets(5, 20, 10, 5), 0, 0));
-
-            //---- pnlDatabaseSettings ----
-            pnlDatabaseSettings.setBorder(new LineBorder(new Color(51, 102, 153), 2));
-            pnlDatabaseSettings.setName("pnlDatabaseSettings");
-            panel1.add(pnlDatabaseSettings, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(10, 0, 0, 5), 0, 0));
         }
         add(panel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -225,7 +171,5 @@ public class NoServerConnectionPanel extends JPanel {
     private JPanel panel2;
     private JLabel label6;
     private JPanel panel3;
-    private JButton btnSetup;
-    private DatabaseSettingsPanel pnlDatabaseSettings;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

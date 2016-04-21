@@ -5,6 +5,7 @@
 package bsaDb.client;
 
 import bsaDb.client.home.HomePanel;
+import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 import bsaDb.client.home.clientPnls.NoServerConnectionPanel;
 import bsaDb.client.home.dialogs.MessageDialog;
 import util.CacheObject;
@@ -38,7 +39,7 @@ public class BaseFrame extends JFrame {
         );
 
         pnlCards.add(new NoServerConnectionPanel(this), NO_SERVER_CONNECTION_PAGE);
-        pnlCards.add(new NoServerConnectionPanel(this), NO_DATABASE_CONNECTION_PAGE);
+        pnlCards.add(new NoDatabaseConnectionPanel(this), NO_DATABASE_CONNECTION_PAGE);
         pnlCards.add(new SignInPanel(this), SIGN_IN_PAGE);
 
         switch (MySqlConnector.getInstance().checkConnection()) {
