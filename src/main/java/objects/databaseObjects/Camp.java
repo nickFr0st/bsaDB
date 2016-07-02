@@ -18,6 +18,7 @@ public class Camp implements Compare {
     private Date startDate;
     private String leaders;
     private String note;
+    private int numberOfNights;
 
     {
         id = -1;
@@ -82,6 +83,14 @@ public class Camp implements Compare {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getNumberOfNights() {
+        return numberOfNights;
+    }
+
+    public void setNumberOfNights(int numberOfNights) {
+        this.numberOfNights = numberOfNights;
     }
 
     @Override

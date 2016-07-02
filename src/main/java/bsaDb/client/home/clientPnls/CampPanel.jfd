@@ -120,7 +120,7 @@ new FormModel {
 							}
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 								"$columnSpecs": "0, 255, 124, 236"
-								"$rowSpecs": "0, 30, 0, 30, 0, 30, 0, 0, 0, 0, 123"
+								"$rowSpecs": "0, 30, 0, 30, 0, 30, 0, 0, 0, 0, 0, 0, 123"
 								"$hGap": 5
 								"$vGap": 5
 								"$alignLeft": true
@@ -207,7 +207,7 @@ new FormModel {
 									}
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 3
-									"insets": new java.awt.Insets( 0, 5, 0, 0 )
+									"insets": &Insets1 new java.awt.Insets( 0, 5, 0, 0 )
 								} )
 								add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 									name: "txtLocation"
@@ -245,7 +245,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblLocationError"
 									"text": "*error message"
-									"foreground": new java.awt.Color( 206, 17, 38, 255 )
+									"foreground": &Color1 new java.awt.Color( 206, 17, 38, 255 )
 									"font": #Font3
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 4
@@ -294,8 +294,39 @@ new FormModel {
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 6
 									"insets": #Insets0
+									"gridwidth": 4
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblNumOfNights"
+									"text": "# of Nights:"
+									"font": #Font1
+									"foreground": #Color0
+									auxiliary() {
+										"JavaCodeGenerator.variableLocal": true
+									}
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 7
+									"insets": #Insets1
+								} )
+								add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
+									name: "txtNumOfNights"
+									"font": #Font2
+									"defaultText": "1"
+									addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "validateNumberOfNights", false ) )
+									addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "validateNumberOfNights", false ) )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 7
 									"gridx": 1
-									"gridwidth": 3
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblNumOfNightsError"
+									"text": "*error message"
+									"foreground": #Color1
+									"font": #Font3
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 8
+									"insets": #Insets0
+									"gridwidth": 2
 								} )
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblWhoCame"
@@ -307,7 +338,7 @@ new FormModel {
 									}
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridwidth": 3
-									"gridy": 7
+									"gridy": 9
 								} )
 								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 									"$columnSpecs": "300, 0, 300"
@@ -326,7 +357,7 @@ new FormModel {
 										name: "lblAvailable"
 										"text": "Available:"
 										"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
-										"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
+										"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -337,7 +368,7 @@ new FormModel {
 										name: "lblSelected"
 										"text": "Selected:"
 										"font": #Font4
-										"foreground": #Color1
+										"foreground": #Color2
 										auxiliary() {
 											"JavaCodeGenerator.variableLocal": true
 										}
@@ -420,7 +451,7 @@ new FormModel {
 										"insets": new java.awt.Insets( 0, 5, 0, 0 )
 									} )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-									"gridy": 8
+									"gridy": 10
 									"gridwidth": 4
 									"hAlign": 0
 								} )
@@ -433,7 +464,7 @@ new FormModel {
 										"JavaCodeGenerator.variableLocal": true
 									}
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-									"gridy": 9
+									"gridy": 11
 								} )
 								add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 									name: "scrollPane5"
@@ -447,7 +478,7 @@ new FormModel {
 										"foreground": new java.awt.Color( 0, 0, 0, 255 )
 									} )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-									"gridy": 10
+									"gridy": 12
 									"gridwidth": 4
 								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -529,7 +560,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1085, 660 )
+			"size": new java.awt.Dimension( 1085, 775 )
 		} )
 	}
 }

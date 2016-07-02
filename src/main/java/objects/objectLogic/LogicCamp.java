@@ -52,6 +52,7 @@ public class LogicCamp {
                 camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
                 camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
                 camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+                camp.setNumberOfNights(rs.getInt(KeyConst.NIGHT_COUNT.getName()));
 
                 campList.add(camp);
             }
@@ -88,6 +89,7 @@ public class LogicCamp {
                     camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
                     camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
                     camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+                    camp.setNumberOfNights(rs.getInt(KeyConst.NIGHT_COUNT.getName()));
 
                     campList.add(camp);
                 }
@@ -120,6 +122,7 @@ public class LogicCamp {
                 camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
                 camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
                 camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+                camp.setNumberOfNights(rs.getInt(KeyConst.NIGHT_COUNT.getName()));
             }
         } catch (SQLException e) {
             return null;
@@ -148,6 +151,7 @@ public class LogicCamp {
                 camp.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
                 camp.setLeaders(rs.getString(KeyConst.LEADER.getName()));
                 camp.setNote(rs.getString(KeyConst.NOTE.getName()));
+                camp.setNumberOfNights(rs.getInt(KeyConst.NIGHT_COUNT.getName()));
             }
         } catch (SQLException e) {
             return null;
@@ -196,7 +200,8 @@ public class LogicCamp {
             query.append("'").append(camp.getLocation().replace("'", "''")).append("', ");
             query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate())).append("', ");
             query.append("'").append(camp.getLeaders().replace("'", "''")).append("', ");
-            query.append("'").append(camp.getNote().replace("'", "''")).append("'");
+            query.append("'").append(camp.getNote().replace("'", "''")).append("', ");
+            query.append(camp.getNumberOfNights());
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -238,6 +243,7 @@ public class LogicCamp {
             query.append("startDate = '").append(Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate())).append("', ");
             query.append("leaders = '").append(camp.getLeaders().replace("'", "''")).append("', ");
             query.append("note = '").append(camp.getNote().replace("'", "''")).append("' ");
+            query.append("numberOfNights = ").append(camp.getNumberOfNights()).append(" ");
             query.append("WHERE id = ").append(camp.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

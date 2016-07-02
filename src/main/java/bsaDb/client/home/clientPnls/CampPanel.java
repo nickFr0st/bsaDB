@@ -113,6 +113,7 @@ public class CampPanel extends JPanel {
         cboCampDate.getModel().setSelected(true);
 
         txtLeaders.setText(camp.getLeaders());
+        txtNumOfNights.setText(Integer.toString(camp.getNumberOfNights()));
         txtNotes.setText(camp.getNote());
 
         availableList = new ArrayList<>();
@@ -156,6 +157,7 @@ public class CampPanel extends JPanel {
         txtLocation.setEnabled(enable);
         cboCampDate.setEnabled(enable);
         txtLeaders.setEnabled(enable);
+        txtNumOfNights.setEnabled(enable);
         listAvailable.setEnabled(enable);
         listSelected.setEnabled(enable);
         btnAdd.setEnabled(enable);
@@ -168,6 +170,7 @@ public class CampPanel extends JPanel {
         Util.clearError(lblLocationError);
         Util.clearError(lblCampDateError);
         Util.clearError(lblLeaderError);
+        Util.clearError(lblNumOfNightsError);
     }
 
     private void btnNewActionPerformed() {
@@ -197,6 +200,7 @@ public class CampPanel extends JPanel {
         cboCampDate.getModel().setValue(null);
         cboCampDate.getModel().setSelected(true);
         txtLeaders.setDefault();
+        txtNumOfNights.setDefault();
         availableList = new ArrayList<>();
         selectedList = new ArrayList<>();
         listAvailable.setListData(availableList.toArray());
@@ -252,6 +256,7 @@ public class CampPanel extends JPanel {
 
         camp.setStartDate(startDate.getTime());
         camp.setLeaders(txtLeaders.getText());
+        camp.setNumberOfNights(Integer.parseInt(txtNumOfNights.getText()));
         camp.setNote(txtNotes.getText());
     }
 
@@ -267,6 +272,10 @@ public class CampPanel extends JPanel {
         }
 
         if (!validateCampDate()) {
+            valid = false;
+        }
+
+        if (!validateNumberOfNights()) {
             valid = false;
         }
 
@@ -435,6 +444,28 @@ public class CampPanel extends JPanel {
         }
     }
 
+    private boolean validateNumberOfNights() {
+        Util.clearError(lblNumOfNightsError);
+
+        if (txtNumOfNights.isMessageDefault()) {
+            Util.setError(lblNumOfNightsError, "Value missing, must be a positive whole number");
+            return false;
+        }
+
+        try {
+            int timeRequirement = Integer.parseInt(txtNumOfNights.getText());
+            if (timeRequirement < 0) {
+                Util.setError(lblNumOfNightsError, "Invalid value, must be positive whole numbers only");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Util.setError(lblNumOfNightsError, "Invalid value, whole numbers only");
+            return false;
+        }
+
+        return true;
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -463,6 +494,9 @@ public class CampPanel extends JPanel {
         JLabel lblLeaders = new JLabel();
         txtLeaders = new JTextFieldDefaultText();
         lblLeaderError = new JLabel();
+        JLabel lblNumOfNights = new JLabel();
+        txtNumOfNights = new JTextFieldDefaultText();
+        lblNumOfNightsError = new JLabel();
         JLabel lblWhoCame = new JLabel();
         JPanel pnlWhoCame = new JPanel();
         JLabel lblAvailable = new JLabel();
@@ -612,9 +646,9 @@ public class CampPanel extends JPanel {
                             panel1.setName("panel1");
                             panel1.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 260, 129, 236, 0};
-                            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 35, 0, 35, 0, 35, 0, 0, 0, 0, 123, 0};
+                            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 35, 0, 35, 0, 35, 0, 0, 0, 0, 0, 0, 123, 0};
                             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
-                            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                             //---- lblGeneralInformation ----
                             lblGeneralInformation.setText("General Information:");
@@ -792,18 +826,56 @@ public class CampPanel extends JPanel {
                             lblLeaderError.setForeground(new Color(206, 17, 38));
                             lblLeaderError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblLeaderError.setName("lblLeaderError");
-                            panel1.add(lblLeaderError, new GridBagConstraints(1, 6, 3, 1, 0.0, 0.0,
+                            panel1.add(lblLeaderError, new GridBagConstraints(0, 6, 4, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 20, 5, 0), 0, 0));
+
+                            //---- lblNumOfNights ----
+                            lblNumOfNights.setText("# of Nights:");
+                            lblNumOfNights.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            lblNumOfNights.setForeground(Color.black);
+                            lblNumOfNights.setName("lblNumOfNights");
+                            panel1.add(lblNumOfNights, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 5, 5, 5), 0, 0));
+
+                            //---- txtNumOfNights ----
+                            txtNumOfNights.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            txtNumOfNights.setDefaultText("1");
+                            txtNumOfNights.setName("txtNumOfNights");
+                            txtNumOfNights.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateNumberOfNights();
+                                }
+                            });
+                            txtNumOfNights.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateNumberOfNights();
+                                }
+                            });
+                            panel1.add(txtNumOfNights, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
+
+                            //---- lblNumOfNightsError ----
+                            lblNumOfNightsError.setText("*error message");
+                            lblNumOfNightsError.setForeground(new Color(206, 17, 38));
+                            lblNumOfNightsError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                            lblNumOfNightsError.setName("lblNumOfNightsError");
+                            panel1.add(lblNumOfNightsError, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 20, 5, 5), 0, 0));
 
                             //---- lblWhoCame ----
                             lblWhoCame.setText("Who Came:");
                             lblWhoCame.setFont(new Font("Vijaya", Font.PLAIN, 22));
                             lblWhoCame.setForeground(new Color(0, 63, 135));
                             lblWhoCame.setName("lblWhoCame");
-                            panel1.add(lblWhoCame, new GridBagConstraints(0, 7, 3, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 5), 0, 0));
+                            panel1.add(lblWhoCame, new GridBagConstraints(0, 9, 3, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== pnlWhoCame ========
                             {
@@ -915,7 +987,7 @@ public class CampPanel extends JPanel {
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                     new Insets(0, 5, 0, 0), 0, 0));
                             }
-                            panel1.add(pnlWhoCame, new GridBagConstraints(0, 8, 4, 1, 0.0, 0.0,
+                            panel1.add(pnlWhoCame, new GridBagConstraints(0, 10, 4, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                                 new Insets(0, 0, 5, 0), 0, 0));
 
@@ -924,9 +996,9 @@ public class CampPanel extends JPanel {
                             lblNotes.setFont(new Font("Vijaya", Font.PLAIN, 22));
                             lblNotes.setForeground(new Color(0, 63, 135));
                             lblNotes.setName("lblNotes");
-                            panel1.add(lblNotes, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0,
-                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 5, 5), 0, 0));
+                            panel1.add(lblNotes, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0,
+                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                    new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== scrollPane5 ========
                             {
@@ -939,7 +1011,7 @@ public class CampPanel extends JPanel {
                                 txtNotes.setName("txtNotes");
                                 scrollPane5.setViewportView(txtNotes);
                             }
-                            panel1.add(scrollPane5, new GridBagConstraints(0, 10, 4, 1, 0.0, 0.0,
+                            panel1.add(scrollPane5, new GridBagConstraints(0, 12, 4, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 0, 0), 0, 0));
                         }
@@ -1062,6 +1134,8 @@ public class CampPanel extends JPanel {
     private JLabel lblCampDateError;
     private JTextFieldDefaultText txtLeaders;
     private JLabel lblLeaderError;
+    private JTextFieldDefaultText txtNumOfNights;
+    private JLabel lblNumOfNightsError;
     private JList listAvailable;
     private JButton btnRemove;
     private JButton btnAdd;

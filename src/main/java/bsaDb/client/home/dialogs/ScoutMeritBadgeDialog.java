@@ -234,8 +234,8 @@ public class ScoutMeritBadgeDialog extends JDialog {
                         new Insets(0, 0, 0, 0), 0, 0));
                 }
                 contentPanel.add(panel1, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 0, 5), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 5), 0, 0));
 
                 //======== panel2 ========
                 {

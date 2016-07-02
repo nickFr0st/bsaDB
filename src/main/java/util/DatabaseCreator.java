@@ -147,6 +147,7 @@ public class DatabaseCreator {
                 " startDate DATE NOT NULL," +
                 " leaders VARCHAR(255) NULL," +
                 " note BLOB NULL," +
+                " numberOfNights INT NOT NULL DEFAULT 1," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableCamp);
 

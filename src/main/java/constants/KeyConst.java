@@ -45,6 +45,7 @@ public enum KeyConst {
     LOCATION("location"),
     START_DATE("startDate"),
     LEADER("leaders"),
+    NIGHT_COUNT("numberOfNights"),
 
     // Access Right
     RIGHT_ID("rightId"),
