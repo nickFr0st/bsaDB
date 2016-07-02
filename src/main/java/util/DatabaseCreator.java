@@ -156,6 +156,7 @@ public class DatabaseCreator {
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " campId INT NOT NULL," +
+                " numberOfNights INT NOT NULL DEFAULT 1," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableScoutCamp);
 

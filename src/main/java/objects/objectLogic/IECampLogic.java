@@ -164,6 +164,7 @@ public class IECampLogic {
                 ScoutCamp scoutCamp = new ScoutCamp();
                 scoutCamp.setScoutId(scout.getId());
                 scoutCamp.setScoutTypeId(camp.getScoutTypeId());
+                scoutCamp.setNumberOfNights(camp.getNumberOfNights());
 
                 scoutCampList.add(scoutCamp);
             }

@@ -9,6 +9,7 @@ public class ScoutCamp {
     private int scoutId;
     private int scoutTypeId;
     private int campId;
+    private int numberOfNights;
 
     public ScoutCamp() {
         id = -1;
@@ -44,5 +45,13 @@ public class ScoutCamp {
 
     public void setCampId(int campId) {
         this.campId = campId;
+    }
+
+    public int getNumberOfNights() {
+        return numberOfNights;
+    }
+
+    public void setNumberOfNights(int numberOfNights) {
+        this.numberOfNights = numberOfNights;
     }
 }

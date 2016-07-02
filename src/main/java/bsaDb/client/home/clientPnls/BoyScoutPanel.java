@@ -438,9 +438,13 @@ public class BoyScoutPanel extends JPanel {
             barCampsAttended.setValue(0);
             barCampsAttended.setForeground(BAD);
             lblCampsAttendedDisplay.setText("0 of " + barCampsAttended.getMaximum());
+            return;
         }
 
-        int value = scoutCampList.size();
+        int value = 0;
+        for (ScoutCamp scoutCamp : scoutCampList) {
+            value += scoutCamp.getNumberOfNights();
+        }
         barCampsAttended.setValue(value);
         lblCampsAttendedDisplay.setText(value + " of " + barCampsAttended.getMaximum());
 
@@ -757,6 +761,7 @@ public class BoyScoutPanel extends JPanel {
             scoutCamp.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
             scoutCamp.setScoutId(boyScout.getId());
             scoutCamp.setCampId(camp.getId());
+            scoutCamp.setNumberOfNights(camp.getNumberOfNights());
 
             scoutCampList.add(scoutCamp);
         }

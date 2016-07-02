@@ -33,6 +33,7 @@ public class LogicScoutCamp {
                 scoutCamp.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
                 scoutCamp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
                 scoutCamp.setCampId(rs.getInt(KeyConst.CAMP_ID.getName()));
+                scoutCamp.setNumberOfNights(rs.getInt(KeyConst.NIGHT_COUNT.getName()));
 
                 scoutCampList.add(scoutCamp);
             }
@@ -110,7 +111,8 @@ public class LogicScoutCamp {
             query.append(scoutCamp.getId()).append(", ");
             query.append(scoutCamp.getScoutId()).append(", ");
             query.append(scoutCamp.getScoutTypeId()).append(", ");
-            query.append(scoutCamp.getCampId());
+            query.append(scoutCamp.getCampId()).append(", ");
+            query.append(scoutCamp.getNumberOfNights());
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -137,6 +139,7 @@ public class LogicScoutCamp {
                 scoutCamp.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
                 scoutCamp.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
                 scoutCamp.setCampId(rs.getInt(KeyConst.CAMP_ID.getName()));
+                scoutCamp.setNumberOfNights(rs.getInt(KeyConst.NIGHT_COUNT.getName()));
 
                 scoutCampList.add(scoutCamp);
             }

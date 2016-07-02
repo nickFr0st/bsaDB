@@ -224,6 +224,7 @@ public class CampPanel extends JPanel {
                 scoutCamp.setCampId(camp.getId());
                 scoutCamp.setScoutTypeId(camp.getScoutTypeId());
                 scoutCamp.setScoutId(LogicBoyScout.findByName(scoutName).getId());
+                scoutCamp.setNumberOfNights(camp.getNumberOfNights());
 
                 scoutCampList.add(scoutCamp);
             }
@@ -333,6 +334,7 @@ public class CampPanel extends JPanel {
                 scoutCamp.setCampId(camp.getId());
                 scoutCamp.setScoutTypeId(camp.getScoutTypeId());
                 scoutCamp.setScoutId(LogicBoyScout.findByName(scoutName).getId());
+                scoutCamp.setNumberOfNights(camp.getNumberOfNights());
 
                 scoutCampList.add(scoutCamp);
             }
