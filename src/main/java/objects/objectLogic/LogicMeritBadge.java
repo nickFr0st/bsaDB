@@ -18,10 +18,6 @@ public class LogicMeritBadge {
     public static List<MeritBadge> findAll(List<MeritBadge> excludedBadges) {
         List<MeritBadge> meritBadgeList = new ArrayList<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return meritBadgeList;
-        }
-
         StringBuilder ids = new StringBuilder();
         if (!Util.isEmpty(excludedBadges)) {
             for (MeritBadge badge : excludedBadges) {
@@ -58,9 +54,6 @@ public class LogicMeritBadge {
     }
 
     public static MeritBadge findByName(String name) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -83,9 +76,6 @@ public class LogicMeritBadge {
     }
 
     public static MeritBadge findById(int meritBadgeId) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

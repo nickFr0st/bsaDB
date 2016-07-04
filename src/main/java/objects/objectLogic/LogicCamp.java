@@ -20,10 +20,6 @@ public class LogicCamp {
     public static Set<Camp> findAll(List<Camp> excludedCamps) {
         Set<Camp> campList = new LinkedHashSet<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return campList;
-        }
-
         StringBuilder ids = new StringBuilder();
         if (!Util.isEmpty(excludedCamps)) {
             for (Camp badge : excludedCamps) {
@@ -71,10 +67,6 @@ public class LogicCamp {
 
         Set<Camp> campList = new LinkedHashSet<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return campList;
-        }
-
         for (String name : nameList) {
             try {
                 Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -105,10 +97,6 @@ public class LogicCamp {
     public static Camp findByName(String name) {
         Camp camp = null;
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return camp;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM camp WHERE name LIKE '" + name + "'");
@@ -133,10 +121,6 @@ public class LogicCamp {
 
     public static Camp findById(int campId) {
         Camp camp = null;
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return camp;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

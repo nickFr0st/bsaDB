@@ -20,10 +20,6 @@ public class LogicScoutRequirement {
     public static Set<ScoutRequirement> findByAllScoutIdScoutTypeIdAndAdvancementId(int scoutId, int scoutTypeId, int advancementId) {
         Set<ScoutRequirement> scoutRequirementSet = new LinkedHashSet<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return scoutRequirementSet;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM scoutRequirement WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId + " AND advancementId = " + advancementId + " ORDER BY id");
@@ -47,9 +43,6 @@ public class LogicScoutRequirement {
     }
 
     public static ScoutRequirement findByScoutIdScoutTypeIdAdvancementIdAndRequirementId(int scoutId, int scoutTypeId, int advancementId, int requirementId) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

@@ -17,13 +17,8 @@ import java.util.List;
  */
 public class LogicSpecialAward {
 
-    // todo: make work for the special award object
     public static List<AccessRight> findAll() {
         List<AccessRight> accessRightList = new ArrayList<>();
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return accessRightList;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -47,10 +42,6 @@ public class LogicSpecialAward {
 
     public static List<SpecialAward> findAllByScoutIdAndScoutTypeId(int scoutId, int scoutTypeId) {
         List<SpecialAward> specialAwardList = new ArrayList<>();
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return specialAwardList;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

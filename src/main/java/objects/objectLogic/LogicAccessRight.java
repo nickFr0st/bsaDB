@@ -18,10 +18,6 @@ public class LogicAccessRight {
     public static List<AccessRight> findAll() {
         List<AccessRight> accessRightList = new ArrayList<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return accessRightList;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM accessRight ORDER BY userId");

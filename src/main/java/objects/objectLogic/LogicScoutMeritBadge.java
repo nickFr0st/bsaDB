@@ -19,10 +19,6 @@ public class LogicScoutMeritBadge {
     public static Set<ScoutMeritBadge> findByAllScoutIdScoutTypeId(int scoutId, int scoutTypeId) {
         Set<ScoutMeritBadge> scoutMeritBadgeSet = new LinkedHashSet<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return scoutMeritBadgeSet;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM scoutMeritBadge WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId + " ORDER BY id");

@@ -20,10 +20,6 @@ public class LogicBoyScout {
     public static Set<BoyScout> findAll() {
         Set<BoyScout> boyScoutSet = new LinkedHashSet<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return boyScoutSet;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM boyScout ORDER BY name");
@@ -189,9 +185,6 @@ public class LogicBoyScout {
     }
 
     public static BoyScout findByName(String name) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -225,9 +218,6 @@ public class LogicBoyScout {
     }
 
     public static Scout findById(int scoutId) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

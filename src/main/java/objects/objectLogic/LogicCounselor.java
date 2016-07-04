@@ -20,10 +20,6 @@ public class LogicCounselor {
 
         List<Counselor> counselorList = new ArrayList<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return counselorList;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM counselor WHERE badgeId = " + badgeId + " ORDER BY name");
@@ -46,10 +42,6 @@ public class LogicCounselor {
 
     public static List<Counselor> findAll() {
         List<Counselor> counselorList = new ArrayList<>();
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return counselorList;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -198,9 +190,6 @@ public class LogicCounselor {
     }
 
     public static Counselor findByNameAndBadgeId(String name, int badgeId) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         Counselor counselor = null;
 

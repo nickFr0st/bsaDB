@@ -18,10 +18,6 @@ public class LogicRequirement {
     public static Set<Requirement> findAllByParentIdAndTypeId(int parentId, int typeId) {
         Set<Requirement> requirementSet = new LinkedHashSet<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return requirementSet;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM requirement WHERE parentId = " + parentId + " AND typeId = " + typeId + " ORDER BY id");
@@ -212,39 +208,10 @@ public class LogicRequirement {
     }
 
     public static Requirement findByParentIdAndTypeIdAndName(int parentId, int typeId, String requirementName) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM requirement WHERE parentId = " + parentId + " AND typeId = " + typeId + " AND name LIKE '" + requirementName + "' ORDER BY id");
-
-            if (rs.next()) {
-                Requirement requirement = new Requirement();
-                requirement.setId(rs.getInt(KeyConst.ID.getName()));
-                requirement.setName(rs.getString(KeyConst.NAME.getName()));
-                requirement.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
-                requirement.setParentId(rs.getInt(KeyConst.PARENT_ID.getName()));
-                requirement.setTypeId(rs.getInt(KeyConst.TYPE_ID.getName()));
-                return requirement;
-            }
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        return null;
-    }
-
-    public static Requirement findById(int requirementId) {
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return null;
-        }
-
-        try {
-            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM requirement WHERE id = " + requirementId);
 
             if (rs.next()) {
                 Requirement requirement = new Requirement();

@@ -99,31 +99,6 @@ public class MySqlConnector {
         return connection;
     }
 
-    public boolean checkForDataBaseConnection() {
-        try {
-            properties.load(new FileReader(DB_PROPERTIES_PATH));
-            String dbName = properties.getProperty(KeyConst.DB_NAME.getName());
-            String userName = properties.getProperty(KeyConst.DB_USER_NAME.getName());
-            String password = properties.getProperty(KeyConst.DB_PASSWORD.getName());
-
-            if (Util.isEmpty(dbName) || userName == null || password == null) {
-                return false;
-            }
-
-            Class.forName(DRIVER).newInstance();
-
-            // test the connection
-            connection = DriverManager.getConnection(DB_PATH + dbName, userName, password);
-        } catch (SQLException ignore) {
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
     public ConnectionConst checkConnection() {
         try {
             properties.load(new FileReader(DB_PROPERTIES_PATH));
@@ -235,10 +210,6 @@ public class MySqlConnector {
     }
 
     public int getNextId(String tableName) {
-        if (!checkForDataBaseConnection()) {
-            return -1;
-        }
-
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT MAX(id) as id FROM " + tableName);
@@ -251,6 +222,6 @@ public class MySqlConnector {
             return -1;
         }
 
-        return 1;
+        return -1;
     }
 }

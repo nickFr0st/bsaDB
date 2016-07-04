@@ -17,10 +17,6 @@ public class LogicAdvancement {
     public static List<Advancement> findAll() {
         List<Advancement> advancementList = new ArrayList<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return advancementList;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM advancement ORDER BY name");

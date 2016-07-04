@@ -40,10 +40,6 @@ public class DatabaseSettingsPanel extends JPanel {
     private void loadData() {
         clearData();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return;
-        }
-
         Properties dbProperties = MySqlConnector.getInstance().getProperties();
 
         lblConnectionName.setText(dbProperties.getProperty(KeyConst.DB_NAME.getName()));

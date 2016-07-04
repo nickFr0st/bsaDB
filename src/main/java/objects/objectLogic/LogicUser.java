@@ -18,10 +18,6 @@ public class LogicUser {
     public static List<User> findAll() {
         List<User> userList = new ArrayList<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return userList;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM user ORDER BY name");

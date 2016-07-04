@@ -19,10 +19,6 @@ public class LogicScoutCamp {
     public static List<ScoutCamp> findAllByCampId(int campId) {
         List<ScoutCamp> scoutCampList = new ArrayList<>();
 
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return scoutCampList;
-        }
-
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM scoutCamp WHERE campId = " + campId);
@@ -124,10 +120,6 @@ public class LogicScoutCamp {
 
     public static List<ScoutCamp> findAllByScoutIdAndScoutTypeId(int scoutId, int scoutTypeId) {
         List<ScoutCamp> scoutCampList = new ArrayList<>();
-
-        if (!MySqlConnector.getInstance().checkForDataBaseConnection()) {
-            return scoutCampList;
-        }
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
