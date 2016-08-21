@@ -1021,7 +1021,7 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Part of TableModel, day
          */
         public String getColumnName(int columnIndex) {
-            ComponentTextDefaults.Key key = ComponentTextDefaults.Key.getDowKey(((firstDayOfWeek - 1) + columnIndex) % 7);
+            ComponentTextDefaults.Key key = ComponentTextDefaults.Key.getDowKey(((firstDayOfWeek) + columnIndex) % 7);
             return getTexts().getText(key);
         }
 
