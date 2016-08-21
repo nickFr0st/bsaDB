@@ -166,6 +166,8 @@ public class BoyScoutPanel extends JPanel {
             for (MeritBadge meritBadge : meritBadgeList) {
                 mdlMeritBadgeList.addElement(meritBadge);
             }
+
+            setBadgeTotals(meritBadgeList);
         }
 
         List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
@@ -180,6 +182,19 @@ public class BoyScoutPanel extends JPanel {
                 mdlCampList.addElement(camp);
             }
         }
+    }
+
+    private void setBadgeTotals(List<MeritBadge> meritBadgeList) {
+        lblTotalBadgesValue.setText(String.valueOf(meritBadgeList.size()));
+
+        int requiredCount = 0;
+        for (MeritBadge badge : meritBadgeList) {
+            if (badge.isRequiredForEagle()) {
+                requiredCount++;
+            }
+        }
+
+        lblTotalRequiredValue.setText(String.valueOf(requiredCount));
     }
 
     private void loadContactTab() {
@@ -663,6 +678,8 @@ public class BoyScoutPanel extends JPanel {
         cboBirthDate.getModel().setSelected(false);
 
         lblAgeValue.setText("");
+        lblTotalBadgesValue.setText("");
+        lblTotalRequiredValue.setText("");
 
         setupProgressBars();
     }
@@ -1294,6 +1311,11 @@ public class BoyScoutPanel extends JPanel {
         cboBirthDate = new JDatePicker();
         lblAge = new JLabel();
         lblAgeValue = new JLabel();
+        pnlBadgeTotals = new JPanel();
+        lblTotalBadges = new JLabel();
+        lblTotalBadgesValue = new JLabel();
+        lblTotalRequired = new JLabel();
+        lblTotalRequiredValue = new JLabel();
         lblBirthDateError = new JLabel();
         lblTimeLeft = new JLabel();
         lblCampsAttended = new JLabel();
@@ -1651,16 +1673,65 @@ public class BoyScoutPanel extends JPanel {
                                     lblAge.setForeground(Color.black);
                                     lblAge.setName("lblAge");
                                     pnlGeneral.add(lblAge, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
                                         new Insets(0, 10, 5, 5), 0, 0));
 
                                     //---- lblAgeValue ----
                                     lblAgeValue.setFont(new Font("Tahoma", Font.BOLD, 14));
-                                    lblAgeValue.setForeground(new Color(0, 107, 63));
+                                    lblAgeValue.setForeground(new Color(0, 63, 135));
                                     lblAgeValue.setName("lblAgeValue");
                                     pnlGeneral.add(lblAgeValue, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
                                         new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //======== pnlBadgeTotals ========
+                                    {
+                                        pnlBadgeTotals.setOpaque(false);
+                                        pnlBadgeTotals.setBorder(new LineBorder(new Color(0, 63, 135), 2, true));
+                                        pnlBadgeTotals.setName("pnlBadgeTotals");
+                                        pnlBadgeTotals.setLayout(new GridBagLayout());
+                                        ((GridBagLayout)pnlBadgeTotals.getLayout()).columnWidths = new int[] {0, 35, 0, 27, 0};
+                                        ((GridBagLayout)pnlBadgeTotals.getLayout()).rowHeights = new int[] {0, 0};
+                                        ((GridBagLayout)pnlBadgeTotals.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0, 0.0, 1.0E-4};
+                                        ((GridBagLayout)pnlBadgeTotals.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
+
+                                        //---- lblTotalBadges ----
+                                        lblTotalBadges.setText("Total Badges:");
+                                        lblTotalBadges.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                        lblTotalBadges.setForeground(Color.black);
+                                        lblTotalBadges.setName("lblTotalBadges");
+                                        pnlBadgeTotals.add(lblTotalBadges, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                                            new Insets(0, 2, 0, 5), 0, 0));
+
+                                        //---- lblTotalBadgesValue ----
+                                        lblTotalBadgesValue.setFont(new Font("Tahoma", Font.BOLD, 16));
+                                        lblTotalBadgesValue.setForeground(new Color(0, 63, 135));
+                                        lblTotalBadgesValue.setName("lblTotalBadgesValue");
+                                        pnlBadgeTotals.add(lblTotalBadgesValue, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                                            new Insets(0, 5, 0, 5), 0, 0));
+
+                                        //---- lblTotalRequired ----
+                                        lblTotalRequired.setText("Total Required:");
+                                        lblTotalRequired.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                        lblTotalRequired.setForeground(Color.black);
+                                        lblTotalRequired.setName("lblTotalRequired");
+                                        pnlBadgeTotals.add(lblTotalRequired, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.EAST, GridBagConstraints.NONE,
+                                            new Insets(0, 15, 0, 5), 0, 0));
+
+                                        //---- lblTotalRequiredValue ----
+                                        lblTotalRequiredValue.setFont(new Font("Tahoma", Font.BOLD, 16));
+                                        lblTotalRequiredValue.setForeground(new Color(0, 107, 63));
+                                        lblTotalRequiredValue.setName("lblTotalRequiredValue");
+                                        pnlBadgeTotals.add(lblTotalRequiredValue, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                                            new Insets(0, 5, 0, 2), 0, 0));
+                                    }
+                                    pnlGeneral.add(pnlBadgeTotals, new GridBagConstraints(4, 4, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 0), 0, 0));
 
                                     //---- lblBirthDateError ----
                                     lblBirthDateError.setText("*error message");
@@ -2431,6 +2502,11 @@ public class BoyScoutPanel extends JPanel {
     private JDatePicker cboBirthDate;
     private JLabel lblAge;
     private JLabel lblAgeValue;
+    private JPanel pnlBadgeTotals;
+    private JLabel lblTotalBadges;
+    private JLabel lblTotalBadgesValue;
+    private JLabel lblTotalRequired;
+    private JLabel lblTotalRequiredValue;
     private JLabel lblBirthDateError;
     private JLabel lblTimeLeft;
     private JLabel lblCampsAttended;
