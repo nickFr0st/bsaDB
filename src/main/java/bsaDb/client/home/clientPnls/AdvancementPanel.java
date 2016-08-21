@@ -8,6 +8,7 @@ import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.PnlRequirement;
 import bsaDb.client.customComponents.TitlePanel;
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;
@@ -393,6 +394,10 @@ public class AdvancementPanel extends JPanel {
 
     private void btnDeleteActionPerformed() {
         if (listAdvancementNames.getSelectedValue() == null) {
+            return;
+        }
+
+        if (new MessageDialog(Util.getParent(this), "Delete Advancement", "Are you sure you want to delete the selected advancement?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO).getChoice() != MessageDialog.OPTION_YES) {
             return;
         }
 

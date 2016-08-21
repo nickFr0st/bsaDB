@@ -7,10 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
-import bsaDb.client.home.dialogs.EditScoutAdvancementDialog;
-import bsaDb.client.home.dialogs.ScoutCampDialog;
-import bsaDb.client.home.dialogs.ScoutMeritBadgeDialog;
-import bsaDb.client.home.dialogs.SpecialAwardDialog;
+import bsaDb.client.home.dialogs.*;
 import constants.RequirementTypeConst;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.*;
@@ -893,6 +890,10 @@ public class BoyScoutPanel extends JPanel {
 
     private void btnDeleteActionPerformed() {
         if (listBoyScoutNames.getSelectedValue() == null) {
+            return;
+        }
+
+        if (new MessageDialog(Util.getParent(this), "Delete Boy Scout", "Are you sure you want to delete the selected boy scout?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO).getChoice() != MessageDialog.OPTION_YES) {
             return;
         }
 

@@ -7,6 +7,7 @@ package bsaDb.client.home.clientPnls;
 import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.customComponents.jdatepicker.JDatePicker;
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.Camp;
@@ -349,6 +350,10 @@ public class CampPanel extends JPanel {
 
     private void btnDeleteActionPerformed() {
         if (listCampoutNames.getSelectedValue() == null) {
+            return;
+        }
+
+        if (new MessageDialog(Util.getParent(this), "Delete Camp", "Are you sure you want to delete the selected camp?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO).getChoice() != MessageDialog.OPTION_YES) {
             return;
         }
 

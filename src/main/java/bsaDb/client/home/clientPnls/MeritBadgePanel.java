@@ -9,6 +9,7 @@ import bsaDb.client.customComponents.JTextFieldDefaultText;
 import bsaDb.client.customComponents.PnlRequirement;
 import bsaDb.client.customComponents.TitlePanel;
 import bsaDb.client.home.dialogs.CounselorDialog;
+import bsaDb.client.home.dialogs.MessageDialog;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Counselor;
 import objects.databaseObjects.MeritBadge;
@@ -481,6 +482,10 @@ public class MeritBadgePanel extends JPanel {
 
     private void btnDeleteActionPerformed() {
         if (listMeritBadgeNames.getSelectedValue() == null) {
+            return;
+        }
+
+        if (new MessageDialog(Util.getParent(this), "Delete Merit Badge", "Are you sure you want to delete the selected merit badge?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO).getChoice() != MessageDialog.OPTION_YES) {
             return;
         }
 

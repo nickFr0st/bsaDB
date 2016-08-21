@@ -438,6 +438,10 @@ public class UserPanel extends JPanel {
             return;
         }
 
+        if (new MessageDialog(Util.getParent(this), "Delete User", "Are you sure you want to delete the selected user?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO).getChoice() != MessageDialog.OPTION_YES) {
+            return;
+        }
+
         for (AccessRight accessRight : CacheObject.getAccessRights(user.getId())) {
             CacheObject.removeFromAccessRights(accessRight.getId());
             LogicAccessRight.delete(accessRight.getId());
