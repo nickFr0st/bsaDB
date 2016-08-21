@@ -226,7 +226,7 @@ public class LogicCamp {
             query.append("location = '").append(camp.getLocation()).append("', ");
             query.append("startDate = '").append(Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate())).append("', ");
             query.append("leaders = '").append(camp.getLeaders().replace("'", "''")).append("', ");
-            query.append("note = '").append(camp.getNote().replace("'", "''")).append("' ");
+            query.append("note = '").append(camp.getNote().replace("'", "''")).append("', ");
             query.append("numberOfNights = ").append(camp.getNumberOfNights()).append(" ");
             query.append("WHERE id = ").append(camp.getId());
 
