@@ -1051,6 +1051,22 @@ public class BoyScoutPanel extends JPanel {
     private void createUIComponents() {
         createSpecialAwardsTable();
         createProgressTable();
+        createMeritBadgeList();
+    }
+
+    private void createMeritBadgeList() {
+        listMeritBadges = new JList(mdlMeritBadgeList);
+
+        listMeritBadges.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (((MeritBadge)value).isRequiredForEagle()) {
+                    setForeground(new Color(0, 107, 63));
+                }
+                return c;
+            }
+        });
     }
 
     private void createSpecialAwardsTable() {
@@ -1373,7 +1389,6 @@ public class BoyScoutPanel extends JPanel {
         btnRemoveCamp = new JLabel();
         lblRequirementError3 = new JLabel();
         scrollPane6 = new JScrollPane();
-        listMeritBadges = new JList(mdlMeritBadgeList);
         scrollPane7 = new JScrollPane();
         listCamps = new JList(mdlCampList);
         JPanel panel5 = new JPanel();

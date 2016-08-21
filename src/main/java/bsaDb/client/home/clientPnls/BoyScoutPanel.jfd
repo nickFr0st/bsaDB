@@ -940,7 +940,7 @@ new FormModel {
 											add( new FormComponent( "javax.swing.JList" ) {
 												name: "listMeritBadges"
 												auxiliary() {
-													"JavaCodeGenerator.customCreateCode": "new JList(mdlMeritBadgeList);"
+													"JavaCodeGenerator.customCreate": true
 												}
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
