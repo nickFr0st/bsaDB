@@ -355,7 +355,7 @@ new FormModel {
 									}
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "lblAvailable"
-										"text": "Available:"
+										"text": "Did Not Attend:"
 										"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
 										"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
 										auxiliary() {
@@ -366,7 +366,7 @@ new FormModel {
 									} )
 									add( new FormComponent( "javax.swing.JLabel" ) {
 										name: "lblSelected"
-										"text": "Selected:"
+										"text": "Attended:"
 										"font": #Font4
 										"foreground": #Color2
 										auxiliary() {

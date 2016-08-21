@@ -876,8 +876,8 @@ public class CampPanel extends JPanel {
                             lblWhoCame.setForeground(new Color(0, 63, 135));
                             lblWhoCame.setName("lblWhoCame");
                             panel1.add(lblWhoCame, new GridBagConstraints(0, 9, 3, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== pnlWhoCame ========
                             {
@@ -890,7 +890,7 @@ public class CampPanel extends JPanel {
                                 ((GridBagLayout)pnlWhoCame.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
                                 //---- lblAvailable ----
-                                lblAvailable.setText("Available:");
+                                lblAvailable.setText("Did Not Attend:");
                                 lblAvailable.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                 lblAvailable.setForeground(Color.black);
                                 lblAvailable.setName("lblAvailable");
@@ -899,7 +899,7 @@ public class CampPanel extends JPanel {
                                     new Insets(0, 5, 5, 8), 0, 0));
 
                                 //---- lblSelected ----
-                                lblSelected.setText("Selected:");
+                                lblSelected.setText("Attended:");
                                 lblSelected.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                 lblSelected.setForeground(Color.black);
                                 lblSelected.setName("lblSelected");
@@ -999,8 +999,8 @@ public class CampPanel extends JPanel {
                             lblNotes.setForeground(new Color(0, 63, 135));
                             lblNotes.setName("lblNotes");
                             panel1.add(lblNotes, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0,
-                                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                    new Insets(0, 0, 5, 5), 0, 0));
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 5), 0, 0));
 
                             //======== scrollPane5 ========
                             {
