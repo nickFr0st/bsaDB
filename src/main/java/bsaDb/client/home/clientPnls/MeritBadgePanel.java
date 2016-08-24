@@ -665,9 +665,14 @@ public class MeritBadgePanel extends JPanel {
     }
 
     private void btnRefreshActionPerformed() {
-        populateMeritBadgeNameList();
+        MeritBadge currentSelectedMeritBadge = null;
         if (listMeritBadgeNames.getSelectedValue() != null) {
-            listMeritBadgeNames.setSelectedValue(meritBadge, true);
+            currentSelectedMeritBadge = (MeritBadge) listMeritBadgeNames.getSelectedValue();
+        }
+
+        populateMeritBadgeNameList();
+        if (currentSelectedMeritBadge != null) {
+            listMeritBadgeNames.setSelectedValue(currentSelectedMeritBadge, true);
         }
     }
 
