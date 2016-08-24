@@ -258,8 +258,14 @@ public class LogicCamp {
 
     private static void deleteCamp(Integer id) {
         try {
+            StringBuilder query = new StringBuilder();
+            query.append("DELETE camp, scoutCamp ");
+            query.append("FROM camp ");
+            query.append("INNER JOIN scoutCamp ON scoutCamp.campId = camp.id ");
+            query.append("WHERE camp.id = ").append(id);
+
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM camp WHERE id = " + id);
+            statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

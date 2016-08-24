@@ -360,7 +360,6 @@ public class CampPanel extends JPanel {
             return;
         }
 
-        LogicScoutCamp.deleteAllByCampId(camp.getId());
         LogicCamp.delete(camp);
 
         populateCampNameList();
