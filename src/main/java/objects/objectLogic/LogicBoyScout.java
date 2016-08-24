@@ -1,6 +1,7 @@
 package objects.objectLogic;
 
 import constants.KeyConst;
+import constants.ScoutTypeConst;
 import objects.databaseObjects.BoyScout;
 import objects.databaseObjects.Scout;
 import util.MySqlConnector;
@@ -177,8 +178,17 @@ public class LogicBoyScout {
 
     private static void deleteBoyScout(Integer id) {
         try {
+            StringBuilder query = new StringBuilder();
+            query.append("DELETE boyscout, specialaward, scoutmeritbadge, scoutrequirement, scoutcamp ");
+            query.append("FROM boyscout ");
+            query.append("LEFT JOIN specialaward ON specialaward.scoutId = boyscout.id AND specialaward.scoutTypeId = ").append(ScoutTypeConst.BOY_SCOUT.getId()).append(" ");
+            query.append("LEFT JOIN scoutmeritbadge ON scoutmeritbadge.scoutId = boyscout.id AND scoutmeritbadge.scoutTypeId = ").append(ScoutTypeConst.BOY_SCOUT.getId()).append(" ");
+            query.append("LEFT JOIN scoutcamp ON scoutcamp.scoutId = boyscout.id AND scoutcamp.scoutTypeId = ").append(ScoutTypeConst.BOY_SCOUT.getId()).append(" ");
+            query.append("LEFT JOIN scoutrequirement ON scoutrequirement.scoutId = boyscout.id AND scoutrequirement.scoutTypeId = ").append(ScoutTypeConst.BOY_SCOUT.getId()).append(" ");
+            query.append("WHERE boyscout.id = ").append(id);
+
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM boyScout WHERE id = " + id);
+            statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
