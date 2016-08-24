@@ -108,8 +108,8 @@ public class LogicAdvancement {
             StringBuilder query = new StringBuilder();
             query.append("DELETE advancement, requirement, scoutRequirement ");
             query.append("FROM advancement ");
-            query.append("INNER JOIN requirement ON requirement.parentId = advancement.id AND requirement.typeId = ").append(RequirementTypeConst.ADVANCEMENT.getId()).append(" ");
-            query.append("INNER JOIN scoutRequirement ON scoutRequirement.advancementId = advancement.id ");
+            query.append("LEFT JOIN requirement ON requirement.parentId = advancement.id AND requirement.typeId = ").append(RequirementTypeConst.ADVANCEMENT.getId()).append(" ");
+            query.append("LEFT JOIN scoutRequirement ON scoutRequirement.advancementId = advancement.id ");
             query.append("WHERE advancement.id = ").append(id);
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

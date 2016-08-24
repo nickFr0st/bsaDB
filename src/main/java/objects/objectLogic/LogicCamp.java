@@ -261,7 +261,7 @@ public class LogicCamp {
             StringBuilder query = new StringBuilder();
             query.append("DELETE camp, scoutCamp ");
             query.append("FROM camp ");
-            query.append("INNER JOIN scoutCamp ON scoutCamp.campId = camp.id ");
+            query.append("LEFT JOIN scoutCamp ON scoutCamp.campId = camp.id ");
             query.append("WHERE camp.id = ").append(id);
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

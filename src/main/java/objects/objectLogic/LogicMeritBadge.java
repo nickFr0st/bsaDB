@@ -169,9 +169,9 @@ public class LogicMeritBadge {
             StringBuilder query = new StringBuilder();
             query.append("DELETE meritBadge, counselor, requirement, scoutMeritBadge ");
             query.append("FROM meritBadge ");
-            query.append("INNER JOIN counselor ON counselor.badgeId = meritBadge.id " );
-            query.append("INNER JOIN requirement ON requirement.parentId = meritBadge.id AND requirement.typeId = ").append(RequirementTypeConst.MERIT_BADGE.getId()).append(" ");
-            query.append("INNER JOIN scoutMeritBadge ON scoutMeritBadge.meritBadgeId = meritBadge.id ");
+            query.append("LEFT JOIN counselor ON counselor.badgeId = meritBadge.id " );
+            query.append("LEFT JOIN requirement ON requirement.parentId = meritBadge.id AND requirement.typeId = ").append(RequirementTypeConst.MERIT_BADGE.getId()).append(" ");
+            query.append("LEFT JOIN scoutMeritBadge ON scoutMeritBadge.meritBadgeId = meritBadge.id ");
             query.append("WHERE meritBadge.id = ").append(id);
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
