@@ -126,6 +126,7 @@ public class AdvancementPanel extends JPanel {
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
         btnSave.setVisible(false);
+        btnRefresh.setVisible(true);
     }
 
     private void loadRequirementSet() {
