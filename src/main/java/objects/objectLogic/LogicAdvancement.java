@@ -1,6 +1,7 @@
 package objects.objectLogic;
 
 import constants.KeyConst;
+import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import util.MySqlConnector;
 
@@ -104,8 +105,15 @@ public class LogicAdvancement {
 
     private static void deleteAdvancement(Integer id) {
         try {
+            StringBuilder query = new StringBuilder();
+            query.append("DELETE advancement, requirement, scoutRequirement ");
+            query.append("FROM advancement ");
+            query.append("INNER JOIN requirement ON requirement.parentId = advancement.id AND requirement.typeId = ").append(RequirementTypeConst.ADVANCEMENT.getId()).append(" ");
+            query.append("INNER JOIN scoutRequirement ON scoutRequirement.advancementId = advancement.id ");
+            query.append("WHERE advancement.id = ").append(id);
+
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM advancement WHERE id = " + id);
+            statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

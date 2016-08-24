@@ -406,8 +406,6 @@ public class AdvancementPanel extends JPanel {
 
         int advancementId = advancement.getId();
 
-        Set<Requirement> requirementSet = validateRequirements(advancement.getId(), false);
-        LogicRequirement.delete(requirementSet);
         LogicAdvancement.delete(advancement);
 
         CacheObject.removeFromAdvancements(advancementId);
