@@ -145,6 +145,7 @@ public class BoyScoutPanel extends JPanel {
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
         btnSave.setVisible(false);
+        btnRefresh.setVisible(true);
     }
 
     private void loadDetailsTab() {
@@ -614,6 +615,7 @@ public class BoyScoutPanel extends JPanel {
         btnSave.setVisible(true);
         btnUpdate.setVisible(false);
         btnDelete.setVisible(false);
+        btnRefresh.setVisible(false);
 
         enableControls(true);
         clearAllErrors();
@@ -700,6 +702,7 @@ public class BoyScoutPanel extends JPanel {
         btnSave.setVisible(false);
         btnUpdate.setVisible(true);
         btnDelete.setVisible(true);
+        btnRefresh.setVisible(true);
 
         populateBoyScoutNameList();
 
@@ -950,6 +953,7 @@ public class BoyScoutPanel extends JPanel {
         btnDelete.setVisible(false);
         btnSave.setVisible(false);
         btnUpdate.setVisible(false);
+        btnRefresh.setVisible(true);
 
         clearAllErrors();
         clearData();
@@ -1296,6 +1300,18 @@ public class BoyScoutPanel extends JPanel {
         tblModelSpecialAwards.setValueAt(updatedSpecialAward.getDateReceived(), selectedRow, 2);
     }
 
+    private void btnRefreshActionPerformed() {
+        BoyScout currentSelectedBoyScout = null;
+        if (listBoyScoutNames.getSelectedValue() != null) {
+            currentSelectedBoyScout = (BoyScout) listBoyScoutNames.getSelectedValue();
+        }
+
+        populateBoyScoutNameList();
+        if (currentSelectedBoyScout != null) {
+            listBoyScoutNames.setSelectedValue(currentSelectedBoyScout, true);
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         createUIComponents();
@@ -1396,6 +1412,7 @@ public class BoyScoutPanel extends JPanel {
         btnSave = new JButton();
         btnUpdate = new JButton();
         btnDelete = new JButton();
+        btnRefresh = new JButton();
 
         //======== this ========
         setBackground(Color.white);
@@ -2406,9 +2423,9 @@ public class BoyScoutPanel extends JPanel {
                     panel5.setName("panel5");
                     panel5.setLayout(new GridBagLayout());
                     ((GridBagLayout)panel5.getLayout()).columnWidths = new int[] {89, 0};
-                    ((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
+                    ((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
                     ((GridBagLayout)panel5.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
-                    ((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                    ((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                     //---- btnNew ----
                     btnNew.setText("New");
@@ -2479,6 +2496,24 @@ public class BoyScoutPanel extends JPanel {
                         }
                     });
                     panel5.add(btnDelete, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 10, 0), 0, 0));
+
+                    //---- btnRefresh ----
+                    btnRefresh.setText("Refresh");
+                    btnRefresh.setBackground(new Color(0, 107, 63));
+                    btnRefresh.setForeground(Color.white);
+                    btnRefresh.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                    btnRefresh.setFocusPainted(false);
+                    btnRefresh.setPreferredSize(new Dimension(68, 40));
+                    btnRefresh.setName("btnRefresh");
+                    btnRefresh.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            btnRefreshActionPerformed();
+                        }
+                    });
+                    panel5.add(btnRefresh, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 0, 0), 0, 0));
                 }
@@ -2572,5 +2607,6 @@ public class BoyScoutPanel extends JPanel {
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;
+    private JButton btnRefresh;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
