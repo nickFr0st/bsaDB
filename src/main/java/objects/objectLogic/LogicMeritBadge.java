@@ -1,6 +1,7 @@
 package objects.objectLogic;
 
 import constants.KeyConst;
+import constants.RequirementTypeConst;
 import objects.databaseObjects.MeritBadge;
 import util.MySqlConnector;
 import util.Util;
@@ -165,8 +166,16 @@ public class LogicMeritBadge {
     private static void deleteMeritBadge(Integer id) {
 
         try {
+            StringBuilder query = new StringBuilder();
+            query.append("DELETE meritBadge, counselor, requirement, scoutMeritBadge ");
+            query.append("FROM meritBadge ");
+            query.append("INNER JOIN counselor ON counselor.badgeId = meritBadge.id " );
+            query.append("INNER JOIN requirement ON requirement.parentId = meritBadge.id AND requirement.typeId = ").append(RequirementTypeConst.MERIT_BADGE.getId()).append(" ");
+            query.append("INNER JOIN scoutMeritBadge ON scoutMeritBadge.meritBadgeId = meritBadge.id ");
+            query.append("WHERE meritBadge.id = ").append(id);
+
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM meritBadge WHERE id = " + id);
+            statement.executeUpdate(query.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

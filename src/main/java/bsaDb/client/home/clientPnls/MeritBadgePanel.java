@@ -494,11 +494,6 @@ public class MeritBadgePanel extends JPanel {
 
         int meritBadgeId = meritBadge.getId();
 
-        Set<Requirement> requirementSet = validateRequirements(meritBadgeId, false);
-        List<Counselor> counselorList = getCounselorListForDeletion(meritBadgeId);
-
-        LogicCounselor.delete(counselorList);
-        LogicRequirement.delete(requirementSet);
         LogicMeritBadge.delete(meritBadge);
 
         CacheObject.removeFromMeritBadges(meritBadgeId);
