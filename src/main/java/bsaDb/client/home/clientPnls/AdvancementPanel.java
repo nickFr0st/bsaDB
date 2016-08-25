@@ -55,6 +55,7 @@ public class AdvancementPanel extends JPanel {
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
         populateAdvancementNameList();
+        clearData();
 
         enableControls(false);
     }
@@ -159,6 +160,7 @@ public class AdvancementPanel extends JPanel {
         txtTimeRequirement.setEnabled(enable);
         btnAddRequirement.setEnabled(enable);
         btnRemoveRequirement.setEnabled(enable);
+        cboRank.setEnabled(enable);
     }
 
     private void clearAllErrors() {
@@ -187,6 +189,13 @@ public class AdvancementPanel extends JPanel {
         txtName.setDefault();
         txtTimeRequirement.setDefault();
         imagePath = "";
+
+        cboRank.removeAllItems();
+        cboRank.insertItemAt("", 0);
+        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+        if (!Util.isEmpty(advancementList)) {
+            advancementList.forEach(cboRank::addItem);
+        }
 
         pnlRequirementList.removeAll();
         pnlRequirementList.repaint();
@@ -551,6 +560,10 @@ public class AdvancementPanel extends JPanel {
         }
     }
 
+    private void cboRankActionPerformed() {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -580,6 +593,8 @@ public class AdvancementPanel extends JPanel {
         JLabel lblTimeRequirement = new JLabel();
         txtTimeRequirement = new JTextFieldDefaultText();
         lblTimeRequirementError = new JLabel();
+        cboRank = new JComboBox();
+        lblRank = new JLabel();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -856,9 +871,9 @@ public class AdvancementPanel extends JPanel {
                             panel6.setName("panel6");
                             panel6.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
                             ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                             //---- lblName ----
                             lblName.setText("Name:");
@@ -941,7 +956,31 @@ public class AdvancementPanel extends JPanel {
                             lblTimeRequirementError.setName("lblTimeRequirementError");
                             panel6.add(lblTimeRequirementError, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 0, 0), 0, 0));
+                                new Insets(0, 10, 5, 0), 0, 0));
+
+                            //---- cboRank ----
+                            cboRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            cboRank.setBackground(Color.white);
+                            cboRank.setForeground(Color.black);
+                            cboRank.setName("cboRank");
+                            cboRank.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    cboRankActionPerformed();
+                                }
+                            });
+                            panel6.add(cboRank, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 0, 0), 0, 0));
+
+                            //---- lblRank ----
+                            lblRank.setText("Next Rank:");
+                            lblRank.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            lblRank.setForeground(Color.black);
+                            lblRank.setName("lblRank");
+                            panel6.add(lblRank, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 0, 5), 0, 0));
                         }
                         panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1081,6 +1120,8 @@ public class AdvancementPanel extends JPanel {
     private JLabel lblNameError;
     private JTextFieldDefaultText txtTimeRequirement;
     private JLabel lblTimeRequirementError;
+    private JComboBox cboRank;
+    private JLabel lblRank;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;

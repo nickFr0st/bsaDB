@@ -233,7 +233,7 @@ new FormModel {
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 								"$columnSpecs": "0, 215:1.0"
-								"$rowSpecs": "0, 0, 0, 0"
+								"$rowSpecs": "0, 0, 0, 0, 0"
 								"$hGap": 5
 								"$vGap": 5
 								"$alignLeft": true
@@ -312,6 +312,25 @@ new FormModel {
 									"gridy": 3
 									"insets": #Insets0
 									"gridwidth": 2
+								} )
+								add( new FormComponent( "javax.swing.JComboBox" ) {
+									name: "cboRank"
+									"font": new java.awt.Font( "Tahoma", 0, 14 )
+									"background": new java.awt.Color( 255, 255, 255, 255 )
+									"foreground": new java.awt.Color( 0, 0, 0, 255 )
+									addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cboRankActionPerformed", false ) )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 1
+									"gridy": 4
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblRank"
+									"text": "Next Rank:"
+									"font": new java.awt.Font( "Tahoma", 0, 14 )
+									"foreground": new java.awt.Color( 0, 0, 0, 255 )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 4
+									"insets": new java.awt.Insets( 0, 10, 0, 0 )
 								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 1
