@@ -65,6 +65,7 @@ public class DatabaseCreator {
                 " name VARCHAR(225) NOT NULL," +
                 " timeRequirement INT NULL," +
                 " imgPath VARCHAR(255) NULL," +
+                " nextAdvancementId INT NULL," +
                 " PRIMARY KEY (id))";
         statement.addBatch(tableAdvancement);
 

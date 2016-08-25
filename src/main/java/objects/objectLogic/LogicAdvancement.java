@@ -28,6 +28,7 @@ public class LogicAdvancement {
                 advancement.setName(rs.getString(KeyConst.NAME.getName()));
                 advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
                 advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEX_ADVANCEMENT_ID.getName()));
                 advancementList.add(advancement);
             }
 
@@ -74,7 +75,8 @@ public class LogicAdvancement {
             query.append(advancement.getId()).append(", ");
             query.append("'").append(advancement.getName().replace("'", "''")).append("', ");
             query.append(advancement.getTimeRequirement()).append(", ");
-            query.append("'").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("'");
+            query.append("'").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
+            query.append(advancement.getNextAdvancementId());
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -147,7 +149,8 @@ public class LogicAdvancement {
             query.append("UPDATE advancement SET ");
             query.append("name = '").append(advancement.getName().replace("'", "''")).append("', ");
             query.append("timeRequirement = ").append(advancement.getTimeRequirement()).append(", ");
-            query.append("imgPath = '").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("' ");
+            query.append("imgPath = '").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
+            query.append("nextAdvancementId = ").append(advancement.getNextAdvancementId()).append(" ");
             query.append("WHERE id = ").append(advancement.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
