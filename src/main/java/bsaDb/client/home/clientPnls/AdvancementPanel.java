@@ -55,7 +55,6 @@ public class AdvancementPanel extends JPanel {
         scrollPane2.getVerticalScrollBar().setUnitIncrement(18);
 
         populateAdvancementNameList();
-        clearData();
         clearAllErrors();
 
         enableControls(false);
@@ -101,6 +100,7 @@ public class AdvancementPanel extends JPanel {
         clearData();
 
         advancement = (Advancement) listAdvancementNames.getSelectedValue();
+        setupCboRank();
         loadData();
     }
 
@@ -187,6 +187,13 @@ public class AdvancementPanel extends JPanel {
         clearAllErrors();
         clearData();
 
+        cboRank.removeAllItems();
+        cboRank.insertItemAt("", 0);
+        Collection<Advancement> advancementList = CacheObject.getAdvancementList();
+        if (!Util.isEmpty(advancementList)) {
+            advancementList.forEach(cboRank::addItem);
+        }
+
         txtName.requestFocus();
     }
 
@@ -198,15 +205,22 @@ public class AdvancementPanel extends JPanel {
         txtTimeRequirement.setDefault();
         imagePath = "";
 
+        pnlRequirementList.removeAll();
+        pnlRequirementList.repaint();
+    }
+
+    private void setupCboRank() {
         cboRank.removeAllItems();
         cboRank.insertItemAt("", 0);
         Collection<Advancement> advancementList = CacheObject.getAdvancementList();
         if (!Util.isEmpty(advancementList)) {
-            advancementList.forEach(cboRank::addItem);
+            for (Advancement advancement : advancementList) {
+                if (advancement.getId() == this.advancement.getId()) {
+                     continue;
+                }
+                cboRank.addItem(advancement);
+            }
         }
-
-        pnlRequirementList.removeAll();
-        pnlRequirementList.repaint();
     }
 
     private void btnSaveActionPerformed() {
@@ -468,6 +482,7 @@ public class AdvancementPanel extends JPanel {
 
         clearAllErrors();
         clearData();
+        cboRank.removeAllItems();
         enableControls(false);
     }
 
