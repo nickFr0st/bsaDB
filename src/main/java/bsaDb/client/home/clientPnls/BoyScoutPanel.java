@@ -605,6 +605,7 @@ public class BoyScoutPanel extends JPanel {
         Util.clearError(lblNameError);
         Util.clearError(lblBirthDateError);
         Util.clearError(lblRankDateError);
+        Util.clearError(lblRankError);
 
         // Contact Info Tab
         Util.clearError(lblPhoneNumberError);
@@ -853,6 +854,11 @@ public class BoyScoutPanel extends JPanel {
 
         if (!cboRankDate.getModel().isSelected()) {
             Util.setError(lblRankDateError, "must select a valid rank date");
+            valid = false;
+        }
+
+        if (cboRank.getSelectedItem() == null) {
+            Util.setError(lblRankError, "must select a rank");
             valid = false;
         }
 
@@ -1309,6 +1315,7 @@ public class BoyScoutPanel extends JPanel {
         cboRank = new JComboBox();
         lblRankDate = new JLabel();
         cboRankDate = new JDatePicker();
+        lblRankError = new JLabel();
         lblRankDateError = new JLabel();
         lblBirthDate = new JLabel();
         cboBirthDate = new JDatePicker();
@@ -1636,6 +1643,15 @@ public class BoyScoutPanel extends JPanel {
                                     pnlGeneral.add(cboRankDate, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 0), 0, 0));
+
+                                    //---- lblRankError ----
+                                    lblRankError.setText("*error message");
+                                    lblRankError.setForeground(new Color(206, 17, 38));
+                                    lblRankError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblRankError.setName("lblRankError");
+                                    pnlGeneral.add(lblRankError, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
 
                                     //---- lblRankDateError ----
                                     lblRankDateError.setText("*error message");
@@ -2518,6 +2534,7 @@ public class BoyScoutPanel extends JPanel {
     private JComboBox cboRank;
     private JLabel lblRankDate;
     private JDatePicker cboRankDate;
+    private JLabel lblRankError;
     private JLabel lblRankDateError;
     private JLabel lblBirthDate;
     private JDatePicker cboBirthDate;

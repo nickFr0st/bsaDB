@@ -219,6 +219,16 @@ new FormModel {
 											"gridx": 5
 										} )
 										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "lblRankError"
+											"text": "*error message"
+											"foreground": new java.awt.Color( 206, 17, 38, 255 )
+											"font": new java.awt.Font( "Tahoma", 2, 11 )
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridy": 3
+											"gridwidth": 2
+											"insets": new java.awt.Insets( 0, 20, 0, 0 )
+										} )
+										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblRankDateError"
 											"text": "*error message"
 											"foreground": new java.awt.Color( 206, 17, 38, 255 )
