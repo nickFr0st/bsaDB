@@ -56,6 +56,7 @@ public class AdvancementPanel extends JPanel {
 
         populateAdvancementNameList();
         clearData();
+        clearAllErrors();
 
         enableControls(false);
     }
@@ -122,6 +123,12 @@ public class AdvancementPanel extends JPanel {
             setImage(advancement.getImgPath());
         }
 
+        if (advancement.getNextAdvancementId() == null) {
+            cboRank.setSelectedIndex(0);
+        } else {
+            cboRank.setSelectedItem(CacheObject.getAdvancement(advancement.getNextAdvancementId()));
+        }
+
         loadRequirementSet();
 
         btnUpdate.setVisible(true);
@@ -167,6 +174,7 @@ public class AdvancementPanel extends JPanel {
         Util.clearError(lblNameError);
         Util.clearError(lblRequirementError);
         Util.clearError(lblTimeRequirementError);
+        Util.clearError(lblRankError);
     }
 
     private void btnNewActionPerformed() {
@@ -292,6 +300,12 @@ public class AdvancementPanel extends JPanel {
             advancement.setTimeRequirement(Integer.parseInt(txtTimeRequirement.getText()));
         }
 
+        if (cboRank.getSelectedItem() == null || cboRank.getSelectedItem().equals("")) {
+            advancement.setNextAdvancementId(null);
+        } else {
+            advancement.setNextAdvancementId(((Advancement)cboRank.getSelectedItem()).getId());
+        }
+
         if (Util.isEmpty(imagePath) || getImage() == null) {
             advancement.setImgPath("");
         } else {
@@ -325,7 +339,27 @@ public class AdvancementPanel extends JPanel {
             valid = false;
         }
 
+        if (!validateNextRank()) {
+            valid = false;
+        }
+
         return valid;
+    }
+
+    private boolean validateNextRank() {
+        Util.clearError(lblRankError);
+
+        if (cboRank.getSelectedItem() == null || cboRank.getSelectedItem().equals("")) {
+            return true;
+        }
+
+        List<Advancement> advancementList = LogicAdvancement.findAllByNextAdvancementId(((Advancement)cboRank.getSelectedItem()).getId());
+        if (!Util.isEmpty(advancementList)) {
+            Util.setError(lblRankError, "Advancement currently in use on another advancement");
+            return false;
+        }
+
+        return true;
     }
 
     private void btnUpdateActionPerformed() {
@@ -595,6 +629,7 @@ public class AdvancementPanel extends JPanel {
         lblTimeRequirementError = new JLabel();
         cboRank = new JComboBox();
         lblRank = new JLabel();
+        lblRankError = new JLabel();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -871,9 +906,9 @@ public class AdvancementPanel extends JPanel {
                             panel6.setName("panel6");
                             panel6.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
                             ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                             //---- lblName ----
                             lblName.setText("Name:");
@@ -971,7 +1006,7 @@ public class AdvancementPanel extends JPanel {
                             });
                             panel6.add(cboRank, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 0, 0, 0), 0, 0));
+                                new Insets(0, 0, 5, 0), 0, 0));
 
                             //---- lblRank ----
                             lblRank.setText("Next Rank:");
@@ -980,7 +1015,16 @@ public class AdvancementPanel extends JPanel {
                             lblRank.setName("lblRank");
                             panel6.add(lblRank, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                new Insets(0, 10, 0, 5), 0, 0));
+                                new Insets(0, 10, 5, 5), 0, 0));
+
+                            //---- lblRankError ----
+                            lblRankError.setText("* Error Message");
+                            lblRankError.setForeground(new Color(206, 17, 38));
+                            lblRankError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                            lblRankError.setName("lblRankError");
+                            panel6.add(lblRankError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 0, 0), 0, 0));
                         }
                         panel4.add(panel6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -1122,6 +1166,7 @@ public class AdvancementPanel extends JPanel {
     private JLabel lblTimeRequirementError;
     private JComboBox cboRank;
     private JLabel lblRank;
+    private JLabel lblRankError;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;

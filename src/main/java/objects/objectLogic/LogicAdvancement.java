@@ -28,7 +28,7 @@ public class LogicAdvancement {
                 advancement.setName(rs.getString(KeyConst.NAME.getName()));
                 advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
                 advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEX_ADVANCEMENT_ID.getName()));
+                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
                 advancementList.add(advancement);
             }
 
@@ -161,5 +161,29 @@ public class LogicAdvancement {
         }
 
         return advancement;
+    }
+
+    public static List<Advancement> findAllByNextAdvancementId(int nextAdvancementId) {
+        List<Advancement> advancementList = new ArrayList<>();
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE nextAdvancementId = " + nextAdvancementId + " ORDER BY name");
+
+            while (rs.next()) {
+                Advancement advancement = new Advancement();
+                advancement.setId(rs.getInt(KeyConst.ID.getName()));
+                advancement.setName(rs.getString(KeyConst.NAME.getName()));
+                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
+                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+                advancementList.add(advancement);
+            }
+
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+
+        return advancementList;
     }
 }

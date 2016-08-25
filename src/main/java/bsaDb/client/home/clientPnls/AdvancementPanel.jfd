@@ -233,7 +233,7 @@ new FormModel {
 							} )
 							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 								"$columnSpecs": "0, 215:1.0"
-								"$rowSpecs": "0, 0, 0, 0, 0"
+								"$rowSpecs": "0, 0, 0, 0, 0, 0"
 								"$hGap": 5
 								"$vGap": 5
 								"$alignLeft": true
@@ -305,7 +305,7 @@ new FormModel {
 								add( new FormComponent( "javax.swing.JLabel" ) {
 									name: "lblTimeRequirementError"
 									"text": "* Error Message"
-									"foreground": new java.awt.Color( 206, 17, 38, 255 )
+									"foreground": &Color1 new java.awt.Color( 206, 17, 38, 255 )
 									"font": #Font0
 									"visible": false
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
@@ -331,6 +331,16 @@ new FormModel {
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 4
 									"insets": new java.awt.Insets( 0, 10, 0, 0 )
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "lblRankError"
+									"text": "* Error Message"
+									"foreground": #Color1
+									"font": #Font0
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 5
+									"insets": #Insets0
+									"gridwidth": 2
 								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 1

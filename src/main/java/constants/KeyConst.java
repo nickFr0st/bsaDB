@@ -53,7 +53,7 @@ public enum KeyConst {
 
     // Advancement
     IMG_PATH("imgPath"),
-    NEX_ADVANCEMENT_ID("nextAdvancementId"),
+    NEXT_ADVANCEMENT_ID("nextAdvancementId"),
 
     // Requirement
     DESCRIPTION("description"),
