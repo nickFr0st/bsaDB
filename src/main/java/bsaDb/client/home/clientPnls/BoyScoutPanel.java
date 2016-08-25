@@ -889,8 +889,11 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void btnUpdateActionPerformed() {
+        int scoutIndex;
         if (listBoyScoutNames.getSelectedValue() == null) {
             return;
+        } else {
+            scoutIndex = listBoyScoutNames.getSelectedIndex();
         }
 
         if (!validateFields()) {
@@ -898,7 +901,7 @@ public class BoyScoutPanel extends JPanel {
         }
 
         setData();
-        boyScout = LogicBoyScout.update(boyScout);
+        LogicBoyScout.update(boyScout);
 
         LogicScoutRequirement.delete(LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), boyScout.getAdvancementId()));
         LogicSpecialAward.delete(LogicSpecialAward.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId()));
@@ -911,7 +914,7 @@ public class BoyScoutPanel extends JPanel {
 
         populateBoyScoutNameList();
 
-        listBoyScoutNames.setSelectedValue(boyScout, true);
+        listBoyScoutNames.setSelectedIndex(scoutIndex);
     }
 
     private void btnDeleteActionPerformed() {
