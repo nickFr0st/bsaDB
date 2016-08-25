@@ -615,10 +615,6 @@ public class AdvancementPanel extends JPanel {
         }
     }
 
-    private void cboRankActionPerformed() {
-        // TODO add your code here
-    }
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -1017,12 +1013,6 @@ public class AdvancementPanel extends JPanel {
                             cboRank.setBackground(Color.white);
                             cboRank.setForeground(Color.black);
                             cboRank.setName("cboRank");
-                            cboRank.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    cboRankActionPerformed();
-                                }
-                            });
                             panel6.add(cboRank, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 0, 5, 0), 0, 0));

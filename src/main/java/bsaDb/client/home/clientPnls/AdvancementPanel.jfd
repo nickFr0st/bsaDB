@@ -316,7 +316,6 @@ new FormModel {
 									"font": new java.awt.Font( "Tahoma", 0, 14 )
 									"background": new java.awt.Color( 255, 255, 255, 255 )
 									"foreground": new java.awt.Color( 0, 0, 0, 255 )
-									addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cboRankActionPerformed", false ) )
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridx": 1
 									"gridy": 4
