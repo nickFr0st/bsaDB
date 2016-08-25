@@ -271,7 +271,6 @@ new FormModel {
 									"text": "* Error Message"
 									"foreground": new java.awt.Color( 206, 17, 38, 255 )
 									"font": #Font0
-									"visible": false
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 1
 									"gridwidth": 2
@@ -307,7 +306,6 @@ new FormModel {
 									"text": "* Error Message"
 									"foreground": &Color1 new java.awt.Color( 206, 17, 38, 255 )
 									"font": #Font0
-									"visible": false
 								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 									"gridy": 3
 									"insets": #Insets0

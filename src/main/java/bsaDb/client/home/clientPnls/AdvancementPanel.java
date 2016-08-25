@@ -443,6 +443,12 @@ public class AdvancementPanel extends JPanel {
             return;
         }
 
+        List<Advancement> advancementList = LogicAdvancement.findAllByNextAdvancementId(advancement.getId());
+        if (!Util.isEmpty(advancementList)) {
+            new MessageDialog(Util.getParent(this), "Delete Failure", "Cannot delete advancement because it is in use on other advancement(s).\nTo delete please remove usages and try again.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
+            return;
+        }
+
         if (new MessageDialog(Util.getParent(this), "Delete Advancement", "Are you sure you want to delete the selected advancement?", MessageDialog.MessageType.QUESTION, MessageDialog.ButtonType.YES_NO).getChoice() != MessageDialog.OPTION_YES) {
             return;
         }
@@ -945,7 +951,6 @@ public class AdvancementPanel extends JPanel {
                             lblNameError.setText("* Error Message");
                             lblNameError.setForeground(new Color(206, 17, 38));
                             lblNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                            lblNameError.setVisible(false);
                             lblNameError.setName("lblNameError");
                             panel6.add(lblNameError, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -987,7 +992,6 @@ public class AdvancementPanel extends JPanel {
                             lblTimeRequirementError.setText("* Error Message");
                             lblTimeRequirementError.setForeground(new Color(206, 17, 38));
                             lblTimeRequirementError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                            lblTimeRequirementError.setVisible(false);
                             lblTimeRequirementError.setName("lblTimeRequirementError");
                             panel6.add(lblTimeRequirementError, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
