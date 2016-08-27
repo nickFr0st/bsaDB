@@ -171,17 +171,10 @@ public class BoyScoutPanel extends JPanel {
             setBadgeTotals(meritBadgeList);
         }
 
-        List<ScoutCamp> scoutCampList = LogicScoutCamp.findAllByScoutIdAndScoutTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
-        if (!Util.isEmpty(scoutCampList)) {
-            List<Camp> campList = new ArrayList<>();
-            for (ScoutCamp scoutCamp : scoutCampList) {
-                campList.add(LogicCamp.findById(scoutCamp.getCampId()));
-            }
-
-            mdlCampList.removeAllElements();
-            for (Camp camp : campList) {
-                mdlCampList.addElement(camp);
-            }
+        mdlCampList.removeAllElements();
+        List<Camp> campList = LogicCamp.findAllByScoutIdAndTypeId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId());
+        if (!Util.isEmpty(campList)) {
+            campList.forEach(mdlCampList::addElement);
         }
     }
 

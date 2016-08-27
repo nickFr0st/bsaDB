@@ -24,6 +24,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author User #2
@@ -54,7 +55,7 @@ public class CampPanel extends JPanel {
     }
 
     public void populateCampNameList() {
-        listCampoutNames.setListData(Util.getSortedList((LinkedHashSet) LogicCamp.findAll(null)));
+        listCampoutNames.setListData(LogicCamp.findAll(null).toArray());
         listCampoutNames.revalidate();
         listCampoutNames.repaint();
     }
@@ -63,19 +64,14 @@ public class CampPanel extends JPanel {
         LinkedHashSet campSet = (LinkedHashSet) LogicCamp.findAll(null);
 
         if (txtSearchName.isMessageDefault()) {
-            listCampoutNames.setListData(Util.getSortedList(campSet));
+            listCampoutNames.setListData(campSet.toArray());
             listCampoutNames.revalidate();
             return;
         }
 
-        List<Camp> filteredList = new ArrayList<>();
-        for (Camp campout : (LinkedHashSet<Camp>) campSet) {
-            if (campout.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
-                filteredList.add(campout);
-            }
-        }
+        List<Camp> filteredList = (LinkedList<Camp>) campSet.stream().filter(campout -> ((Camp)campout).getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())).collect(Collectors.toList());
 
-        listCampoutNames.setListData(Util.getSortedList((ArrayList) filteredList));
+        listCampoutNames.setListData(filteredList.toArray());
         listCampoutNames.revalidate();
     }
 
