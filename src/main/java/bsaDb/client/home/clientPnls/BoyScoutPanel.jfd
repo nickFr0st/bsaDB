@@ -475,7 +475,7 @@ new FormModel {
 											"opaque": false
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "lblProgressTable"
-												"text": "Progress of Current Advancement"
+												"text": "Progress Towards Next Advancement"
 												"font": #Font6
 												"foreground": #Color2
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {

@@ -260,27 +260,23 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void setAdvancementTable() {
+        if (tblModelProgress.getRowCount() > 0) {
+            for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
+                tblModelProgress.removeRow(i);
+            }
+        }
+
         Advancement advancement = (Advancement)cboRank.getSelectedItem();
-        if (advancement == null) {
-            if (tblModelProgress.getRowCount() > 0) {
-                for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
-                    tblModelProgress.removeRow(i);
-                }
-            }
+        if (advancement == null || advancement.getNextAdvancementId() == null) {
             return;
         }
 
-        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
+        Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getNextAdvancementId(), RequirementTypeConst.ADVANCEMENT.getId());
         if (requirementSet.isEmpty()) {
-            if (tblModelProgress.getRowCount() > 0) {
-                for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
-                    tblModelProgress.removeRow(i);
-                }
-            }
             return;
         }
 
-        Set<ScoutRequirement> scoutRequirementSet = LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), advancement.getId());
+        Set<ScoutRequirement> scoutRequirementSet = LogicScoutRequirement.findByAllScoutIdScoutTypeIdAndAdvancementId(boyScout.getId(), ScoutTypeConst.BOY_SCOUT.getId(), advancement.getNextAdvancementId());
 
         for (Requirement requirement : requirementSet) {
             ScoutRequirement scoutRequirement = null;
@@ -712,6 +708,7 @@ public class BoyScoutPanel extends JPanel {
 
     private void saveRelatedScoutData() {
         List<ScoutRequirement> scoutRequirementList = new ArrayList<>();
+        Integer nextAdvancementId = ((Advancement)cboRank.getSelectedItem()).getNextAdvancementId();
         for (int i = 0; i < tblModelProgress.getRowCount(); ++i) {
             Boolean isCompleted = (Boolean) tblModelProgress.getValueAt(i, 0);
             if (!isCompleted) {
@@ -722,11 +719,11 @@ public class BoyScoutPanel extends JPanel {
             Date dateCompleted = (Date) tblModelProgress.getValueAt(i, 2);
 
             ScoutRequirement scoutRequirement = new ScoutRequirement();
-            scoutRequirement.setAdvancementId(boyScout.getAdvancementId());
+            scoutRequirement.setAdvancementId(nextAdvancementId);
             scoutRequirement.setDateCompleted(dateCompleted);
             scoutRequirement.setScoutId(boyScout.getId());
             scoutRequirement.setScoutTypeId(ScoutTypeConst.BOY_SCOUT.getId());
-            scoutRequirement.setRequirementId(LogicRequirement.findByParentIdAndTypeIdAndName(boyScout.getAdvancementId(), RequirementTypeConst.ADVANCEMENT.getId(), requirementName).getId());
+            scoutRequirement.setRequirementId(LogicRequirement.findByParentIdAndTypeIdAndName(nextAdvancementId, RequirementTypeConst.ADVANCEMENT.getId(), requirementName).getId());
 
             scoutRequirementList.add(scoutRequirement);
         }
@@ -1013,12 +1010,6 @@ public class BoyScoutPanel extends JPanel {
     }
 
     private void updateProgressTable() {
-        if (tblModelProgress.getRowCount() > 0) {
-            for (int i = tblModelProgress.getRowCount() - 1; i > -1; i--) {
-                tblModelProgress.removeRow(i);
-            }
-        }
-
         setAdvancementTable();
     }
 
@@ -1880,7 +1871,7 @@ public class BoyScoutPanel extends JPanel {
                                         ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0E-4};
 
                                         //---- lblProgressTable ----
-                                        lblProgressTable.setText("Progress of Current Advancement");
+                                        lblProgressTable.setText("Progress Towards Next Advancement");
                                         lblProgressTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                         lblProgressTable.setForeground(Color.black);
                                         lblProgressTable.setName("lblProgressTable");
