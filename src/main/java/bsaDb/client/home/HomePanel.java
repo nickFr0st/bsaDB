@@ -253,6 +253,18 @@ public class HomePanel extends JPanel {
         ((CardLayout)pnlCards.getLayout()).show(pnlCards, CAMP_PAGE);
     }
 
+    private void mniUtahScoutsActionPerformed() {
+        if (!Desktop.isDesktopSupported()) {
+            return;
+        }
+
+        try {
+            URI uri = new URI("http://www.utahscouts.org/");
+            Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException ignore) {
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -272,6 +284,7 @@ public class HomePanel extends JPanel {
         mnuHelp = new JMenu();
         mniAbout = new JMenuItem();
         mniMeritBadgeLink = new JMenuItem();
+        mniUtahScouts = new JMenuItem();
         JPanel hSpacer1 = new JPanel(null);
         btnSignOut = new JButton();
         label1 = new JLabel();
@@ -520,6 +533,17 @@ public class HomePanel extends JPanel {
                         }
                     });
                     mnuHelp.add(mniMeritBadgeLink);
+
+                    //---- mniUtahScouts ----
+                    mniUtahScouts.setText("utahscouts.org");
+                    mniUtahScouts.setName("mniUtahScouts");
+                    mniUtahScouts.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniUtahScoutsActionPerformed();
+                        }
+                    });
+                    mnuHelp.add(mniUtahScouts);
                 }
                 menuBar1.add(mnuHelp);
 
@@ -597,6 +621,7 @@ public class HomePanel extends JPanel {
     private JMenu mnuHelp;
     private JMenuItem mniAbout;
     private JMenuItem mniMeritBadgeLink;
+    private JMenuItem mniUtahScouts;
     private JButton btnSignOut;
     private JLabel label1;
     private JPanel pnlCards;
