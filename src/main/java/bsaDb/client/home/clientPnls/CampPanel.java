@@ -24,7 +24,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author User #2
@@ -69,7 +68,12 @@ public class CampPanel extends JPanel {
             return;
         }
 
-        List<Camp> filteredList = (LinkedList<Camp>) campSet.stream().filter(campout -> ((Camp)campout).getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())).collect(Collectors.toList());
+        List<Camp> filteredList = new ArrayList<>();
+        for (Camp campout : (LinkedHashSet<Camp>) campSet) {
+            if (campout.getName().toLowerCase().contains(txtSearchName.getText().toLowerCase())) {
+                filteredList.add(campout);
+            }
+        }
 
         listCampoutNames.setListData(filteredList.toArray());
         listCampoutNames.revalidate();
