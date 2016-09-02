@@ -8,6 +8,7 @@ import bsaDb.client.home.HomePanel;
 import bsaDb.client.home.clientPnls.NoDatabaseConnectionPanel;
 import bsaDb.client.home.clientPnls.NoServerConnectionPanel;
 import bsaDb.client.home.dialogs.MessageDialog;
+import updater.DatabaseUpdater;
 import util.CacheObject;
 import util.MySqlConnector;
 
@@ -50,6 +51,7 @@ public class BaseFrame extends JFrame {
                 slideCard(NO_DATABASE_CONNECTION_PAGE);
                 break;
             default:
+                DatabaseUpdater.runUpdates();
                 CacheObject.setupCache();
                 slideCard(SIGN_IN_PAGE);
         }

@@ -60,6 +60,12 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id))";
         statement.addBatch(tableAccessRight);
 
+        String tableDbVersion = "CREATE TABLE dbversion " +
+                "(id INT NOT NULL AUTO_INCREMENT," +
+                " version BIGINT(19) NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(tableDbVersion);
+
         String tableAdvancement = "CREATE TABLE advancement " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(225) NOT NULL," +
