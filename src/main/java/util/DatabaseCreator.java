@@ -16,7 +16,7 @@ public class DatabaseCreator {
             statement.executeUpdate("CREATE DATABASE " + name);
             connection = DriverManager.getConnection(MySqlConnector.DB_PATH + name, userName, password);
 
-            buildDataBase(connection);
+            buildDatabase(connection);
             insertDefaultValues(connection);
 
         } catch (SQLException sqle) {
@@ -34,10 +34,36 @@ public class DatabaseCreator {
         statement.executeUpdate("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
     }
 
-    private static void buildDataBase(Connection connection) throws SQLException {
+    private static void buildDatabase(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
 
-        String tableUser = "CREATE TABLE user " +
+        createDbVersionTable(statement);
+        createUserTable(statement);
+        createAccessRightTable(statement);
+        createAdvancementTable(statement);
+        createMeritBadgeTable(statement);
+        createRequirementTable(statement);
+        createCounselorTable(statement);
+        createBoyScoutTable(statement);
+        createSpecialAwardTable(statement);
+        createScoutRequirementTable(statement);
+        createScoutMeritBadgeTable(statement);
+        createCampTable(statement);
+        createScoutCampTable(statement);
+
+        statement.executeBatch();
+    }
+
+    private static void createDbVersionTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE dbversion " +
+                "(id INT NOT NULL AUTO_INCREMENT," +
+                " version BIGINT(19) NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(query);
+    }
+
+    private static void createUserTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE user " +
                 "(id INT NOT NULL," +
                 " username VARCHAR(30) NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
@@ -51,56 +77,62 @@ public class DatabaseCreator {
                 " password VARCHAR(90) NOT NULL," +
                 " email VARCHAR(255) NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableUser);
+        statement.addBatch(query);
+    }
 
-        String tableAccessRight = "CREATE TABLE accessRight " +
+    private static void createAccessRightTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE accessRight " +
                 "(id INT NOT NULL," +
                 " userId INT NOT NULL," +
                 " rightId INT NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableAccessRight);
+        statement.addBatch(query);
+    }
 
-        String tableDbVersion = "CREATE TABLE dbversion " +
-                "(id INT NOT NULL AUTO_INCREMENT," +
-                " version BIGINT(19) NOT NULL," +
-                " PRIMARY KEY (id))";
-        statement.addBatch(tableDbVersion);
-
-        String tableAdvancement = "CREATE TABLE advancement " +
+    private static void createAdvancementTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE advancement " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(225) NOT NULL," +
                 " timeRequirement INT NULL," +
                 " imgPath VARCHAR(255) NULL," +
                 " nextAdvancementId INT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableAdvancement);
+        statement.addBatch(query);
+    }
 
-        String tableMeritBadge = "CREATE TABLE meritBadge " +
+    private static void createMeritBadgeTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE meritBadge " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(225) NOT NULL," +
                 " imgPath VARCHAR(255) NOT NULL," +
                 " requiredForEagle TINYINT NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableMeritBadge);
+        statement.addBatch(query);
+    }
 
-        String tableRequirement = "CREATE TABLE requirement " +
+    private static void createRequirementTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE requirement " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(45) NOT NULL," +
                 " description BLOB NOT NULL," +
                 " typeId INT NOT NULL," +
                 " parentId INT NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableRequirement);
+        statement.addBatch(query);
+    }
 
-        String tableCounselor = "CREATE TABLE counselor " +
+    private static void createCounselorTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE counselor " +
                 "(id INT NOT NULL," +
                 " badgeId INT NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
                 " phoneNumber VARCHAR(20) NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableCounselor);
+        statement.addBatch(query);
+    }
 
-        String tableBoyScout = "CREATE TABLE boyScout " +
+    private static void createBoyScoutTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE boyScout " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
                 " position VARCHAR(90) NULL," +
@@ -116,9 +148,11 @@ public class DatabaseCreator {
                 " zip VARCHAR(10) NULL," +
                 " note BLOB NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableBoyScout);
+        statement.addBatch(query);
+    }
 
-        String tableSpecialAward = "CREATE TABLE specialAward " +
+    private static void createSpecialAwardTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE specialAward " +
                 "(id INT NOT NULL," +
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
@@ -126,9 +160,11 @@ public class DatabaseCreator {
                 " description BLOB NULL," +
                 " dateReceived DATE NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableSpecialAward);
+        statement.addBatch(query);
+    }
 
-        String tableScoutRequirement = "CREATE TABLE scoutRequirement " +
+    private static void createScoutRequirementTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE scoutRequirement " +
                 "(id INT NOT NULL," +
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
@@ -136,17 +172,21 @@ public class DatabaseCreator {
                 " requirementId INT NOT NULL," +
                 " dateCompleted DATE NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableScoutRequirement);
+        statement.addBatch(query);
+    }
 
-        String tableScoutMeritBadge = "CREATE TABLE scoutMeritBadge " +
+    private static void createScoutMeritBadgeTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE scoutMeritBadge " +
                 "(id INT NOT NULL," +
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " meritBadgeId INT NOT NULL," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableScoutMeritBadge);
+        statement.addBatch(query);
+    }
 
-        String tableCamp = "CREATE TABLE camp " +
+    private static void createCampTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE camp " +
                 "(id INT NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
@@ -156,17 +196,17 @@ public class DatabaseCreator {
                 " note BLOB NULL," +
                 " numberOfNights INT NOT NULL DEFAULT 1," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableCamp);
+        statement.addBatch(query);
+    }
 
-        String tableScoutCamp = "CREATE TABLE scoutCamp " +
+    private static void createScoutCampTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE scoutCamp " +
                 "(id INT NOT NULL," +
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " campId INT NOT NULL," +
                 " numberOfNights INT NOT NULL DEFAULT 1," +
                 " PRIMARY KEY (id))";
-        statement.addBatch(tableScoutCamp);
-
-        statement.executeBatch();
+        statement.addBatch(query);
     }
 }
