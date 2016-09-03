@@ -85,7 +85,9 @@ public class DatabaseCreator {
                 "(id INT NOT NULL," +
                 " userId INT NOT NULL," +
                 " rightId INT NOT NULL," +
-                " PRIMARY KEY (id))";
+                " PRIMARY KEY (id)," +
+                " CONSTRAINT fk_access_right_user_id_to_user FOREIGN KEY (userId) REFERENCES user(id)," +
+                " INDEX fk_access_right_user_id_to_user (userId))";
         statement.addBatch(query);
     }
 
@@ -127,7 +129,9 @@ public class DatabaseCreator {
                 " badgeId INT NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
                 " phoneNumber VARCHAR(20) NOT NULL," +
-                " PRIMARY KEY (id))";
+                " PRIMARY KEY (id)," +
+                " CONSTRAINT fk_counselor_badge_id_to_merit_badge FOREIGN KEY (badgeId) REFERENCES meritbadge(id)," +
+                " INDEX fk_counselor_badge_id_to_merit_badge (badgeId))";
         statement.addBatch(query);
     }
 
@@ -171,7 +175,13 @@ public class DatabaseCreator {
                 " advancementId INT NOT NULL," +
                 " requirementId INT NOT NULL," +
                 " dateCompleted DATE NOT NULL," +
-                " PRIMARY KEY (id))";
+                " PRIMARY KEY (id)," +
+                " CONSTRAINT fk_scout_requirement_advancement_id_to_advancement FOREIGN KEY (advancementId)" +
+                " REFERENCES advancement(id)," +
+                " CONSTRAINT fk_scout_requirement_requirement_id_to_requirement FOREIGN KEY (requirementId)" +
+                " REFERENCES requirement(id)," +
+                " INDEX fk_scout_requirement_advancement_id_to_advancement (advancementId)," +
+                " INDEX fk_scout_requirement_requirement_id_to_requirement (requirementId))";
         statement.addBatch(query);
     }
 
@@ -181,7 +191,9 @@ public class DatabaseCreator {
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " meritBadgeId INT NOT NULL," +
-                " PRIMARY KEY (id))";
+                " PRIMARY KEY (id)," +
+                " CONSTRAINT fk_scout_badge_badge_id_to_merit_badge FOREIGN KEY (meritBadgeId) REFERENCES meritbadge(id)," +
+                " INDEX fk_scout_badge_badge_id_to_merit_badge (meritBadgeId))";
         statement.addBatch(query);
     }
 
@@ -206,7 +218,9 @@ public class DatabaseCreator {
                 " scoutTypeId INT NOT NULL," +
                 " campId INT NOT NULL," +
                 " numberOfNights INT NOT NULL DEFAULT 1," +
-                " PRIMARY KEY (id))";
+                " PRIMARY KEY (id)," +
+                " CONSTRAINT fk_scout_camp_camp_id_to_camp FOREIGN KEY (campId) REFERENCES camp(id)," +
+                " INDEX fk_scout_camp_camp_id_to_camp (campId))";
         statement.addBatch(query);
     }
 }
