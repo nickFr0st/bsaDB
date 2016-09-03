@@ -15,7 +15,7 @@ new FormModel {
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0:1.0, 350, 0:1.0"
-				"$rowSpecs": "90, 0, 0, 0, 0, 0, 0, 0:1.0"
+				"$rowSpecs": "90, 0, 0, 0, 0, 0, 0, 0, 0:1.0"
 				"$hGap": 8
 				"$vGap": 8
 				"$alignLeft": true
@@ -29,6 +29,31 @@ new FormModel {
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
 				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "350"
+					"$rowSpecs": "0"
+					"$hGap": 8
+					"$vGap": 8
+					"$alignTop": true
+					"$alignLeft": true
+				} ) {
+					name: "pnlCapsLock"
+					"background": new java.awt.Color( 153, 102, 51, 255 )
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 65536, 0, false )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lblCapsLock"
+						"text": "CAPS LOCK IS ON"
+						"foreground": sfield java.awt.Color white
+						"background": new java.awt.Color( 153, 102, 0, 103 )
+						"horizontalAlignment": 0
+						"font": new java.awt.Font( "Tahoma", 2, 11 )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"insets": new java.awt.Insets( 3, 0, 3, 0 )
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 1
+					"gridy": 1
+				} )
 				add( new FormComponent( "bsaDb.client.customComponents.JTextFieldDefaultText" ) {
 					name: "txtUserName"
 					"preferredSize": &Dimension0 new java.awt.Dimension( 14, 40 )
@@ -40,7 +65,7 @@ new FormModel {
 					addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "txtUserNameFocusGained", false ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
-					"gridy": 1
+					"gridy": 2
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "lblUserNameError"
@@ -50,7 +75,7 @@ new FormModel {
 					"visible": false
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
-					"gridy": 2
+					"gridy": 3
 				} )
 				add( new FormComponent( "bsaDb.client.customComponents.JPasswordFieldDefaultText" ) {
 					name: "txtPassword"
@@ -61,8 +86,9 @@ new FormModel {
 					"font": #Font0
 					addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "txtPasswordFocusLost", false ) )
 					addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "txtPasswordFocusGained", false ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyReleased", "txtPasswordKeyReleased", false ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridy": 3
+					"gridy": 4
 					"gridx": 1
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -72,7 +98,7 @@ new FormModel {
 					"font": #Font1
 					"visible": false
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridy": 4
+					"gridy": 5
 					"gridx": 1
 				} )
 				add( new FormComponent( "javax.swing.JCheckBox" ) {
@@ -83,7 +109,7 @@ new FormModel {
 					"background": new java.awt.Color( 255, 255, 255, 255 )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
-					"gridy": 5
+					"gridy": 6
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "btnSignIn"
@@ -99,7 +125,7 @@ new FormModel {
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnSignInActionPerformed", false ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1
-					"gridy": 6
+					"gridy": 7
 					"hAlign": 0
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {

@@ -33,6 +33,15 @@ public class SignInPanel extends JPanel {
     public SignInPanel() {
         initComponents();
 
+        pnlCapsLock.setVisible(false);
+        addSubmitListener();
+
+        setupProperties();
+
+        loadSavedUser();
+    }
+
+    private void addSubmitListener() {
         btnSignIn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), SIGN_IN);
         Action action = new AbstractAction() {
             @Override
@@ -40,12 +49,7 @@ public class SignInPanel extends JPanel {
                 btnSignInActionPerformed();
             }
         };
-
         btnSignIn.getActionMap().put(SIGN_IN, action);
-
-        setupProperties();
-
-        loadSavedUser();
     }
 
     public SignInPanel(BaseFrame baseFrame) {
@@ -160,6 +164,15 @@ public class SignInPanel extends JPanel {
 
     private void txtPasswordFocusGained() {
         clearPasswordError();
+        checkForCapsLock();
+    }
+
+    private void checkForCapsLock() {
+        pnlCapsLock.setVisible(Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK));
+    }
+
+    private void txtPasswordKeyReleased() {
+        checkForCapsLock();
     }
 
     private void initComponents() {
@@ -167,6 +180,8 @@ public class SignInPanel extends JPanel {
         lblTitle = new JLabel();
         panel1 = new JPanel();
         vSpacer1 = new JPanel(null);
+        pnlCapsLock = new JPanel();
+        lblCapsLock = new JLabel();
         txtUserName = new JTextFieldDefaultText();
         lblUserNameError = new JLabel();
         txtPassword = new JPasswordFieldDefaultText();
@@ -191,14 +206,40 @@ public class SignInPanel extends JPanel {
             panel1.setName("panel1");
             panel1.setLayout(new GridBagLayout());
             ((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 358, 0, 0};
-            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {98, 0, 0, 0, 0, 0, 0, 0, 0};
+            ((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {98, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             ((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 0.0, 1.0, 1.0E-4};
-            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
+            ((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
 
             //---- vSpacer1 ----
             vSpacer1.setOpaque(false);
             vSpacer1.setName("vSpacer1");
             panel1.add(vSpacer1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 8, 8), 0, 0));
+
+            //======== pnlCapsLock ========
+            {
+                pnlCapsLock.setBackground(new Color(153, 102, 51));
+                pnlCapsLock.setFont(pnlCapsLock.getFont().deriveFont(pnlCapsLock.getFont().getStyle() & ~Font.BOLD));
+                pnlCapsLock.setName("pnlCapsLock");
+                pnlCapsLock.setLayout(new GridBagLayout());
+                ((GridBagLayout)pnlCapsLock.getLayout()).columnWidths = new int[] {350, 0};
+                ((GridBagLayout)pnlCapsLock.getLayout()).rowHeights = new int[] {0, 0};
+                ((GridBagLayout)pnlCapsLock.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
+                ((GridBagLayout)pnlCapsLock.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                //---- lblCapsLock ----
+                lblCapsLock.setText("CAPS LOCK IS ON");
+                lblCapsLock.setForeground(Color.white);
+                lblCapsLock.setBackground(new Color(153, 102, 0, 103));
+                lblCapsLock.setHorizontalAlignment(SwingConstants.CENTER);
+                lblCapsLock.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                lblCapsLock.setName("lblCapsLock");
+                pnlCapsLock.add(lblCapsLock, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(3, 0, 3, 0), 0, 0));
+            }
+            panel1.add(pnlCapsLock, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 8, 8), 0, 0));
 
@@ -219,7 +260,7 @@ public class SignInPanel extends JPanel {
                     txtUserNameFocusLost();
                 }
             });
-            panel1.add(txtUserName, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+            panel1.add(txtUserName, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 8, 8), 0, 0));
 
@@ -229,7 +270,7 @@ public class SignInPanel extends JPanel {
             lblUserNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
             lblUserNameError.setVisible(false);
             lblUserNameError.setName("lblUserNameError");
-            panel1.add(lblUserNameError, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+            panel1.add(lblUserNameError, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 8, 8), 0, 0));
 
@@ -245,12 +286,19 @@ public class SignInPanel extends JPanel {
                 public void focusGained(FocusEvent e) {
                     txtPasswordFocusGained();
                 }
+
                 @Override
                 public void focusLost(FocusEvent e) {
                     txtPasswordFocusLost();
                 }
             });
-            panel1.add(txtPassword, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+            txtPassword.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    txtPasswordKeyReleased();
+                }
+            });
+            panel1.add(txtPassword, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 8, 8), 0, 0));
 
@@ -260,7 +308,7 @@ public class SignInPanel extends JPanel {
             lblPasswordError.setFont(new Font("Tahoma", Font.ITALIC, 11));
             lblPasswordError.setVisible(false);
             lblPasswordError.setName("lblPasswordError");
-            panel1.add(lblPasswordError, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+            panel1.add(lblPasswordError, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 8, 8), 0, 0));
 
@@ -270,7 +318,7 @@ public class SignInPanel extends JPanel {
             chkRememberMe.setForeground(Color.black);
             chkRememberMe.setBackground(Color.white);
             chkRememberMe.setName("chkRememberMe");
-            panel1.add(chkRememberMe, new GridBagConstraints(1, 5, 1, 1, 0.0, 0.0,
+            panel1.add(chkRememberMe, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 8, 8), 0, 0));
 
@@ -291,7 +339,7 @@ public class SignInPanel extends JPanel {
                     btnSignInActionPerformed();
                 }
             });
-            panel1.add(btnSignIn, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
+            panel1.add(btnSignIn, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                 new Insets(0, 0, 8, 8), 0, 0));
         }
@@ -303,6 +351,8 @@ public class SignInPanel extends JPanel {
     private JLabel lblTitle;
     private JPanel panel1;
     private JPanel vSpacer1;
+    private JPanel pnlCapsLock;
+    private JLabel lblCapsLock;
     private JTextFieldDefaultText txtUserName;
     private JLabel lblUserNameError;
     private JPasswordFieldDefaultText txtPassword;
