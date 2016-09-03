@@ -2,6 +2,7 @@ package updater;
 
 import updater.updates.UpdateVersion_1;
 import updater.updates.UpdateVersion_2;
+import updater.updates.UpdateVersion_3;
 import util.MySqlConnector;
 
 import java.sql.ResultSet;
@@ -12,9 +13,18 @@ import java.sql.Statement;
  * Created by Nathanael on 9/1/2016
  */
 public class DatabaseUpdater {
-    private static final Long CURRENT_VERSION = 2L;
+    private static final Long CURRENT_VERSION = 3L;
 
     public static void runUpdates() {
+        Long version = getDbVersion();
+        if (version.equals(CURRENT_VERSION)) {
+             return;
+        }
+
+        update(version);
+    }
+
+    private static Long getDbVersion() {
         Long version = 0L;
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -26,12 +36,7 @@ public class DatabaseUpdater {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        if (version.equals(CURRENT_VERSION)) {
-             return;
-        }
-
-        update(version);
+        return version;
     }
 
     private static void update(Long version) {
@@ -43,6 +48,11 @@ public class DatabaseUpdater {
         if (version < 2L) {
             UpdateVersion_2.run();
             version = 2L;
+        }
+
+        if (version < 3L) {
+            UpdateVersion_3.run();
+            version = 3L;
         }
     }
 }

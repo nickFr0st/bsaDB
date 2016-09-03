@@ -50,6 +50,9 @@ public class DatabaseCreator {
         createScoutMeritBadgeTable(statement);
         createCampTable(statement);
         createScoutCampTable(statement);
+        createImageTable(statement);
+        createServiceProjectTable(statement);
+        createScoutServiceProjectTable(statement);
 
         statement.executeBatch();
     }
@@ -221,6 +224,44 @@ public class DatabaseCreator {
                 " PRIMARY KEY (id)," +
                 " CONSTRAINT fk_scout_camp_camp_id_to_camp FOREIGN KEY (campId) REFERENCES camp(id)," +
                 " INDEX fk_scout_camp_camp_id_to_camp (campId))";
+        statement.addBatch(query);
+    }
+
+    private static void createImageTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE image" +
+                " (id INT NOT NULL AUTO_INCREMENT," +
+                " path BLOB NOT NULL," +
+                " typeId INT NOT NULL," +
+                " recordId INT NOT NULL," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(query);
+    }
+
+    private static void createServiceProjectTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE serviceProject" +
+                " (id INT NOT NULL AUTO_INCREMENT," +
+                " startDate DATE NOT NULL," +
+                " duration DOUBLE DEFAULT 0 NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
+                " name VARCHAR(255) NOT NULL," +
+                " location VARCHAR(255) NOT NULL," +
+                " leaders VARCHAR(255) NOT NULL," +
+                " note BLOB," +
+                " PRIMARY KEY (id))";
+        statement.addBatch(query);
+    }
+
+    private static void createScoutServiceProjectTable(Statement statement) throws SQLException {
+        String query = "CREATE TABLE scoutServiceProject" +
+                " (id INT NOT NULL AUTO_INCREMENT," +
+                " scoutId INT NOT NULL," +
+                " scoutTypeId INT NOT NULL," +
+                " serviceProjectId INT NOT NULL," +
+                " PRIMARY KEY (id)," +
+                " INDEX fk_scout_service_project_idx (serviceProjectId)," +
+                " CONSTRAINT fk_scout_service_project" +
+                " FOREIGN KEY (serviceProjectId)" +
+                " REFERENCES serviceProject(id))";
         statement.addBatch(query);
     }
 }
