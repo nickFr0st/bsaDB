@@ -1,6 +1,6 @@
 package util;
 
-import bsaDb.client.home.dialogs.MessageDialog;
+import bsaDb.client.dialogs.message.MessageDialog;
 import constants.ConnectionConst;
 import constants.KeyConst;
 

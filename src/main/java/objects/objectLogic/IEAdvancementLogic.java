@@ -3,7 +3,7 @@ package objects.objectLogic;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import bsaDb.client.customComponents.CustomChooser;
-import bsaDb.client.home.dialogs.MessageDialog;
+import bsaDb.client.dialogs.message.MessageDialog;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;

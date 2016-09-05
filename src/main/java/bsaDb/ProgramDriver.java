@@ -1,6 +1,6 @@
 package bsaDb;
 
-import bsaDb.client.BaseFrame;
+import bsaDb.client.baseFrame.BaseFrame;
 
 /**
  * Created by Nathanael on 5/4/2015

@@ -1,6 +1,6 @@
 package bsaDb.client.customComponents;
 
-import bsaDb.client.home.dialogs.MessageDialog;
+import bsaDb.client.dialogs.message.MessageDialog;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
