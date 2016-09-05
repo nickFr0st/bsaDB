@@ -27,6 +27,7 @@ public class LogicScoutServiceProject {
                 ScoutServiceProject scoutServiceProject = new ScoutServiceProject();
                 scoutServiceProject.setId(rs.getInt(KeyConst.ID.getName()));
                 scoutServiceProject.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+                scoutServiceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
                 scoutServiceProject.setServiceProjectId(rs.getInt(KeyConst.SERVICE_PROJECT_ID.getName()));
 
                 scoutServiceProjectList.add(scoutServiceProject);

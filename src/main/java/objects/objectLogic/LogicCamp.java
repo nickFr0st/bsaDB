@@ -239,7 +239,7 @@ public class LogicCamp {
     }
 
     public static synchronized void delete(final Camp camp) {
-        if (camp == null || camp.getId() <= 1) {
+        if (camp == null || camp.getId() < 0) {
              return;
         }
 

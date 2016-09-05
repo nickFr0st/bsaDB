@@ -58,11 +58,7 @@ public class UpdateVersion_3 {
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " serviceProjectId INT NOT NULL," +
-                " PRIMARY KEY (id)," +
-                " INDEX fk_scout_service_project_idx (serviceProjectId)," +
-                " CONSTRAINT fk_scout_service_project" +
-                " FOREIGN KEY (serviceProjectId)" +
-                " REFERENCES serviceProject(id))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 

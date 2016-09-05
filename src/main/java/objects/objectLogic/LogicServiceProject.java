@@ -239,7 +239,7 @@ public class LogicServiceProject {
     }
 
     public static synchronized void delete(final ServiceProject serviceProject) {
-        if (serviceProject == null || serviceProject.getId() <= 1) {
+        if (serviceProject == null || serviceProject.getId() < 0) {
              return;
         }
 
@@ -260,7 +260,7 @@ public class LogicServiceProject {
     private static void deleteServiceProject(Integer id) {
         try {
             StringBuilder query = new StringBuilder();
-            query.append("DELETE serviceProject, scoutServiceProject ");
+            query.append("DELETE scoutServiceProject, serviceProject ");
             query.append("FROM serviceProject ");
             query.append("LEFT JOIN scoutServiceProject ON scoutServiceProject.serviceProjectId = serviceProject.id ");
             query.append("WHERE serviceProject.id = ").append(id);

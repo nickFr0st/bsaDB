@@ -1,5 +1,7 @@
 package util;
 
+import updater.DatabaseUpdater;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -31,7 +33,9 @@ public class DatabaseCreator {
 
     private static void insertDefaultValues(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
-        statement.executeUpdate("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
+        statement.addBatch("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
+        statement.addBatch("INSERT INTO dbVersion (version) VALUES(" + DatabaseUpdater.CURRENT_VERSION + ")");
+        statement.executeBatch();
     }
 
     private static void buildDatabase(Connection connection) throws SQLException {
@@ -88,9 +92,7 @@ public class DatabaseCreator {
                 "(id INT NOT NULL," +
                 " userId INT NOT NULL," +
                 " rightId INT NOT NULL," +
-                " PRIMARY KEY (id)," +
-                " CONSTRAINT fk_access_right_user_id_to_user FOREIGN KEY (userId) REFERENCES user(id)," +
-                " INDEX fk_access_right_user_id_to_user (userId))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 
@@ -132,9 +134,7 @@ public class DatabaseCreator {
                 " badgeId INT NOT NULL," +
                 " name VARCHAR(90) NOT NULL," +
                 " phoneNumber VARCHAR(20) NOT NULL," +
-                " PRIMARY KEY (id)," +
-                " CONSTRAINT fk_counselor_badge_id_to_merit_badge FOREIGN KEY (badgeId) REFERENCES meritbadge(id)," +
-                " INDEX fk_counselor_badge_id_to_merit_badge (badgeId))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 
@@ -178,13 +178,7 @@ public class DatabaseCreator {
                 " advancementId INT NOT NULL," +
                 " requirementId INT NOT NULL," +
                 " dateCompleted DATE NOT NULL," +
-                " PRIMARY KEY (id)," +
-                " CONSTRAINT fk_scout_requirement_advancement_id_to_advancement FOREIGN KEY (advancementId)" +
-                " REFERENCES advancement(id)," +
-                " CONSTRAINT fk_scout_requirement_requirement_id_to_requirement FOREIGN KEY (requirementId)" +
-                " REFERENCES requirement(id)," +
-                " INDEX fk_scout_requirement_advancement_id_to_advancement (advancementId)," +
-                " INDEX fk_scout_requirement_requirement_id_to_requirement (requirementId))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 
@@ -194,9 +188,7 @@ public class DatabaseCreator {
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " meritBadgeId INT NOT NULL," +
-                " PRIMARY KEY (id)," +
-                " CONSTRAINT fk_scout_badge_badge_id_to_merit_badge FOREIGN KEY (meritBadgeId) REFERENCES meritbadge(id)," +
-                " INDEX fk_scout_badge_badge_id_to_merit_badge (meritBadgeId))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 
@@ -221,9 +213,7 @@ public class DatabaseCreator {
                 " scoutTypeId INT NOT NULL," +
                 " campId INT NOT NULL," +
                 " numberOfNights INT NOT NULL DEFAULT 1," +
-                " PRIMARY KEY (id)," +
-                " CONSTRAINT fk_scout_camp_camp_id_to_camp FOREIGN KEY (campId) REFERENCES camp(id)," +
-                " INDEX fk_scout_camp_camp_id_to_camp (campId))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 
@@ -257,11 +247,7 @@ public class DatabaseCreator {
                 " scoutId INT NOT NULL," +
                 " scoutTypeId INT NOT NULL," +
                 " serviceProjectId INT NOT NULL," +
-                " PRIMARY KEY (id)," +
-                " INDEX fk_scout_service_project_idx (serviceProjectId)," +
-                " CONSTRAINT fk_scout_service_project" +
-                " FOREIGN KEY (serviceProjectId)" +
-                " REFERENCES serviceProject(id))";
+                " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 }

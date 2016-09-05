@@ -13,7 +13,7 @@ import java.sql.Statement;
  * Created by Nathanael on 9/1/2016
  */
 public class DatabaseUpdater {
-    private static final Long CURRENT_VERSION = 3L;
+    public static final Long CURRENT_VERSION = 3L;
 
     public static void runUpdates() {
         Long version = getDbVersion();
