@@ -47,6 +47,12 @@ public enum KeyConst {
     LEADER("leaders"),
     NIGHT_COUNT("numberOfNights"),
 
+    // Service Project
+    DURATION("duration"),
+
+    // Scout Service Project
+    SERVICE_PROJECT_ID("serviceProjectId"),
+
     // Access Right
     RIGHT_ID("rightId"),
     USER_ID("userId"),

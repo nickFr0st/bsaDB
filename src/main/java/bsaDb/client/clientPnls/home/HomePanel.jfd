@@ -99,6 +99,12 @@ new FormModel {
 							"mnemonic": 67
 							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniCampoutsActionPerformed", false ) )
 						} )
+						add( new FormComponent( "javax.swing.JMenuItem" ) {
+							name: "mniServiceProject"
+							"text": "Service Projects"
+							"mnemonic": 83
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "mniServiceProjectActionPerformed", false ) )
+						} )
 					} )
 					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 						name: "mnuScout"

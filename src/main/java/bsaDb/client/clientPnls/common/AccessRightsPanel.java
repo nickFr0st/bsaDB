@@ -34,6 +34,7 @@ public class AccessRightsPanel extends JPanel {
         chkAdvancements.setEnabled(enabled);
         chkMeritBadges.setEnabled(enabled);
         chkCampouts.setEnabled(enabled);
+        chkServiceProjects.setEnabled(enabled);
     }
 
     public void populateRights(User user) {
@@ -58,6 +59,8 @@ public class AccessRightsPanel extends JPanel {
                 chkMeritBadges.setSelected(true);
             } else if (accessRight.getRightId() == AccessRightConst.CAMPOUTS.getId()) {
                 chkCampouts.setSelected(true);
+            } else if (accessRight.getRightId() == AccessRightConst.SERVICE_PROJECTS.getId()) {
+                chkServiceProjects.setSelected(true);
             }
         }
     }
@@ -86,6 +89,9 @@ public class AccessRightsPanel extends JPanel {
         if (chkCampouts.isSelected()) {
             accessRightIdList.add(AccessRightConst.CAMPOUTS.getId());
         }
+        if (chkServiceProjects.isSelected()) {
+            accessRightIdList.add(AccessRightConst.SERVICE_PROJECTS.getId());
+        }
 
         return accessRightIdList;
     }
@@ -98,6 +104,7 @@ public class AccessRightsPanel extends JPanel {
         chkExports.setSelected(false);
         chkMeritBadges.setSelected(false);
         chkCampouts.setSelected(false);
+        chkServiceProjects.setSelected(false);
     }
 
     private void initComponents() {
@@ -107,6 +114,7 @@ public class AccessRightsPanel extends JPanel {
         chkImports = new JCheckBox();
         chkCampouts = new JCheckBox();
         chkExports = new JCheckBox();
+        chkServiceProjects = new JCheckBox();
         chkUsers = new JCheckBox();
         chkAdvancements = new JCheckBox();
 
@@ -117,9 +125,9 @@ public class AccessRightsPanel extends JPanel {
         setName("this");
         setLayout(new GridBagLayout());
         ((GridBagLayout)getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
+        ((GridBagLayout)getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
         ((GridBagLayout)getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+        ((GridBagLayout)getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
         //---- chkDatabaseSettings ----
         chkDatabaseSettings.setText("Database Settings");
@@ -171,6 +179,16 @@ public class AccessRightsPanel extends JPanel {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 20), 0, 0));
 
+        //---- chkServiceProjects ----
+        chkServiceProjects.setText("Service Projects");
+        chkServiceProjects.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chkServiceProjects.setForeground(Color.black);
+        chkServiceProjects.setOpaque(false);
+        chkServiceProjects.setName("chkServiceProjects");
+        add(chkServiceProjects, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 0), 0, 0));
+
         //---- chkUsers ----
         chkUsers.setText("Users");
         chkUsers.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -189,7 +207,7 @@ public class AccessRightsPanel extends JPanel {
         chkAdvancements.setName("chkAdvancements");
         add(chkAdvancements, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-            new Insets(5, 5, 5, 20), 0, 0));
+            new Insets(5, 5, 0, 20), 0, 0));
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -199,6 +217,7 @@ public class AccessRightsPanel extends JPanel {
     private JCheckBox chkImports;
     private JCheckBox chkCampouts;
     private JCheckBox chkExports;
+    private JCheckBox chkServiceProjects;
     private JCheckBox chkUsers;
     private JCheckBox chkAdvancements;
     // JFormDesigner - End of variables declaration  //GEN-END:variables

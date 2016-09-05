@@ -11,6 +11,7 @@ public enum AccessRightConst {
     EXPORTS(50, "Exports"),
     MERIT_BADGES(60, "Merit Badges"),
     CAMPOUTS(70, "Campouts"),
+    SERVICE_PROJECTS(80, "Service Projects"),
     ;
 
     private int id;

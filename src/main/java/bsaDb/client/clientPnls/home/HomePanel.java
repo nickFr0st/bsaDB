@@ -11,6 +11,7 @@ import bsaDb.client.clientPnls.database.DatabaseSettingsPanel;
 import bsaDb.client.clientPnls.frontPage.SplashPanel;
 import bsaDb.client.clientPnls.meritBadge.MeritBadgePanel;
 import bsaDb.client.clientPnls.scout.BoyScoutPanel;
+import bsaDb.client.clientPnls.serviceProject.ServiceProjectPanel;
 import bsaDb.client.clientPnls.user.UserPanel;
 import bsaDb.client.dialogs.about.AboutDialog;
 import bsaDb.client.dialogs.export.ExportDialog;
@@ -46,6 +47,7 @@ public class HomePanel extends JPanel {
     private final static String MERIT_BADGE_PAGE = "meritBadge";
     private final static String BOY_SCOUTS_PAGE = "boyScouts";
     private final static String CAMP_PAGE = "camp";
+    private final static String SERVICE_PROJECT_PAGE = "serviceProject";
 
     private UserPanel pnlUser;
     private AdvancementPanel pnlAdvancement;
@@ -53,6 +55,7 @@ public class HomePanel extends JPanel {
     private MeritBadgePanel pnlMeritBadge;
     private BoyScoutPanel pnlBoyScouts;
     private CampPanel pnlCamp;
+    private ServiceProjectPanel pnlServiceProject;
     private BaseFrame baseFrame;
 
     public HomePanel() {
@@ -92,6 +95,8 @@ public class HomePanel extends JPanel {
                     mniMeritBadges.setEnabled(true);
                 } else if (accessRight.getRightId() == AccessRightConst.CAMPOUTS.getId()) {
                     mniCampouts.setEnabled(true);
+                } else if (accessRight.getRightId() == AccessRightConst.SERVICE_PROJECTS.getId()) {
+                    mniServiceProject.setEnabled(true);
                 }
             }
 
@@ -107,6 +112,7 @@ public class HomePanel extends JPanel {
         mniExports.setEnabled(false);
         mniMeritBadges.setEnabled(false);
         mniCampouts.setEnabled(false);
+        mniServiceProject.setEnabled(false);
     }
 
     public HomePanel(BaseFrame baseFrame) {
@@ -271,6 +277,15 @@ public class HomePanel extends JPanel {
         }
     }
 
+    private void mniServiceProjectActionPerformed() {
+        if (pnlServiceProject == null) {
+            pnlServiceProject = new ServiceProjectPanel();
+            pnlCards.add(pnlServiceProject, SERVICE_PROJECT_PAGE);
+        }
+
+        ((CardLayout)pnlCards.getLayout()).show(pnlCards, SERVICE_PROJECT_PAGE);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         JPanel panel1 = new JPanel();
@@ -285,6 +300,7 @@ public class HomePanel extends JPanel {
         mniAdvancements = new JMenuItem();
         mniMeritBadges = new JMenuItem();
         mniCampouts = new JMenuItem();
+        mniServiceProject = new JMenuItem();
         mnuScout = new JMenu();
         mniBoyScouts = new JMenuItem();
         mnuHelp = new JMenu();
@@ -459,6 +475,18 @@ public class HomePanel extends JPanel {
                         }
                     });
                     mnuSetup.add(mniCampouts);
+
+                    //---- mniServiceProject ----
+                    mniServiceProject.setText("Service Projects");
+                    mniServiceProject.setMnemonic('S');
+                    mniServiceProject.setName("mniServiceProject");
+                    mniServiceProject.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mniServiceProjectActionPerformed();
+                        }
+                    });
+                    mnuSetup.add(mniServiceProject);
                 }
                 menuBar1.add(mnuSetup);
 
@@ -622,6 +650,7 @@ public class HomePanel extends JPanel {
     private JMenuItem mniAdvancements;
     private JMenuItem mniMeritBadges;
     private JMenuItem mniCampouts;
+    private JMenuItem mniServiceProject;
     private JMenu mnuScout;
     private JMenuItem mniBoyScouts;
     private JMenu mnuHelp;
