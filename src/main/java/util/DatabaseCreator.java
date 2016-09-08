@@ -21,6 +21,8 @@ public class DatabaseCreator {
             buildDatabase(connection);
             insertDefaultValues(connection);
 
+            MySqlConnector.getInstance().setConnection(connection);
+
         } catch (SQLException sqle) {
             return sqle.getMessage();
         } catch (Exception e) {

@@ -45,7 +45,7 @@ new FormModel {
 				add( new FormComponent( "bsaDb.client.home.clientPnls.DatabaseSettingsPanel" ) {
 					name: "databaseSettingsPanel1"
 					auxiliary() {
-						"JavaCodeGenerator.customCreateCode": "new DatabaseSettingsPanel(baseFrame, true);"
+						"JavaCodeGenerator.customCreateCode": "new DatabaseSettingsPanel(baseFrame, false);"
 					}
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 					"gridx": 1

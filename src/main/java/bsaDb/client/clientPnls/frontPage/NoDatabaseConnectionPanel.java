@@ -24,7 +24,6 @@ public class NoDatabaseConnectionPanel extends JPanel {
         this.baseFrame = baseFrame;
 
         initComponents();
-
     }
 
     private void initComponents() {
@@ -32,7 +31,7 @@ public class NoDatabaseConnectionPanel extends JPanel {
         JPanel panel1 = new JPanel();
         label3 = new JLabel();
         label1 = new JLabel();
-        databaseSettingsPanel1 = new DatabaseSettingsPanel(baseFrame, true);
+        databaseSettingsPanel1 = new DatabaseSettingsPanel(baseFrame, false);
 
         //======== this ========
         setBackground(Color.white);

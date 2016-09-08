@@ -99,6 +99,10 @@ public class MySqlConnector {
         return connection;
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     public ConnectionConst checkConnection() {
         try {
             properties.load(new FileReader(DB_PROPERTIES_PATH));

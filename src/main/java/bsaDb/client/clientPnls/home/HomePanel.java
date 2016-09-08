@@ -132,7 +132,7 @@ public class HomePanel extends JPanel {
 
     private void mnuDatabaseSettingsActionPerformed() {
         if (pnlDatabaseSettings == null) {
-            pnlDatabaseSettings = new DatabaseSettingsPanel();
+            pnlDatabaseSettings = new DatabaseSettingsPanel(baseFrame, true);
             pnlCards.add(pnlDatabaseSettings, DATABASE_SETTINGS_PAGE);
         }
 
