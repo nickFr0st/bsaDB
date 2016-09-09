@@ -186,4 +186,30 @@ public class LogicAdvancement {
 
         return advancementList;
     }
+
+    public static Advancement findById(Integer advancementId) {
+        if (advancementId == null) {
+             return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE id = " + advancementId);
+
+            if (rs.next()) {
+                Advancement advancement = new Advancement();
+                advancement.setId(rs.getInt(KeyConst.ID.getName()));
+                advancement.setName(rs.getString(KeyConst.NAME.getName()));
+                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
+                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+                return advancement;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
 }

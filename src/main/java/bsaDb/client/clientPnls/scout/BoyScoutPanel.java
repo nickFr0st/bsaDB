@@ -336,8 +336,15 @@ public class BoyScoutPanel extends JPanel {
             return;
         }
 
-        Advancement advancement = (Advancement)cboRank.getSelectedItem();
-        Integer timeRequirement = advancement.getTimeRequirement();
+        Advancement nextAdvancement = LogicAdvancement.findById(((Advancement)cboRank.getSelectedItem()).getNextAdvancementId());
+        if (nextAdvancement == null) {
+            barWaitPeriod.setValue(barWaitPeriod.getMaximum());
+            barWaitPeriod.setForeground(GOOD);
+            lblWaitPeriodDisplay.setText("no time requirement for this advancement");
+            return;
+        }
+
+        Integer timeRequirement = nextAdvancement.getTimeRequirement();
         if (timeRequirement == null || timeRequirement == 0) {
             barWaitPeriod.setValue(barWaitPeriod.getMaximum());
             barWaitPeriod.setForeground(GOOD);
