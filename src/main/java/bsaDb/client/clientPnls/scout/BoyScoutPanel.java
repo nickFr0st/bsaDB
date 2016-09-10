@@ -1507,7 +1507,7 @@ public class BoyScoutPanel extends JPanel {
 
                     //======== panel4 ========
                     {
-                        panel4.setBackground(new Color(179, 148, 117));
+                        panel4.setBackground(new Color(0, 63, 135));
                         panel4.setName("panel4");
                         panel4.setLayout(new BorderLayout());
 
