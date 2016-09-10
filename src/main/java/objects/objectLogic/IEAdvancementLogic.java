@@ -21,6 +21,11 @@ import java.util.List;
  */
 public class IEAdvancementLogic {
 
+    private final static int ADVANCEMENT_NAME_INDEX = 0;
+    private final static int TIME_REQUIREMENT_INDEX = 1;
+    private final static int ADVANCEMENT_IMAGE_PATH_INDEX = 2;
+    private final static int SERVICE_HOURS_INDEX = 3;
+
     public static boolean export(Component parent, List<String> exportList) {
         try {
             // get the file path
@@ -118,7 +123,7 @@ public class IEAdvancementLogic {
 
             boolean getAdvancement = true;
             Advancement advancement = null;
-            java.util.List<Requirement> requirementList = new ArrayList<>();
+            List<Requirement> requirementList = new ArrayList<>();
 
             String[] record;
             int line = 0;
@@ -129,11 +134,11 @@ public class IEAdvancementLogic {
                 String errorLine = "line: " + line + "\n";
 
                 // check for the headers
-                if (record[0].equals("Advancement Name") || record[0].equals("Requirement Name")) {
+                if (record[ADVANCEMENT_NAME_INDEX].equals("Advancement Name") || record[ADVANCEMENT_NAME_INDEX].equals("Requirement Name")) {
                     continue;
                 }
 
-                if (record[0].isEmpty()) {
+                if (record[ADVANCEMENT_NAME_INDEX].isEmpty()) {
                     getAdvancement = true;
 
                     if (advancement != null) {
@@ -153,40 +158,20 @@ public class IEAdvancementLogic {
                     getAdvancement = false;
 
                     advancement = new Advancement();
-                    String advancementName = record[0];
 
-                    if (Util.isEmpty(advancementName)){
-                        errors.append("Advancement name is missing. ").append(errorLine);
-                    } else if (advancementName.length() > Advancement.COL_NAME_LENGTH) {
-                        errors.append("Advancement name is too long. ").append(errorLine);
-                    }
+                    String advancementName = record[ADVANCEMENT_NAME_INDEX];
+                    validateAdvancementName(errors, errorLine, advancementName);
                     advancement.setName(advancementName);
 
-                    String timeRequirement = record[1];
-                    if (!Util.isEmpty(timeRequirement)) {
-                        try {
-                            int value = Integer.parseInt(timeRequirement);
-                            if (value <= 0) {
-                                errors.append("Invalid Time Requirement, must be a positive whole number. ").append(errorLine);
-                            } else {
-                                advancement.setTimeRequirement(value);
-                            }
-                        } catch (NumberFormatException e) {
-                            errors.append("Invalid Time Requirement, must be a whole number. ").append(errorLine);
-                        }
-                    }
+                    String timeRequirement = record[TIME_REQUIREMENT_INDEX];
+                    validateTimeRequirement(advancement, errors, errorLine, timeRequirement);
 
-                    if (record.length == 2) {
-                        continue;
-                    }
-
-                    String advancementImgPath = record[2];
-                    if (Util.isEmpty(advancementImgPath)){
-                        errors.append("Advancement image path is missing. ").append(errorLine);
-                    } else if (advancementImgPath.length() > Advancement.COL_IMG_PATH_LENGTH) {
-                        errors.append("Advancement image path is too long. ").append(errorLine);
-                    }
+                    String advancementImgPath = record[ADVANCEMENT_IMAGE_PATH_INDEX];
+                    validateImgPath(errors, errorLine, advancementImgPath);
                     advancement.setImgPath(advancementImgPath);
+
+                    String serviceHours = record[SERVICE_HOURS_INDEX];
+                    validateServiceHours(advancement, errors, errorLine, serviceHours);
 
                     continue;
                 }
@@ -268,6 +253,50 @@ public class IEAdvancementLogic {
 
         new MessageDialog(Util.getParent(parent), "Import Successful", "Your advancements have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
+    }
+
+    private static void validateImgPath(StringBuilder errors, String errorLine, String advancementImgPath) {
+        if (!Util.isEmpty(advancementImgPath) && advancementImgPath.length() > Advancement.COL_IMG_PATH_LENGTH) {
+            errors.append("Advancement image path is too long. ").append(errorLine);
+        }
+    }
+
+    private static void validateTimeRequirement(Advancement advancement, StringBuilder errors, String errorLine, String timeRequirement) {
+        if (!Util.isEmpty(timeRequirement)) {
+            try {
+                int value = Integer.parseInt(timeRequirement);
+                if (value <= 0) {
+                    errors.append("Invalid Time Requirement, must be a positive whole number. ").append(errorLine);
+                } else {
+                    advancement.setTimeRequirement(value);
+                }
+            } catch (NumberFormatException e) {
+                errors.append("Invalid Time Requirement, must be a whole number. ").append(errorLine);
+            }
+        }
+    }
+
+    private static void validateServiceHours(Advancement advancement, StringBuilder errors, String errorLine, String serviceHours) {
+        if (!Util.isEmpty(serviceHours)) {
+            try {
+                Double value = Double.parseDouble(serviceHours);
+                if (value < 0.0) {
+                    errors.append("Invalid Service Hours, must be a positive number. ").append(errorLine);
+                } else {
+                    advancement.setServiceHours(value);
+                }
+            } catch (NumberFormatException e) {
+                errors.append("Invalid Service Hours, must be a number. ").append(errorLine);
+            }
+        }
+    }
+
+    private static void validateAdvancementName(StringBuilder errors, String errorLine, String advancementName) {
+        if (Util.isEmpty(advancementName)){
+            errors.append("Advancement name is missing. ").append(errorLine);
+        } else if (advancementName.length() > Advancement.COL_NAME_LENGTH) {
+            errors.append("Advancement name is too long. ").append(errorLine);
+        }
     }
 
     private static boolean checkForErrors(StringBuilder errors, Component parent) {
