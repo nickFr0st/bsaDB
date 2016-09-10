@@ -41,7 +41,7 @@ public class IEAdvancementLogic {
             CSVWriter csvWriter = new CSVWriter(writer, ',');
             java.util.List<String[]> records = new ArrayList<>();
 
-            records.add(new String[]{"Advancement Name", "Time Requirement", "Advancement Image Path"});
+            records.add(new String[]{"Advancement Name", "Time Requirement", "Advancement Image Path", "Service Hours"});
             records.add(new String[]{"Requirement Name", "Requirement Description"});
 
             boolean firstPass = true;
@@ -50,19 +50,32 @@ public class IEAdvancementLogic {
                     records.add(new String[]{""});
                 }
 
-                if (Util.isEmpty(advancement.getImgPath())) {
-                    if (advancement.getTimeRequirement() == null) {
-                        records.add(new String[]{advancement.getName(), ""});
-                    } else {
-                        records.add(new String[]{advancement.getName(), advancement.getTimeRequirement().toString()});
-                    }
+                List<String> row = new ArrayList<>();
+                row.add(advancement.getName());
+
+                if (advancement.getTimeRequirement() == null) {
+                    row.add("");
                 } else {
-                    if (advancement.getTimeRequirement() == null) {
-                        records.add(new String[]{advancement.getName(), "", advancement.getImgPath()});
-                    } else {
-                        records.add(new String[]{advancement.getName(), advancement.getTimeRequirement().toString(), advancement.getImgPath()});
-                    }
+                    row.add(advancement.getTimeRequirement().toString());
                 }
+
+                if (Util.isEmpty(advancement.getImgPath())) {
+                    row.add("");
+                } else {
+                    row.add(advancement.getImgPath());
+                }
+
+                if (advancement.getServiceHours() == null) {
+                    row.add("");
+                } else {
+                    row.add(advancement.getServiceHours().toString());
+                }
+
+                String[] temp = new String[row.size()];
+                for (int i = 0; i < row.size(); i++) {
+                    temp[i] = row.get(i);
+                }
+                records.add(temp);
 
                 Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
                 if (!Util.isEmpty(requirementSet)) {
