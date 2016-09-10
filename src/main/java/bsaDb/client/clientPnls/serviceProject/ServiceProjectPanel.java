@@ -469,7 +469,7 @@ public class ServiceProjectPanel extends JPanel {
                 return false;
             }
         } catch (NumberFormatException e) {
-            Util.setError(lblDurationError, "Invalid value, whole numbers only");
+            Util.setError(lblDurationError, "Invalid value, numbers only");
             return false;
         }
 

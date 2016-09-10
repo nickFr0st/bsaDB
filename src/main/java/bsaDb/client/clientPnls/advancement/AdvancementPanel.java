@@ -129,6 +129,10 @@ public class AdvancementPanel extends JPanel {
             cboRank.setSelectedItem(CacheObject.getAdvancement(advancement.getNextAdvancementId()));
         }
 
+        if (advancement.getServiceHours() != null) {
+            txtServiceHours.setText(advancement.getServiceHours().toString());
+        }
+
         loadRequirementSet();
 
         btnUpdate.setVisible(true);
@@ -168,6 +172,7 @@ public class AdvancementPanel extends JPanel {
         btnAddRequirement.setEnabled(enable);
         btnRemoveRequirement.setEnabled(enable);
         cboRank.setEnabled(enable);
+        txtServiceHours.setEnabled(enable);
     }
 
     private void clearAllErrors() {
@@ -175,6 +180,7 @@ public class AdvancementPanel extends JPanel {
         Util.clearError(lblRequirementError);
         Util.clearError(lblTimeRequirementError);
         Util.clearError(lblRankError);
+        Util.clearError(lblServiceHoursError);
     }
 
     private void btnNewActionPerformed() {
@@ -204,6 +210,7 @@ public class AdvancementPanel extends JPanel {
         txtName.setDefault();
         txtTimeRequirement.setDefault();
         imagePath = "";
+        txtServiceHours.setDefault();
 
         pnlRequirementList.removeAll();
         pnlRequirementList.repaint();
@@ -324,6 +331,12 @@ public class AdvancementPanel extends JPanel {
             advancement.setImgPath("");
         } else {
             advancement.setImgPath(imagePath);
+        }
+
+        if (txtServiceHours.isMessageDefault()) {
+            advancement.setServiceHours(null);
+        } else {
+            advancement.setServiceHours(Double.parseDouble(txtServiceHours.getText()));
         }
     }
 
@@ -615,6 +628,27 @@ public class AdvancementPanel extends JPanel {
         }
     }
 
+    private boolean validateServiceHours() {
+        Util.clearError(lblServiceHoursError);
+
+        if (txtServiceHours.isMessageDefault()) {
+            return true;
+        }
+
+        try {
+            double timeRequirement = Double.parseDouble(txtServiceHours.getText());
+            if (timeRequirement < 0) {
+                Util.setError(lblServiceHoursError, "Invalid value, must be positive numbers only");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Util.setError(lblServiceHoursError, "Invalid value, numbers only");
+            return false;
+        }
+
+        return true;
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         TitlePanel pnlTitle = new TitlePanel();
@@ -647,6 +681,9 @@ public class AdvancementPanel extends JPanel {
         cboRank = new JComboBox();
         lblRank = new JLabel();
         lblRankError = new JLabel();
+        lblServiceHours = new JLabel();
+        txtServiceHours = new JTextFieldDefaultText();
+        lblServiceHoursError = new JLabel();
         JPanel panel5 = new JPanel();
         JButton btnNew = new JButton();
         btnSave = new JButton();
@@ -923,9 +960,9 @@ public class AdvancementPanel extends JPanel {
                             panel6.setName("panel6");
                             panel6.setLayout(new GridBagLayout());
                             ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 215, 0};
-                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0};
+                            ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
                             ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                            ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                             //---- lblName ----
                             lblName.setText("Name:");
@@ -1032,6 +1069,44 @@ public class AdvancementPanel extends JPanel {
                             lblRankError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                             lblRankError.setName("lblRankError");
                             panel6.add(lblRankError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 5, 0), 0, 0));
+
+                            //---- lblServiceHours ----
+                            lblServiceHours.setText("Service Hours:");
+                            lblServiceHours.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            lblServiceHours.setForeground(Color.black);
+                            lblServiceHours.setName("lblServiceHours");
+                            panel6.add(lblServiceHours, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 10, 5, 5), 0, 0));
+
+                            //---- txtServiceHours ----
+                            txtServiceHours.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                            txtServiceHours.setDefaultText("1.0");
+                            txtServiceHours.setName("txtServiceHours");
+                            txtServiceHours.addFocusListener(new FocusAdapter() {
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    validateServiceHours();
+                                }
+                            });
+                            txtServiceHours.addKeyListener(new KeyAdapter() {
+                                @Override
+                                public void keyReleased(KeyEvent e) {
+                                    validateServiceHours();
+                                }
+                            });
+                            panel6.add(txtServiceHours, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
+                                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                new Insets(0, 0, 5, 0), 0, 0));
+
+                            //---- lblServiceHoursError ----
+                            lblServiceHoursError.setText("* Error Message");
+                            lblServiceHoursError.setForeground(new Color(206, 17, 38));
+                            lblServiceHoursError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                            lblServiceHoursError.setName("lblServiceHoursError");
+                            panel6.add(lblServiceHoursError, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
                                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                 new Insets(0, 10, 0, 0), 0, 0));
                         }
@@ -1176,6 +1251,9 @@ public class AdvancementPanel extends JPanel {
     private JComboBox cboRank;
     private JLabel lblRank;
     private JLabel lblRankError;
+    private JLabel lblServiceHours;
+    private JTextFieldDefaultText txtServiceHours;
+    private JLabel lblServiceHoursError;
     private JButton btnSave;
     private JButton btnUpdate;
     private JButton btnDelete;
