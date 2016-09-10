@@ -105,6 +105,7 @@ public class DatabaseCreator {
                 " timeRequirement INT NULL," +
                 " imgPath VARCHAR(255) NULL," +
                 " nextAdvancementId INT NULL," +
+                " serviceHours DOUBLE PRECISION," +
                 " PRIMARY KEY (id))";
         statement.addBatch(query);
     }

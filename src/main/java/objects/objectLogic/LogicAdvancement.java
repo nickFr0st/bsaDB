@@ -29,6 +29,7 @@ public class LogicAdvancement {
                 advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
                 advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
                 advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
                 advancementList.add(advancement);
             }
 
@@ -76,7 +77,8 @@ public class LogicAdvancement {
             query.append("'").append(advancement.getName().replace("'", "''")).append("', ");
             query.append(advancement.getTimeRequirement()).append(", ");
             query.append("'").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
-            query.append(advancement.getNextAdvancementId());
+            query.append(advancement.getNextAdvancementId()).append(", ");
+            query.append(advancement.getServiceHours());
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -150,7 +152,8 @@ public class LogicAdvancement {
             query.append("name = '").append(advancement.getName().replace("'", "''")).append("', ");
             query.append("timeRequirement = ").append(advancement.getTimeRequirement()).append(", ");
             query.append("imgPath = '").append(advancement.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
-            query.append("nextAdvancementId = ").append(advancement.getNextAdvancementId()).append(" ");
+            query.append("nextAdvancementId = ").append(advancement.getNextAdvancementId()).append(", ");
+            query.append("serviceHours = ").append(advancement.getServiceHours()).append(" ");
             query.append("WHERE id = ").append(advancement.getId());
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
@@ -177,6 +180,7 @@ public class LogicAdvancement {
                 advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
                 advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
                 advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
                 advancementList.add(advancement);
             }
 
@@ -203,6 +207,7 @@ public class LogicAdvancement {
                 advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
                 advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
                 advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
                 return advancement;
             }
 

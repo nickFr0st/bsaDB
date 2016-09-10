@@ -60,6 +60,7 @@ public enum KeyConst {
     // Advancement
     IMG_PATH("imgPath"),
     NEXT_ADVANCEMENT_ID("nextAdvancementId"),
+    SERVICE_HOURS("serviceHours"),
 
     // Requirement
     DESCRIPTION("description"),

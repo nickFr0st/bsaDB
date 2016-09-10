@@ -12,6 +12,7 @@ public class Advancement implements Compare {
     private String imgPath;
     private Integer timeRequirement;
     private Integer nextAdvancementId;
+    private Double serviceHours;
 
     public Advancement() {
         id = -1;
@@ -55,6 +56,14 @@ public class Advancement implements Compare {
 
     public void setNextAdvancementId(Integer nextAdvancementId) {
         this.nextAdvancementId = nextAdvancementId;
+    }
+
+    public Double getServiceHours() {
+        return serviceHours;
+    }
+
+    public void setServiceHours(Double serviceHours) {
+        this.serviceHours = serviceHours;
     }
 
     @Override

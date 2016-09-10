@@ -3,6 +3,7 @@ package updater;
 import updater.updates.UpdateVersion_1;
 import updater.updates.UpdateVersion_2;
 import updater.updates.UpdateVersion_3;
+import updater.updates.UpdateVersion_4;
 import util.MySqlConnector;
 
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import java.sql.Statement;
  * Created by Nathanael on 9/1/2016
  */
 public class DatabaseUpdater {
-    public static final Long CURRENT_VERSION = 3L;
+    public static final Long CURRENT_VERSION = 4L;
 
     public static void runUpdates() {
         Long version = getDbVersion();
@@ -53,6 +54,11 @@ public class DatabaseUpdater {
         if (version < 3L) {
             UpdateVersion_3.run();
             version = 3L;
+        }
+
+        if (version < 4L) {
+            UpdateVersion_4.run();
+            version = 4L;
         }
     }
 }
