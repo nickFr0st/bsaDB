@@ -13,10 +13,14 @@ import updater.DatabaseUpdater;
 import util.CacheObject;
 import util.MySqlConnector;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nathanael
@@ -39,6 +43,18 @@ public class BaseFrame extends JFrame {
                     }
                 }
         );
+
+        try {
+            List<Image> icons = new ArrayList<>();
+            icons.add(ImageIO.read(getClass().getResource("/images/flurDeLis16.png")));
+            icons.add(ImageIO.read(getClass().getResource("/images/flurdelis24.png")));
+            icons.add(ImageIO.read(getClass().getResource("/images/flurdelis32.png")));
+            icons.add(ImageIO.read(getClass().getResource("/images/flurdelis48.png")));
+            icons.add(ImageIO.read(getClass().getResource("/images/flurdelis64.png")));
+            this.setIconImages(icons);
+        } catch (IOException exp) {
+            exp.printStackTrace();
+        }
 
         pnlCards.add(new NoServerConnectionPanel(this), NO_SERVER_CONNECTION_PAGE);
         pnlCards.add(new NoDatabaseConnectionPanel(this), NO_DATABASE_CONNECTION_PAGE);
