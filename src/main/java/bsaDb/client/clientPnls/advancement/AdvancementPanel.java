@@ -380,7 +380,7 @@ public class AdvancementPanel extends JPanel {
             return true;
         }
 
-        List<Advancement> advancementList = LogicAdvancement.findAllByNextAdvancementId(((Advancement)cboRank.getSelectedItem()).getId());
+        List<Advancement> advancementList = LogicAdvancement.findAllByNextAdvancementId(((Advancement)cboRank.getSelectedItem()).getId(), advancement == null ? null : advancement.getId());
         if (!Util.isEmpty(advancementList)) {
             Util.setError(lblRankError, "Advancement currently in use on another advancement");
             return false;
@@ -470,7 +470,7 @@ public class AdvancementPanel extends JPanel {
             return;
         }
 
-        List<Advancement> advancementList = LogicAdvancement.findAllByNextAdvancementId(advancement.getId());
+        List<Advancement> advancementList = LogicAdvancement.findAllByNextAdvancementId(advancement.getId(), null);
         if (!Util.isEmpty(advancementList)) {
             new MessageDialog(Util.getParent(this), "Delete Failure", "Cannot delete advancement because it is in use on other advancement(s).\nTo delete please remove usages and try again.", MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
             return;

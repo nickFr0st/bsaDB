@@ -166,12 +166,17 @@ public class LogicAdvancement {
         return advancement;
     }
 
-    public static List<Advancement> findAllByNextAdvancementId(int nextAdvancementId) {
+    public static List<Advancement> findAllByNextAdvancementId(int nextAdvancementId, Integer advancementId) {
         List<Advancement> advancementList = new ArrayList<>();
 
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE nextAdvancementId = " + nextAdvancementId + " ORDER BY name");
+            StringBuilder query = new StringBuilder("SELECT * FROM advancement WHERE nextAdvancementId = ").append(nextAdvancementId);
+            if (advancementId != null && advancementId >= 0) {
+                query.append(" AND id != ").append(advancementId);
+            }
+            query.append(" ORDER BY name");
+            ResultSet rs = statement.executeQuery(query.toString());
 
             while (rs.next()) {
                 Advancement advancement = new Advancement();
