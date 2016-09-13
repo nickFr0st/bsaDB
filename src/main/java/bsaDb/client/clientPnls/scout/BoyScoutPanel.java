@@ -1319,11 +1319,6 @@ public class BoyScoutPanel extends JPanel {
         cboBirthDate = new JDatePicker();
         lblAge = new JLabel();
         lblAgeValue = new JLabel();
-        pnlBadgeTotals = new JPanel();
-        lblTotalBadges = new JLabel();
-        lblTotalBadgesValue = new JLabel();
-        lblTotalRequired = new JLabel();
-        lblTotalRequiredValue = new JLabel();
         lblBirthDateError = new JLabel();
         lblTimeLeft = new JLabel();
         lblCampsAttended = new JLabel();
@@ -1337,6 +1332,14 @@ public class BoyScoutPanel extends JPanel {
         barProgress = new JProgressBar();
         lblWaitPeriodDisplay = new JLabel();
         lblProgressDisplay = new JLabel();
+        lblServiceHours = new JLabel();
+        barServiceHours = new JProgressBar();
+        pnlBadgeTotals = new JPanel();
+        lblTotalBadges = new JLabel();
+        lblTotalBadgesValue = new JLabel();
+        lblTotalRequired = new JLabel();
+        lblTotalRequiredValue = new JLabel();
+        lblServiceHoursDisplay = new JLabel();
         panel1 = new JPanel();
         lblProgressTable = new JLabel();
         btnEditAdvancementProgress = new JLabel();
@@ -1534,10 +1537,10 @@ public class BoyScoutPanel extends JPanel {
                                     pnlGeneral.setOpaque(false);
                                     pnlGeneral.setName("pnlGeneral");
                                     pnlGeneral.setLayout(new GridBagLayout());
-                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 207, 36, 30, 0, 195, 0};
-                                    ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 35, 0, 24, 25, 0, 35, 25, 0, 35, 201, 0};
-                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
-                                    ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWidths = new int[] {0, 207, 36, 30, 0, 200, 0, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).rowHeights = new int[] {35, 0, 35, 0, 35, 0, 24, 25, 0, 35, 25, 0, 35, 25, 0, 35, 201, 0};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                                    ((GridBagLayout)pnlGeneral.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
                                     //---- lblName ----
                                     lblName.setText("Name:");
@@ -1583,7 +1586,7 @@ public class BoyScoutPanel extends JPanel {
                                     txtPosition.setName("txtPosition");
                                     pnlGeneral.add(txtPosition, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 0), 0, 0));
+                                        new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- lblNameError ----
                                     lblNameError.setText("*error message");
@@ -1640,7 +1643,7 @@ public class BoyScoutPanel extends JPanel {
                                     });
                                     pnlGeneral.add(cboRankDate, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 0), 0, 0));
+                                        new Insets(0, 0, 5, 5), 0, 0));
 
                                     //---- lblRankError ----
                                     lblRankError.setText("*error message");
@@ -1658,7 +1661,7 @@ public class BoyScoutPanel extends JPanel {
                                     lblRankDateError.setName("lblRankDateError");
                                     pnlGeneral.add(lblRankDateError, new GridBagConstraints(4, 3, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 20, 5, 0), 0, 0));
+                                        new Insets(0, 20, 5, 5), 0, 0));
 
                                     //---- lblBirthDate ----
                                     lblBirthDate.setText("Birth Date:");
@@ -1699,6 +1702,137 @@ public class BoyScoutPanel extends JPanel {
                                     lblAgeValue.setName("lblAgeValue");
                                     pnlGeneral.add(lblAgeValue, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblBirthDateError ----
+                                    lblBirthDateError.setText("*error message");
+                                    lblBirthDateError.setForeground(new Color(206, 17, 38));
+                                    lblBirthDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblBirthDateError.setName("lblBirthDateError");
+                                    pnlGeneral.add(lblBirthDateError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
+
+                                    //---- lblTimeLeft ----
+                                    lblTimeLeft.setText("Time Left in Boy Scouts");
+                                    lblTimeLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblTimeLeft.setForeground(Color.black);
+                                    lblTimeLeft.setName("lblTimeLeft");
+                                    pnlGeneral.add(lblTimeLeft, new GridBagConstraints(0, 6, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblCampsAttended ----
+                                    lblCampsAttended.setText("Number of Camps Attended");
+                                    lblCampsAttended.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblCampsAttended.setForeground(Color.black);
+                                    lblCampsAttended.setName("lblCampsAttended");
+                                    pnlGeneral.add(lblCampsAttended, new GridBagConstraints(4, 6, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- barTimeLeft ----
+                                    barTimeLeft.setValue(50);
+                                    barTimeLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    barTimeLeft.setMaximum(1095);
+                                    barTimeLeft.setName("barTimeLeft");
+                                    pnlGeneral.add(barTimeLeft, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- barCampsAttended ----
+                                    barCampsAttended.setValue(11);
+                                    barCampsAttended.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    barCampsAttended.setMaximum(20);
+                                    barCampsAttended.setName("barCampsAttended");
+                                    pnlGeneral.add(barCampsAttended, new GridBagConstraints(4, 7, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblTimeLeftDisplay ----
+                                    lblTimeLeftDisplay.setText("1 yr, 6 mon, 2 days");
+                                    lblTimeLeftDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    lblTimeLeftDisplay.setForeground(Color.black);
+                                    lblTimeLeftDisplay.setName("lblTimeLeftDisplay");
+                                    pnlGeneral.add(lblTimeLeftDisplay, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblCampsAttendedDisplay ----
+                                    lblCampsAttendedDisplay.setText("11 of 21");
+                                    lblCampsAttendedDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    lblCampsAttendedDisplay.setForeground(Color.black);
+                                    lblCampsAttendedDisplay.setName("lblCampsAttendedDisplay");
+                                    pnlGeneral.add(lblCampsAttendedDisplay, new GridBagConstraints(4, 8, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblWaitPeriod ----
+                                    lblWaitPeriod.setText("Time Requirement");
+                                    lblWaitPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblWaitPeriod.setForeground(Color.black);
+                                    lblWaitPeriod.setName("lblWaitPeriod");
+                                    pnlGeneral.add(lblWaitPeriod, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblProgress ----
+                                    lblProgress.setText("Progress Towards Next Advancement");
+                                    lblProgress.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblProgress.setForeground(Color.black);
+                                    lblProgress.setName("lblProgress");
+                                    pnlGeneral.add(lblProgress, new GridBagConstraints(4, 9, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- barWaitPeriod ----
+                                    barWaitPeriod.setValue(50);
+                                    barWaitPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    barWaitPeriod.setName("barWaitPeriod");
+                                    pnlGeneral.add(barWaitPeriod, new GridBagConstraints(0, 10, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- barProgress ----
+                                    barProgress.setValue(60);
+                                    barProgress.setName("barProgress");
+                                    pnlGeneral.add(barProgress, new GridBagConstraints(4, 10, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblWaitPeriodDisplay ----
+                                    lblWaitPeriodDisplay.setText("2 mo, 3 days");
+                                    lblWaitPeriodDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    lblWaitPeriodDisplay.setForeground(Color.black);
+                                    lblWaitPeriodDisplay.setName("lblWaitPeriodDisplay");
+                                    pnlGeneral.add(lblWaitPeriodDisplay, new GridBagConstraints(0, 11, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblProgressDisplay ----
+                                    lblProgressDisplay.setText("6 of 10 Requirements");
+                                    lblProgressDisplay.setForeground(Color.black);
+                                    lblProgressDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    lblProgressDisplay.setName("lblProgressDisplay");
+                                    pnlGeneral.add(lblProgressDisplay, new GridBagConstraints(4, 11, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblServiceHours ----
+                                    lblServiceHours.setText("Service Hours Requirement");
+                                    lblServiceHours.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblServiceHours.setForeground(Color.black);
+                                    lblServiceHours.setName("lblServiceHours");
+                                    pnlGeneral.add(lblServiceHours, new GridBagConstraints(0, 12, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- barServiceHours ----
+                                    barServiceHours.setValue(50);
+                                    barServiceHours.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    barServiceHours.setName("barServiceHours");
+                                    pnlGeneral.add(barServiceHours, new GridBagConstraints(0, 13, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
                                     //======== pnlBadgeTotals ========
@@ -1746,123 +1880,18 @@ public class BoyScoutPanel extends JPanel {
                                             GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
                                             new Insets(0, 5, 0, 2), 0, 0));
                                     }
-                                    pnlGeneral.add(pnlBadgeTotals, new GridBagConstraints(4, 4, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 0), 0, 0));
-
-                                    //---- lblBirthDateError ----
-                                    lblBirthDateError.setText("*error message");
-                                    lblBirthDateError.setForeground(new Color(206, 17, 38));
-                                    lblBirthDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                                    lblBirthDateError.setName("lblBirthDateError");
-                                    pnlGeneral.add(lblBirthDateError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 20, 5, 5), 0, 0));
-
-                                    //---- lblTimeLeft ----
-                                    lblTimeLeft.setText("Time Left in Boy Scouts");
-                                    lblTimeLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblTimeLeft.setForeground(Color.black);
-                                    lblTimeLeft.setName("lblTimeLeft");
-                                    pnlGeneral.add(lblTimeLeft, new GridBagConstraints(0, 6, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- lblCampsAttended ----
-                                    lblCampsAttended.setText("Number of Camps Attended");
-                                    lblCampsAttended.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblCampsAttended.setForeground(Color.black);
-                                    lblCampsAttended.setName("lblCampsAttended");
-                                    pnlGeneral.add(lblCampsAttended, new GridBagConstraints(4, 6, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 0, 5, 0), 0, 0));
-
-                                    //---- barTimeLeft ----
-                                    barTimeLeft.setValue(50);
-                                    barTimeLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    barTimeLeft.setMaximum(1095);
-                                    barTimeLeft.setName("barTimeLeft");
-                                    pnlGeneral.add(barTimeLeft, new GridBagConstraints(0, 7, 2, 1, 0.0, 0.0,
+                                    pnlGeneral.add(pnlBadgeTotals, new GridBagConstraints(4, 13, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- barCampsAttended ----
-                                    barCampsAttended.setValue(11);
-                                    barCampsAttended.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    barCampsAttended.setMaximum(20);
-                                    barCampsAttended.setName("barCampsAttended");
-                                    pnlGeneral.add(barCampsAttended, new GridBagConstraints(4, 7, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 0), 0, 0));
-
-                                    //---- lblTimeLeftDisplay ----
-                                    lblTimeLeftDisplay.setText("1 yr, 6 mon, 2 days");
-                                    lblTimeLeftDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                                    lblTimeLeftDisplay.setForeground(Color.black);
-                                    lblTimeLeftDisplay.setName("lblTimeLeftDisplay");
-                                    pnlGeneral.add(lblTimeLeftDisplay, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0,
+                                    //---- lblServiceHoursDisplay ----
+                                    lblServiceHoursDisplay.setText("2 of 6 Hours");
+                                    lblServiceHoursDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                                    lblServiceHoursDisplay.setForeground(Color.black);
+                                    lblServiceHoursDisplay.setName("lblServiceHoursDisplay");
+                                    pnlGeneral.add(lblServiceHoursDisplay, new GridBagConstraints(0, 14, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.NORTH, GridBagConstraints.NONE,
                                         new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- lblCampsAttendedDisplay ----
-                                    lblCampsAttendedDisplay.setText("11 of 21");
-                                    lblCampsAttendedDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                                    lblCampsAttendedDisplay.setForeground(Color.black);
-                                    lblCampsAttendedDisplay.setName("lblCampsAttendedDisplay");
-                                    pnlGeneral.add(lblCampsAttendedDisplay, new GridBagConstraints(4, 8, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
-                                        new Insets(0, 0, 5, 0), 0, 0));
-
-                                    //---- lblWaitPeriod ----
-                                    lblWaitPeriod.setText("Time Requirement");
-                                    lblWaitPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblWaitPeriod.setForeground(Color.black);
-                                    lblWaitPeriod.setName("lblWaitPeriod");
-                                    pnlGeneral.add(lblWaitPeriod, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- lblProgress ----
-                                    lblProgress.setText("Progress Towards Next Advancement");
-                                    lblProgress.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblProgress.setForeground(Color.black);
-                                    lblProgress.setName("lblProgress");
-                                    pnlGeneral.add(lblProgress, new GridBagConstraints(4, 9, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 0, 5, 0), 0, 0));
-
-                                    //---- barWaitPeriod ----
-                                    barWaitPeriod.setValue(50);
-                                    barWaitPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    barWaitPeriod.setName("barWaitPeriod");
-                                    pnlGeneral.add(barWaitPeriod, new GridBagConstraints(0, 10, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- barProgress ----
-                                    barProgress.setValue(60);
-                                    barProgress.setName("barProgress");
-                                    pnlGeneral.add(barProgress, new GridBagConstraints(4, 10, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 0), 0, 0));
-
-                                    //---- lblWaitPeriodDisplay ----
-                                    lblWaitPeriodDisplay.setText("2 mo, 3 days");
-                                    lblWaitPeriodDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                                    lblWaitPeriodDisplay.setForeground(Color.black);
-                                    lblWaitPeriodDisplay.setName("lblWaitPeriodDisplay");
-                                    pnlGeneral.add(lblWaitPeriodDisplay, new GridBagConstraints(0, 11, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.NORTH, GridBagConstraints.NONE,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- lblProgressDisplay ----
-                                    lblProgressDisplay.setText("6 of 10 Requirements");
-                                    lblProgressDisplay.setForeground(Color.black);
-                                    lblProgressDisplay.setFont(new Font("Tahoma", Font.PLAIN, 12));
-                                    lblProgressDisplay.setName("lblProgressDisplay");
-                                    pnlGeneral.add(lblProgressDisplay, new GridBagConstraints(4, 11, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
-                                        new Insets(0, 0, 5, 0), 0, 0));
 
                                     //======== panel1 ========
                                     {
@@ -1900,9 +1929,9 @@ public class BoyScoutPanel extends JPanel {
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                             new Insets(0, 0, 0, 0), 0, 0));
                                     }
-                                    pnlGeneral.add(panel1, new GridBagConstraints(0, 12, 6, 1, 0.0, 0.0,
+                                    pnlGeneral.add(panel1, new GridBagConstraints(0, 15, 6, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 0), 0, 0));
+                                        new Insets(0, 0, 5, 5), 0, 0));
 
                                     //======== scrollPane3 ========
                                     {
@@ -1918,9 +1947,9 @@ public class BoyScoutPanel extends JPanel {
                                         tblProgress.setName("tblProgress");
                                         scrollPane3.setViewportView(tblProgress);
                                     }
-                                    pnlGeneral.add(scrollPane3, new GridBagConstraints(0, 13, 6, 1, 0.0, 0.0,
+                                    pnlGeneral.add(scrollPane3, new GridBagConstraints(0, 16, 6, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 10, 0), 0, 0));
+                                        new Insets(0, 0, 10, 5), 0, 0));
                                 }
                                 pnlSummary.add(pnlGeneral, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -2538,11 +2567,6 @@ public class BoyScoutPanel extends JPanel {
     private JDatePicker cboBirthDate;
     private JLabel lblAge;
     private JLabel lblAgeValue;
-    private JPanel pnlBadgeTotals;
-    private JLabel lblTotalBadges;
-    private JLabel lblTotalBadgesValue;
-    private JLabel lblTotalRequired;
-    private JLabel lblTotalRequiredValue;
     private JLabel lblBirthDateError;
     private JLabel lblTimeLeft;
     private JLabel lblCampsAttended;
@@ -2556,6 +2580,14 @@ public class BoyScoutPanel extends JPanel {
     private JProgressBar barProgress;
     private JLabel lblWaitPeriodDisplay;
     private JLabel lblProgressDisplay;
+    private JLabel lblServiceHours;
+    private JProgressBar barServiceHours;
+    private JPanel pnlBadgeTotals;
+    private JLabel lblTotalBadges;
+    private JLabel lblTotalBadgesValue;
+    private JLabel lblTotalRequired;
+    private JLabel lblTotalRequiredValue;
+    private JLabel lblServiceHoursDisplay;
     private JPanel panel1;
     private JLabel lblProgressTable;
     private JLabel btnEditAdvancementProgress;

@@ -132,8 +132,8 @@ new FormModel {
 									"background": new java.awt.Color( 255, 255, 255, 255 )
 									"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-										"$columnSpecs": "0, 202, 31, 25, 0, 195"
-										"$rowSpecs": "30, 0, 30, 0, 30, 0, 19, 20, 0, 30, 20, 0, 30, 201"
+										"$columnSpecs": "0, 202, 31, 25, 0, 195, 0"
+										"$rowSpecs": "30, 0, 30, 0, 30, 0, 19, 20, 0, 30, 20, 0, 30, 20, 0, 30, 201"
 										"$hGap": 5
 										"$vGap": 5
 										"$alignLeft": true
@@ -277,60 +277,6 @@ new FormModel {
 											"gridx": 3
 											"vAlign": 0
 										} )
-										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-											"$columnSpecs": "0, 30, 0:1.0, 27"
-											"$rowSpecs": "0:1.0"
-											"$hGap": 5
-											"$vGap": 5
-											"$alignLeft": true
-											"$alignTop": true
-										} ) {
-											name: "pnlBadgeTotals"
-											"opaque": false
-											"border": new javax.swing.border.LineBorder( new java.awt.Color( 0, 63, 135, 255 ), 2, true )
-											add( new FormComponent( "javax.swing.JLabel" ) {
-												name: "lblTotalBadges"
-												"text": "Total Badges:"
-												"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
-												"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
-											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-												"vAlign": 0
-												"insets": new java.awt.Insets( 0, 2, 0, 0 )
-											} )
-											add( new FormComponent( "javax.swing.JLabel" ) {
-												name: "lblTotalBadgesValue"
-												"font": &Font5 new java.awt.Font( "Tahoma", 1, 16 )
-												"foreground": new java.awt.Color( 0, 63, 135, 255 )
-											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-												"gridx": 1
-												"insets": new java.awt.Insets( 0, 5, 0, 0 )
-												"vAlign": 0
-											} )
-											add( new FormComponent( "javax.swing.JLabel" ) {
-												name: "lblTotalRequired"
-												"text": "Total Required:"
-												"font": #Font4
-												"foreground": #Color1
-											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-												"gridx": 2
-												"insets": new java.awt.Insets( 0, 15, 0, 0 )
-												"hAlign": 4
-												"vAlign": 0
-											} )
-											add( new FormComponent( "javax.swing.JLabel" ) {
-												name: "lblTotalRequiredValue"
-												"font": #Font5
-												"foreground": new java.awt.Color( 0, 107, 63, 255 )
-											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-												"gridx": 3
-												"insets": new java.awt.Insets( 0, 5, 0, 2 )
-												"vAlign": 0
-											} )
-										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-											"gridx": 4
-											"gridy": 4
-											"gridwidth": 2
-										} )
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblBirthDateError"
 											"text": "*error message"
@@ -344,8 +290,8 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblTimeLeft"
 											"text": "Time Left in Boy Scouts"
-											"font": &Font6 new java.awt.Font( "Tahoma", 0, 14 )
-											"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
+											"font": &Font4 new java.awt.Font( "Tahoma", 0, 14 )
+											"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 6
 											"gridwidth": 2
@@ -354,8 +300,8 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblCampsAttended"
 											"text": "Number of Camps Attended"
-											"font": #Font6
-											"foreground": #Color2
+											"font": #Font4
+											"foreground": #Color1
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridx": 4
 											"gridy": 6
@@ -365,7 +311,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JProgressBar" ) {
 											name: "barTimeLeft"
 											"value": 50
-											"font": &Font7 new java.awt.Font( "Tahoma", 0, 14 )
+											"font": &Font5 new java.awt.Font( "Tahoma", 0, 14 )
 											"maximum": 1095
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 7
@@ -374,7 +320,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JProgressBar" ) {
 											name: "barCampsAttended"
 											"value": 11
-											"font": #Font7
+											"font": #Font5
 											"maximum": 20
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 7
@@ -384,8 +330,8 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblTimeLeftDisplay"
 											"text": "1 yr, 6 mon, 2 days"
-											"font": &Font8 new java.awt.Font( "Tahoma", 0, 12 )
-											"foreground": &Color3 new java.awt.Color( 0, 0, 0, 255 )
+											"font": &Font6 new java.awt.Font( "Tahoma", 0, 12 )
+											"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 8
 											"gridwidth": 2
@@ -395,8 +341,8 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblCampsAttendedDisplay"
 											"text": "11 of 21"
-											"font": #Font8
-											"foreground": #Color3
+											"font": #Font6
+											"foreground": #Color2
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 8
 											"hAlign": 0
@@ -407,8 +353,8 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblWaitPeriod"
 											"text": "Time Requirement"
-											"font": #Font6
-											"foreground": #Color2
+											"font": #Font4
+											"foreground": #Color1
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 9
 											"gridwidth": 2
@@ -428,7 +374,7 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JProgressBar" ) {
 											name: "barWaitPeriod"
 											"value": 50
-											"font": #Font7
+											"font": #Font5
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 10
 											"gridwidth": 2
@@ -444,8 +390,8 @@ new FormModel {
 										add( new FormComponent( "javax.swing.JLabel" ) {
 											name: "lblWaitPeriodDisplay"
 											"text": "2 mo, 3 days"
-											"font": #Font8
-											"foreground": #Color3
+											"font": #Font6
+											"foreground": #Color2
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 11
 											"hAlign": 0
@@ -463,6 +409,89 @@ new FormModel {
 											"gridwidth": 2
 											"hAlign": 0
 										} )
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "lblServiceHours"
+											"text": "Service Hours Requirement"
+											"font": #Font4
+											"foreground": #Color1
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridy": 12
+											"vAlign": 3
+											"gridwidth": 2
+										} )
+										add( new FormComponent( "javax.swing.JProgressBar" ) {
+											name: "barServiceHours"
+											"value": 50
+											"font": #Font5
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridy": 13
+											"gridwidth": 2
+										} )
+										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+											"$columnSpecs": "0, 30, 0:1.0, 27"
+											"$rowSpecs": "0:1.0"
+											"$hGap": 5
+											"$vGap": 5
+											"$alignLeft": true
+											"$alignTop": true
+										} ) {
+											name: "pnlBadgeTotals"
+											"opaque": false
+											"border": new javax.swing.border.LineBorder( new java.awt.Color( 0, 63, 135, 255 ), 2, true )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "lblTotalBadges"
+												"text": "Total Badges:"
+												"font": &Font7 new java.awt.Font( "Tahoma", 0, 14 )
+												"foreground": &Color3 new java.awt.Color( 0, 0, 0, 255 )
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"vAlign": 0
+												"insets": new java.awt.Insets( 0, 2, 0, 0 )
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "lblTotalBadgesValue"
+												"font": &Font8 new java.awt.Font( "Tahoma", 1, 16 )
+												"foreground": new java.awt.Color( 0, 63, 135, 255 )
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 1
+												"insets": new java.awt.Insets( 0, 5, 0, 0 )
+												"vAlign": 0
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "lblTotalRequired"
+												"text": "Total Required:"
+												"font": #Font7
+												"foreground": #Color3
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 2
+												"insets": new java.awt.Insets( 0, 15, 0, 0 )
+												"hAlign": 4
+												"vAlign": 0
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "lblTotalRequiredValue"
+												"font": #Font8
+												"foreground": new java.awt.Color( 0, 107, 63, 255 )
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 3
+												"insets": new java.awt.Insets( 0, 5, 0, 2 )
+												"vAlign": 0
+											} )
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 4
+											"gridy": 13
+											"gridwidth": 2
+										} )
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "lblServiceHoursDisplay"
+											"text": "2 of 6 Hours"
+											"font": #Font6
+											"foreground": #Color2
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridy": 14
+											"hAlign": 0
+											"vAlign": 1
+											"gridwidth": 2
+										} )
 										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 											"$columnSpecs": "193, 0"
 											"$rowSpecs": "0:1.0"
@@ -476,8 +505,8 @@ new FormModel {
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "lblProgressTable"
 												"text": "Progress Towards Next Advancement"
-												"font": #Font6
-												"foreground": #Color2
+												"font": #Font4
+												"foreground": #Color1
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"vAlign": 3
 											} )
@@ -493,7 +522,7 @@ new FormModel {
 												"gridx": 1
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-											"gridy": 12
+											"gridy": 15
 											"gridwidth": 6
 										} )
 										add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -511,7 +540,7 @@ new FormModel {
 												}
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-											"gridy": 13
+											"gridy": 16
 											"gridwidth": 6
 											"insets": new java.awt.Insets( 0, 0, 10, 0 )
 										} )
@@ -1067,7 +1096,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 5, 0 )
-			"size": new java.awt.Dimension( 1015, 680 )
+			"size": new java.awt.Dimension( 1015, 730 )
 		} )
 	}
 }
