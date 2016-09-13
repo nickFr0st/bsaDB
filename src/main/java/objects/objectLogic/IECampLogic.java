@@ -22,6 +22,16 @@ import java.util.List;
  */
 public class IECampLogic {
 
+    private static final int COL_CAMP_NAME = 0;
+    private static final int COL_SCOUT_TYPE_NAME = 1;
+    private static final int COL_LOCATION = 2;
+    private static final int COL_START_DATE = 3;
+    private static final int COL_LEADERS = 4;
+    private static final int COL_NUMBER_OF_NIGHTS = 5;
+    private static final int COL_NOTES = 6;
+
+    private static final int COL_SCOUT_NAME = 0;
+
     public static boolean export(Component parent, List<String> exportList) {
         try {
             // get the file path
@@ -42,7 +52,7 @@ public class IECampLogic {
             CSVWriter csvWriter = new CSVWriter(writer, ',');
             List<String[]> records = new ArrayList<>();
 
-            records.add(new String[]{"Camp Name", "Scout Type Name", "Location", "Start Date", "Leaders", "Notes"});
+            records.add(new String[]{"Camp Name", "Scout Type Name", "Location", "Start Date", "Leaders", "Number Of Nights", "Notes"});
             records.add(new String[]{"Scouts Attended"});
 
             boolean firstPass = true;
@@ -51,7 +61,8 @@ public class IECampLogic {
                     records.add(new String[]{""});
                 }
 
-                records.add(new String[]{camp.getName(), ScoutTypeConst.getConst(camp.getScoutTypeId()).getName(), camp.getLocation(), Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate()), camp.getLeaders(), camp.getNote()});
+                records.add(new String[]{camp.getName(), ScoutTypeConst.getConst(camp.getScoutTypeId()).getName(), camp.getLocation(),
+                        Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate()), camp.getLeaders(), String.valueOf(camp.getNumberOfNights()), camp.getNote()});
 
                 for (ScoutCamp scoutCamp : LogicScoutCamp.findAllByCampId(camp.getId())) {
                     Scout boyScout = LogicBoyScout.findById(scoutCamp.getScoutId());
@@ -129,32 +140,24 @@ public class IECampLogic {
                 if (getCamp) {
                     getCamp = false;
 
-                    if (record.length < 5) {
-                        errors.append("There are too few values for the camp. ").append(errorLine);
-                        continue;
-                    }
-
                     camp = new Camp();
-                    String campName = record[0];
+                    String campName = record[COL_CAMP_NAME];
 
                     validateCampName(camp, errors, errorLine, campName);
-                    validateScoutType(camp, record[1], errors, errorLine);
-                    validateLocation(camp, record[2], errors, errorLine);
-                    validateStartDate(camp, record[3], errors, errorLine);
-                    validateLeaders(camp, record[4], errors, errorLine);
+                    validateScoutType(camp, record[COL_SCOUT_TYPE_NAME], errors, errorLine);
+                    validateLocation(camp, record[COL_LOCATION], errors, errorLine);
+                    validateStartDate(camp, record[COL_START_DATE], errors, errorLine);
+                    validateLeaders(camp, record[COL_LEADERS], errors, errorLine);
+                    validateNumberOfNights(camp, record[COL_NUMBER_OF_NIGHTS], errors, errorLine);
 
-                    if (record.length == 5) {
-                        continue;
-                    }
-
-                    String note = record[5];
+                    String note = record[COL_NOTES];
                     if (!Util.isEmpty(note)) {
                         camp.setNote(note);
                     }
                     continue;
                 }
 
-                String scoutName = record[0];
+                String scoutName = record[COL_SCOUT_NAME];
                 Scout scout = LogicBoyScout.findByName(scoutName);
                 if (scout == null) {
                     errors.append("Scout ").append(scoutName).append(" does not exists.").append(errorLine);
@@ -217,6 +220,24 @@ public class IECampLogic {
 
         new MessageDialog(Util.getParent(parent), "Import Successful", "Your merit badges have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
+    }
+
+    private static void validateNumberOfNights(Camp camp, String numberOfNights, StringBuilder errors, String errorLine) {
+        if (Util.isEmpty(numberOfNights)) {
+            errors.append("Number of Nights is missing. ").append(errorLine);
+            return;
+        }
+
+        try {
+            int count = Integer.parseInt(numberOfNights);
+            if (count <= 0) {
+                errors.append("Number of Nights must be a positive whole number. ").append(errorLine);
+            } else {
+                camp.setNumberOfNights(count);
+            }
+        } catch (NumberFormatException ignore) {
+            errors.append("Number of Nights must be a positive whole number. ").append(errorLine);
+        }
     }
 
     private static void validateLeaders(Camp camp, String leaders, StringBuilder errors, String errorLine) {
