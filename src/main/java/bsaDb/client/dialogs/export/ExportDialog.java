@@ -9,6 +9,7 @@ import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
 import objects.objectLogic.IECampLogic;
 import objects.objectLogic.IEMeritBadgeLogic;
+import objects.objectLogic.exports.ExportServiceProjectLogic;
 import util.Util;
 
 import javax.swing.*;
@@ -83,6 +84,8 @@ public class ExportDialog extends JDialog {
             case CAMPOUT:
                 success = IECampLogic.export(this, exportList);
                 break;
+            case SERVICE_PROJECTS:
+                success = ExportServiceProjectLogic.execute(this, exportList);
         }
 
         if (success) {

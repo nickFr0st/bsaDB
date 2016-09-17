@@ -9,6 +9,7 @@ public enum IETypeConst {
     ADVANCEMENT(10, "Advancement"),
     MERIT_BADGE(20, "Merit Badge"),
     CAMPOUT(30, "Campout"),
+    SERVICE_PROJECTS(40, "Service Project"),
     ;
 
     private int id;

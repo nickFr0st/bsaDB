@@ -8,7 +8,9 @@ import constants.IETypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Camp;
 import objects.databaseObjects.MeritBadge;
+import objects.databaseObjects.ServiceProject;
 import objects.objectLogic.LogicCamp;
+import objects.objectLogic.LogicServiceProject;
 import util.CacheObject;
 
 import javax.swing.*;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author User #2
@@ -51,21 +54,19 @@ public class ExportPanel extends JPanel {
         switch (typeConst) {
             case ADVANCEMENT:
                 Collection<Advancement> advancementList = CacheObject.getAdvancementList();
-                for (Advancement advancement : advancementList) {
-                    nameSource.add(advancement.getName());
-                }
+                nameSource.addAll(advancementList.stream().map(Advancement::getName).collect(Collectors.toList()));
                 break;
             case MERIT_BADGE:
                 Collection<MeritBadge> meritBadgeList = CacheObject.getMeritBadgeList();
-                for (MeritBadge meritBadge : meritBadgeList) {
-                    nameSource.add(meritBadge.getName());
-                }
+                nameSource.addAll(meritBadgeList.stream().map(MeritBadge::getName).collect(Collectors.toList()));
                 break;
             case CAMPOUT:
                 Set<Camp> campList = LogicCamp.findAll(null);
-                for (Camp camp : campList) {
-                    nameSource.add(camp.getName());
-                }
+                nameSource.addAll(campList.stream().map(Camp::getName).collect(Collectors.toList()));
+                break;
+            case SERVICE_PROJECTS:
+                Set<ServiceProject> serviceProjectSet = LogicServiceProject.findAll(null);
+                nameSource.addAll(serviceProjectSet.stream().map(ServiceProject::getName).collect(Collectors.toList()));
                 break;
         }
 
