@@ -89,6 +89,11 @@ public class BoyScoutPanel extends JPanel {
         barProgress.setForeground(AVG);
         barProgress.setValue(0);
         lblProgressDisplay.setText("");
+
+        barServiceHours.setBackground(Color.white);
+        barServiceHours.setForeground(AVG);
+        barServiceHours.setValue(0);
+        lblServiceHoursDisplay.setText("");
     }
 
     public void populateBoyScoutNameList() {
@@ -254,6 +259,51 @@ public class BoyScoutPanel extends JPanel {
         setCampsAttendedBar();
         setWaitingPeriodBar();
         setProgressBar();
+        setServiceBar();
+    }
+
+    private void setServiceBar() {
+        Advancement advancement = LogicAdvancement.findById(boyScout.getAdvancementId());
+        if (advancement == null || advancement.getNextAdvancementId() == null || advancement.getNextAdvancementId() <= 0) {
+            barServiceHours.setValue(barServiceHours.getMaximum());
+            barServiceHours.setForeground(GOOD);
+            lblServiceHoursDisplay.setText("no service hours required for next advancement");
+            return;
+        }
+
+        Advancement nextAdvancement = LogicAdvancement.findById(advancement.getNextAdvancementId());
+        if (nextAdvancement.getServiceHours() <= 0) {
+            barServiceHours.setValue(barServiceHours.getMaximum());
+            barServiceHours.setForeground(GOOD);
+            lblServiceHoursDisplay.setText("no service hours required for next advancement");
+            return;
+        }
+
+        Double maxServiceHours = nextAdvancement.getServiceHours();
+        Double serviceHours = LogicServiceProject.findServiceSumAfterDate(boyScout.getAdvancementDate());
+
+        if (serviceHours >= maxServiceHours) {
+            barServiceHours.setValue(barServiceHours.getMaximum());
+            barServiceHours.setForeground(GOOD);
+            lblServiceHoursDisplay.setText("service hours completed");
+            return;
+        }
+
+        barServiceHours.setMaximum(maxServiceHours.intValue());
+        barServiceHours.setValue(serviceHours.intValue());
+        lblServiceHoursDisplay.setText(serviceHours.intValue() + " of " + maxServiceHours.intValue());
+
+        if (serviceHours < maxServiceHours * .30) {
+            barServiceHours.setForeground(BAD);
+        } else if (serviceHours < maxServiceHours * .60) {
+            barServiceHours.setForeground(WARNING);
+        } else if (serviceHours < maxServiceHours * .80) {
+            barServiceHours.setForeground(AVG);
+        } else {
+            barServiceHours.setForeground(GOOD);
+        }
+
+
     }
 
     private void setAdvancementTable() {
@@ -340,7 +390,7 @@ public class BoyScoutPanel extends JPanel {
         if (nextAdvancement == null) {
             barWaitPeriod.setValue(barWaitPeriod.getMaximum());
             barWaitPeriod.setForeground(GOOD);
-            lblWaitPeriodDisplay.setText("no time requirement for this advancement");
+            lblWaitPeriodDisplay.setText("no time requirement for next advancement");
             return;
         }
 
@@ -348,7 +398,7 @@ public class BoyScoutPanel extends JPanel {
         if (timeRequirement == null || timeRequirement == 0) {
             barWaitPeriod.setValue(barWaitPeriod.getMaximum());
             barWaitPeriod.setForeground(GOOD);
-            lblWaitPeriodDisplay.setText("no time requirement for this advancement");
+            lblWaitPeriodDisplay.setText("no time requirement for next advancement");
             return;
         }
 

@@ -8,10 +8,7 @@ import util.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Nathanael on 5/12/2015
@@ -41,16 +38,7 @@ public class LogicServiceProject {
             }
 
             while (rs.next()) {
-                ServiceProject serviceProject = new ServiceProject();
-                serviceProject.setId(rs.getInt(KeyConst.ID.getName()));
-                serviceProject.setName(rs.getString(KeyConst.NAME.getName()));
-                serviceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                serviceProject.setLocation(rs.getString(KeyConst.LOCATION.getName()));
-                serviceProject.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
-                serviceProject.setLeaders(rs.getString(KeyConst.LEADER.getName()));
-                serviceProject.setNote(rs.getString(KeyConst.NOTE.getName()));
-                serviceProject.setDuration(rs.getDouble(KeyConst.DURATION.getName()));
-
+                ServiceProject serviceProject = buildServiceProject(rs);
                 projectList.add(serviceProject);
             }
         } catch (SQLException e) {
@@ -74,16 +62,7 @@ public class LogicServiceProject {
                 ResultSet rs = statement.executeQuery("SELECT * FROM serviceProject WHERE name LIKE '" + name + "'" + " ORDER BY startDate");
 
                 if (rs.next()) {
-                    ServiceProject serviceProject = new ServiceProject();
-                    serviceProject.setId(rs.getInt(KeyConst.ID.getName()));
-                    serviceProject.setName(rs.getString(KeyConst.NAME.getName()));
-                    serviceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                    serviceProject.setLocation(rs.getString(KeyConst.LOCATION.getName()));
-                    serviceProject.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
-                    serviceProject.setLeaders(rs.getString(KeyConst.LEADER.getName()));
-                    serviceProject.setNote(rs.getString(KeyConst.NOTE.getName()));
-                    serviceProject.setDuration(rs.getDouble(KeyConst.DURATION.getName()));
-
+                    ServiceProject serviceProject = buildServiceProject(rs);
                     serviceProjectSet.add(serviceProject);
                 }
             } catch (SQLException e) {
@@ -103,15 +82,7 @@ public class LogicServiceProject {
             ResultSet rs = statement.executeQuery("SELECT * FROM serviceProject WHERE name LIKE '" + name + "'");
 
             if (rs.next()) {
-                serviceProject = new ServiceProject();
-                serviceProject.setId(rs.getInt(KeyConst.ID.getName()));
-                serviceProject.setName(rs.getString(KeyConst.NAME.getName()));
-                serviceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                serviceProject.setLocation(rs.getString(KeyConst.LOCATION.getName()));
-                serviceProject.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
-                serviceProject.setLeaders(rs.getString(KeyConst.LEADER.getName()));
-                serviceProject.setNote(rs.getString(KeyConst.NOTE.getName()));
-                serviceProject.setDuration(rs.getDouble(KeyConst.DURATION.getName()));
+                serviceProject = buildServiceProject(rs);
             }
         } catch (SQLException e) {
             return null;
@@ -128,15 +99,7 @@ public class LogicServiceProject {
             ResultSet rs = statement.executeQuery("SELECT * FROM serviceProject WHERE id = " + serviceProjectId);
 
             if (rs.next()) {
-                serviceProject = new ServiceProject();
-                serviceProject.setId(rs.getInt(KeyConst.ID.getName()));
-                serviceProject.setName(rs.getString(KeyConst.NAME.getName()));
-                serviceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                serviceProject.setLocation(rs.getString(KeyConst.LOCATION.getName()));
-                serviceProject.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
-                serviceProject.setLeaders(rs.getString(KeyConst.LEADER.getName()));
-                serviceProject.setNote(rs.getString(KeyConst.NOTE.getName()));
-                serviceProject.setDuration(rs.getDouble(KeyConst.DURATION.getName()));
+                serviceProject = buildServiceProject(rs);
             }
         } catch (SQLException e) {
             return null;
@@ -289,15 +252,7 @@ public class LogicServiceProject {
             ResultSet rs = statement.executeQuery(query.toString());
 
             while (rs.next()) {
-                ServiceProject serviceProject = new ServiceProject();
-                serviceProject.setId(rs.getInt(KeyConst.ID.getName()));
-                serviceProject.setName(rs.getString(KeyConst.NAME.getName()));
-                serviceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                serviceProject.setLocation(rs.getString(KeyConst.LOCATION.getName()));
-                serviceProject.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
-                serviceProject.setLeaders(rs.getString(KeyConst.LEADER.getName()));
-                serviceProject.setNote(rs.getString(KeyConst.NOTE.getName()));
-                serviceProject.setDuration(rs.getDouble(KeyConst.DURATION.getName()));
+                ServiceProject serviceProject = buildServiceProject(rs);
 
                 serviceProjectList.add(serviceProject);
             }
@@ -306,5 +261,39 @@ public class LogicServiceProject {
         }
 
         return serviceProjectList;
+    }
+
+    private static ServiceProject buildServiceProject(ResultSet rs) throws SQLException {
+        ServiceProject serviceProject = new ServiceProject();
+        serviceProject.setId(rs.getInt(KeyConst.ID.getName()));
+        serviceProject.setName(rs.getString(KeyConst.NAME.getName()));
+        serviceProject.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+        serviceProject.setLocation(rs.getString(KeyConst.LOCATION.getName()));
+        serviceProject.setStartDate(rs.getDate(KeyConst.START_DATE.getName()));
+        serviceProject.setLeaders(rs.getString(KeyConst.LEADER.getName()));
+        serviceProject.setNote(rs.getString(KeyConst.NOTE.getName()));
+        serviceProject.setDuration(rs.getDouble(KeyConst.DURATION.getName()));
+        return serviceProject;
+    }
+
+    public static double findServiceSumAfterDate(Date advancementDate) {
+        try {
+
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT SUM(serviceProject.duration) AS duration ");
+            query.append("FROM serviceProject ");
+            query.append("WHERE serviceProject.startDate >= '").append(advancementDate).append("'");
+
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(query.toString());
+
+            if (rs.next()) {
+                return rs.getDouble(KeyConst.DURATION.getName());
+            }
+        } catch (SQLException e) {
+            return 0d;
+        }
+
+        return 0d;
     }
 }
