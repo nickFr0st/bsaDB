@@ -9,6 +9,7 @@ import constants.IETypeConst;
 import objects.objectLogic.IEAdvancementLogic;
 import objects.objectLogic.IECampLogic;
 import objects.objectLogic.IEMeritBadgeLogic;
+import objects.objectLogic.imports.ImportServiceProjectLogic;
 import util.Util;
 
 import javax.swing.*;
@@ -82,6 +83,9 @@ public class ImportDialog extends JDialog {
                 break;
             case CAMPOUT:
                 success = IECampLogic.doImport(this, importPath);
+                break;
+            case SERVICE_PROJECTS:
+                success = ImportServiceProjectLogic.execute(this, importPath);
                 break;
         }
 

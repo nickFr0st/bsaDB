@@ -218,7 +218,7 @@ public class IECampLogic {
             return false;
         }
 
-        new MessageDialog(Util.getParent(parent), "Import Successful", "Your merit badges have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
+        new MessageDialog(Util.getParent(parent), "Import Successful", "Your camp(s) have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
     }
 

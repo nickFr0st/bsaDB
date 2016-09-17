@@ -41,6 +41,9 @@ public class ImportPanel extends JPanel {
             case CAMPOUT:
                 setTxtImportInstructions(getClass().getResource("/instructions/ImportCampInstructions.html").toString());
                 break;
+            case SERVICE_PROJECTS:
+                setTxtImportInstructions(getClass().getResource("/instructions/ImportServiceProjectInstructions.html").toString());
+                break;
         }
     }
 
