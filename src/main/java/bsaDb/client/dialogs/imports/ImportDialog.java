@@ -6,9 +6,9 @@ package bsaDb.client.dialogs.imports;
 
 import bsaDb.client.dialogs.message.MessageDialog;
 import constants.IETypeConst;
-import objects.objectLogic.IEAdvancementLogic;
-import objects.objectLogic.IECampLogic;
-import objects.objectLogic.IEMeritBadgeLogic;
+import objects.objectLogic.imports.ImportAdvancementLogic;
+import objects.objectLogic.imports.ImportCampLogic;
+import objects.objectLogic.imports.ImportMeritBadgeLogic;
 import objects.objectLogic.imports.ImportServiceProjectLogic;
 import util.Util;
 
@@ -76,13 +76,13 @@ public class ImportDialog extends JDialog {
         success = false;
         switch (typeConst) {
             case ADVANCEMENT:
-                success = IEAdvancementLogic.doImport(this, importPath);
+                success = ImportAdvancementLogic.execute(this, importPath);
                 break;
             case MERIT_BADGE:
-                success = IEMeritBadgeLogic.doImport(this, importPath);
+                success = ImportMeritBadgeLogic.execute(this, importPath);
                 break;
             case CAMPOUT:
-                success = IECampLogic.doImport(this, importPath);
+                success = ImportCampLogic.execute(this, importPath);
                 break;
             case SERVICE_PROJECTS:
                 success = ImportServiceProjectLogic.execute(this, importPath);

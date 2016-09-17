@@ -1,122 +1,32 @@
-package objects.objectLogic;
+package objects.objectLogic.imports;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
-import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.dialogs.message.MessageDialog;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import objects.databaseObjects.Requirement;
+import objects.objectLogic.LogicAdvancement;
+import objects.objectLogic.LogicRequirement;
 import util.CacheObject;
 import util.Util;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 /**
  * Created by Nathanael on 5/24/2015
  */
-public class IEAdvancementLogic {
+public class ImportAdvancementLogic {
 
     private final static int ADVANCEMENT_NAME_INDEX = 0;
     private final static int TIME_REQUIREMENT_INDEX = 1;
     private final static int ADVANCEMENT_IMAGE_PATH_INDEX = 2;
     private final static int SERVICE_HOURS_INDEX = 3;
 
-    public static boolean export(Component parent, List<String> exportList) {
-        try {
-            // get the file path
-            CustomChooser chooser = new CustomChooser("Select export location", JFileChooser.FILES_ONLY);
-
-            chooser.setSelectedFile(new File("AdvancementExport.csv"));
-            int returnValue = chooser.showSaveDialog(parent);
-            chooser.resetLookAndFeel();
-
-            if (returnValue != JFileChooser.APPROVE_OPTION) {
-                return false;
-            }
-
-            String exportPath = chooser.getSelectedFile().getPath();
-
-            // write to location
-            StringWriter writer = new StringWriter();
-            CSVWriter csvWriter = new CSVWriter(writer, ',');
-            java.util.List<String[]> records = new ArrayList<>();
-
-            records.add(new String[]{"Advancement Name", "Time Requirement", "Advancement Image Path", "Service Hours"});
-            records.add(new String[]{"Requirement Name", "Requirement Description"});
-
-            boolean firstPass = true;
-            for (Advancement advancement : CacheObject.getAdvancementList(exportList)) {
-                if (!firstPass) {
-                    records.add(new String[]{""});
-                }
-
-                List<String> row = new ArrayList<>();
-                row.add(advancement.getName());
-
-                if (advancement.getTimeRequirement() == null) {
-                    row.add("");
-                } else {
-                    row.add(advancement.getTimeRequirement().toString());
-                }
-
-                if (Util.isEmpty(advancement.getImgPath())) {
-                    row.add("");
-                } else {
-                    row.add(advancement.getImgPath());
-                }
-
-                if (advancement.getServiceHours() == null) {
-                    row.add("");
-                } else {
-                    row.add(advancement.getServiceHours().toString());
-                }
-
-                String[] temp = new String[row.size()];
-                for (int i = 0; i < row.size(); i++) {
-                    temp[i] = row.get(i);
-                }
-                records.add(temp);
-
-                Set<Requirement> requirementSet = LogicRequirement.findAllByParentIdAndTypeId(advancement.getId(), RequirementTypeConst.ADVANCEMENT.getId());
-                if (!Util.isEmpty(requirementSet)) {
-                    for (Requirement requirement : requirementSet) {
-                        records.add(new String[]{requirement.getName(), requirement.getDescription()});
-                    }
-                }
-
-                if (firstPass) {
-                    firstPass = false;
-                }
-            }
-
-            csvWriter.writeAll(records);
-            csvWriter.close();
-
-            // check directory and let know if we are overwriting something, ask if it is ok
-            if (!exportPath.endsWith(".csv")) {
-                exportPath += ".csv";
-            }
-
-            FileWriter export = new FileWriter(exportPath);
-            export.append(writer.toString());
-            export.flush();
-            export.close();
-
-        } catch (IOException ioe) {
-            new MessageDialog(null, "Export Error", ioe.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
-            return false;
-        }
-
-        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected advancement(s) have been successfully exported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
-        return true;
-    }
-
-    public static boolean doImport(Component parent, String importPath) {
+    public static boolean execute(Component parent, String importPath) {
         try {
             CSVReader reader = new CSVReader(new FileReader(importPath), ',');
             Map<Advancement, List<Requirement>> importMap = new HashMap<>();

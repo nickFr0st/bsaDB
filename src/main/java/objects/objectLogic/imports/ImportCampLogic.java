@@ -1,18 +1,19 @@
-package objects.objectLogic;
+package objects.objectLogic.imports;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
-import bsaDb.client.customComponents.CustomChooser;
 import bsaDb.client.dialogs.message.MessageDialog;
 import constants.ScoutTypeConst;
 import objects.databaseObjects.Camp;
 import objects.databaseObjects.Scout;
 import objects.databaseObjects.ScoutCamp;
+import objects.objectLogic.LogicBoyScout;
+import objects.objectLogic.LogicCamp;
+import objects.objectLogic.LogicScoutCamp;
 import util.Util;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by Nathanael on 5/24/2015
  */
-public class IECampLogic {
+public class ImportCampLogic {
 
     private static final int COL_CAMP_NAME = 0;
     private static final int COL_SCOUT_TYPE_NAME = 1;
@@ -32,74 +33,7 @@ public class IECampLogic {
 
     private static final int COL_SCOUT_NAME = 0;
 
-    public static boolean export(Component parent, List<String> exportList) {
-        try {
-            // get the file path
-            CustomChooser chooser = new CustomChooser("Select export location", JFileChooser.FILES_ONLY);
-
-            chooser.setSelectedFile(new File("CampExport.csv"));
-            int returnValue = chooser.showSaveDialog(parent);
-            chooser.resetLookAndFeel();
-
-            if (returnValue != JFileChooser.APPROVE_OPTION) {
-                return false;
-            }
-
-            String exportPath = chooser.getSelectedFile().getPath();
-
-            // write to location
-            StringWriter writer = new StringWriter();
-            CSVWriter csvWriter = new CSVWriter(writer, ',');
-            List<String[]> records = new ArrayList<>();
-
-            records.add(new String[]{"Camp Name", "Scout Type Name", "Location", "Start Date", "Leaders", "Number Of Nights", "Notes"});
-            records.add(new String[]{"Scouts Attended"});
-
-            boolean firstPass = true;
-            for (Camp camp : LogicCamp.findAllByName(exportList)) {
-                if (!firstPass) {
-                    records.add(new String[]{""});
-                }
-
-                records.add(new String[]{camp.getName(), ScoutTypeConst.getConst(camp.getScoutTypeId()).getName(), camp.getLocation(),
-                        Util.DATA_BASE_DATE_FORMAT.format(camp.getStartDate()), camp.getLeaders(), String.valueOf(camp.getNumberOfNights()), camp.getNote()});
-
-                for (ScoutCamp scoutCamp : LogicScoutCamp.findAllByCampId(camp.getId())) {
-                    Scout boyScout = LogicBoyScout.findById(scoutCamp.getScoutId());
-                    if (boyScout == null) {
-                         continue;
-                    }
-                    records.add(new String[]{boyScout.getName()});
-                }
-
-                if (firstPass) {
-                    firstPass = false;
-                }
-            }
-
-            csvWriter.writeAll(records);
-            csvWriter.close();
-
-            // check directory and let know if we are overwriting something, ask if it is ok
-            if (!exportPath.endsWith(".csv")) {
-                exportPath += ".csv";
-            }
-
-            FileWriter export = new FileWriter(exportPath);
-            export.append(writer.toString());
-            export.flush();
-            export.close();
-
-        } catch (IOException ioe) {
-            new MessageDialog(null, "Export Error", ioe.getMessage(), MessageDialog.MessageType.ERROR, MessageDialog.ButtonType.OKAY);
-            return false;
-        }
-
-        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected camp(s) have been successfully exported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
-        return true;
-    }
-
-    public static boolean doImport(Component parent, String importPath) {
+    public static boolean execute(Component parent, String importPath) {
         try {
             CSVReader reader = new CSVReader(new FileReader(importPath), ',');
             Map<Camp, List<ScoutCamp>> importMap = new HashMap<>();

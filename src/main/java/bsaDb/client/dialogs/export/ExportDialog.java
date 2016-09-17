@@ -6,9 +6,9 @@ package bsaDb.client.dialogs.export;
 
 import bsaDb.client.dialogs.message.MessageDialog;
 import constants.IETypeConst;
-import objects.objectLogic.IEAdvancementLogic;
-import objects.objectLogic.IECampLogic;
-import objects.objectLogic.IEMeritBadgeLogic;
+import objects.objectLogic.exports.ExportAdvancementLogic;
+import objects.objectLogic.exports.ExportCampLogic;
+import objects.objectLogic.exports.ExportMeritBadgeLogic;
 import objects.objectLogic.exports.ExportServiceProjectLogic;
 import util.Util;
 
@@ -76,13 +76,13 @@ public class ExportDialog extends JDialog {
         boolean success = false;
         switch (typeConst) {
             case ADVANCEMENT:
-                success = IEAdvancementLogic.export(this, exportList);
+                success = ExportAdvancementLogic.execute(this, exportList);
                 break;
             case MERIT_BADGE:
-                success = IEMeritBadgeLogic.export(this, exportList);
+                success = ExportMeritBadgeLogic.execute(this, exportList);
                 break;
             case CAMPOUT:
-                success = IECampLogic.export(this, exportList);
+                success = ExportCampLogic.execute(this, exportList);
                 break;
             case SERVICE_PROJECTS:
                 success = ExportServiceProjectLogic.execute(this, exportList);
