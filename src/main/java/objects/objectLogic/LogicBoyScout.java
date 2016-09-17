@@ -18,7 +18,6 @@ import java.util.Set;
  * Created by Nathanael on 5/12/2015
  */
 public class LogicBoyScout {
-// todo: change this to work with the boy scout object
     public static Set<BoyScout> findAll() {
         Set<BoyScout> boyScoutSet = new LinkedHashSet<>();
 
@@ -45,13 +44,7 @@ public class LogicBoyScout {
         }
 
         try {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    saveBoyScout(boyScout);
-                }
-            });
-
+            Thread t = new Thread(() -> saveBoyScout(boyScout));
             t.start();
             t.join();
         } catch (InterruptedException e) {
@@ -102,13 +95,7 @@ public class LogicBoyScout {
         }
 
         try {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    updateBoyScout(boyScout);
-                }
-            });
-
+            Thread t = new Thread(() -> updateBoyScout(boyScout));
             t.start();
             t.join();
         } catch (InterruptedException e) {
@@ -150,12 +137,7 @@ public class LogicBoyScout {
         }
 
         try {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    deleteBoyScout(boyScout.getId());
-                }
-            });
+            Thread t = new Thread(() -> deleteBoyScout(boyScout.getId()));
             t.start();
             t.join();
         } catch (InterruptedException e) {
@@ -188,8 +170,7 @@ public class LogicBoyScout {
             ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE name LIKE '" + name + "'");
 
             if (rs.next()) {
-                BoyScout boyScout = buildBoyScout(rs);
-                return boyScout;
+                return buildBoyScout(rs);
             }
 
         } catch (Exception e) {
@@ -206,8 +187,7 @@ public class LogicBoyScout {
             ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE id = " + scoutId);
 
             if (rs.next()) {
-                BoyScout boyScout = buildBoyScout(rs);
-                return boyScout;
+                return buildBoyScout(rs);
             }
 
         } catch (Exception e) {
