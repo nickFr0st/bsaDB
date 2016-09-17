@@ -45,8 +45,8 @@ public class ExportBoyScoutLogic {
             String[] header = {
                     "Boy Scout Name",
                     "Birth Date",
-                    "Rank",
-                    "Rank Date",
+                    "Advancement",
+                    "Advancement Date",
                     "Position",
                     "Scout Phone Number",
                     "City",

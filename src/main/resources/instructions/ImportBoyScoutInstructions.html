@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Boy Scout Import</h2>
+
+<p>
+    Files that are imported must have a .csv extension. Make sure that all your values are separated by commas.<br>
+    It is important to note that when you specify a boy scout name that already exists in BSA Database this will <b>update the existing data.</b>
+    <br>
+    The following table will explain what data is valid and how to build the import file. The type and max values are related to the type of information that will be
+    stored in the associated field (such as: Text or Number) and the maximum number of character allow in each field respectfully.<br>
+</p>
+
+<table border="1" id="vertical-1">
+    <tr>
+        <th align="left">Boy Scout Name <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            The name of the boy scout.<br>
+            <b>(Text, 90)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Birth Date <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            Boy scout's birth date. Please format date as "YYYY-MM-DD". <br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Advancement <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            Name of boy scout's current rank advancement. (the advancement needs to already exists in BSA Database)<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Advancement Date <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            The date the boy scout's current rank advancement was received. Please format date as "YYYY-MM-DD".<br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Position <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            The boy scout's current position in the troop.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Scout Phone Number <i>(Optional)</i> <br><br>(type, max)</th>
+        <td>
+            The boy scout's phone number.<br>
+            <i>(10 digit number formatted like a phone number)</i><br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">City <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            Boy scout's address info.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">State <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            Boy scout's address info.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Street <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            Boy scout's address info.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Zip <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            Boy scout's address info.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Parent Name <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            Name of scout's primary parent or guardian.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Parent Phone Number <i>(Optional)</i> <br><br>(type, max)</th>
+        <td>
+            The boy scout's primary parent or guardians phone number.<br>
+            <i>(10 digit number formatted like a phone number)</i><br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Notes <i>(Optional)</i> <br>(type, max)</th>
+        <td>
+            Notes on the boy scout.<br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+</table>
+
+<h2>Example</h2>
+
+<p>
+    "Boy Scout Name","Birth Date","Advancement","Advancement Date","Position","Scout Phone Number","City","State","Street","Zip","Parent Name","Parent Phone Number","Notes"<br>
+    "bruce","2004/02/15","First Class","2015/09/13","Patrol Leader","1234567890","maple dell","utah","scouter street","84651","scout parent","3216549870","note on scout"<br>
+</p>
+
+</body>
+</html>

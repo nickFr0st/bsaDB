@@ -4,6 +4,7 @@ import constants.KeyConst;
 import constants.RequirementTypeConst;
 import objects.databaseObjects.Advancement;
 import util.MySqlConnector;
+import util.Util;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -204,6 +205,33 @@ public class LogicAdvancement {
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE id = " + advancementId);
+
+            if (rs.next()) {
+                Advancement advancement = new Advancement();
+                advancement.setId(rs.getInt(KeyConst.ID.getName()));
+                advancement.setName(rs.getString(KeyConst.NAME.getName()));
+                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
+                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
+                return advancement;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
+
+    public static Advancement findByName(String advancementName) {
+        if (Util.isEmpty(advancementName)) {
+             return null;
+        }
+
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE name LIKE '" + advancementName + "'");
 
             if (rs.next()) {
                 Advancement advancement = new Advancement();

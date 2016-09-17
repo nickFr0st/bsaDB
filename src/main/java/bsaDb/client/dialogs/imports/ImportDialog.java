@@ -6,10 +6,7 @@ package bsaDb.client.dialogs.imports;
 
 import bsaDb.client.dialogs.message.MessageDialog;
 import constants.IETypeConst;
-import objects.objectLogic.imports.ImportAdvancementLogic;
-import objects.objectLogic.imports.ImportCampLogic;
-import objects.objectLogic.imports.ImportMeritBadgeLogic;
-import objects.objectLogic.imports.ImportServiceProjectLogic;
+import objects.objectLogic.imports.*;
 import util.Util;
 
 import javax.swing.*;
@@ -86,6 +83,9 @@ public class ImportDialog extends JDialog {
                 break;
             case SERVICE_PROJECTS:
                 success = ImportServiceProjectLogic.execute(this, importPath);
+                break;
+            case BOY_SCOUT:
+                success = ImportBoyScoutLogic.execute(this, importPath);
                 break;
         }
 
