@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,21 +27,7 @@ public class LogicBoyScout {
             ResultSet rs = statement.executeQuery("SELECT * FROM boyScout ORDER BY name");
 
             while (rs.next()) {
-                BoyScout boyScout = new BoyScout();
-                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
-                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
-                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
-                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
-                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
-                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
-                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
-                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
-                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
-                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
-                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
-                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
+                BoyScout boyScout = buildBoyScout(rs);
 
                 boyScoutSet.add(boyScout);
             }
@@ -201,22 +188,7 @@ public class LogicBoyScout {
             ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE name LIKE '" + name + "'");
 
             if (rs.next()) {
-                BoyScout boyScout = new BoyScout();
-                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
-                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
-                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
-                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
-                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
-                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
-                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
-                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
-                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
-                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
-                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
-                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
-
+                BoyScout boyScout = buildBoyScout(rs);
                 return boyScout;
             }
 
@@ -234,22 +206,7 @@ public class LogicBoyScout {
             ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE id = " + scoutId);
 
             if (rs.next()) {
-                BoyScout boyScout = new BoyScout();
-                boyScout.setId(rs.getInt(KeyConst.ID.getName()));
-                boyScout.setName(rs.getString(KeyConst.NAME.getName()));
-                boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
-                boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
-                boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
-                boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
-                boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
-                boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
-                boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
-                boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
-                boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
-                boyScout.setState(rs.getString(KeyConst.STATE.getName()));
-                boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
-                boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
-
+                BoyScout boyScout = buildBoyScout(rs);
                 return boyScout;
             }
 
@@ -258,5 +215,49 @@ public class LogicBoyScout {
         }
 
         return null;
+    }
+
+    public static Set<BoyScout> findAllByName(List<String> nameList) {
+        if (Util.isEmpty(nameList)) {
+            return new LinkedHashSet<>();
+        }
+
+        Set<BoyScout> boyScoutSet = new LinkedHashSet<>();
+
+        for (String name : nameList) {
+            try {
+                Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM boyScout WHERE name LIKE '" + name + "'");
+
+                if (rs.next()) {
+                    BoyScout boyScout = buildBoyScout(rs);
+                    boyScoutSet.add(boyScout);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return new LinkedHashSet<>();
+            }
+        }
+
+        return boyScoutSet;
+    }
+
+    private static BoyScout buildBoyScout(ResultSet rs) throws SQLException {
+        BoyScout boyScout = new BoyScout();
+        boyScout.setId(rs.getInt(KeyConst.ID.getName()));
+        boyScout.setName(rs.getString(KeyConst.NAME.getName()));
+        boyScout.setPosition(rs.getString(KeyConst.POSITION.getName()));
+        boyScout.setBirthDate(rs.getDate(KeyConst.BIRTH_DATE.getName()));
+        boyScout.setAdvancementId(rs.getInt(KeyConst.ADVANCEMENT_ID.getName()));
+        boyScout.setAdvancementDate(rs.getDate(KeyConst.ADVANCEMENT_DATE.getName()));
+        boyScout.setPhoneNumber(rs.getString(KeyConst.PHONE_NUMBER.getName()));
+        boyScout.setGuardianName(rs.getString(KeyConst.GUARDIAN_NAME.getName()));
+        boyScout.setGuardianPhoneNumber(rs.getString(KeyConst.GUARDIAN_PHONE_NUMBER.getName()));
+        boyScout.setStreet(rs.getString(KeyConst.STREET.getName()));
+        boyScout.setCity(rs.getString(KeyConst.CITY.getName()));
+        boyScout.setState(rs.getString(KeyConst.STATE.getName()));
+        boyScout.setZip(rs.getString(KeyConst.ZIP.getName()));
+        boyScout.setNote(rs.getString(KeyConst.NOTE.getName()));
+        return boyScout;
     }
 }

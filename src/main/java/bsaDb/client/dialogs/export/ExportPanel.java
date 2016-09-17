@@ -5,10 +5,8 @@
 package bsaDb.client.dialogs.export;
 
 import constants.IETypeConst;
-import objects.databaseObjects.Advancement;
-import objects.databaseObjects.Camp;
-import objects.databaseObjects.MeritBadge;
-import objects.databaseObjects.ServiceProject;
+import objects.databaseObjects.*;
+import objects.objectLogic.LogicBoyScout;
 import objects.objectLogic.LogicCamp;
 import objects.objectLogic.LogicServiceProject;
 import util.CacheObject;
@@ -67,6 +65,10 @@ public class ExportPanel extends JPanel {
             case SERVICE_PROJECTS:
                 Set<ServiceProject> serviceProjectSet = LogicServiceProject.findAll(null);
                 nameSource.addAll(serviceProjectSet.stream().map(ServiceProject::getName).collect(Collectors.toList()));
+                break;
+            case BOY_SCOUT:
+                Set<BoyScout> boyScoutSet = LogicBoyScout.findAll();
+                nameSource.addAll(boyScoutSet.stream().map(BoyScout::getName).collect(Collectors.toList()));
                 break;
         }
 

@@ -6,10 +6,7 @@ package bsaDb.client.dialogs.export;
 
 import bsaDb.client.dialogs.message.MessageDialog;
 import constants.IETypeConst;
-import objects.objectLogic.exports.ExportAdvancementLogic;
-import objects.objectLogic.exports.ExportCampLogic;
-import objects.objectLogic.exports.ExportMeritBadgeLogic;
-import objects.objectLogic.exports.ExportServiceProjectLogic;
+import objects.objectLogic.exports.*;
 import util.Util;
 
 import javax.swing.*;
@@ -86,6 +83,10 @@ public class ExportDialog extends JDialog {
                 break;
             case SERVICE_PROJECTS:
                 success = ExportServiceProjectLogic.execute(this, exportList);
+                break;
+            case BOY_SCOUT:
+                success = ExportBoyScoutLogic.execute(this, exportList);
+                break;
         }
 
         if (success) {
