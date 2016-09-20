@@ -87,6 +87,9 @@ public class ImportDialog extends JDialog {
             case BOY_SCOUT:
                 success = ImportBoyScoutLogic.execute(this, importPath);
                 break;
+            case SCOUT_MERIT_BADGE:
+                success = ImportScoutMeritBadgeLogic.execute(this, importPath);
+                break;
         }
 
         if (success) {

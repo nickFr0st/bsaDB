@@ -11,6 +11,7 @@ public enum IETypeConst {
     CAMPOUT(30, "Campout"),
     SERVICE_PROJECTS(40, "Service Project"),
     BOY_SCOUT(50, "Boy Scout"),
+    SCOUT_MERIT_BADGE(60, "Scout Merit Badge"),
     ;
 
     private int id;
@@ -30,11 +31,14 @@ public enum IETypeConst {
         return name;
     }
 
-    public static String[] getValueNames() {
+    public static String[] getValueNames(boolean isExport) {
         String[] names = new String[IETypeConst.values().length];
 
         int i = 0;
         for (IETypeConst typeConst : IETypeConst.values()) {
+            if (isExport && typeConst.getId() == 60) {
+                continue;
+            }
             names[i++] = typeConst.getName();
         }
 

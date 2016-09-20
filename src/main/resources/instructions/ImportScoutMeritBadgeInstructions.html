@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Scout Merit Badge Import</h2>
+
+<p>
+    Files that are imported must have a .csv extension. Make sure that all your values are separated by commas.<br>
+    This import is used to link existing scouts to existing merit badges. If the values in the import do not exists in
+    BSA Database the import will fail.
+    <br>
+    The following table will explain what data is valid and how to build our import file. The type and max values are related to the type of information that will be
+    stored in the associated field (such as: Text or Number) and the maximum number of character allow in each field respectfully.<br>
+</p>
+
+<table border="1" id="vertical-1">
+    <tr>
+        <th align="left">Scout Name <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            The name of the scout you are linking to a merit badge.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Scout Type Name <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            Scout Type Name, accepted values are: Cub Scout, Boy Scout, Varsity Scout, or Venture Scout.<br>
+            <b>(Text, N/A)</b>
+        </td>
+    </tr>
+    <tr>
+        <th align="left">Merit Badge Name <i>(Required)</i> <br>(type, max)</th>
+        <td>
+            The name of the merit badge you are linking to the scout.<br>
+            <b>(Text, 254)</b>
+        </td>
+    </tr>
+</table>
+
+<h2>Example</h2>
+
+<p>
+    "Scout Name","Scout Type Name","Merit Badge Name"<br>
+    "Steve Rogers","Boy Scout","Camping"<br>
+    "Steve Rogers","Boy Scout","Swimming"<br>
+    "Steve Rogers","Boy Scout","Cooking"<br>
+</p>
+
+</body>
+</html>

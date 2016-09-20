@@ -18,7 +18,7 @@ public class ImportSelectPanel extends JPanel {
         initComponents();
 
         scrollPane1.getVerticalScrollBar().setUnitIncrement(18);
-        listImportType.setListData(IETypeConst.getValueNames());
+        listImportType.setListData(IETypeConst.getValueNames(false));
     }
 
     public IETypeConst getSelectedImport() {

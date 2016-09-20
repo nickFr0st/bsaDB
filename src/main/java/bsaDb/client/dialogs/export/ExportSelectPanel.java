@@ -17,7 +17,7 @@ public class ExportSelectPanel extends JPanel {
         initComponents();
 
         scrollPane1.getVerticalScrollBar().setUnitIncrement(18);
-        listExportType.setListData(IETypeConst.getValueNames());
+        listExportType.setListData(IETypeConst.getValueNames(true));
     }
 
     public IETypeConst getSelectedExport() {

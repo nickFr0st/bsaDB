@@ -101,6 +101,28 @@ public class LogicScoutMeritBadge {
         return scoutMeritBadgeList;
     }
 
+    public static synchronized ScoutMeritBadge save(final ScoutMeritBadge scoutMeritBadge) {
+        if (scoutMeritBadge == null) {
+            return null;
+        }
+
+            try {
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveScoutMeritBadge(scoutMeritBadge);
+                    }
+                });
+
+                t.start();
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        return scoutMeritBadge;
+    }
+
     private static void saveScoutMeritBadge(ScoutMeritBadge scoutMeritBadge) {
         if (scoutMeritBadge.getId() < 0) {
             scoutMeritBadge.setId(MySqlConnector.getInstance().getNextId("scoutMeritBadge"));
@@ -124,5 +146,30 @@ public class LogicScoutMeritBadge {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static ScoutMeritBadge findByScoutIdScoutTypeIdAndMeritBadgeId(int scoutId, int scoutTypeId, int meritBadgeId) {
+        try {
+            Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+            String query = "SELECT * " +
+                    "FROM scoutMeritBadge " +
+                    "WHERE scoutId = " + scoutId +
+                    " AND scoutTypeId = " + scoutTypeId +
+                    " AND meritBadgeId = " + meritBadgeId;
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                ScoutMeritBadge scoutMeritBadge = new ScoutMeritBadge();
+                scoutMeritBadge.setId(rs.getInt(KeyConst.ID.getName()));
+                scoutMeritBadge.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+                scoutMeritBadge.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+                scoutMeritBadge.setMeritBadgeId(rs.getInt(KeyConst.MERIT_BADGE_ID.getName()));
+                return scoutMeritBadge;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
     }
 }

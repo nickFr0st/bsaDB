@@ -47,6 +47,9 @@ public class ImportPanel extends JPanel {
             case BOY_SCOUT:
                 setTxtImportInstructions(getClass().getResource("/instructions/ImportBoyScoutInstructions.html").toString());
                 break;
+            case SCOUT_MERIT_BADGE:
+                setTxtImportInstructions(getClass().getResource("/instructions/ImportScoutMeritBadgeInstructions.html").toString());
+                break;
         }
     }
 
