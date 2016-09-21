@@ -50,6 +50,9 @@ public class ImportPanel extends JPanel {
             case SCOUT_MERIT_BADGE:
                 setTxtImportInstructions(getClass().getResource("/instructions/ImportScoutMeritBadgeInstructions.html").toString());
                 break;
+            case SPECIAL_AWARD:
+                setTxtImportInstructions(getClass().getResource("/instructions/ImportSpecialAwardInstructions.html").toString());
+                break;
         }
     }
 
