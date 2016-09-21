@@ -1,6 +1,6 @@
-package util;
+package util.dbCreation;
 
-import updater.DatabaseUpdater;
+import util.MySqlConnector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +19,7 @@ public class DatabaseCreator {
             connection = DriverManager.getConnection(MySqlConnector.DB_PATH + name, userName, password);
 
             buildDatabase(connection);
-            insertDefaultValues(connection);
+            DefaultValues.getInstance().execute(connection);
 
             MySqlConnector.getInstance().setConnection(connection);
 
@@ -31,13 +31,6 @@ public class DatabaseCreator {
         }
 
         return null;
-    }
-
-    private static void insertDefaultValues(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.addBatch("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
-        statement.addBatch("INSERT INTO dbVersion (version) VALUES(" + DatabaseUpdater.CURRENT_VERSION + ")");
-        statement.executeBatch();
     }
 
     private static void buildDatabase(Connection connection) throws SQLException {
