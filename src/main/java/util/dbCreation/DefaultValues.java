@@ -1,6 +1,7 @@
 package util.dbCreation;
 
 import updater.DatabaseUpdater;
+import util.dbCreation.advancements.DefaultAdvancements;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,8 +27,19 @@ public class DefaultValues {
 
     public void execute(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
-        statement.addBatch("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
-        statement.addBatch("INSERT INTO dbVersion (version) VALUES(" + DatabaseUpdater.CURRENT_VERSION + ")");
+
+        addDatabaseVersion(statement);
+        addAdminUser(statement);
         statement.executeBatch();
+
+        DefaultAdvancements.addAdvancements(connection);
+    }
+
+    private void addDatabaseVersion(Statement statement) throws SQLException{
+        statement.addBatch("INSERT INTO dbVersion (version) VALUES(" + DatabaseUpdater.CURRENT_VERSION + ")");
+    }
+
+    private void addAdminUser(Statement statement) throws SQLException {
+        statement.addBatch("INSERT INTO user VALUES(1, 'admin', 'Admin', 'administrator', '', '', '', '', '', false, 'admin', '')");
     }
 }

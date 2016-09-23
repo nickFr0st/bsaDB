@@ -99,6 +99,7 @@ public class DatabaseCreator {
                 " imgPath VARCHAR(255) NULL," +
                 " nextAdvancementId INT NULL," +
                 " serviceHours DOUBLE PRECISION," +
+                " readOnly TINYINT NOT NULL DEFAULT 0," +
                 " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
@@ -109,13 +110,14 @@ public class DatabaseCreator {
                 " name VARCHAR(225) NOT NULL," +
                 " imgPath VARCHAR(255) NOT NULL," +
                 " requiredForEagle TINYINT NOT NULL," +
+                " readOnly TINYINT NOT NULL DEFAULT 0," +
                 " PRIMARY KEY (id))";
         statement.addBatch(query);
     }
 
     private static void createRequirementTable(Statement statement) throws SQLException {
         String query = "CREATE TABLE requirement " +
-                "(id INT NOT NULL," +
+                "(id INT NOT NULL AUTO_INCREMENT," +
                 " name VARCHAR(45) NOT NULL," +
                 " description BLOB NOT NULL," +
                 " typeId INT NOT NULL," +
