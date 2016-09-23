@@ -267,9 +267,9 @@ public class MeritBadgePanel extends JPanel {
         btnDelete.setVisible(false);
         btnRefresh.setVisible(false);
 
-        enableControls(true);
         clearAllErrors();
         clearData();
+        enableControls(true);
 
         txtName.requestFocus();
     }
@@ -277,6 +277,7 @@ public class MeritBadgePanel extends JPanel {
     private void clearData() {
         meritBadge = null;
 
+        btnBadgeImage.setDisabledIcon(null);
         btnBadgeImage.setIcon(noImage);
         txtName.setDefault();
         chkRequiredForEagle.setSelected(false);

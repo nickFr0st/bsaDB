@@ -192,9 +192,9 @@ public class AdvancementPanel extends JPanel {
         btnDelete.setVisible(false);
         btnRefresh.setVisible(false);
 
-        enableControls(true);
         clearAllErrors();
         clearData();
+        enableControls(true);
 
         cboRank.removeAllItems();
         cboRank.insertItemAt("", 0);
@@ -209,6 +209,7 @@ public class AdvancementPanel extends JPanel {
     private void clearData() {
         advancement = null;
 
+        btnBadgeImage.setDisabledIcon(null);
         btnBadgeImage.setIcon(noImage);
         txtName.setDefault();
         txtTimeRequirement.setDefault();
