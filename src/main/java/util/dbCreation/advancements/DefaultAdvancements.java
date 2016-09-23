@@ -1,9 +1,6 @@
 package util.dbCreation.advancements;
 
-import util.dbCreation.advancements.objects.DefaultFirstClass;
-import util.dbCreation.advancements.objects.DefaultNewScout;
-import util.dbCreation.advancements.objects.DefaultSecondClass;
-import util.dbCreation.advancements.objects.DefaultTenderfoot;
+import util.dbCreation.advancements.objects.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,5 +14,7 @@ public class DefaultAdvancements {
         DefaultTenderfoot.execute(connection);
         DefaultSecondClass.execute(connection);
         DefaultFirstClass.execute(connection);
+        DefaultStar.execute(connection);
+        DefaultLife.execute(connection);
     }
 }
