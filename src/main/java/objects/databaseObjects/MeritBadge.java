@@ -11,9 +11,11 @@ public class MeritBadge implements Compare {
     private String name;
     private String imgPath;
     private boolean requiredForEagle;
+    private boolean readOnly;
 
     public MeritBadge() {
         id = -1;
+        readOnly = false;
     }
 
     public int getId() {
@@ -46,6 +48,14 @@ public class MeritBadge implements Compare {
 
     public void setRequiredForEagle(boolean requiredForEagle) {
         this.requiredForEagle = requiredForEagle;
+    }
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 
     @Override

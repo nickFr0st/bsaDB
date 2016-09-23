@@ -13,9 +13,11 @@ public class Advancement implements Compare {
     private Integer timeRequirement;
     private Integer nextAdvancementId;
     private Double serviceHours;
+    private boolean readOnly;
 
     public Advancement() {
         id = -1;
+        readOnly = false;
     }
 
     public int getId() {
@@ -64,6 +66,14 @@ public class Advancement implements Compare {
 
     public void setServiceHours(Double serviceHours) {
         this.serviceHours = serviceHours;
+    }
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 
     @Override

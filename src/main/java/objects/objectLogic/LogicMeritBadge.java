@@ -7,6 +7,7 @@ import util.MySqlConnector;
 import util.Util;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +40,7 @@ public class LogicMeritBadge {
             }
 
             while (rs.next()) {
-                MeritBadge meritBadge = new MeritBadge();
-                meritBadge.setId(rs.getInt(KeyConst.ID.getName()));
-                meritBadge.setName(rs.getString(KeyConst.NAME.getName()));
-                meritBadge.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                meritBadge.setRequiredForEagle(rs.getBoolean(KeyConst.REQUIRED_FOR_EAGLE.getName()));
+                MeritBadge meritBadge = buildMeritBadge(rs);
                 meritBadgeList.add(meritBadge);
             }
 
@@ -61,11 +58,7 @@ public class LogicMeritBadge {
             ResultSet rs = statement.executeQuery("SELECT * FROM meritBadge WHERE name LIKE '" + name + "'");
 
             if (rs.next()) {
-                MeritBadge meritBadge = new MeritBadge();
-                meritBadge.setId(rs.getInt(KeyConst.ID.getName()));
-                meritBadge.setName(rs.getString(KeyConst.NAME.getName()));
-                meritBadge.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                meritBadge.setRequiredForEagle(rs.getBoolean(KeyConst.REQUIRED_FOR_EAGLE.getName()));
+                MeritBadge meritBadge = buildMeritBadge(rs);
                 return meritBadge;
             }
 
@@ -83,11 +76,7 @@ public class LogicMeritBadge {
             ResultSet rs = statement.executeQuery("SELECT * FROM meritBadge WHERE id = " + meritBadgeId);
 
             if (rs.next()) {
-                MeritBadge meritBadge = new MeritBadge();
-                meritBadge.setId(rs.getInt(KeyConst.ID.getName()));
-                meritBadge.setName(rs.getString(KeyConst.NAME.getName()));
-                meritBadge.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                meritBadge.setRequiredForEagle(rs.getBoolean(KeyConst.REQUIRED_FOR_EAGLE.getName()));
+                MeritBadge meritBadge = buildMeritBadge(rs);
                 return meritBadge;
             }
 
@@ -216,5 +205,15 @@ public class LogicMeritBadge {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static MeritBadge buildMeritBadge(ResultSet rs) throws SQLException {
+        MeritBadge meritBadge = new MeritBadge();
+        meritBadge.setId(rs.getInt(KeyConst.ID.getName()));
+        meritBadge.setName(rs.getString(KeyConst.NAME.getName()));
+        meritBadge.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+        meritBadge.setRequiredForEagle(rs.getBoolean(KeyConst.REQUIRED_FOR_EAGLE.getName()));
+        meritBadge.setReadOnly(rs.getBoolean(KeyConst.READ_ONLY.getName()));
+        return meritBadge;
     }
 }

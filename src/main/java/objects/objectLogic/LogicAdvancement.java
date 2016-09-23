@@ -7,6 +7,7 @@ import util.MySqlConnector;
 import util.Util;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +25,7 @@ public class LogicAdvancement {
             ResultSet rs = statement.executeQuery("SELECT * FROM advancement ORDER BY name");
 
             while (rs.next()) {
-                Advancement advancement = new Advancement();
-                advancement.setId(rs.getInt(KeyConst.ID.getName()));
-                advancement.setName(rs.getString(KeyConst.NAME.getName()));
-                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
-                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
-                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
+                Advancement advancement = buildAdvancement(rs);
                 advancementList.add(advancement);
             }
 
@@ -180,13 +175,7 @@ public class LogicAdvancement {
             ResultSet rs = statement.executeQuery(query.toString());
 
             while (rs.next()) {
-                Advancement advancement = new Advancement();
-                advancement.setId(rs.getInt(KeyConst.ID.getName()));
-                advancement.setName(rs.getString(KeyConst.NAME.getName()));
-                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
-                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
-                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
+                Advancement advancement = buildAdvancement(rs);
                 advancementList.add(advancement);
             }
 
@@ -207,13 +196,7 @@ public class LogicAdvancement {
             ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE id = " + advancementId);
 
             if (rs.next()) {
-                Advancement advancement = new Advancement();
-                advancement.setId(rs.getInt(KeyConst.ID.getName()));
-                advancement.setName(rs.getString(KeyConst.NAME.getName()));
-                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
-                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
-                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
+                Advancement advancement = buildAdvancement(rs);
                 return advancement;
             }
 
@@ -234,13 +217,7 @@ public class LogicAdvancement {
             ResultSet rs = statement.executeQuery("SELECT * FROM advancement WHERE name LIKE '" + advancementName + "'");
 
             if (rs.next()) {
-                Advancement advancement = new Advancement();
-                advancement.setId(rs.getInt(KeyConst.ID.getName()));
-                advancement.setName(rs.getString(KeyConst.NAME.getName()));
-                advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
-                advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
-                advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
-                advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
+                Advancement advancement = buildAdvancement(rs);
                 return advancement;
             }
 
@@ -249,5 +226,17 @@ public class LogicAdvancement {
         }
 
         return null;
+    }
+
+    private static Advancement buildAdvancement(ResultSet rs) throws SQLException {
+        Advancement advancement = new Advancement();
+        advancement.setId(rs.getInt(KeyConst.ID.getName()));
+        advancement.setName(rs.getString(KeyConst.NAME.getName()));
+        advancement.setTimeRequirement(rs.getInt(KeyConst.TIME_REQUIREMENT.getName()));
+        advancement.setImgPath(rs.getString(KeyConst.IMG_PATH.getName()));
+        advancement.setNextAdvancementId(rs.getInt(KeyConst.NEXT_ADVANCEMENT_ID.getName()));
+        advancement.setServiceHours(rs.getDouble(KeyConst.SERVICE_HOURS.getName()));
+        advancement.setReadOnly(rs.getBoolean(KeyConst.READ_ONLY.getName()));
+        return advancement;
     }
 }
