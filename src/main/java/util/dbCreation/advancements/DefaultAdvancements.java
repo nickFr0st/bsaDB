@@ -16,5 +16,6 @@ public class DefaultAdvancements {
         DefaultFirstClass.execute(connection);
         DefaultStar.execute(connection);
         DefaultLife.execute(connection);
+        DefaultEagle.execute(connection);
     }
 }
