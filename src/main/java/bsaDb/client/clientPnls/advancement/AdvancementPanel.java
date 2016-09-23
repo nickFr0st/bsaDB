@@ -118,8 +118,9 @@ public class AdvancementPanel extends JPanel {
 
         btnBadgeImage.setDisabledIcon(null);
         if (advancement.isReadOnly()) {
-            btnBadgeImage.setIcon(new ImageIcon(getClass().getResource(advancement.getImgPath())));
-            btnBadgeImage.setDisabledIcon(new ImageIcon(getClass().getResource(advancement.getImgPath())));
+            ImageIcon image = new ImageIcon(getClass().getResource(advancement.getImgPath()));
+            btnBadgeImage.setIcon(image);
+            btnBadgeImage.setDisabledIcon(image);
         } else if (new ImageIcon(advancement.getImgPath()).getImageLoadStatus() < MediaTracker.COMPLETE) {
             btnBadgeImage.setIcon(noImage);
         } else {
@@ -330,10 +331,12 @@ public class AdvancementPanel extends JPanel {
             advancement.setNextAdvancementId(((Advancement)cboRank.getSelectedItem()).getId());
         }
 
-        if (Util.isEmpty(imagePath) || getImage() == null) {
-            advancement.setImgPath("");
-        } else {
-            advancement.setImgPath(imagePath);
+        if (!advancement.isReadOnly()) {
+            if (Util.isEmpty(imagePath) || getImage() == null) {
+                advancement.setImgPath("");
+            } else {
+                advancement.setImgPath(imagePath);
+            }
         }
 
         if (txtServiceHours.isMessageDefault()) {

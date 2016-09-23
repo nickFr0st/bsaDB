@@ -367,10 +367,13 @@ public class MeritBadgePanel extends JPanel {
 
         meritBadge.setName(txtName.getText());
         meritBadge.setRequiredForEagle(chkRequiredForEagle.isSelected());
-        if (Util.isEmpty(imagePath) || getImage() == null) {
-            meritBadge.setImgPath("");
-        } else {
-            meritBadge.setImgPath(imagePath);
+
+        if (!meritBadge.isReadOnly()) {
+            if (Util.isEmpty(imagePath) || getImage() == null) {
+                meritBadge.setImgPath("");
+            } else {
+                meritBadge.setImgPath(imagePath);
+            }
         }
     }
 
