@@ -74,7 +74,6 @@ public class DefaultLife {
         requirement.append("6");
         requirement.append(")");
 
-
         statement.addBatch(requirement.toString());
     }
 
