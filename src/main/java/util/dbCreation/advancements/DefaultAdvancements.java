@@ -1,5 +1,6 @@
 package util.dbCreation.advancements;
 
+import util.dbCreation.advancements.objects.DefaultFirstClass;
 import util.dbCreation.advancements.objects.DefaultNewScout;
 import util.dbCreation.advancements.objects.DefaultSecondClass;
 import util.dbCreation.advancements.objects.DefaultTenderfoot;
@@ -15,5 +16,6 @@ public class DefaultAdvancements {
         DefaultNewScout.execute(connection);
         DefaultTenderfoot.execute(connection);
         DefaultSecondClass.execute(connection);
+        DefaultFirstClass.execute(connection);
     }
 }
