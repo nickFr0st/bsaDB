@@ -118,8 +118,10 @@ public class MeritBadgePanel extends JPanel {
         txtName.setText(meritBadge.getName());
         chkRequiredForEagle.setSelected(meritBadge.isRequiredForEagle());
 
+        btnBadgeImage.setDisabledIcon(null);
         if (meritBadge.isReadOnly()) {
             btnBadgeImage.setIcon(new ImageIcon(getClass().getResource(meritBadge.getImgPath())));
+            btnBadgeImage.setDisabledIcon(new ImageIcon(getClass().getResource(meritBadge.getImgPath())));
         } else if (new ImageIcon(meritBadge.getImgPath()).getImageLoadStatus() < MediaTracker.COMPLETE) {
             btnBadgeImage.setIcon(noImage);
         } else {
@@ -130,7 +132,7 @@ public class MeritBadgePanel extends JPanel {
         loadCounselorTable();
 
         btnUpdate.setVisible(true);
-        btnDelete.setVisible(true);
+        btnDelete.setVisible(!meritBadge.isReadOnly());
         btnSave.setVisible(false);
         btnRefresh.setVisible(true);
     }
@@ -224,7 +226,7 @@ public class MeritBadgePanel extends JPanel {
     }
 
     private void enableControls(boolean enable) {
-        btnBadgeImage.setEnabled(enable);
+        btnBadgeImage.setEnabled(enable && (meritBadge == null || !meritBadge.isReadOnly()));
         txtName.setEnabled(enable);
         btnAddRequirement.setEnabled(enable);
         btnRemoveRequirement.setEnabled(enable);

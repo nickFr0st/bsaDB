@@ -116,8 +116,10 @@ public class AdvancementPanel extends JPanel {
             txtTimeRequirement.setText(advancement.getTimeRequirement().toString());
         }
 
+        btnBadgeImage.setDisabledIcon(null);
         if (advancement.isReadOnly()) {
             btnBadgeImage.setIcon(new ImageIcon(getClass().getResource(advancement.getImgPath())));
+            btnBadgeImage.setDisabledIcon(new ImageIcon(getClass().getResource(advancement.getImgPath())));
         } else if (new ImageIcon(advancement.getImgPath()).getImageLoadStatus() < MediaTracker.COMPLETE) {
             btnBadgeImage.setIcon(noImage);
         } else {
@@ -137,7 +139,7 @@ public class AdvancementPanel extends JPanel {
         loadRequirementSet();
 
         btnUpdate.setVisible(true);
-        btnDelete.setVisible(true);
+        btnDelete.setVisible(!advancement.isReadOnly());
         btnSave.setVisible(false);
         btnRefresh.setVisible(true);
     }
@@ -167,7 +169,7 @@ public class AdvancementPanel extends JPanel {
     }
 
     private void enableControls(boolean enable) {
-        btnBadgeImage.setEnabled(enable);
+        btnBadgeImage.setEnabled(enable && (advancement == null || !advancement.isReadOnly()));
         txtName.setEnabled(enable);
         txtTimeRequirement.setEnabled(enable);
         btnAddRequirement.setEnabled(enable);

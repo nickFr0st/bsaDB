@@ -187,7 +187,7 @@ public class ImportMeritBadgeLogic {
 
                 if (existingBadge != null) {
                     meritBadgeId = existingBadge.getId();
-                    if (!Util.isEmpty(importedBadge.getImgPath())) {
+                    if (!Util.isEmpty(importedBadge.getImgPath()) && !existingBadge.isReadOnly()) {
                         existingBadge.setImgPath(importedBadge.getImgPath());
                     }
                     existingBadge.setRequiredForEagle(importedBadge.isRequiredForEagle());

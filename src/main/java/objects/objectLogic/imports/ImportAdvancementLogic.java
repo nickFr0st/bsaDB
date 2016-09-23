@@ -125,7 +125,7 @@ public class ImportAdvancementLogic {
 
                 if (existingAdv != null) {
                     advancementId = existingAdv.getId();
-                    if (!Util.isEmpty(importedAdvancement.getImgPath())) {
+                    if (!Util.isEmpty(importedAdvancement.getImgPath()) && !existingAdv.isReadOnly()) {
                         existingAdv.setImgPath(importedAdvancement.getImgPath());
                     }
                     existingAdv = LogicAdvancement.update(existingAdv);
