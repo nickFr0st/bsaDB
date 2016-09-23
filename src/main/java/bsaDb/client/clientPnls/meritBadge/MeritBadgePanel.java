@@ -32,6 +32,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 
@@ -120,8 +121,7 @@ public class MeritBadgePanel extends JPanel {
 
         btnBadgeImage.setDisabledIcon(null);
         if (meritBadge.isReadOnly()) {
-            btnBadgeImage.setIcon(new ImageIcon(getClass().getResource(meritBadge.getImgPath())));
-            btnBadgeImage.setDisabledIcon(new ImageIcon(getClass().getResource(meritBadge.getImgPath())));
+            setReadOnlyImage(meritBadge.getImgPath());
         } else if (new ImageIcon(meritBadge.getImgPath()).getImageLoadStatus() < MediaTracker.COMPLETE) {
             btnBadgeImage.setIcon(noImage);
         } else {
@@ -135,6 +135,26 @@ public class MeritBadgePanel extends JPanel {
         btnDelete.setVisible(!meritBadge.isReadOnly());
         btnSave.setVisible(false);
         btnRefresh.setVisible(true);
+    }
+
+    private void setReadOnlyImage(String imgPath) {
+        try {
+            BufferedImage img = ImageIO.read(new File(getClass().getResource(imgPath).toURI()));
+
+            int height = img.getHeight() > btnBadgeImage.getHeight() ? btnBadgeImage.getHeight() : img.getHeight();
+            int width = img.getWidth() > btnBadgeImage.getWidth() ? btnBadgeImage.getWidth() : img.getWidth();
+
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            if (icon.getImage() == null) {
+                btnBadgeImage.setIcon(noImage);
+                imagePath = "";
+            } else {
+                btnBadgeImage.setIcon(icon);
+                btnBadgeImage.setDisabledIcon(icon);
+                imagePath = imgPath;
+            }
+        } catch (IOException | URISyntaxException ignore) {
+        }
     }
 
     private void loadCounselorTable() {
