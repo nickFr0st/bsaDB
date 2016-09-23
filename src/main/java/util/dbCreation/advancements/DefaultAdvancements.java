@@ -1,5 +1,8 @@
 package util.dbCreation.advancements;
 
+import util.dbCreation.advancements.objects.DefaultNewScout;
+import util.dbCreation.advancements.objects.DefaultTenderfoot;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -9,5 +12,6 @@ import java.sql.SQLException;
 public class DefaultAdvancements {
     public static void addAdvancements(Connection connection) throws SQLException {
         DefaultNewScout.execute(connection);
+        DefaultTenderfoot.execute(connection);
     }
 }
