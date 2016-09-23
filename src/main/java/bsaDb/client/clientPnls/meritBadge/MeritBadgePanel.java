@@ -118,15 +118,15 @@ public class MeritBadgePanel extends JPanel {
         txtName.setText(meritBadge.getName());
         chkRequiredForEagle.setSelected(meritBadge.isRequiredForEagle());
 
-        ImageIcon tryPath = new ImageIcon(meritBadge.getImgPath());
-        if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
+        if (meritBadge.isReadOnly()) {
+            btnBadgeImage.setIcon(new ImageIcon(getClass().getResource(meritBadge.getImgPath())));
+        } else if (new ImageIcon(meritBadge.getImgPath()).getImageLoadStatus() < MediaTracker.COMPLETE) {
             btnBadgeImage.setIcon(noImage);
         } else {
             setImage(meritBadge.getImgPath());
         }
 
         loadRequirements();
-
         loadCounselorTable();
 
         btnUpdate.setVisible(true);

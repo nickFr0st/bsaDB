@@ -116,8 +116,9 @@ public class AdvancementPanel extends JPanel {
             txtTimeRequirement.setText(advancement.getTimeRequirement().toString());
         }
 
-        ImageIcon tryPath = new ImageIcon(advancement.getImgPath());
-        if (tryPath.getImageLoadStatus() < MediaTracker.COMPLETE) {
+        if (advancement.isReadOnly()) {
+            btnBadgeImage.setIcon(new ImageIcon(getClass().getResource(advancement.getImgPath())));
+        } else if (new ImageIcon(advancement.getImgPath()).getImageLoadStatus() < MediaTracker.COMPLETE) {
             btnBadgeImage.setIcon(noImage);
         } else {
             setImage(advancement.getImgPath());
