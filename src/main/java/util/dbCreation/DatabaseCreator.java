@@ -106,7 +106,7 @@ public class DatabaseCreator {
 
     private static void createMeritBadgeTable(Statement statement) throws SQLException {
         String query = "CREATE TABLE meritBadge " +
-                "(id INT NOT NULL," +
+                "(id INT NOT NULL AUTO_INCREMENT," +
                 " name VARCHAR(225) NOT NULL," +
                 " imgPath VARCHAR(255) NOT NULL," +
                 " requiredForEagle TINYINT NOT NULL," +

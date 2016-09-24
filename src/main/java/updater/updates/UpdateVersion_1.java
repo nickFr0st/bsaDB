@@ -10,12 +10,20 @@ import java.sql.Statement;
  */
 public class UpdateVersion_1 {
 
-    public static void run() {
+    public static Long run(Long version) {
+        long VERSION = 1L;
+
+        if (version >= VERSION) {
+            return version;
+        }
+
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
-            statement.executeUpdate("INSERT INTO dbVersion (version) VALUES(1)");
+            statement.executeUpdate("INSERT INTO dbVersion (version) VALUES(" + VERSION + ")");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return VERSION;
     }
 }

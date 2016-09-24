@@ -10,9 +10,13 @@ import java.sql.Statement;
  */
 public class UpdateVersion_3 {
 
-    private final static int VERSION = 3;
+    private final static Long VERSION = 3L;
 
-    public static void run() {
+    public static Long run(Long version) {
+        if (version >= VERSION) {
+            return version;
+        }
+
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             addNewVersionData(statement);
@@ -26,6 +30,8 @@ public class UpdateVersion_3 {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return VERSION;
     }
 
     private static void createImageTable(Statement statement) throws SQLException {

@@ -11,7 +11,7 @@ import java.sql.Statement;
  * Created by Nathanael on 9/1/2016
  */
 public class DatabaseUpdater {
-    public static final Long CURRENT_VERSION = 6L;
+    public static final Long CURRENT_VERSION = 7L;
 
     public static void runUpdates() {
         Long version = getDbVersion();
@@ -38,34 +38,12 @@ public class DatabaseUpdater {
     }
 
     private static void update(Long version) {
-        if (version < 1L) {
-            UpdateVersion_1.run();
-            version = 1L;
-        }
-
-        if (version < 2L) {
-            UpdateVersion_2.run();
-            version = 2L;
-        }
-
-        if (version < 3L) {
-            UpdateVersion_3.run();
-            version = 3L;
-        }
-
-        if (version < 4L) {
-            UpdateVersion_4.run();
-            version = 4L;
-        }
-
-        if (version < 5L) {
-            UpdateVersion_5.run();
-            version = 5L;
-        }
-
-        if (version < 6L) {
-            UpdateVersion_6.run();
-            version = 6L;
-        }
+        version = UpdateVersion_1.run(version);
+        version = UpdateVersion_2.run(version);
+        version = UpdateVersion_3.run(version);
+        version = UpdateVersion_4.run(version);
+        version = UpdateVersion_5.run(version);
+        version = UpdateVersion_6.run(version);
+        version = UpdateVersion_7.run(version);
     }
 }

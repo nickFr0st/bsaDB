@@ -10,9 +10,14 @@ import java.sql.Statement;
  */
 public class UpdateVersion_6 {
 
-    private final static int VERSION = 6;
+    private final static Long VERSION = 6L;
 
-    public static void run() {
+    public static Long run(Long version) {
+
+        if (version >= VERSION) {
+            return version;
+        }
+
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             addNewVersionData(statement);
@@ -24,6 +29,8 @@ public class UpdateVersion_6 {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return VERSION;
     }
 
     private static void makeRequirementIdAutoIncrement(Statement statement) throws SQLException {

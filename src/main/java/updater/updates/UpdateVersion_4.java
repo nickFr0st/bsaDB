@@ -10,9 +10,13 @@ import java.sql.Statement;
  */
 public class UpdateVersion_4 {
 
-    private final static int VERSION = 4;
+    private final static Long VERSION = 4L;
 
-    public static void run() {
+    public static Long run(Long version) {
+        if (version >= VERSION) {
+            return version;
+        }
+
         try {
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
             addNewVersionData(statement);
@@ -24,6 +28,8 @@ public class UpdateVersion_4 {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return VERSION;
     }
 
     private static void addServiceHourToAdvancement(Statement statement) throws SQLException {
