@@ -17,10 +17,10 @@ public class DefaultMeritBadges {
         DefaultCitInCom.execute(connection);
         DefaultCitInWorld.execute(connection);
         DefaultCommunication.execute(connection);
-//        DefaultFamilyLife.execute(connection);
-//        DefaultPersonalManagement.execute(connection);
-//        DefaultFirstAid.execute(connection);
-//        DefaultEnvironmentalScience.execute(connection);
+        DefaultFamilyLife.execute(connection);
+        DefaultPersonalManagement.execute(connection);
+        DefaultFirstAid.execute(connection);
+        DefaultEnvironmentalScience.execute(connection);
 //        DefaultSustainability.execute(connection);
 //        DefaultEmergencyPreparedness.execute(connection);
 //        DefaultCycling.execute(connection);
