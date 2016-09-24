@@ -1,5 +1,8 @@
 package util.dbCreation.meritBadges;
 
+import util.dbCreation.meritBadges.objects.DefaultCamping;
+import util.dbCreation.meritBadges.objects.DefaultLifesaving;
+import util.dbCreation.meritBadges.objects.DefaultPersonalFitness;
 import util.dbCreation.meritBadges.objects.DefaultSwimming;
 
 import java.sql.Connection;
@@ -11,9 +14,9 @@ import java.sql.SQLException;
 public class DefaultMeritBadges {
     public static void addMeritBadges(Connection connection) throws SQLException {
         DefaultSwimming.execute(connection);
-//        DefaultPersonFitness.execute(connection);
-//        DefaultLifeSaving.execute(connection);
-//        DefaultCamping.execute(connection);
+        DefaultPersonalFitness.execute(connection);
+        DefaultLifesaving.execute(connection);
+        DefaultCamping.execute(connection);
 //        DefaultCitInCom.execute(connection);
 //        DefaultCitInWorld.execute(connection);
 //        DefaultCommunication.execute(connection);
