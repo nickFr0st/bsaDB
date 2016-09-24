@@ -2,6 +2,7 @@ package util.dbCreation;
 
 import updater.DatabaseUpdater;
 import util.dbCreation.advancements.DefaultAdvancements;
+import util.dbCreation.meritBadges.DefaultMeritBadges;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ public class DefaultValues {
         statement.executeBatch();
 
         DefaultAdvancements.addAdvancements(connection);
+        DefaultMeritBadges.addMeritBadges(connection);
     }
 
     private void addDatabaseVersion(Statement statement) throws SQLException{
