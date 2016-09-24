@@ -21,13 +21,12 @@ public class DefaultMeritBadges {
         DefaultPersonalManagement.execute(connection);
         DefaultFirstAid.execute(connection);
         DefaultEnvironmentalScience.execute(connection);
-//        DefaultSustainability.execute(connection);
-//        DefaultEmergencyPreparedness.execute(connection);
-//        DefaultCycling.execute(connection);
-//        DefaultCitInNation.execute(connection);
-//        DefaultCooking.execute(connection);
-//        DefaultHiking.execute(connection);
-//        DefaultHiking.execute(connection);
+        DefaultSustainability.execute(connection);
+        DefaultEmergencyPreparedness.execute(connection);
+        DefaultCycling.execute(connection);
+        DefaultCitInNation.execute(connection);
+        DefaultCooking.execute(connection);
+        DefaultHiking.execute(connection);
 
 
     }
