@@ -99,7 +99,7 @@ public class ExportMeritBadgeLogic {
             return false;
         }
 
-        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected advancement(s) have been successfully exported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
+        new MessageDialog(Util.getParent(parent), "Export Successful", "Your selected merit badge(s) have been successfully exported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
     }
 }
