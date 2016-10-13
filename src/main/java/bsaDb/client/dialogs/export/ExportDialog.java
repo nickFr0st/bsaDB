@@ -90,6 +90,9 @@ public class ExportDialog extends JDialog {
             case SPECIAL_AWARD:
                 success = ExportSpecialAwardLogic.execute(this, exportList);
                 break;
+            case SCOUT_MERIT_BADGE:
+                success = ExportScoutMeritBadgeLogic.execute(this, exportList);
+                break;
         }
 
         if (success) {

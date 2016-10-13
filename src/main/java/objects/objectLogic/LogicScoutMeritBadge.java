@@ -6,7 +6,9 @@ import util.MySqlConnector;
 import util.Util;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,11 +26,7 @@ public class LogicScoutMeritBadge {
             ResultSet rs = statement.executeQuery("SELECT * FROM scoutMeritBadge WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId + " ORDER BY id");
 
             while (rs.next()) {
-                ScoutMeritBadge scoutMeritBadge = new ScoutMeritBadge();
-                scoutMeritBadge.setId(rs.getInt(KeyConst.ID.getName()));
-                scoutMeritBadge.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
-                scoutMeritBadge.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                scoutMeritBadge.setMeritBadgeId(rs.getInt(KeyConst.MERIT_BADGE_ID.getName()));
+                ScoutMeritBadge scoutMeritBadge = buildScoutMeritBadge(rs);
                 scoutMeritBadgeSet.add(scoutMeritBadge);
             }
 
@@ -37,6 +35,15 @@ public class LogicScoutMeritBadge {
         }
 
         return scoutMeritBadgeSet;
+    }
+
+    private static ScoutMeritBadge buildScoutMeritBadge(ResultSet rs) throws SQLException {
+        ScoutMeritBadge scoutMeritBadge = new ScoutMeritBadge();
+        scoutMeritBadge.setId(rs.getInt(KeyConst.ID.getName()));
+        scoutMeritBadge.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+        scoutMeritBadge.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+        scoutMeritBadge.setMeritBadgeId(rs.getInt(KeyConst.MERIT_BADGE_ID.getName()));
+        return scoutMeritBadge;
     }
 
     public static synchronized void delete(Set<ScoutMeritBadge> scoutMeritBadgeSet) {
@@ -159,11 +166,7 @@ public class LogicScoutMeritBadge {
             ResultSet rs = statement.executeQuery(query);
 
             if (rs.next()) {
-                ScoutMeritBadge scoutMeritBadge = new ScoutMeritBadge();
-                scoutMeritBadge.setId(rs.getInt(KeyConst.ID.getName()));
-                scoutMeritBadge.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
-                scoutMeritBadge.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                scoutMeritBadge.setMeritBadgeId(rs.getInt(KeyConst.MERIT_BADGE_ID.getName()));
+                ScoutMeritBadge scoutMeritBadge = buildScoutMeritBadge(rs);
                 return scoutMeritBadge;
             }
         } catch (Exception e) {
@@ -171,5 +174,30 @@ public class LogicScoutMeritBadge {
         }
 
         return null;
+    }
+
+    public static List<ScoutMeritBadge> findAllByScoutId(List<Integer> scoutIdList) {
+        if (Util.isEmpty(scoutIdList)) {
+            return new ArrayList<>();
+        }
+
+        List<ScoutMeritBadge> scoutMeritBadgeList = new ArrayList<>();
+
+        for (Integer scoutId : scoutIdList) {
+            try {
+                Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM scoutMeritBadge WHERE scoutId = " + scoutId + " ORDER BY meritBadgeId");
+
+                while (rs.next()) {
+                    ScoutMeritBadge scoutMeritBadge = buildScoutMeritBadge(rs);
+                    scoutMeritBadgeList.add(scoutMeritBadge);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        }
+
+        return scoutMeritBadgeList;
     }
 }

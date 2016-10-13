@@ -172,8 +172,8 @@ public class LogicSpecialAward {
                 ResultSet rs = statement.executeQuery("SELECT * FROM specialAward WHERE scoutId = " + scoutId + " ORDER BY name");
 
                 while (rs.next()) {
-                    SpecialAward serviceProject = buildSpecialAward(rs);
-                    specialAwardList.add(serviceProject);
+                    SpecialAward specialAward = buildSpecialAward(rs);
+                    specialAwardList.add(specialAward);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

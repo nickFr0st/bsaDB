@@ -32,14 +32,11 @@ public enum IETypeConst {
         return name;
     }
 
-    public static String[] getValueNames(boolean isExport) {
+    public static String[] getValueNames() {
         String[] names = new String[IETypeConst.values().length];
 
         int i = 0;
         for (IETypeConst typeConst : IETypeConst.values()) {
-            if (isExport && (typeConst.getId() == 60)) {
-                continue;
-            }
             names[i++] = typeConst.getName();
         }
 
