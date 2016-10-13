@@ -90,6 +90,10 @@ public class BaseFrame extends JFrame {
     }
 
     public void clearHomePnl() {
+        if (pnlHome == null) {
+            return;
+        }
+
         pnlCards.remove(pnlHome);
         pnlHome = null;
     }

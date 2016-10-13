@@ -175,14 +175,19 @@ public class DatabaseSettingsPanel extends JPanel {
         JLabel lblConnection = new JLabel();
         lblConnectionName = new JLabel();
         JPanel panel2 = new JPanel();
+        label1 = new JLabel();
         txtDatabaseName = new JTextFieldDefaultText();
         lblDatabaseNameError = new JLabel();
+        label2 = new JLabel();
         txtServerUserName = new JTextFieldDefaultText();
         lblUserNameError = new JLabel();
+        label3 = new JLabel();
         txtServerPassword = new JPasswordFieldDefaultText();
         lblPasswordError = new JLabel();
         JButton btnCreate = new JButton();
         JButton btnConnect = new JButton();
+        panel3 = new JPanel();
+        textArea1 = new JTextArea();
 
         //======== this ========
         setBackground(Color.white);
@@ -220,7 +225,6 @@ public class DatabaseSettingsPanel extends JPanel {
                 new Insets(0, 0, 5, 5), 0, 0));
 
             //---- lblConnectionName ----
-            lblConnectionName.setText("dbName");
             lblConnectionName.setFont(new Font("Vijaya", Font.PLAIN, 22));
             lblConnectionName.setForeground(new Color(0, 107, 63));
             lblConnectionName.setName("lblConnectionName");
@@ -233,10 +237,19 @@ public class DatabaseSettingsPanel extends JPanel {
                 panel2.setOpaque(false);
                 panel2.setName("panel2");
                 panel2.setLayout(new GridBagLayout());
-                ((GridBagLayout)panel2.getLayout()).columnWidths = new int[] {132, 113, 136, 0, 0};
-                ((GridBagLayout)panel2.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0};
-                ((GridBagLayout)panel2.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 1.0E-4};
-                ((GridBagLayout)panel2.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+                ((GridBagLayout)panel2.getLayout()).columnWidths = new int[] {0, 132, 113, 136, 0, 0};
+                ((GridBagLayout)panel2.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
+                ((GridBagLayout)panel2.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0, 1.0E-4};
+                ((GridBagLayout)panel2.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+
+                //---- label1 ----
+                label1.setText("Database Name:");
+                label1.setForeground(Color.black);
+                label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                label1.setName("label1");
+                panel2.add(label1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 5, 8, 10), 0, 0));
 
                 //---- txtDatabaseName ----
                 txtDatabaseName.setPreferredSize(new Dimension(14, 40));
@@ -256,7 +269,7 @@ public class DatabaseSettingsPanel extends JPanel {
                         validateDatabaseName();
                     }
                 });
-                panel2.add(txtDatabaseName, new GridBagConstraints(0, 0, 3, 1, 0.0, 0.0,
+                panel2.add(txtDatabaseName, new GridBagConstraints(1, 0, 3, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 8, 5), 0, 0));
 
@@ -266,15 +279,24 @@ public class DatabaseSettingsPanel extends JPanel {
                 lblDatabaseNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                 lblDatabaseNameError.setVisible(false);
                 lblDatabaseNameError.setName("lblDatabaseNameError");
-                panel2.add(lblDatabaseNameError, new GridBagConstraints(0, 1, 4, 1, 0.0, 0.0,
+                panel2.add(lblDatabaseNameError, new GridBagConstraints(1, 1, 4, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 10, 8, 0), 0, 0));
+
+                //---- label2 ----
+                label2.setText("Username:");
+                label2.setForeground(Color.black);
+                label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                label2.setName("label2");
+                panel2.add(label2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 5, 8, 10), 0, 0));
 
                 //---- txtServerUserName ----
                 txtServerUserName.setMinimumSize(new Dimension(14, 40));
                 txtServerUserName.setPreferredSize(new Dimension(14, 40));
                 txtServerUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                txtServerUserName.setDefaultText("MySQL server user name");
+                txtServerUserName.setDefaultText("MySQL server username");
                 txtServerUserName.setName("txtServerUserName");
                 txtServerUserName.addKeyListener(new KeyAdapter() {
                     @Override
@@ -288,9 +310,9 @@ public class DatabaseSettingsPanel extends JPanel {
                         validateServerUserName();
                     }
                 });
-                panel2.add(txtServerUserName, new GridBagConstraints(0, 2, 3, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 8, 5), 0, 0));
+                panel2.add(txtServerUserName, new GridBagConstraints(1, 2, 3, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 8, 5), 0, 0));
 
                 //---- lblUserNameError ----
                 lblUserNameError.setText("* Error Message");
@@ -298,9 +320,18 @@ public class DatabaseSettingsPanel extends JPanel {
                 lblUserNameError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                 lblUserNameError.setVisible(false);
                 lblUserNameError.setName("lblUserNameError");
-                panel2.add(lblUserNameError, new GridBagConstraints(0, 3, 4, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 10, 8, 0), 0, 0));
+                panel2.add(lblUserNameError, new GridBagConstraints(1, 3, 4, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 10, 8, 0), 0, 0));
+
+                //---- label3 ----
+                label3.setText("Password:");
+                label3.setForeground(Color.black);
+                label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                label3.setName("label3");
+                panel2.add(label3, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 5, 8, 10), 0, 0));
 
                 //---- txtServerPassword ----
                 txtServerPassword.setPreferredSize(new Dimension(14, 40));
@@ -320,9 +351,9 @@ public class DatabaseSettingsPanel extends JPanel {
                         validateServerPassword();
                     }
                 });
-                panel2.add(txtServerPassword, new GridBagConstraints(0, 4, 3, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 8, 5), 0, 0));
+                panel2.add(txtServerPassword, new GridBagConstraints(1, 4, 3, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 8, 5), 0, 0));
 
                 //---- lblPasswordError ----
                 lblPasswordError.setText("* Error Message");
@@ -330,9 +361,9 @@ public class DatabaseSettingsPanel extends JPanel {
                 lblPasswordError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                 lblPasswordError.setVisible(false);
                 lblPasswordError.setName("lblPasswordError");
-                panel2.add(lblPasswordError, new GridBagConstraints(0, 5, 4, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 10, 8, 0), 0, 0));
+                panel2.add(lblPasswordError, new GridBagConstraints(1, 5, 4, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 10, 8, 0), 0, 0));
 
                 //---- btnCreate ----
                 btnCreate.setText("Create");
@@ -344,7 +375,6 @@ public class DatabaseSettingsPanel extends JPanel {
                 btnCreate.setBackground(new Color(0, 63, 135));
                 btnCreate.setForeground(Color.white);
                 btnCreate.setFocusPainted(false);
-                btnCreate.setToolTipText("<html>On database creatation a defualt user will be added.<br>\ndefualt user credentials are: <br>\nusername: admin<br>\npassword: admin\n</html>");
                 btnCreate.setName("btnCreate");
                 btnCreate.addActionListener(new ActionListener() {
                     @Override
@@ -352,9 +382,9 @@ public class DatabaseSettingsPanel extends JPanel {
                         btnCreateActionPerformed();
                     }
                 });
-                panel2.add(btnCreate, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(5, 5, 0, 5), 0, 0));
+                panel2.add(btnCreate, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(5, 5, 8, 5), 0, 0));
 
                 //---- btnConnect ----
                 btnConnect.setText("Connect");
@@ -373,9 +403,37 @@ public class DatabaseSettingsPanel extends JPanel {
                         btnConnectActionPerformed();
                     }
                 });
-                panel2.add(btnConnect, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0,
+                panel2.add(btnConnect, new GridBagConstraints(3, 6, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(5, 20, 8, 5), 0, 0));
+
+                //======== panel3 ========
+                {
+                    panel3.setBackground(new Color(152, 178, 204));
+                    panel3.setName("panel3");
+                    panel3.setLayout(new GridBagLayout());
+                    ((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {0, 0};
+                    ((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0};
+                    ((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+                    ((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                    //---- textArea1 ----
+                    textArea1.setText("On database creation a default user will be added.   \nThe default user credentials are:   \nusername: admin   \npassword: admin");
+                    textArea1.setEditable(false);
+                    textArea1.setWrapStyleWord(true);
+                    textArea1.setLineWrap(true);
+                    textArea1.setForeground(Color.black);
+                    textArea1.setBackground(new Color(153, 204, 255));
+                    textArea1.setOpaque(false);
+                    textArea1.setFont(new Font("Monospaced", Font.PLAIN, 13));
+                    textArea1.setName("textArea1");
+                    panel3.add(textArea1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(5, 10, 5, 10), 0, 0));
+                }
+                panel2.add(panel3, new GridBagConstraints(0, 7, 4, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(5, 20, 0, 5), 0, 0));
+                    new Insets(10, 5, 0, 5), 0, 0));
             }
             panel1.add(panel2, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -390,11 +448,16 @@ public class DatabaseSettingsPanel extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private TitlePanel pnlTitle;
     private JLabel lblConnectionName;
+    private JLabel label1;
     private JTextFieldDefaultText txtDatabaseName;
     private JLabel lblDatabaseNameError;
+    private JLabel label2;
     private JTextFieldDefaultText txtServerUserName;
     private JLabel lblUserNameError;
+    private JLabel label3;
     private JPasswordFieldDefaultText txtServerPassword;
     private JLabel lblPasswordError;
+    private JPanel panel3;
+    private JTextArea textArea1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
