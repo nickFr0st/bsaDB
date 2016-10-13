@@ -10,6 +10,7 @@ import util.Util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -220,6 +221,30 @@ public class LogicBoyScout {
         }
 
         return boyScoutSet;
+    }
+
+    public static List<Integer> findIdsByName(List<String> nameList) {
+        if (Util.isEmpty(nameList)) {
+            return new ArrayList<>();
+        }
+
+        List<Integer> scoutIdList = new ArrayList<>();
+
+        for (String name : nameList) {
+            try {
+                Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+                ResultSet rs = statement.executeQuery("SELECT id FROM boyScout WHERE name LIKE '" + name + "'");
+
+                if (rs.next()) {
+                    scoutIdList.add(rs.getInt("id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        }
+
+        return scoutIdList;
     }
 
     private static BoyScout buildBoyScout(ResultSet rs) throws SQLException {

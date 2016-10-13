@@ -66,6 +66,7 @@ public class ExportPanel extends JPanel {
                 Set<ServiceProject> serviceProjectSet = LogicServiceProject.findAll(null);
                 nameSource.addAll(serviceProjectSet.stream().map(ServiceProject::getName).collect(Collectors.toList()));
                 break;
+            case SPECIAL_AWARD:
             case BOY_SCOUT:
                 Set<BoyScout> boyScoutSet = LogicBoyScout.findAll();
                 nameSource.addAll(boyScoutSet.stream().map(BoyScout::getName).collect(Collectors.toList()));

@@ -87,6 +87,9 @@ public class ExportDialog extends JDialog {
             case BOY_SCOUT:
                 success = ExportBoyScoutLogic.execute(this, exportList);
                 break;
+            case SPECIAL_AWARD:
+                success = ExportSpecialAwardLogic.execute(this, exportList);
+                break;
         }
 
         if (success) {

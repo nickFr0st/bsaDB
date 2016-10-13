@@ -48,13 +48,7 @@ public class LogicSpecialAward {
             ResultSet rs = statement.executeQuery("SELECT * FROM specialAward WHERE scoutId = " + scoutId + " AND scoutTypeId = " + scoutTypeId + " ORDER BY name");
 
             while (rs.next()) {
-                SpecialAward specialAward = new SpecialAward();
-                specialAward.setId(rs.getInt(KeyConst.ID.getName()));
-                specialAward.setName(rs.getString(KeyConst.NAME.getName()));
-                specialAward.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
-                specialAward.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
-                specialAward.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
-                specialAward.setDateReceived(rs.getDate(KeyConst.DATE_RECEIVED.getName()));
+                SpecialAward specialAward = buildSpecialAward(rs);
 
                 specialAwardList.add(specialAward);
             }
@@ -64,6 +58,17 @@ public class LogicSpecialAward {
         }
 
         return specialAwardList;
+    }
+
+    private static SpecialAward buildSpecialAward(ResultSet rs) throws SQLException {
+        SpecialAward specialAward = new SpecialAward();
+        specialAward.setId(rs.getInt(KeyConst.ID.getName()));
+        specialAward.setName(rs.getString(KeyConst.NAME.getName()));
+        specialAward.setDescription(rs.getString(KeyConst.DESCRIPTION.getName()));
+        specialAward.setScoutId(rs.getInt(KeyConst.SCOUT_ID.getName()));
+        specialAward.setScoutTypeId(rs.getInt(KeyConst.SCOUT_TYPE_ID.getName()));
+        specialAward.setDateReceived(rs.getDate(KeyConst.DATE_RECEIVED.getName()));
+        return specialAward;
     }
 
     public static synchronized void save(List<SpecialAward> specialAwardList) {
@@ -152,5 +157,30 @@ public class LogicSpecialAward {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<SpecialAward> findAllByScoutId(List<Integer> scoutIdList) {
+        if (Util.isEmpty(scoutIdList)) {
+            return new ArrayList<>();
+        }
+
+        List<SpecialAward> specialAwardList = new ArrayList<>();
+
+        for (Integer scoutId : scoutIdList) {
+            try {
+                Statement statement = MySqlConnector.getInstance().getConnection().createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM specialAward WHERE scoutId = " + scoutId + " ORDER BY name");
+
+                while (rs.next()) {
+                    SpecialAward serviceProject = buildSpecialAward(rs);
+                    specialAwardList.add(serviceProject);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        }
+
+        return specialAwardList;
     }
 }

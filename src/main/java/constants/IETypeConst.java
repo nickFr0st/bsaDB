@@ -37,7 +37,7 @@ public enum IETypeConst {
 
         int i = 0;
         for (IETypeConst typeConst : IETypeConst.values()) {
-            if (isExport && (typeConst.getId() == 60 || typeConst.getId() == 70)) {
+            if (isExport && (typeConst.getId() == 60)) {
                 continue;
             }
             names[i++] = typeConst.getName();
