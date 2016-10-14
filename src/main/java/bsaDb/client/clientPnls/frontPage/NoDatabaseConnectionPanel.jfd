@@ -42,7 +42,7 @@ new FormModel {
 					"gridy": 1
 					"insets": new java.awt.Insets( 0, 10, 0, 0 )
 				} )
-				add( new FormComponent( "bsaDb.client.home.clientPnls.DatabaseSettingsPanel" ) {
+				add( new FormComponent( "bsaDb.client.clientPnls.database.DatabaseSettingsPanel" ) {
 					name: "databaseSettingsPanel1"
 					auxiliary() {
 						"JavaCodeGenerator.customCreateCode": "new DatabaseSettingsPanel(baseFrame, false);"

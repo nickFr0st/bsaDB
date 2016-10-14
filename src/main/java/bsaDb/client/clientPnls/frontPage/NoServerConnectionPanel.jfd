@@ -99,18 +99,6 @@ new FormModel {
 							"hAlign": 0
 							"insets": new java.awt.Insets( 10, 0, 10, 0 )
 						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label4"
-							"text": "<HTML>- Once your MySQL server is active, click on the button below <BR>&nbsp;&nbsp;&nbsp;to create and configure your database.</HTML>"
-							"font": new java.awt.Font( "Tahoma", 0, 13 )
-							"foreground": new java.awt.Color( 0, 0, 0, 255 )
-							auxiliary() {
-								"JavaCodeGenerator.variableLocal": true
-							}
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 3
-							"insets": new java.awt.Insets( 0, 10, 0, 10 )
-						} )
 					}, new FormLayoutConstraints( class java.lang.String ) {
 						"value": "Center"
 					} )

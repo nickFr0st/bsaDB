@@ -27,12 +27,11 @@ public class DatabaseSettingsPanel extends JPanel {
 
     public DatabaseSettingsPanel() {
         initComponents();
-
-        loadData();
     }
 
     public DatabaseSettingsPanel(BaseFrame baseFrame, boolean showTitle) {
         this();
+        loadData();
         this.baseFrame = baseFrame;
         pnlTitle.setVisible(showTitle);
     }

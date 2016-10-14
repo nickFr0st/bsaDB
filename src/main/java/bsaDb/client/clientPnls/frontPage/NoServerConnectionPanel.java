@@ -52,7 +52,6 @@ public class NoServerConnectionPanel extends JPanel {
         JLabel label5 = new JLabel();
         JTextArea textArea4 = new JTextArea();
         JButton button1 = new JButton();
-        JLabel label4 = new JLabel();
 
         //======== this ========
         setBackground(Color.white);
@@ -144,15 +143,6 @@ public class NoServerConnectionPanel extends JPanel {
                     panel3.add(button1, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                         new Insets(10, 0, 15, 5), 0, 0));
-
-                    //---- label4 ----
-                    label4.setText("<HTML>- Once your MySQL server is active, click on the button below <BR>&nbsp;&nbsp;&nbsp;to create and configure your database.</HTML>");
-                    label4.setFont(new Font("Tahoma", Font.PLAIN, 13));
-                    label4.setForeground(Color.black);
-                    label4.setName("label4");
-                    panel3.add(label4, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 10, 5, 15), 0, 0));
                 }
                 panel2.add(panel3, BorderLayout.CENTER);
             }
