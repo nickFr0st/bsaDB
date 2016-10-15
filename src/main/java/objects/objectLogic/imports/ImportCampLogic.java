@@ -51,11 +51,11 @@ public class ImportCampLogic {
                 String errorLine = "line: " + line + "\n";
 
                 // check for the headers
-                if (record[0].equals("Camp Name") || record[0].equals("Scouts Attended")) {
+                if (record[COL_CAMP_NAME].equals("Camp Name") || record[COL_CAMP_NAME].equals("Scouts Attended")) {
                     continue;
                 }
 
-                if (record[0].isEmpty()) {
+                if (record[COL_CAMP_NAME].isEmpty()) {
                     getCamp = true;
 
                     if (camp != null) {
@@ -186,11 +186,6 @@ public class ImportCampLogic {
     private static void validateStartDate(Camp camp, String startDate, StringBuilder errors, String errorLine) {
         if (Util.isEmpty(startDate)) {
             errors.append("Start date is missing. ").append(errorLine);
-            return;
-        }
-
-        if (!startDate.matches("\\d{4}/\\d{2}/\\d{2}?")) {
-            errors.append("Invalid date format date. ").append(errorLine);
             return;
         }
 

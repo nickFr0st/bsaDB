@@ -137,11 +137,6 @@ public class ImportBoyScoutLogic {
             return;
         }
 
-        if (!advancementDate.matches("\\d{4}/\\d{2}/\\d{2}?")) {
-            errors.append("Invalid date format date. ").append(errorLine);
-            return;
-        }
-
         try {
             boyScout.setAdvancementDate(Util.DATA_BASE_DATE_FORMAT.parse(advancementDate));
         } catch (ParseException e) {
@@ -242,11 +237,6 @@ public class ImportBoyScoutLogic {
     private static void validateBirthDate(BoyScout boyScout, String birthDate, StringBuilder errors, String errorLine) {
         if (Util.isEmpty(birthDate)) {
             errors.append("Birth Date is missing. ").append(errorLine);
-            return;
-        }
-
-        if (!birthDate.matches("\\d{4}/\\d{2}/\\d{2}?")) {
-            errors.append("Invalid date format date. ").append(errorLine);
             return;
         }
 

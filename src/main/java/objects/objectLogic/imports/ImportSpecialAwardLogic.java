@@ -88,11 +88,6 @@ public class ImportSpecialAwardLogic {
             return;
         }
 
-        if (!dateReceived.matches("\\d{4}/\\d{2}/\\d{2}?")) {
-            errors.append("Invalid date format date. ").append(errorLine);
-            return;
-        }
-
         try {
             Date date = Util.DATA_BASE_DATE_FORMAT.parse(dateReceived);
             specialAward.setDateReceived(date);
