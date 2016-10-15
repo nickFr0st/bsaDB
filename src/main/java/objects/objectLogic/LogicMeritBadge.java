@@ -123,7 +123,8 @@ public class LogicMeritBadge {
             query.append(meritBadge.getId()).append(", ");
             query.append("'").append(meritBadge.getName().replace("'", "''")).append("', ");
             query.append("'").append(meritBadge.getImgPath().replace("\\", "\\\\").replace("'", "''")).append("', ");
-            query.append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(" ");
+            query.append(Util.getIntValue(meritBadge.isRequiredForEagle())).append(", ");
+            query.append(meritBadge.isReadOnly());
             query.append(")");
 
             Statement statement = MySqlConnector.getInstance().getConnection().createStatement();

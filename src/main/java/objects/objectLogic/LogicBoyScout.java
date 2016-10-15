@@ -74,8 +74,8 @@ public class LogicBoyScout {
             query.append(boyScout.getAdvancementId()).append(", ");
             query.append("'").append(Util.DATA_BASE_DATE_FORMAT.format(boyScout.getAdvancementDate())).append("', ");
             query.append("'").append(boyScout.getPhoneNumber().replace("'", "''")).append("', ");
-            query.append("'").append(boyScout.getGuardianPhoneNumber().replace("'", "''")).append("', ");
             query.append("'").append(boyScout.getGuardianName().replace("'", "''")).append("', ");
+            query.append("'").append(boyScout.getGuardianPhoneNumber().replace("'", "''")).append("', ");
             query.append("'").append(boyScout.getStreet().replace("'", "''")).append("', ");
             query.append("'").append(boyScout.getCity().replace("'", "''")).append("', ");
             query.append("'").append(boyScout.getState().replace("'", "''")).append("', ");

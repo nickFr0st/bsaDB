@@ -24,6 +24,16 @@ import java.util.List;
  */
 public class ImportMeritBadgeLogic {
 
+    private static final int HEADER_INDEX = 0;
+
+    private static final int BADGE_NAME_INDEX = 0;
+    private static final int REQUIRED_INDEX = 1;
+    private static final int IMAGE_INDEX = 2;
+    private static final int COUNSELOR_NAME_INDEX = 0;
+    private static final int COUNSELOR_PHONE_INDEX = 1;
+    private static final int REQUIREMENT_NAME_INDEX = 0;
+    private static final int REQUIREMENT_DESC_INDEX = 1;
+
     public static boolean execute(Component parent, String importPath) {
         try {
             CSVReader reader = new CSVReader(new FileReader(importPath), ',');
@@ -40,15 +50,14 @@ public class ImportMeritBadgeLogic {
             StringBuilder errors = new StringBuilder();
 
             while ((record = reader.readNext()) != null) {
-                ++line;
+                line++;
                 String errorLine = "line: " + line + "\n";
 
-                // check for the headers
-                if (record[0].equals("Merit Badge Name") || record[0].equals("Counselor Name") || record[0].equals("Requirement Name")) {
+                if (record[HEADER_INDEX].equals("Merit Badge Name") || record[HEADER_INDEX].equals("Counselor Name") || record[HEADER_INDEX].equals("Requirement Name")) {
                     continue;
                 }
 
-                if (record[0].isEmpty()) {
+                if (record[HEADER_INDEX].isEmpty()) {
                     getMeritBadge = true;
 
                     if (meritBadge != null) {
@@ -74,96 +83,41 @@ public class ImportMeritBadgeLogic {
                 if (getMeritBadge) {
                     getMeritBadge = false;
 
-                    if (record.length < 2) {
-                        errors.append("There are too few values for the merit badge. ").append(errorLine);
-                        continue;
-                    }
-
-
                     meritBadge = new MeritBadge();
-                    String badgeName = record[0];
+                    String badgeName = record[BADGE_NAME_INDEX];
 
-                    if (Util.isEmpty(badgeName)){
-                        errors.append("Merit badge name is missing. ").append(errorLine);
-                    } else if (badgeName.length() > MeritBadge.COL_NAME_LENGTH) {
-                        errors.append("Merit badge name is too long. ").append(errorLine);
-                    }
-                    meritBadge.setName(badgeName);
+                    validateBadgeName(meritBadge, errors, errorLine, badgeName);
+                    validateRequiredForEagle(meritBadge, record, errors, errorLine);
 
-                    if (!(checkForBoolean(record[1].trim()))) {
-                        errors.append("invalid value: ").append(record[1]).append(". Accepted values are 'true' or 'false'. ").append(errorLine);
-                        meritBadge.setRequiredForEagle(false);
-                        continue;
-                    } else {
-                        meritBadge.setRequiredForEagle(Boolean.parseBoolean(record[1].trim()));
+                    String advancementImgPath = record[IMAGE_INDEX];
+                    if (!Util.isEmpty(advancementImgPath)){
+                        meritBadge.setImgPath(advancementImgPath);
                     }
-
-                    if (record.length == 2) {
-                        continue;
-                    }
-
-                    String advancementImgPath = record[2];
-                    if (Util.isEmpty(advancementImgPath)){
-                        errors.append("Merit badge image path is missing. ").append(errorLine);
-                    } else if (advancementImgPath.length() > MeritBadge.COL_IMG_PATH_LENGTH) {
-                        errors.append("Merit badge image path is too long. ").append(errorLine);
-                    }
-                    meritBadge.setImgPath(advancementImgPath);
                     continue;
                 }
 
-                if (record[0].startsWith("*")) {
-                    if (record.length < 2) {
-                        errors.append("Counselors needs both a name and a phone number.").append(errorLine);
-                        continue;
-                    }
-
+                if (record[COUNSELOR_NAME_INDEX].startsWith("*")) {
                     Counselor counselor = new Counselor();
-                    String counselorName = record[0];
+                    String counselorName = stripAstrix(record[COUNSELOR_NAME_INDEX]);
                     if (Util.isEmpty(counselorName)){
                         errors.append("Counselor name is missing. ").append(errorLine);
                     } else if (counselorName.length() > Counselor.COL_NAME_LENGTH) {
                         errors.append("Counselor name is too long. ").append(errorLine);
                     } else if (!counselorNameSet.add(counselorName)) {
-                        errors.append("Counselor names must be unique per Merit Badge. ").append(errorLine);
+                        continue;
                     }
-                    counselor.setName(counselorName.substring(1, counselorName.length()));
+                    counselor.setName(counselorName);
 
-                    String phoneNumber = record[1];
-                    if (Util.isEmpty(phoneNumber)){
-                        errors.append("Phone number is missing. ").append(errorLine);
-                    } else if (counselorName.length() > Counselor.COL_PHONE_NUMBER_LENGTH) {
-                        errors.append("Phone number is too long. ").append(errorLine);
-                    }
-
-                    if (!Util.validatePhoneNumber(phoneNumber)) {
-                        errors.append("Phone number format is incorrect. ").append(errorLine);
-                    }
-
-                    counselor.setPhoneNumber(phoneNumber);
+                    validateCounselorPhone(record, errors, errorLine, counselor, counselorName);
                     counselorList.add(counselor);
                     continue;
                 }
 
-                if (record.length < 2) {
-                    errors.append("Requirements needs both a name and a description.").append(errorLine);
-                    continue;
-                }
-
                 Requirement requirement = new Requirement();
-                String reqName = record[0];
-                if (Util.isEmpty(reqName)){
-                    errors.append("Requirement name is missing. ").append(errorLine);
-                } else if (reqName.length() > Requirement.COL_NAME_LENGTH) {
-                    errors.append("Requirement name is too long. ").append(errorLine);
-                }
-                requirement.setName(reqName);
+                String reqName = record[REQUIREMENT_NAME_INDEX];
+                validateRequirementName(errors, errorLine, requirement, reqName);
 
-                String reqDesc = record[1];
-                if (Util.isEmpty(reqDesc)){
-                    errors.append("Requirement description is missing. ").append(errorLine);
-                }
-                requirement.setDescription(reqDesc);
+                vaildateRequirementDesc(record, errors, errorLine, requirement);
                 requirement.setTypeId(RequirementTypeConst.MERIT_BADGE.getId());
 
                 requirementSet.add(requirement);
@@ -213,7 +167,7 @@ public class ImportMeritBadgeLogic {
                     for (Counselor counselor : counselors) {
                         counselor.setBadgeId(meritBadgeId);
                     }
-                    LogicCounselor.save(counselorList);
+                    LogicCounselor.save(counselors);
                 }
 
                 Set<Requirement> reqList = listContainer.getRequirementSet();
@@ -232,6 +186,63 @@ public class ImportMeritBadgeLogic {
 
         new MessageDialog(Util.getParent(parent), "Import Successful", "Your merit badges have been successfully imported.", MessageDialog.MessageType.SUCCESS, MessageDialog.ButtonType.OKAY);
         return true;
+    }
+
+    private static void vaildateRequirementDesc(String[] record, StringBuilder errors, String errorLine, Requirement requirement) {
+        String reqDesc = record[REQUIREMENT_DESC_INDEX];
+        if (Util.isEmpty(reqDesc)){
+            errors.append("Requirement description is missing. ").append(errorLine);
+        }
+        requirement.setDescription(reqDesc);
+    }
+
+    private static void validateRequirementName(StringBuilder errors, String errorLine, Requirement requirement, String reqName) {
+        if (Util.isEmpty(reqName)){
+            errors.append("Requirement name is missing. ").append(errorLine);
+        } else if (reqName.length() > Requirement.COL_NAME_LENGTH) {
+            errors.append("Requirement name is too long. ").append(errorLine);
+        }
+        requirement.setName(reqName);
+    }
+
+    private static void validateCounselorPhone(String[] record, StringBuilder errors, String errorLine, Counselor counselor, String counselorName) {
+        String phoneNumber = record[COUNSELOR_PHONE_INDEX];
+        if (Util.isEmpty(phoneNumber)){
+            errors.append("Phone number is missing. ").append(errorLine);
+        } else if (counselorName.length() > Counselor.COL_PHONE_NUMBER_LENGTH) {
+            errors.append("Phone number is too long. ").append(errorLine);
+        }
+
+        if (!Util.validatePhoneNumber(phoneNumber)) {
+            errors.append("Phone number format is incorrect. ").append(errorLine);
+        }
+
+        counselor.setPhoneNumber(phoneNumber);
+    }
+
+    private static String stripAstrix(String s) {
+        if (s.startsWith("*")) {
+            return s.substring(1, s.length());
+        }
+        return s;
+    }
+
+    private static void validateRequiredForEagle(MeritBadge meritBadge, String[] record, StringBuilder errors, String errorLine) {
+        if (!(checkForBoolean(record[REQUIRED_INDEX].trim()))) {
+            errors.append("invalid value: ").append(record[1]).append(". Accepted values are 'true' or 'false'. ").append(errorLine);
+            meritBadge.setRequiredForEagle(false);
+        } else {
+            meritBadge.setRequiredForEagle(Boolean.parseBoolean(record[1].trim()));
+        }
+    }
+
+    private static void validateBadgeName(MeritBadge meritBadge, StringBuilder errors, String errorLine, String badgeName) {
+        if (Util.isEmpty(badgeName)){
+            errors.append("Merit badge name is missing. ").append(errorLine);
+        } else if (badgeName.length() > MeritBadge.COL_NAME_LENGTH) {
+            errors.append("Merit badge name is too long. ").append(errorLine);
+        }
+        meritBadge.setName(badgeName);
     }
 
     private static boolean checkForBoolean(String arg) {

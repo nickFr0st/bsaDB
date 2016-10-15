@@ -5,7 +5,6 @@ package objects.databaseObjects;
  */
 public class MeritBadge implements Compare {
     public static final int COL_NAME_LENGTH = 254;
-    public static final int COL_IMG_PATH_LENGTH = 254;
 
     private int id;
     private String name;
