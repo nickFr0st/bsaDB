@@ -1977,7 +1977,7 @@ public class BoyScoutPanel extends JPanel {
                                         });
                                         panel1.add(btnEditAdvancementProgress, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                            new Insets(0, 0, 0, 0), 0, 0));
+                                            new Insets(0, 0, 2, 0), 0, 0));
                                     }
                                     pnlGeneral.add(panel1, new GridBagConstraints(0, 15, 6, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -2282,7 +2282,7 @@ public class BoyScoutPanel extends JPanel {
                                         });
                                         panel8.add(btnEditSpecialAward, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                                             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                            new Insets(0, 0, 0, 5), 0, 0));
+                                            new Insets(0, 0, 5, 5), 0, 0));
 
                                         //---- btnRemoveAward ----
                                         btnRemoveAward.setIcon(new ImageIcon(getClass().getResource("/images/delete.png")));

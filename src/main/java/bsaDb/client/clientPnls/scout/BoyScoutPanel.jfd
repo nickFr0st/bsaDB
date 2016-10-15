@@ -520,6 +520,7 @@ new FormModel {
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnEditAdvancementProgressMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 1
+												"insets": new java.awt.Insets( 0, 0, 2, 0 )
 											} )
 										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 											"gridy": 15
@@ -834,6 +835,7 @@ new FormModel {
 												addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "btnEditSpecialAwardMouseReleased", false ) )
 											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 												"gridx": 2
+												"insets": new java.awt.Insets( 0, 0, 5, 0 )
 											} )
 											add( new FormComponent( "javax.swing.JLabel" ) {
 												name: "btnRemoveAward"
