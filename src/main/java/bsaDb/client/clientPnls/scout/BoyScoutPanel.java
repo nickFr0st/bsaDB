@@ -1361,15 +1361,16 @@ public class BoyScoutPanel extends JPanel {
         lblNameError = new JLabel();
         lblRank = new JLabel();
         cboRank = new JComboBox();
-        lblRankDate = new JLabel();
-        cboRankDate = new JDatePicker();
-        lblRankError = new JLabel();
-        lblRankDateError = new JLabel();
         lblBirthDate = new JLabel();
         cboBirthDate = new JDatePicker();
+        lblRankError = new JLabel();
+        lblBirthDateError = new JLabel();
+        lblRankDate = new JLabel();
+        cboRankDate = new JDatePicker();
+        panel6 = new JPanel();
         lblAge = new JLabel();
         lblAgeValue = new JLabel();
-        lblBirthDateError = new JLabel();
+        lblRankDateError = new JLabel();
         lblTimeLeft = new JLabel();
         lblCampsAttended = new JLabel();
         barTimeLeft = new JProgressBar();
@@ -1671,54 +1672,12 @@ public class BoyScoutPanel extends JPanel {
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- lblRankDate ----
-                                    lblRankDate.setText("Rank Date:");
-                                    lblRankDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblRankDate.setForeground(Color.black);
-                                    lblRankDate.setName("lblRankDate");
-                                    pnlGeneral.add(lblRankDate, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- cboRankDate ----
-                                    cboRankDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    cboRankDate.setMaximumSize(new Dimension(32822, 30));
-                                    cboRankDate.setMinimumSize(new Dimension(57, 30));
-                                    cboRankDate.setName("cboRankDate");
-                                    cboRankDate.addActionListener(new ActionListener() {
-                                        @Override
-                                        public void actionPerformed(ActionEvent e) {
-                                            cboRankDateActionPerformed();
-                                        }
-                                    });
-                                    pnlGeneral.add(cboRankDate, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 0, 5, 5), 0, 0));
-
-                                    //---- lblRankError ----
-                                    lblRankError.setText("*error message");
-                                    lblRankError.setForeground(new Color(206, 17, 38));
-                                    lblRankError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                                    lblRankError.setName("lblRankError");
-                                    pnlGeneral.add(lblRankError, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 20, 5, 5), 0, 0));
-
-                                    //---- lblRankDateError ----
-                                    lblRankDateError.setText("*error message");
-                                    lblRankDateError.setForeground(new Color(206, 17, 38));
-                                    lblRankDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
-                                    lblRankDateError.setName("lblRankDateError");
-                                    pnlGeneral.add(lblRankDateError, new GridBagConstraints(4, 3, 2, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                                        new Insets(0, 20, 5, 5), 0, 0));
-
                                     //---- lblBirthDate ----
                                     lblBirthDate.setText("Birth Date:");
                                     lblBirthDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
                                     lblBirthDate.setForeground(Color.black);
                                     lblBirthDate.setName("lblBirthDate");
-                                    pnlGeneral.add(lblBirthDate, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                    pnlGeneral.add(lblBirthDate, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
@@ -1733,33 +1692,89 @@ public class BoyScoutPanel extends JPanel {
                                             cboBirthDateActionPerformed();
                                         }
                                     });
-                                    pnlGeneral.add(cboBirthDate, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                                    pnlGeneral.add(cboBirthDate, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 0, 5, 5), 0, 0));
 
-                                    //---- lblAge ----
-                                    lblAge.setText("Age:");
-                                    lblAge.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                                    lblAge.setForeground(Color.black);
-                                    lblAge.setName("lblAge");
-                                    pnlGeneral.add(lblAge, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 10, 5, 5), 0, 0));
-
-                                    //---- lblAgeValue ----
-                                    lblAgeValue.setFont(new Font("Tahoma", Font.BOLD, 14));
-                                    lblAgeValue.setForeground(new Color(0, 63, 135));
-                                    lblAgeValue.setName("lblAgeValue");
-                                    pnlGeneral.add(lblAgeValue, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
-                                        GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
-                                        new Insets(0, 0, 5, 5), 0, 0));
+                                    //---- lblRankError ----
+                                    lblRankError.setText("*error message");
+                                    lblRankError.setForeground(new Color(206, 17, 38));
+                                    lblRankError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblRankError.setName("lblRankError");
+                                    pnlGeneral.add(lblRankError, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
 
                                     //---- lblBirthDateError ----
                                     lblBirthDateError.setText("*error message");
                                     lblBirthDateError.setForeground(new Color(206, 17, 38));
                                     lblBirthDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
                                     lblBirthDateError.setName("lblBirthDateError");
-                                    pnlGeneral.add(lblBirthDateError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
+                                    pnlGeneral.add(lblBirthDateError, new GridBagConstraints(4, 3, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 20, 5, 5), 0, 0));
+
+                                    //---- lblRankDate ----
+                                    lblRankDate.setText("Rank Date:");
+                                    lblRankDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    lblRankDate.setForeground(Color.black);
+                                    lblRankDate.setName("lblRankDate");
+                                    pnlGeneral.add(lblRankDate, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- cboRankDate ----
+                                    cboRankDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                    cboRankDate.setMaximumSize(new Dimension(32822, 30));
+                                    cboRankDate.setMinimumSize(new Dimension(57, 30));
+                                    cboRankDate.setName("cboRankDate");
+                                    cboRankDate.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            cboRankDateActionPerformed();
+                                        }
+                                    });
+                                    pnlGeneral.add(cboRankDate, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //======== panel6 ========
+                                    {
+                                        panel6.setOpaque(false);
+                                        panel6.setName("panel6");
+                                        panel6.setLayout(new GridBagLayout());
+                                        ((GridBagLayout)panel6.getLayout()).columnWidths = new int[] {0, 0, 0};
+                                        ((GridBagLayout)panel6.getLayout()).rowHeights = new int[] {30, 0};
+                                        ((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+                                        ((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+                                        //---- lblAge ----
+                                        lblAge.setText("Age:");
+                                        lblAge.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                        lblAge.setForeground(Color.black);
+                                        lblAge.setName("lblAge");
+                                        panel6.add(lblAge, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                                            new Insets(0, 0, 0, 5), 0, 0));
+
+                                        //---- lblAgeValue ----
+                                        lblAgeValue.setFont(new Font("Tahoma", Font.BOLD, 14));
+                                        lblAgeValue.setForeground(new Color(0, 63, 135));
+                                        lblAgeValue.setName("lblAgeValue");
+                                        panel6.add(lblAgeValue, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                                            GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
+                                            new Insets(0, 0, 0, 0), 0, 0));
+                                    }
+                                    pnlGeneral.add(panel6, new GridBagConstraints(4, 4, 2, 1, 0.0, 0.0,
+                                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                                        new Insets(0, 0, 5, 5), 0, 0));
+
+                                    //---- lblRankDateError ----
+                                    lblRankDateError.setText("*error message");
+                                    lblRankDateError.setForeground(new Color(206, 17, 38));
+                                    lblRankDateError.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                                    lblRankDateError.setName("lblRankDateError");
+                                    pnlGeneral.add(lblRankDateError, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0,
                                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                         new Insets(0, 20, 5, 5), 0, 0));
 
@@ -2609,15 +2624,16 @@ public class BoyScoutPanel extends JPanel {
     private JLabel lblNameError;
     private JLabel lblRank;
     private JComboBox cboRank;
-    private JLabel lblRankDate;
-    private JDatePicker cboRankDate;
-    private JLabel lblRankError;
-    private JLabel lblRankDateError;
     private JLabel lblBirthDate;
     private JDatePicker cboBirthDate;
+    private JLabel lblRankError;
+    private JLabel lblBirthDateError;
+    private JLabel lblRankDate;
+    private JDatePicker cboRankDate;
+    private JPanel panel6;
     private JLabel lblAge;
     private JLabel lblAgeValue;
-    private JLabel lblBirthDateError;
+    private JLabel lblRankDateError;
     private JLabel lblTimeLeft;
     private JLabel lblCampsAttended;
     private JProgressBar barTimeLeft;
